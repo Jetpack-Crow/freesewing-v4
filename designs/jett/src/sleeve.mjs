@@ -42,6 +42,7 @@ function draftsleeve({
   macro('rmHd', 'wCuff')
   macro('rmVd', 'hCuffToArmhole')
   macro('rmVd', 'hFull')
+  macro('rmGrainline', 'grainline')
 
   //make new paperless markings
   macro('vd', {
@@ -68,6 +69,11 @@ function draftsleeve({
     from: points.wristLeft,
     to: points.wristRight,
     y: points.centerWrist.y + sa + 15,
+  })
+
+  macro('grainline', {
+    from: points.sleeveTop,
+    to: points.centerWrist,
   })
 
   macro('rmtitle')

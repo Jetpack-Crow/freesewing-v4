@@ -82,6 +82,7 @@ function draftBack({
     macro('rmVd', 'hHemToWaist')
     macro('rmPd', 'lShoulderToArmholePitch')
     macro('rmPd', 'lArmhole')
+    delete paths.waist
 
     //Make new paperless macros
     macro('hd', {

@@ -83,6 +83,7 @@ function draftYoke({
   macro('rmVd', 'hHemToWaist')
   macro('rmPd', 'lShoulderToArmholePitch')
   macro('rmPd', 'lArmhole')
+  delete snippets.armholePitchNotch
 
   //Make new macros
 
