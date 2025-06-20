@@ -232,7 +232,7 @@ export const back = {
     chestEase: { pct: 10, min: -15, max: 50, menu: 'fit' },
     hipsEase: { pct: 10, min: -15, max: 50, menu: 'fit' },
     yoke: { bool: true, menu: 'construction' },
-    yokesplit: { pct: 30, min: 5, max: 100, menu: 'style' },
+    yokesplit: { pct: 30, min: 5, max: 80, menu: 'style' },
   },
   draft: draftBack,
 }
