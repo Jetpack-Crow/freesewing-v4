@@ -53,7 +53,13 @@
     },
     "ribbing": {
       "t": "Ribbing",
-      "d": "Whether to generate a waistband made of stretchy ribbing"
+      "d": "Whether to generate a waistband and cuffs made of stretchy ribbing"
+    },
+    "ribbing.Yes": {
+      "t": "Yes"
+    },
+    "ribbing.No": {
+      "t": "No"
     },
     "ribbingEndsPercentage": {
       "t": "Waistband extension percentage",
@@ -83,6 +89,12 @@
     "yoke": {
       "t": "Yoke",
       "d": "Whether to draft the back panel with a yoke across the shoulders. The yoke does no extra shaping right now, so this doesn't affect the fit."
+    },
+    "yoke.Yes": {
+      "t": "Yes"
+    },
+    "yoke.No": {
+      "t": "No"
     },
     "placketwidth": {
       "t": "Placket width",
