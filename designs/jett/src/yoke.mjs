@@ -19,7 +19,7 @@ function draftYoke({
   if (!options.yoke) {
     return part.hide()
   }
-  points.armholesplit = paths.backArmhole.shiftFractionAlong(options.yokesplit, 1)
+  points.armholesplit = paths.backArmhole.shiftFractionAlong(options.yokesplit)
 
   points.centerbottom = new Point(0, points.armholesplit.y)
 

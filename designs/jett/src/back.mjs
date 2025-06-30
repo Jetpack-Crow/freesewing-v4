@@ -33,7 +33,7 @@ function draftBack({
   //If using the yoke option, have to redraw a significant chunk of the path
 
   if (options.yoke) {
-    points.armholesplit = paths.backArmhole.shiftFractionAlong(options.yokesplit, 1)
+    points.armholesplit = paths.backArmhole.shiftFractionAlong(options.yokesplit)
     points.centertop = new Point(0, points.armholesplit.y)
 
     delete paths.saBase
