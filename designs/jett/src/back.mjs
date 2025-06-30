@@ -55,11 +55,11 @@ function draftBack({
       .move(points.centertop)
       .line(points.cbHips)
       .join(paths.saBase)
-      .attr('class', 'fabric')
+      .setClass('fabric')
       .unhide()
 
     if (sa) {
-      paths.sa = paths.saBase.offset(sa).attr('class', 'fabric sa').move(points.cbHips)
+      paths.sa = paths.saBase.offset(sa).setClass('fabric sa').move(points.cbHips)
       paths.sa.line(paths.sa.start())
     }
 
@@ -206,7 +206,7 @@ function draftBack({
       .move(points.cbNeck)
       .line(points.cbHips)
       .join(paths.saBase)
-      .attr('class', 'fabric')
+      .setClass('fabric')
   }
 
   macro('rmtitle')

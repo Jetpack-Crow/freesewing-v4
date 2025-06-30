@@ -39,7 +39,7 @@ function draftJettCollarRibbing({
   paths.seam = paths.saBase.unhide().close()
 
   if (sa) {
-    paths.sa = paths.saBase.offset(sa).attr('class', 'fabric sa')
+    paths.sa = paths.saBase.offset(sa).setClass('fabric sa')
     paths.sa.line(paths.sa.start())
   }
 
@@ -76,7 +76,7 @@ function draftJettCollarRibbing({
 }
 
 export const collar_ribbing = {
-  name: 'Jett.collar_ribbing',
+  name: 'jett.collar_ribbing',
   measurements: ['neck'],
   options: {
     collarEase: { pct: 2, min: -10, max: 50, menu: 'fit' },

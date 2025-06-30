@@ -69,7 +69,7 @@ function draftJettPocketWelt({
 }
 
 export const pocket_welt = {
-  name: 'Jett.pocket_welt',
+  name: 'jett.pocket_welt',
   after: front,
   options: {},
   draft: draftJettPocketWelt,

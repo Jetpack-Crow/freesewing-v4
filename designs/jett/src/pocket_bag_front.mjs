@@ -153,7 +153,7 @@ function draft_pocket_bag_front({
 }
 
 export const pocket_bag_front = {
-  name: 'Jett.pocket_bag_front',
+  name: 'jett.pocket_bag_front',
   after: front,
 
   options: {

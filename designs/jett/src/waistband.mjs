@@ -33,7 +33,7 @@ function draftJettWaistband({ points, measurements, options, macro, store, part 
 }
 
 export const waistband = {
-  name: 'Jett.waistband',
+  name: 'jett.waistband',
   after: front,
   cuff,
   options: {

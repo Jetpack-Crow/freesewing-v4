@@ -28,6 +28,9 @@ function draftJettWaistbandEnds({
   points.bottomRight = new Point(width, rh)
   points.bottomLeft = new Point(0, rh)
 
+  points.centerLeft = new Point(0, rh / 2)
+  points.centerRight = new Point(width, rh / 2)
+
   paths.seam = new Path()
     .move(points.topLeft)
     .line(points.topRight)
@@ -40,6 +43,8 @@ function draftJettWaistbandEnds({
     paths.sa = paths.seam.offset(sa).attr('class', 'fabric sa')
     paths.sa.line(paths.sa.start())
   }
+
+  paths.foldMark = new Path().move(points.centerLeft).line(points.centerRight).setClass('fabric sa')
 
   store.cutlist.setCut({ cut: 2, from: 'fabric' })
   points.title = points.topLeft.shiftFractionTowards(points.bottomRight, 0.5)
@@ -66,14 +71,14 @@ function draftJettWaistbandEnds({
 
   let placketWidth = store.get('placketWidth')
 
-  points.buttonPoint = new Point(placketWidth, (rh * 3) / 4)
+  points.buttonPoint = new Point(placketWidth / 2, (rh * 3) / 4)
   snippets['bottom_button'] = new Snippet('button', points.buttonPoint)
 
   return part
 }
 
 export const waistband_ends = {
-  name: 'Jett.waistband_ends',
+  name: 'jett.waistband_ends',
 
   after: front,
   options: {
