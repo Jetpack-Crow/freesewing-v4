@@ -97,13 +97,20 @@ function draftfront({
 
   paths.sideSeam = new Path().move(points.armhole).line(points.hem).hide()
   let sideseamlength = paths.sideSeam.length()
-  points.waist = points.waist.shift(0, 100)
-  paths.waist = new Path().move(points.cfWaist).line(points.waist).hide()
 
-  points.waist = paths.waist.intersects(paths.sideSeam)[0]
-  paths.waist = new Path().move(points.cfWaist).line(points.waist).hide()
+  let waistOriginal = 0
+  if (points.waist.y < points.hem.y) {
+    points.waist = points.waist.shift(0, measurements.hips * 0.2)
+    paths.waist = new Path().move(points.cfWaist).line(points.waist) //.hide()
 
-  let waistOriginal = points.waist.x
+    points.waist = paths.waist.intersects(paths.sideSeam)[0]
+    paths.waist = new Path().move(points.cfWaist).line(points.waist).setClass('lining').hide()
+  } else {
+    points.waist = points.hem
+    //points.waist.y = points.waist.y * 0.95
+    paths.waist = new Path().move(points.cfHem).line(points.hem).setClass('lining').hide()
+  }
+  waistOriginal = points.waist.x
   log.info('pre-adjustment waist X: ' + waistOriginal)
   log.info('pre-adjustment side seam: ' + sideseamlength)
 
@@ -304,7 +311,22 @@ function draftfront({
     log.info('Full belly adjustment is enabled')
 
     let waistTarget = (measurements.waist * (1 + options.waistEase) - 2 * waistOriginal) / 2
-    let waistY = measurements.hpsToWaistBack
+
+    /*
+    points.waistTargetBottom = new Point(waistTarget, points.hem.y*1.2)
+    points.waistTargetTop = new Point(waistTarget, points.armhole.y)
+    paths.waistTarget = new Path()
+      .move(points.waistTargetBottom)
+      .line(points.waistTargetTop)
+      .setClass('lining')
+    paths.originalSeamOutline = new Path() 
+      .move(points.cfHem)
+      .line(points.hem)
+      .line(points.armhole)
+      .setClass('lining')
+    */
+
+    let waistY = points.waist.y
 
     if (points.sideSeamIntercept) points.rotatePoint = points.sideSeamIntercept
     else points.rotatePoint = points.armhole
@@ -325,6 +347,7 @@ function draftfront({
     points.bellyEdge = points.cfHem.shiftFractionTowards(points.hem, options.bellyAdjustmentX)
 
     while (waistTarget > points.waistIntersect.x && totalAngle < 30) {
+      log.info('Rotation loop ' + totalAngle)
       points.hem = points.hem.rotate(1, points.rotatePoint)
       points.bellyEdge = points.bellyEdge.rotate(1, points.rotatePoint)
 
@@ -485,6 +508,7 @@ function draftfront({
   macro('rmVd', 'hHemToNeckOpeningBottom')
 
   //make new macros
+
   macro('hd', {
     id: 'wHem',
     from: points.cfHem,
@@ -545,6 +569,29 @@ function draftfront({
     to: points.armhole,
     x: points.armhole.x + sa + 15,
   })
+
+  if (options.bustDart == 'None') {
+    macro('ld', {
+      id: 'sideSeam',
+      from: points.armhole,
+      to: points.hem,
+      d: -10,
+    })
+  } else {
+    macro('ld', {
+      id: 'sideSeamTop',
+      from: points.armhole,
+      to: points.sideSeamIntercept,
+      d: -10,
+    })
+    macro('ld', {
+      id: 'sideSeamBottom',
+      from: points.sideSeamIntercept,
+      to: points.hem,
+      d: -10,
+    })
+  }
+
   macro('vd', {
     id: 'hChestToArmHollow',
     from: points.armhole,

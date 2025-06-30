@@ -55,10 +55,10 @@
       "t": "Ribbing",
       "d": "Whether to generate a waistband and cuffs made of stretchy ribbing"
     },
-    "ribbing.Yes": {
+    "ribbingYes": {
       "t": "Yes"
     },
-    "ribbing.No": {
+    "ribbingNo": {
       "t": "No"
     },
     "ribbingEndsPercentage": {
@@ -90,10 +90,10 @@
       "t": "Yoke",
       "d": "Whether to draft the back panel with a yoke across the shoulders. The yoke does no extra shaping right now, so this doesn't affect the fit."
     },
-    "yoke.Yes": {
+    "yokeYes": {
       "t": "Yes"
     },
-    "yoke.No": {
+    "yokeNo": {
       "t": "No"
     },
     "placketwidth": {
@@ -103,6 +103,12 @@
     "useBellyAdjustment": {
       "t": "Use full belly adjustment",
       "d": "This widens the front piece to account for a waist wider than the hip measurement. To use this, make sure to take the waist measurement at the fullest part of your belly"
+    },
+    "useBellyAdjustmentYes": {
+      "t": "Yes"
+    },
+    "useBellyAdjustmentNo": {
+      "t": "No"
     },
     "bustDart.Original": {
       "t": "Original",

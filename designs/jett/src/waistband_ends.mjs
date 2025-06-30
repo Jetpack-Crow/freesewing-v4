@@ -82,7 +82,7 @@ export const waistband_ends = {
 
   after: front,
   options: {
-    ribbingEndsPercentage: { pct: 5, min: 0, max: 20, menu: 'construction' },
+    ribbingEndsPercentage: { pct: 5, min: 0, max: 20, menu: 'style' },
   },
   draft: draftJettWaistbandEnds,
 }
