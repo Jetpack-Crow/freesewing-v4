@@ -40,7 +40,7 @@ function draftJettWaistbandEnds({
     .reverse()
 
   if (sa) {
-    paths.sa = paths.seam.offset(sa).attr('class', 'fabric sa')
+    paths.sa = paths.seam.offset(sa).setClass('fabric sa')
     paths.sa.line(paths.sa.start())
   }
 

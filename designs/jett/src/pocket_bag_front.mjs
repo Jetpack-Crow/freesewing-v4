@@ -75,7 +75,7 @@ function draft_pocket_bag_front({
 
   //This isn't working. fix later
   if (sa) {
-    paths.sa = paths.saBase.offset(sa).attr('class', 'fabric sa')
+    paths.sa = paths.saBase.offset(sa).setClass('fabric sa')
     paths.sa.line(paths.sa.start())
   }
 
@@ -85,14 +85,14 @@ function draft_pocket_bag_front({
     .line(points.pocketBottomOuter)
     .line(points.pocketBottomInner)
     .close()
-    .attr('class', 'sa')
+    .setClass('sa')
 
   points.placketMarkTop = points.bagTopLeft.shift(0, placketoffset * 2)
   points.placketMarkBottom = points.bagBottomLeft.shift(0, placketoffset * 2)
   paths.placketMark = new Path()
     .move(points.placketMarkTop)
     .line(points.placketMarkBottom)
-    .attr('class', 'sa')
+    .setClass('sa')
 
   store.cutlist.addCut({ cut: 2, from: 'fabric', identical: false })
   store.cutlist.addCut({ cut: 2, from: 'lining', identical: false })

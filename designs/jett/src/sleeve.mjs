@@ -33,9 +33,9 @@ function draftsleeve({
       .line(points.bicepsRight)
       .join(paths.sleevecap)
       .close()
-      .attr('class', 'fabric')
+      .setClass('fabric')
 
-    if (sa) paths.sa = paths.seam.offset(sa).attr('class', 'fabric sa')
+    if (sa) paths.sa = paths.seam.offset(sa).setClass('fabric sa')
   }
 
   //remove broken paperless macros

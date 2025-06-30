@@ -48,7 +48,7 @@ function draftYoke({
     .move(points.cbNeck)
     .line(points.centerbottom)
     .join(paths.saBase)
-    .attr('class', 'fabric')
+    .setClass('fabric')
 
   if (sa) {
     paths.sa = new Path()
@@ -56,7 +56,7 @@ function draftYoke({
       .line(points.armholesplit)
       .join(paths.saBase)
       .offset(sa)
-      .attr('class', 'fabric sa')
+      .setClass('fabric sa')
 
     paths.sa.line(paths.sa.start())
   }

@@ -204,7 +204,7 @@ function draftfront({
     paths.FBA_cut_A = new Path()
       .move(points.bustpoint)
       .line(points.FBA_cut_A_end)
-      .attr('class', 'sa')
+      .setClass('sa')
       .hide()
 
     if (paths.sideSeam.intersects(paths.FBA_cut_A).length == 0) {
@@ -219,7 +219,7 @@ function draftfront({
     paths.FBA_cut_B = new Path()
       .move(points.bustpoint)
       .line(points.FBA_cut_B_end)
-      .attr('class', 'sa')
+      .setClass('sa')
       .hide()
     points.bottomHemIntercept = paths.FBA_cut_B.intersectsY(points.hem.y)[0]
 
@@ -232,7 +232,7 @@ function draftfront({
     paths.FBA_cut_C = new Path()
       .move(points.bustpoint)
       .line(points.FBA_cut_C_end)
-      .attr('class', 'sa')
+      .setClass('sa')
       .hide()
 
     points.armholeIntercept = paths.FBA_cut_C.intersects(paths.seam)[0]
@@ -360,21 +360,21 @@ function draftfront({
   paths.innerPlacketLine = new Path()
     .move(points.innerPlacketTop)
     .line(points.innerPlacketBottom)
-    .attr('class', 'sa')
+    .setClass('sa')
 
   paths.centerPlacketLine = new Path()
     .move(points.centerPlacketTop)
     .line(points.centerPlacketBottom)
-    .attr('class', 'sa')
+    .setClass('sa')
     .setClass('lining')
   //.hide()
   paths.edgePlacketLine = new Path()
     .move(points.outerPlacketTop)
     .line(points.outerPlacketBottom)
-    .attr('class', 'sa')
+    .setClass('sa')
 
   //Draw the buttons
-  paths.centerLine = new Path().move(points.cfNeck).line(points.cfHem).attr('class', 'sa').hide()
+  paths.centerLine = new Path().move(points.cfNeck).line(points.cfHem).setClass('sa').hide()
   let j = options.closureCount
   j--
   let closurePoints = []
@@ -418,7 +418,7 @@ function draftfront({
 
   //Seam allowance
   if (sa) {
-    paths.sa = paths.saBase.offset(sa).attr('class', 'fabric sa')
+    paths.sa = paths.saBase.offset(sa).setClass('fabric sa')
     paths.sa.line(paths.sa.start())
   }
 
@@ -461,7 +461,7 @@ function draftfront({
       .line(points.pocketBottomOuter)
       .line(points.pocketBottomInner)
       .close()
-      .attr('class', 'sa')
+      .setClass('sa')
 
     log.info('Pocket angle is ' + pocketangle)
   }
