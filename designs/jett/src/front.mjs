@@ -331,7 +331,13 @@ function draftfront({
     if (points.sideSeamIntercept) points.rotatePoint = points.sideSeamIntercept
     else points.rotatePoint = points.armhole
 
-    points.waistIntersect = paths.sideSeam.intersectsY(waistY)[0]
+    let sideseamangle2 = points.rotatePoint.angle(points.hem)
+    points.sideSeamExtension = points.hem.shift(sideseamangle2, points.hem.y * 0.1)
+    snippets['extension_button'] = new Snippet('button', points.sideSeamExtension)
+
+    paths.sideTarget = new Path().move(points.rotatePoint).line(points.sideSeamExtension)
+
+    points.waistIntersect = paths.sideTarget.intersectsY(waistY)[0]
 
     log.info(
       'Waist front target is ' +
@@ -342,18 +348,18 @@ function draftfront({
     )
 
     let totalAngle = 0
-    paths.sideTarget = new Path().move(points.hem).line(points.rotatePoint).hide()
 
     points.bellyEdge = points.cfHem.shiftFractionTowards(points.hem, options.bellyAdjustmentX)
 
     while (waistTarget > points.waistIntersect.x && totalAngle < 30) {
       log.info('Rotation loop ' + totalAngle)
       points.hem = points.hem.rotate(1, points.rotatePoint)
+      points.sideSeamExtension = points.sideSeamExtension.rotate(1, points.rotatePoint)
       points.bellyEdge = points.bellyEdge.rotate(1, points.rotatePoint)
 
       totalAngle++
 
-      paths.sideTarget = new Path().move(points.hem).line(points.rotatePoint).hide()
+      paths.sideTarget = new Path().move(points.rotatePoint).line(points.sideSeamExtension).hide()
 
       points.waistIntersect = paths.sideTarget.intersectsY(waistY)[0]
     }
