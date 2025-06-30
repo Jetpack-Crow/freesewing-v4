@@ -1,7 +1,22 @@
 import React, { useState, useMemo, useCallback, forwardRef, useContext } from 'react'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import { Pattern } from '@freesewing/react/components/Pattern'
-import { ZoomInIcon, ZoomOutIcon, RotateIcon } from '@freesewing/react/components/Icon'
+import {
+  ZoomInIcon,
+  ZoomOutIcon,
+  RotateIcon,
+  ResetIcon,
+  ResetAllIcon,
+  ReloadIcon,
+  UpIcon,
+  CoverPageIcon,
+  PageSizeIcon,
+  ExpandIcon,
+  SpinnerIcon,
+  UiIcon,
+  XrayIcon,
+  PatternIcon,
+} from '@freesewing/react/components/Icon'
 
 /*
  * A pattern you can pan and zoom
@@ -12,14 +27,16 @@ export const ZoomablePattern = forwardRef(function ZoomablePatternRef(props, ref
 
   return (
     <div className="tw:relative">
-      <div className="tw:absolute tw:top-0 tw:right-0 tw:z-20">
+      <div className="tw:absolute tw:top-0 tw:right-0 tw:z-1">
         <div className="tw:flex tw:flex-row tw:gap-1 tw:items-center">
-          <button
-            onClick={() => props.update.ui('rotate', rotate ? 0 : 1)}
-            className="tw:hover:text-secondary"
-          >
-            <RotateIcon className={`tw:h-6 tw:w-6 ${rotate ? 'tw:text-success' : ''}`} />
-          </button>
+          {props.update ? (
+            <button
+              onClick={() => props.update.ui('rotate', rotate ? 0 : 1)}
+              className="tw:hover:text-secondary"
+            >
+              <RotateIcon className={`tw:h-6 tw:w-6 ${rotate ? 'tw:text-success' : ''}`} />
+            </button>
+          ) : null}
           <button
             onClick={() => (zoomFunctions.zoomIn ? zoomFunctions.zoomIn() : null)}
             className="tw:hover:text-secondary"
@@ -31,6 +48,12 @@ export const ZoomablePattern = forwardRef(function ZoomablePatternRef(props, ref
             className="tw:hover:text-secondary"
           >
             <ZoomOutIcon />
+          </button>
+          <button
+            onClick={() => (zoomFunctions.resetTransform ? zoomFunctions.resetTransform() : null)}
+            className="tw:hover:text-secondary"
+          >
+            <PatternIcon />
           </button>
         </div>
       </div>

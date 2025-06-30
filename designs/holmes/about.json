@@ -16,6 +16,7 @@
     "curved-seam",
     "lining"
   ],
-  "version": "4.0.0",
-  "pkg": "@freesewing/holmes"
+  "version": "4.1.0",
+  "pkg": "@freesewing/holmes",
+  "collection": true
 }

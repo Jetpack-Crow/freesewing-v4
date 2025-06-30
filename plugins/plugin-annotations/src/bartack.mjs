@@ -156,6 +156,7 @@ const bartackAlong = (config, props) =>
   createBartack(
     {
       ...config,
+      id: 'bartackalong',
       bartackFractionAlong: false,
       bartackAlong: true,
       anchor: false,
@@ -172,6 +173,7 @@ const bartackFractionAlong = (config, props) =>
   createBartack(
     {
       ...config,
+      id: 'bartackfractionalong',
       bartackFractionAlong: true,
       bartackAlong: false,
       anchor: false,

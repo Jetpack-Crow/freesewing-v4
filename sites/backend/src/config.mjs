@@ -13,7 +13,7 @@ dotenv.config()
 /*
  * Make this easy to update
  */
-const languages = ['en', 'de', 'es', 'fr', 'nl', 'uk']
+const languages = ['en']
 
 /*
  * Allow these 2 to be imported

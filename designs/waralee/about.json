@@ -14,6 +14,7 @@
     "hem",
     "welt-pocket"
   ],
-  "version": "4.0.0",
-  "pkg": "@freesewing/waralee"
+  "version": "4.1.0",
+  "pkg": "@freesewing/waralee",
+  "collection": true
 }

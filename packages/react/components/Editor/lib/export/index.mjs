@@ -9,7 +9,7 @@ import he from 'he'
 import yaml from 'js-yaml'
 
 export const exportTypes = {
-  exportForPrinting: ['a4', 'a3', 'a2', 'a1', 'a0', 'letter', 'legal', 'tabloid'],
+  exportForPrinting: ['a4', 'a3', 'a2', 'a1', 'a0', 'letter', 'legal', 'tabloid', 'arch d', 'arch e'],
   exportForEditing: ['svg', 'pdf'],
   exportAsData: ['json', 'yaml'],
 }

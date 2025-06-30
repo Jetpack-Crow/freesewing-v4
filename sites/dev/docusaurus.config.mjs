@@ -15,6 +15,37 @@ const config = {
    * We need to make sure we can import from .mjs files
    */
   plugins: [
+    // Use LightningCSS for CSS minification as it handles Tailwind v4 better
+    () => ({
+      name: 'lightningcss-minimizer',
+      configureWebpack(config, isServer, { isDev }) {
+        if (!isDev && !isServer) {
+          const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
+
+          // Replace the default CSS minimizer with LightningCSS
+          if (config.optimization?.minimizer) {
+            config.optimization.minimizer = config.optimization.minimizer.map((plugin) => {
+              if (plugin.constructor.name.includes('CssMinimizerPlugin')) {
+                return new CssMinimizerPlugin({
+                  minify: CssMinimizerPlugin.lightningCssMinify,
+                  minimizerOptions: {
+                    // LightningCSS targets for modern browser support
+                    targets: {
+                      chrome: 120,
+                      firefox: 115,
+                      safari: 16,
+                      edge: 120,
+                    },
+                  },
+                })
+              }
+              return plugin
+            })
+          }
+        }
+        return {}
+      },
+    }),
     () => ({
       name: 'mjs-loader',
       configureWebpack() {
@@ -93,7 +124,7 @@ const config = {
         docs: {
           routeBasePath: '/',
           sidebarPath: './sidebars.js',
-          editUrl: 'https://codeberg.com/freesewing/freesewing/tree/develop/sites/dev/',
+          editUrl: 'https://codeberg.org/freesewing/freesewing/src/branch/develop/sites/dev/',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -118,7 +149,8 @@ const config = {
       title: 'FreeSewing.dev',
       logo: {
         alt: 'FreeSewing Logo',
-        src: 'img/logo-white.svg',
+        src: 'img/logo.svg',
+        srcDark: 'img/logo-white.svg',
       },
       items: [
         { to: '/guides', label: 'Guides', position: 'left' },
@@ -126,8 +158,8 @@ const config = {
         { to: '/reference', label: 'Reference', position: 'left' },
         { to: '/tutorials', label: 'Tutorials', position: 'left' },
         {
-          href: 'https://freesewing.org/',
-          label: 'FreeSewing.org',
+          to: 'https://freesewing.eu/',
+          label: 'FreeSewing.eu',
           position: 'right',
         },
       ],
@@ -184,6 +216,18 @@ const config = {
     prism: {
       theme: prismThemes.dracula,
       darkTheme: prismThemes.dracula,
+      magicComments: [
+        {
+          className: 'fs-code-block-highlight-line',
+          line: 'highlight-next-line',
+          block: { start: 'highlight-start', end: 'highlight-end' },
+        },
+        {
+          className: 'fs-code-block-strikeout-line',
+          line: 'strikeout-next-line',
+          block: { start: 'strikeout-start', end: 'strikeout-end' },
+        },
+      ],
     },
   },
 }

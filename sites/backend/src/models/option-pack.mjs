@@ -178,6 +178,7 @@ OptionPackModel.prototype.guardedUpdate = async function ({ params, body, user }
    * Attempt to read database record
    */
   await this.read({ id: parseInt(params.id) })
+  if (!this.record) return this.setResponse(404, 'notFound')
 
   /*
    * Prepare data for updating the record

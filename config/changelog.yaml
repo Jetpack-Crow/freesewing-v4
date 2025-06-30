@@ -1,4 +1,45 @@
 Unreleased:
+  Added:
+
+4.1.0:
+  date: 2025-06-29
+
+  Added:
+    core:
+      - Added the snappedPctOption named export for wrapping snapped percentage options
+    sabrina:
+      - Initial release of the Sabrina design
+    react:
+      - Added ARCH D and ARCH E paper sizes to export
+      - Added ability to unfreeze an account in the in Admin component
+
+  Fixed:
+    octoplushy:
+      - Use full translation keys (#454)
+    org:
+      - Fixed lack of modal context provider for blog/showcase/newsletter pages
+    react:
+      - Fix Pattern Layout counter-clockwise button (#453)
+      - Fixed issue with custom pattern layout not getting applied (#241)
+      - Fixed crash in pattern layout view (#340)
+      - Show snapped value for snapped percentage options with toAbs() set
+
+4.0.3:
+  date: 2025-06-09
+
+  Added:
+    studio:
+      - Include signup / signin pages in studio
+
+4.0.2:
+  date: 2025-06-09
+
+  Fixed:
+    studio:
+      - Add @freesewing/plugin-svgattr as a dependency to the studio
+
+4.0.1:
+  date: 2025-06-09
 
   Added:
     bee:
@@ -6,6 +47,23 @@ Unreleased:
       - Added the `duoBandTieColours` option
       - Added the `pointedNeckTieEnds` option
       - Added the `pointedBandTieEnds` option
+    cathrin:
+      - Added waistline markings
+    dev:
+      - Added documentation for the @freesewing/react package
+      - Jargon and terminology handling in MDX (#446)
+    gozer:
+      - Added expand handling
+    hugo:
+      - Add Collar Ease option to allow neck opening size adjustments
+    plugin-path-utils:
+      - Added the new @freesewing/plugins-path-utils plugin
+    org:
+      - Added documentation for the new Editor
+      - Jargon and terminology handling in MDX (#446)
+    react:
+      - Add inline help to the Editor
+      - Added new useFilter hook
 
   Fixed:
     backend:
@@ -13,13 +71,27 @@ Unreleased:
     bee:
       - Neck ties no longer shown to be cut on fold
       - Band tie locks in duo colours when `options.crossBackTies` is true (fixes incorrect notch placements)
+    bonny:
+      - Corrected path names
+    core:
+      - Fix stack anchoring (#258)
     dev:
       - Ensure `path._curve` is included in docs
+      - Various website fixes
+      - Various style/themeing fixes
+      - Fixes to setup tutorial
+      - Revert incorrect formatting for some examples
+      - Use a dedicated logo image for dark mode
+    magde:
+      - Corrected path names
+
     plugin-annotations:
-      - Fixed incorrect anchor point of the logo due to share pathstring (#202)
-    react:
-      - Fixed issues with the pattern export feature in the Editor (#218)
-      - Added Jane to the Linedrawing component (#211)
+      - Fixed incorrect anchor point of the logo due to shared pathstring (#202)
+    opal:
+      - Corrected path names
+      - Corrected part name translation
+    otis:
+      - Corrected path names
     org:
       - Update pattern button leads to 404
       - New measurement set leads to 404 when users have no sets yet
@@ -30,7 +102,54 @@ Unreleased:
       - Fixed various links
       - Fixed the _update pattern_ links
       - Fixed the newsletter unsubscribe handling
-
+      - Remove broken link to Simon sew-along (#214)
+      - Various website fixes
+      - Restore the public view for measurements sets
+      - Include string from plugin-i18n package in the Legend MDX components (#262)
+      - Various style/themeing fixes
+      - Fixed simon cuffs cutting instructions
+      - Remove submenus from account sets and patterns pages (#354)
+      - Use a dedicated logo image for dark mode
+      - Allow public sets and profiles to be viewed without login
+      - Correct public profiles web page title
+    react:
+      - Fixed issues with the pattern export feature in the Editor (#218)
+      - Added Jane to the Linedrawing component (#211)
+      - Do not apply null layout in the editor (#219)
+      - Fixed Editor to force the measurements view when measurements are missing
+      - Seam allowance slider (#210)
+      - Fix issues with pattern export (#218)
+      - When sampling options, also test different settings for sa, paperless, and complete (#225)
+      - Do not rely on initial settings in the Editor
+      - Fixed issue with translations (#244)
+      - Fix weird slider behaviour when entering the default value ()#246)
+      - Fix the inspect view popup when clicking on a path or point, fix missing translations in the xray path and point components (#256)
+      - Fix pattern reset button (#258)
+      - Fix deselecting included parts (#259)
+      - Fix sampleMeasurement button
+      - Fix button state for boolean core options (#229)
+      - Respect user account units in the editor
+      - Fixes to the Editor header
+      - Always add bounding box in tiler plugin (#273)
+      - Escape user-provided text in SVG (#260)
+      - Pattern layout print settings UI fixes (#351)
+      - Allow bookmark title to be edited
+      - Fix Collection background image URL
+      - Ignore pointer events on tooltip text of Xray point component
+      - Add URL formats to Bookmarked Set picker
+      - Improve resilience of Editor sample menu when translations are missing
+      - Change the expand icon to have the arrows point inwards if expand is disabled
+      - Gracefully fail the Editor when a part translation is not available
+    shin:
+      - Fix rise option in the front part
+    simone:
+      - Hide buttonFreeLength option when bustAlignedButtons is even
+    studio:
+      - Remove submenus from account sets and patterns pages (#355)
+      - Use a dedicated logo image for dark mode
+    wahid:
+      - Added waist, hips, and pocket calculations (#352)
+      - Add interfacing to front cut list (#262)
 
   Changed:
     bee:
@@ -45,9 +164,35 @@ Unreleased:
       - The `reversible` optinon now acts as an override for the `duoNeckTieColours` and `duoBandTieColours` options
       - Updated `neckTieLength` when `crossBackTies` is `true`
       - Designer note links updated for new options
+    core:
+      - Override the reduce function in the BezierJS dependency with FreeSewing's own version
+    dev:
+      - Upgrade to TailwindCSS 4 and DaisyUI 5
+      - Improved point.flipY() example
+      - Add pluginPathUtils to Example component
+      - Update to docusaurus 3.8.1
+    org:
+      - Improved error handling when pattern drafting fails (#205)
+      - Use replaceState in hash (#216)
+      - Update links to point to codeberg instead of github
+      - Upgrade to TailwindCSS 4 and DaisyUI 5
+      - Removed OIDC signup / signin
+      - Update to docusaurus 3.8.1
+    react:
+      - Changed maximum value for margin between parts to 3 cm
+      - Improvements to the Editor inspect view
+      - PDF cover pages improvements in Editor
+      - Change imperial step to 1/16 inch
+      - Replace the flag number with a colored badge
+      - Migrated from helpProvider to Help components in the Editor
+    studio:
+      - Update to docusaurus 3.8.1
+
+
+
 
 4.0.0:
-  date: 2024-04-01
+  date: 2025-04-01
 
   Breaking:
     core:

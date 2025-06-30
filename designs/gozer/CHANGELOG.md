@@ -1,6 +1,12 @@
 # Change log for: @freesewing/gozer
 
 
+## 4.0.1 (2025-06-09)
+
+### Added
+
+ - Added expand handling
+
 ## 3.0.0 (2023-09-30)
 
 ### Changed

@@ -13,6 +13,7 @@
     "curved-seam",
     "dart"
   ],
-  "version": "4.0.0",
-  "pkg": "@freesewing/hi"
+  "version": "4.1.0",
+  "pkg": "@freesewing/hi",
+  "collection": true
 }

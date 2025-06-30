@@ -55,7 +55,7 @@ export const Username = ({ welcome = false, Link = false }) => {
   const nextHref =
     welcomeSteps[account.control].length > 5
       ? '/welcome/' + welcomeSteps[account.control][5]
-      : '/docs/about/guide'
+      : '/docs/about/'
 
   return (
     <div className="tw:w-full">

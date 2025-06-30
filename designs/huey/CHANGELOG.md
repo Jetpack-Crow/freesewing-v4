@@ -1,7 +1,7 @@
 # Change log for: @freesewing/huey
 
 
-## 4.0.0 (2024-04-01)
+## 4.0.0 (2025-04-01)
 
 ### Changed
 

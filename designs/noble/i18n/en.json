@@ -95,7 +95,7 @@
     },
     "backHemSlope": {
       "t": "Back hem slope",
-      "d": "Constrols the slope of the back hem"
+      "d": "Controls the slope of the back hem"
     },
     "frontShoulderWidth": {
       "t": "Front shoulder width",

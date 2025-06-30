@@ -29,7 +29,8 @@ export const asJson = JSON.stringify
  */
 export const i18nUrl = (lang = 'en', path) => {
   let url = `${website.scheme}://${website.domain}`
-  if (lang !== 'en') url += `/${lang}`
+  // We only support English now
+  // if (lang !== 'en') url += `/${lang}`
 
   return url + path
 }

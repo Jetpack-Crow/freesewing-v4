@@ -197,8 +197,4 @@ async function generateDesignsDocs() {
   }
 }
 
-function prebuild() {
-  generateDesignsDocs()
-}
-
-prebuild()
+generateDesignsDocs()

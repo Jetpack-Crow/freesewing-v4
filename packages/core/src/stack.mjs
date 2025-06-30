@@ -58,7 +58,7 @@ Stack.prototype.home = function () {
   for (const part of this.getPartList()) {
     part.__boundary()
 
-    let partAnchor = part.points.anchor
+    let partAnchor = part.points?.anchor
 
     let bounds = part
 

@@ -13,11 +13,9 @@ import {
 import yaml from 'js-yaml'
 import chalk from 'chalk'
 import mustache from 'mustache'
-import conf from '../lerna.json' assert { type: 'json' }
+import conf from '../lerna.json' with { type: 'json' }
 const { version } = conf
 import { getSoftware } from './software.mjs'
-//import { software, publishedTypes as types, plugins } from '../config/software/index.mjs'
-import { collection } from '@freesewing/collection'
 import { capitalize } from '../packages/utils/src/index.mjs'
 
 /*
@@ -59,7 +57,6 @@ const repo = {
     ? null
     : JSON.parse(fs.readFileSync(path.join(root, '.all-contributorsrc'), 'utf-8')),
   software: await getSoftware(),
-  hiddenDesigns: ['examples', 'legend', 'plugintest', 'rendertest', 'magde'],
 }
 
 /*
@@ -176,35 +173,32 @@ if (!SITEBUILD) {
 }
 
 // Step 6: Generate collection package and hook dynamic files
-const designList = Object.keys(repo.software.designs).filter(
-  (name) => !repo.hiddenDesigns.includes(name)
-)
-
-const designImports = designList
+const collection = Object.keys(repo.software.collection)
+const designImports = collection
   .map((name) => `import { ${capitalize(name)} as ${name} } from '@freesewing/${name}'`)
   .join('\n')
 await writeFile(
   ['packages', 'collection', 'src', 'index.mjs'],
   mustache.render(repo.templates.collection.pkg, {
     designImports,
-    designList: designList.join(',\n  '),
+    collection: collection.join(',\n  '),
   })
 )
-const designI18n = designList
+const collectionI18n = collection
   .map((name) => `import { i18n as ${name} } from '@freesewing/${name}'`)
   .join('\n')
 await writeFile(
   ['packages', 'collection', 'src', 'i18n.mjs'],
   mustache.render(repo.templates.collection.i18n, {
-    designI18n,
-    designList: designList.join(',\n  '),
+    collectionI18n,
+    collection: collection.join(',\n  '),
   })
 )
 await writeFile(
   ['packages', 'react', 'hooks', 'useDesign', 'index.mjs'],
   mustache.render(repo.templates.collection.hook, {
     designImports,
-    designList: designList.join(',\n  '),
+    collection: collection.join(',\n  '),
   })
 )
 

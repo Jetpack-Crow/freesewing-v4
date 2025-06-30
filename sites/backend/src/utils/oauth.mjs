@@ -96,7 +96,7 @@ oauth.google.getToken = async (code) => {
     console.log(err)
   }
 
-  return result.data.access_token
+  return result?.data?.access_token ? result.data.access_token : false
 }
 
 oauth.google.loadUser = async (token) => {

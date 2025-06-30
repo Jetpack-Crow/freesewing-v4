@@ -42,7 +42,7 @@ export const PatternLayout = (props) => {
 
 const PatternAsideMenu = (props) => {
   if (!props.state.ui?.aside) return null
-  if (props.state.view === 'draft')
+  if (props.state.view === 'draft' || props.state.view === 'inspect')
     return (
       <PatternAsideWrapper>
         <h5 className="tw:capitalize">{props.pattern.designConfig.data.id} Options</h5>
@@ -95,7 +95,7 @@ const PatternAsideWrapper = ({ children }) => (
 
 export const SideMenuUl = ({ children }) => (
   <ul
-    className="tw:daisy-menu tw:daisy-dropdown-content tw:flex-nowrap tw:bg-base-200 tw:rounded-box tw:z-1 tw:w-full tw:p-0 tw:pl-0"
+    className="tw:daisy-menu tw:daisy-dropdown-content tw:flex-nowrap tw:bg-base-200 tw:rounded-box tw:z-50 tw:w-full tw:p-0 tw:pl-0"
     style={{ padding: 0 }}
   >
     {children}

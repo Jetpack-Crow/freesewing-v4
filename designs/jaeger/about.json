@@ -20,6 +20,7 @@
     "interfacing",
     "button"
   ],
-  "version": "4.0.0",
-  "pkg": "@freesewing/jaeger"
+  "version": "4.1.0",
+  "pkg": "@freesewing/jaeger",
+  "collection": true
 }

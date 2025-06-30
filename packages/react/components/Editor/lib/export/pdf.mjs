@@ -12,6 +12,13 @@ export const mmToPoints = 2.834645669291339
  * A PDFKit PDF instance
  */
 export const Pdf = ({ size, layout }) => {
+  const customSizes = {
+    // For paper sizes not predefined in PDFKit, we need to provide
+    // the dimensions, not the size name.
+    'ARCH D': [1728, 2592],
+    'ARCH E': [2592, 3456],
+  }
+  if (customSizes[size]) size = customSizes[size]
   const pdf = new PDFDocument({
     size,
     layout,

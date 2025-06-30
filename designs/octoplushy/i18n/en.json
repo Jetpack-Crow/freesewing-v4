@@ -13,7 +13,7 @@
   "s": {
     "eye": "Eye",
     "mouth": "Mouth",
-    "stichLine": "Stitch line",
+    "stitchLine": "Stitch line",
     "foldLine": "Fold lines",
     "octopusEye.t": "The octopus eye is not shown",
     "octopusEye.d": "The **Octopus eye** is a circular piece of fabric with a diameter of {{{ width }}}.",

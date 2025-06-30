@@ -85,7 +85,7 @@ export const SaveView = ({ config, state, update }) => {
   }
 
   return (
-    <RoleBlock user>
+    <RoleBlock role="user">
       <HeaderMenu state={state} {...{ config, update }} />
       <div className="tw:m-auto tw:mt-8 tw:max-w-2xl tw:px-4">
         {saveAs && saveAs.pattern ? (

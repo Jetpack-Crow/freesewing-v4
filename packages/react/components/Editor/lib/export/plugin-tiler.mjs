@@ -9,6 +9,8 @@ export const sizes = {
   letter: [215.9, 279.4],
   legal: [215.9, 355.6],
   tabloid: [279.4, 431.8],
+  'arch d': [609.6, 914.4],
+  'arch e': [914.4, 1219.2],
 }
 
 /** get a letter to represent an index less than 26*/

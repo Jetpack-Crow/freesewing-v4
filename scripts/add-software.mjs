@@ -222,6 +222,7 @@ async function createDesign(name, template) {
     techniques: [],
     version,
     pkg: `@freesewing/${name}`,
+    collection: true,
   })
 }
 

@@ -54,7 +54,7 @@ export const Newsletter = ({ welcome = false, Link = false }) => {
   const nextHref =
     welcomeSteps[account?.control].length > 2
       ? '/welcome/' + welcomeSteps[account?.control][2]
-      : '/docs/about/guide'
+      : '/docs/about/'
 
   return (
     <div className="tw:w-full">

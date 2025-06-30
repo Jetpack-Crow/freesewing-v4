@@ -5,7 +5,6 @@ title: hem
 The `hem` macro drafts a hem allowance with fold lines.
 
 :::note
-
 ##### Not a core-plugins macro
 
 The `hem` macro is not provided by the [core plugins](/reference/plugins/core),
@@ -34,7 +33,7 @@ Path macro('hem', {
 <Example caption="An example of the hem macro">
 
 ```js
-;({ Point, points, Path, paths, macro, part }) => {
+({ Point, points, Path, paths, macro, part }) => {
   paths.inseam = new Path().move(new Point(150, 0)).line(new Point(200, 200)).hide()
 
   paths.outseam = new Path()
@@ -104,7 +103,7 @@ The hem path already includes the seam allowance, so it doesn't need any additio
 <Example caption="Embedding the hem macro in the seam allowance path">
 
 ```js
-;({ Point, points, Path, paths, macro, part }) => {
+({ Point, points, Path, paths, macro, part }) => {
   paths.inseam = new Path().move(new Point(150, 0)).line(new Point(200, 200)).hide()
 
   paths.outseam = new Path()

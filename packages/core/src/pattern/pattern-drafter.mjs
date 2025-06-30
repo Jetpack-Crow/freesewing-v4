@@ -1,6 +1,6 @@
 import { PatternDraftQueue } from './pattern-draft-queue.mjs'
 import { Part } from '../part.mjs'
-import { __macroName, mergeOptions } from '../utils.mjs'
+import { __macroName, getSnappedPercentageValue, mergeOptions } from '../utils.mjs'
 
 /**
  * A class to handle drafting a pattern
@@ -218,32 +218,8 @@ PatternDrafter.prototype.__snappedPercentageOption = function (optionName, set) 
     this.pattern.settings[set],
     mergeOptions(this.pattern.settings[set], this.pattern.config.options)
   )
-  // Handle units-specific config - Side-step immutability for the snap conf
-  let snapConf = conf.snap
-  if (!Array.isArray(snapConf) && snapConf.metric && snapConf.imperial)
-    snapConf = snapConf[this.pattern.settings[set].units]
-  // Simple steps
-  if (typeof snapConf === 'number') return Math.round(abs / snapConf) * snapConf
-  // List of snaps
-  if (Array.isArray(snapConf) && snapConf.length > 1) {
-    for (const snap of snapConf
-      .sort((a, b) => a - b)
-      .map((snap, i) => {
-        const margin =
-          i < snapConf.length - 1
-            ? (snapConf[Number(i) + 1] - snap) / 2 // Look forward
-            : (snap - snapConf[i - 1]) / 2 // Final snap, look backward
 
-        return {
-          min: snap - margin,
-          max: snap + Number(margin),
-          snap,
-        }
-      }))
-      if (abs <= snap.max && abs >= snap.min) return snap.snap
-  }
-
-  return abs
+  return getSnappedPercentageValue(abs, conf, this.pattern.settings[set].units)
 }
 
 /**

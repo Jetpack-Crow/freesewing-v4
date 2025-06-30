@@ -16,6 +16,7 @@
     "flat-felled-seam",
     "flat-sleeve"
   ],
-  "version": "4.0.0",
-  "pkg": "@freesewing/simon"
+  "version": "4.1.0",
+  "pkg": "@freesewing/simon",
+  "collection": true
 }

@@ -22,7 +22,8 @@
     "newdb": "node ./scripts/newdb.mjs",
     "prettier": "npx prettier --write 'src/*.mjs' 'tests/*.mjs'",
     "rmdb": "node ./scripts/rmdb.mjs",
-    "test": "npx mocha --require mocha-steps tests/index.mjs",
+    "test": "node --no-warnings --test-concurrency=1 --test",
+    "ctest": "c8 --reporter=html --reports-dir=coverage node --no-warnings --test-concurrency=1 --test tests/all.mjs",
     "vbuild": "VERBOSE=1 node build.mjs",
     "wbuild": "node build.mjs"
   },
@@ -49,6 +50,7 @@
     "swagger-ui-express": "5.0.0"
   },
   "devDependencies": {
+    "c8": "^10.1.3",
     "chai": "5.1.1",
     "chai-http": "5.1.1",
     "esbuild": "0.21.3",
@@ -58,7 +60,7 @@
     "prisma": "5.15.0"
   },
   "engines": {
-    "node": ">= 18.17.0"
+    "node": ">= 20.0.0"
   },
   "private": true
 }

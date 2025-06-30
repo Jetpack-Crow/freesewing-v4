@@ -1,6 +1,12 @@
 # Change log for: @freesewing/plugin-annotations
 
 
+## 4.0.1 (2025-06-09)
+
+### Fixed
+
+ - Fixed incorrect anchor point of the logo due to shared pathstring (#202)
+
 ## 3.2.0 (2024-02-11)
 
 ### Added

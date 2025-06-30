@@ -55,8 +55,8 @@ import { ModalWrapper } from '@freesewing/react/components/Modal'
 import { Json } from '@freesewing/react/components/Json'
 import { Yaml } from '@freesewing/react/components/Yaml'
 import { Popout } from '@freesewing/react/components/Popout'
-import { bundlePatternTranslations, draft, flattenFlags } from '../Editor/lib/index.mjs'
-import { Bonny } from '@freesewing/bonny'
+import { draft, flattenFlags } from '../Editor/lib/index.mjs'
+import { Bonny, i18n as bonnyi18n } from '@freesewing/bonny'
 import { MiniNote, MiniTip } from '../Mini/index.mjs'
 
 /**
@@ -785,7 +785,12 @@ const RenderedCset = ({ mset, imperial }) => {
         </ul>
       </>
     )
-  const strings = bundlePatternTranslations('bonny')
+
+  // build i18n manually
+  const strings = {}
+  for (const [k, value] of Object.entries(bonnyi18n.en.s)) {
+    strings[`bonny:${k}`] = value
+  }
 
   const { pattern } = draft(Bonny, { measurements: mset.measies })
   const flags = pattern.setStores?.[0]?.plugins?.['plugin-annotations']?.flags
@@ -795,7 +800,8 @@ const RenderedCset = ({ mset, imperial }) => {
       <h4 className="tw:flex tw:flex-row tw:items-center tw:gap-2">Measurement analysis</h4>
       <p>
         Based on your measurements, we estimate your body to be about{' '}
-        <strong>{formatMm(pattern.parts[0].front.points.head.y * -1, imperial)}</strong> high.
+        <strong>{formatMm(pattern.parts[0]['bonny.front'].points.head.y * -1, imperial)}</strong>{' '}
+        high.
       </p>
       <p>Here is what the automated analysis found:</p>
       {Object.entries(flattenFlags(flags)).map(([key, flag]) => {
@@ -831,7 +837,7 @@ const RenderedCset = ({ mset, imperial }) => {
             It’s meant to help you spot possible mistakes and better understand how the software
             sees your measurements, but keep in mind:
           </p>
-          <ul>
+          <ul className="tw:list tw:list-inside tw:list-disc tw:ml-2">
             <li>
               The preview is a simple line drawing, but it does include features like chest shape
               and crotch placement. If that feels uncomfortable, you may prefer to skip using this

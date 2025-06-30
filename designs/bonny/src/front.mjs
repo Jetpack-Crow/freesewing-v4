@@ -607,7 +607,7 @@ function draftFront({ measurements, Point, Path, points, paths, macro, utils, st
 }
 
 export const front = {
-  name: 'front',
+  name: 'bonny.front',
   from: side,
   options: {},
   measurements: [

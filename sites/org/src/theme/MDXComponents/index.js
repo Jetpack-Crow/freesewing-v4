@@ -20,6 +20,7 @@ import { Example } from './example.mjs'
 import { Legend } from './legend.mjs'
 import { MeasurementImage } from './measurement-image.mjs'
 import { YouTube } from './youtube.mjs'
+import { Term } from './term.js'
 // Prose fixes
 import { prose } from './prose.mjs'
 
@@ -50,6 +51,7 @@ const MDXComponents = {
   Legend,
   MeasurementImage,
   YouTube,
+  em: Term,
   // Prose fixes
   ...prose,
 }

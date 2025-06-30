@@ -7,7 +7,21 @@ export function esmPlugin() {
           rules: [
             {
               test: /\.mjs$/,
+              include: /node_modules\/@freesewing/,
+              use: {
+                loader: 'babel-loader',
+                options: {
+                  presets: [
+                    ['@babel/preset-react', { runtime: 'automatic' }],
+                    ['@babel/preset-env', { modules: false }],
+                  ],
+                },
+              },
+            },
+            {
+              test: /\.mjs$/,
               include: /node_modules/,
+              exclude: /node_modules\/@freesewing/,
               type: 'javascript/auto',
             },
             {
@@ -16,7 +30,10 @@ export function esmPlugin() {
               use: {
                 loader: 'babel-loader',
                 options: {
-                  presets: ['@babel/preset-react'],
+                  presets: [
+                    ['@babel/preset-react', { runtime: 'automatic' }],
+                    ['@babel/preset-env', { modules: false }],
+                  ],
                 },
               },
             },

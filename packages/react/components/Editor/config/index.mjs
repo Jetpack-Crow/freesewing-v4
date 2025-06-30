@@ -112,7 +112,7 @@ export const defaultConfig = {
     ui: {
       renderer: 'react',
       kiosk: 0,
-      aside: 1,
+      aside: 0,
       ux: 4,
     },
   },

@@ -2,7 +2,7 @@ import { panels } from './panels.mjs'
 import { draftPanel1ab } from './panel1ab.mjs'
 
 function draftCathrinPanel1(params) {
-  const { macro, sa, store, paths, points, options, part } = params
+  const { macro, sa, store, paths, points, options, Point, Path, complete, part } = params
 
   points.anchor = points.topCF.clone()
 
@@ -85,6 +85,16 @@ function draftCathrinPanel1(params) {
     from: points.waistCF,
     to: points.waistGap1Left,
   })
+
+  // Waist line
+  if (complete) {
+    points.waistGap0Left = new Point(points.topCF.x, points.waistCF.y)
+    paths.panel1Waist = new Path()
+      .move(points.waistGap1Left)
+      .line(points.waistGap0Left)
+      .attr('class', 'dashed mark stroke-sm')
+      .addText('cathrin:waistLine', 'text-xs mark')
+  }
 
   return part
 }

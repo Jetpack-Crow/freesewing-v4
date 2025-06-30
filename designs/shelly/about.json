@@ -15,6 +15,7 @@
     "curved-seam",
     "raglan-sleeve"
   ],
-  "version": "4.0.0",
-  "pkg": "@freesewing/shelly"
+  "version": "4.1.0",
+  "pkg": "@freesewing/shelly",
+  "collection": true
 }

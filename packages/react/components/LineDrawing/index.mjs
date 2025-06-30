@@ -30,6 +30,7 @@ import { Lumina, LuminaFront, LuminaBack } from './lumina.mjs'
 import { Lumira, LumiraFront, LumiraBack } from './lumira.mjs'
 import { Lunetius, LunetiusFront } from './lunetius.mjs'
 import { Noble, NobleFront, NobleBack } from './noble.mjs'
+import { Sabrina, SabrinaFront, SabrinaBack } from './sabrina.mjs'
 import { Simon, SimonFront, SimonBack } from './simon.mjs'
 import { Teagan, TeaganFront, TeaganBack } from './teagan.mjs'
 import { Tristan, TristanFront, TristanBack } from './tristan.mjs'
@@ -78,6 +79,7 @@ export const lineDrawingsFront = {
   lunetius: LunetiusFront,
   noble: NobleFront,
 
+  sabrina: SabrinaFront,
   simon: SimonFront,
 
   teagan: TeaganFront,
@@ -117,6 +119,7 @@ export const lineDrawingsBack = {
   lumina: LuminaBack,
   lumira: LumiraBack,
   noble: NobleBack,
+  sabrina: SabrinaBack,
   simon: SimonBack,
   teagan: TeaganBack,
   tristan: TristanBack,
@@ -164,6 +167,7 @@ export const lineDrawings = {
   lumira: Lumira,
   lunetius: Lunetius,
   noble: Noble,
+  sabrina: Sabrina,
   simon: Simon,
   teagan: Teagan,
   tristan: Tristan,

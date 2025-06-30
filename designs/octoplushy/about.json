@@ -13,6 +13,7 @@
     "curved-seam",
     "precision"
   ],
-  "version": "4.0.0",
-  "pkg": "@freesewing/octoplushy"
+  "version": "4.1.0",
+  "pkg": "@freesewing/octoplushy",
+  "collection": true
 }

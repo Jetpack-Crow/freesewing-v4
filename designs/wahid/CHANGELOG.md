@@ -1,7 +1,14 @@
 # Change log for: @freesewing/wahid
 
 
-## 4.0.0 (2024-04-01)
+## 4.0.1 (2025-06-09)
+
+### Fixed
+
+ - Added waist, hips, and pocket calculations (#352)
+ - Add interfacing to front cut list (#262)
+
+## 4.0.0 (2025-04-01)
 
 ### Changed
 

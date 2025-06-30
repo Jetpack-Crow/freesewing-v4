@@ -30,7 +30,7 @@ export const TextSpans = ({ point, strings }) => {
         </tspan>
       )
     }
-  } else text.push(<tspan key="tspan">{translated}</tspan>)
+  } else text.push(<tspan key="tspan">{translated.replace(/&quot;/g, '"')}</tspan>)
 
   return text
 }

@@ -64,7 +64,7 @@ export const Password = ({ Link = false }) => {
             Authentication to keep your FreeSewing account safe.
           </p>
           <p className="tw:text-right tw:m-0 tw:pt-0">
-            <Link className="tw:daisy-btn tw:daisy-btn-accent" href="/account/mfa">
+            <Link className="tw:daisy-btn tw:daisy-btn-accent" href="/account/security/mfa">
               Two-Factor Authentication <RightIcon className="tw:h-6 tw:w-6 tw:ml-2" />
             </Link>
           </p>

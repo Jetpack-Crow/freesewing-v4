@@ -15,6 +15,7 @@
   "techniques": [
     "curved-seam"
   ],
-  "version": "4.0.0",
-  "pkg": "@freesewing/florent"
+  "version": "4.1.0",
+  "pkg": "@freesewing/florent",
+  "collection": true
 }

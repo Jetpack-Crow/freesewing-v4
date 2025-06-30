@@ -248,12 +248,12 @@ function octoplushyArmSection(
         .move(points.skirtArmLeft)
         .line(points.armTopLeft)
         .addClass('hint dotted')
-        .addText('stitchLine', 'center')
+        .addText('octoplushy:stitchLine', 'center')
       paths.armRightLine = new Path()
         .move(points.armTopRight)
         .line(points.skirtArmRight)
         .addClass('hint dotted')
-        .addText('stitchLine', 'center')
+        .addText('octoplushy:stitchLine', 'center')
     }
   }
 

@@ -11,6 +11,7 @@
   "techniques": [
     "hem"
   ],
-  "version": "4.0.0",
-  "pkg": "@freesewing/gozer"
+  "version": "4.1.0",
+  "pkg": "@freesewing/gozer",
+  "collection": true
 }

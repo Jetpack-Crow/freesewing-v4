@@ -2,9 +2,11 @@ import { expect, use } from 'chai'
 import { Svg } from '../src/svg.mjs'
 import { Design, Attributes } from '../src/index.mjs'
 import { Defs } from '../src/defs.mjs'
-import { version } from '../data.mjs'
+import about from '../about.json' with { type: 'json' }
 import render from './fixtures/render.mjs'
 import { binpackPlugin } from '../../../plugins/plugin-bin-pack/src/index.mjs'
+
+const { version } = about
 
 /*
  * Quick helper assertion for equalIgnoreSpaces
@@ -176,8 +178,12 @@ describe('Svg', () => {
   })
 
   it('Should render Svg text on path, center aligned', () => {
-    const pattern = getPattern({}, ({ paths, Path, part }) => {
+    const pattern = getPattern({}, ({ points, Point, paths, Path, part }) => {
+      points.a = new Point(0, 0)
+      points.b = new Point(1000, 20)
       paths.test = new Path()
+        .move(points.a)
+        .line(points.b)
         .attr('data-text', 'This is another test')
         .attr('data-text-class', 'center')
         .attr('class', 'freesewing')
@@ -190,8 +196,12 @@ describe('Svg', () => {
   })
 
   it('Should render Svg text on path, right aligned', () => {
-    const pattern = getPattern({}, ({ paths, Path, part }) => {
+    const pattern = getPattern({}, ({ points, Point, paths, Path, part }) => {
+      points.a = new Point(0, 0)
+      points.b = new Point(1000, 0)
       paths.test = new Path()
+        .move(points.a)
+        .line(points.b)
         .attr('data-text', 'This is another test')
         .attr('data-text-class', 'right')
         .attr('class', 'freesewing')

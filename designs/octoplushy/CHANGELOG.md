@@ -1,6 +1,12 @@
 # Change log for: @freesewing/octoplushy
 
 
+## 4.1.0 (2025-06-29)
+
+### Fixed
+
+ - Use full translation keys (#454)
+
 ## 3.1.0 (2023-12-26)
 
 ### Changed

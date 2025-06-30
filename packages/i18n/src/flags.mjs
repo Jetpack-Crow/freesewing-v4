@@ -23,4 +23,6 @@ export const flags = {
   saUnused: '(This part does not require any seam allowance)',
   partHiddenByExpand:
     'This part is not shown because the **expand** core setting is currently disabled. Enable it to show this pattern part.',
+  partPartiallyShownByExpand:
+    'This part is only partially shown because the **expand** core setting is currently disabled. Enable it to fully show this pattern part.',
 }

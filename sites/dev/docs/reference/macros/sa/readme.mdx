@@ -11,7 +11,6 @@ will automatically trim useless path ends when adjacent paths
 in the array are intersecting.
 
 :::note
-
 ##### Not a core-plugins macro
 
 The `sa` macro is not provided by the [core plugins](/reference/plugins/core),
@@ -35,7 +34,7 @@ macro('sa', {
 <Example caption="An example of the sa macro">
 
 ```js
-;({ Point, points, Path, paths, macro, part }) => {
+({ Point, points, Path, paths, macro, part }) => {
   paths.outline = new Path()
     .move(new Point(10, 30))
     .line(new Point(30, 30))
@@ -72,7 +71,7 @@ macro('sa', {
 | Property | Default          | Type     | Description                                                                                                                                                                                                                                                 |
 | -------: | ---------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 |  `paths` |                  | `array`  | An array of paths. You can use path names in the `paths` array or reference `Path` objects directly, or insert `null` elements to create gaps. You can also override offset and visibility for individual paths in the same way as with the `offset` macro. |
-|   `mode` | `'corner'`       | `string` | Mode for joining paths. Either `'corner'` or `'cut'`. `'cut'` will join the paths directly (like `Path.join()`) without extending the corners.                                                                                                              |
+|   `mode` | `'corner'`       | `string` | Mode for joining paths. Either `'corner'` or `'cut'`. `'cut'` will join the paths directly (like `Path.join()`) without extending the corners.                                                                                                           |
 |  `limit` | `null`           | `number` | Allows limiting the length of extended path corners in `'corner'` mode. Prevents overly long joins on very sharp angles. Ignored if `null` or `false`.                                                                                                      |
 |     `sa` | (seam allowance) | `number` | Allows you to override the seam allowance used for this macro. Defaults to the standard seam allowance (`sa` parameter in draft function).                                                                                                                  |
 |  `class` | `'sa'`           | `string` | CSS class that is automatically applied to the resulting path.                                                                                                                                                                                              |

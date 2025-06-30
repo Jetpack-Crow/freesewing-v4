@@ -13,7 +13,7 @@
   "scripts": {
     "add": "node --experimental-json-modules --no-warnings scripts/add-software.mjs",
     "new": "node --experimental-json-modules --no-warnings scripts/add-software.mjs",
-    "build": "lerna run build:all",
+    "build": "lerna run build",
     "?": "node scripts/help.mjs",
     "tips": "node scripts/help.mjs",
     "org": "cd sites/org && npm run start",

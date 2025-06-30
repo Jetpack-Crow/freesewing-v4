@@ -13,6 +13,7 @@
     "bottoms"
   ],
   "techniques": [],
-  "version": "4.0.0",
-  "pkg": "@freesewing/titan"
+  "version": "4.1.0",
+  "pkg": "@freesewing/titan",
+  "collection": true
 }

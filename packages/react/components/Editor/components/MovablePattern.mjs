@@ -480,7 +480,7 @@ export const Buttons = ({ transform, flip, rotate, resetPart, rotate90, iconSize
         <Button
           onClickCb={() => rotate90(-1)}
           transform={`translate(${rectSize * 1.7}, ${rectSize / -2})`}
-          Icon={() => <InnerRotateIcon transform="scale(-1,1), translate(-24,0)" />}
+          Icon={() => <InnerRotateIcon props={{ transform: 'scale(-1,1), translate(-24,0)' }} />}
           title="Rotate part counter-clockwise"
         />
       </g>

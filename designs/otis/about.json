@@ -7,6 +7,7 @@
   "difficulty": 2,
   "tags": [],
   "techniques": [],
-  "version": "4.0.0",
-  "pkg": "@freesewing/otis"
+  "version": "4.1.0",
+  "pkg": "@freesewing/otis",
+  "collection": true
 }

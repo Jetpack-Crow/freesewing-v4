@@ -16,6 +16,7 @@
     "welt-pocket",
     "hem"
   ],
-  "version": "4.0.0",
-  "pkg": "@freesewing/paco"
+  "version": "4.1.0",
+  "pkg": "@freesewing/paco",
+  "collection": true
 }

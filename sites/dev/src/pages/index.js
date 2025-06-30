@@ -3,15 +3,13 @@ import Layout from '@theme/Layout'
 import Studio from './_studio.md'
 import SetupMonorepo from './_setup-monorepo.md'
 import MDXContent from '@theme/MDXContent'
+import { FreeSewingIcon } from '@freesewing/react/components/Icon'
 
 const styles = {
   top: {
     margin: 'auto',
     textAlign: 'center',
     paddingTop: '2rem',
-  },
-  logo: {
-    maxWidth: '140px',
   },
   cards: {
     display: 'flex',
@@ -65,7 +63,7 @@ export default function Home() {
     >
       <MDXContent>
         <div style={styles.top}>
-          <img style={styles.logo} src="/img/logo.svg" />
+          <FreeSewingIcon className="tw:w-48 tw:h-48 tw:mx-auto tw:pr-3" />
           <h1>FreeSewing</h1>
           <h2>An open source Javascript library for parametric sewing patterns</h2>
         </div>
