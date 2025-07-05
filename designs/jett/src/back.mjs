@@ -215,7 +215,7 @@ function draftBack({
   store.cutlist.addCut({ cut: 1, from: 'fabric', onFold: true })
   store.cutlist.addCut({ cut: 1, from: 'lining', onFold: true })
 
-  //points.title = points.outerPlacketTop.shiftFractionTowards(points.hem, 0.5)
+  points.title = points.centertop.shiftFractionTowards(points.hem, 0.5)
   macro('title', { at: points.title, nr: 2, title: 'back' })
 
   return part

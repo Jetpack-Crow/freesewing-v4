@@ -69,8 +69,8 @@ function draftJettCollarRibbing({
 
   store.cutlist.setCut({ cut: 1, from: 'ribbing', onFold: 'true' })
 
-  points.title = points.centerTop.shiftFractionTowards(points.outerCenter, 0.3)
-  macro('title', { at: points.title, nr: 5, title: 'collar_ribbing' })
+  points.title = points.centerTop.shiftFractionTowards(points.halfBottom, 0.5)
+  macro('title', { at: points.title, nr: 5, title: 'collar_ribbing', scale: 0.6 })
 
   return part
 }

@@ -21,8 +21,8 @@ function draftJettPocketWelt({
   }
   log.info('Pocket length is ' + store.get('pocketLength'))
 
-  let length = store.get('pocketLength')
-  let width = store.get('pocketWidth') * 2
+  const width = store.get('pocketLength')
+  const length = store.get('pocketWidth') * 2
 
   points.topLeft = new Point(0, 0)
   points.topRight = new Point(width, 0)
@@ -46,9 +46,10 @@ function draftJettPocketWelt({
   points.title = points.topLeft.shiftFractionTowards(points.bottomRight, 0.5)
 
   macro('title', {
-    at: points.bottomLeft,
+    at: points.title,
     nr: 10,
     title: 'pocket_welt',
+    scale: 0.3,
   })
 
   macro('hd', {

@@ -693,8 +693,8 @@ export const front = {
     frontWeltPockets: { bool: true, menu: 'style.pocket' },
     pocketBottomX: { pct: 70, min: 40, max: 95, menu: 'style.pocket' },
     pocketTopX: { pct: 60, min: 40, max: 95, menu: 'style.pocket' },
-    pocketBottomY: { pct: 7, min: 0, max: 50, menu: 'style.pocket' },
-    pocketTopY: { pct: 30, min: 0, max: 50, menu: 'style.pocket' },
+    pocketBottomY: { pct: 7, min: 0, max: 20, menu: 'style.pocket' },
+    pocketTopY: { pct: 30, min: 20, max: 50, menu: 'style.pocket' },
 
     pocketWeltWidth: { pct: 7, min: 0, max: 20, menu: 'style.pocket' },
 

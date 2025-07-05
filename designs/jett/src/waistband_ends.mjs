@@ -48,11 +48,13 @@ function draftJettWaistbandEnds({
 
   store.cutlist.setCut({ cut: 2, from: 'fabric' })
   points.title = points.topLeft.shiftFractionTowards(points.bottomRight, 0.5)
+  points.title = points.title.shift(180, width / 4)
 
   macro('title', {
     at: points.title,
     nr: 8,
     title: 'waistband_ends',
+    scale: 0.6,
   })
 
   macro('hd', {
