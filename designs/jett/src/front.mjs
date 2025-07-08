@@ -503,6 +503,7 @@ function draftfront({
   store.cutlist.addCut({ cut: 2, from: 'lining', identical: false })
 
   points.title = points.outerPlacketTop.shiftFractionTowards(points.hem, 0.5)
+  points.title.y = points.title.shiftFractionTowards(points.hem, 0.5).y
   macro('title', { at: points.title, nr: 1, title: 'front' })
 
   //Remove unneeded paperless macros
@@ -514,6 +515,8 @@ function draftfront({
   macro('rmVd', 'hHemToNeckOpeningBottom')
 
   //make new macros
+
+  const widestX = points.armhole.x > points.hem.x ? points.armhole.x : points.hem.x
 
   macro('hd', {
     id: 'wHem',
@@ -546,6 +549,12 @@ function draftfront({
     y: points.cfNeck.y + 15,
   })
   macro('hd', {
+    id: 'wGreenOffset',
+    from: points.centerPlacketTop,
+    to: points.innerPlacketTop,
+    y: points.cfNeck.y + 15,
+  })
+  macro('hd', {
     id: 'wGreenBottom',
     from: points.outerPlacketTop,
     to: points.centerPlacketTop,
@@ -561,19 +570,13 @@ function draftfront({
     id: 'hTotal',
     from: points.cfHem,
     to: points.s3CollarSplit,
-    x: points.armhole.x + sa + 30,
+    x: widestX + sa + 30,
   })
   macro('vd', {
     id: 'hHemToWaist',
     from: points.hem,
-    to: points.waist,
-    x: points.armhole.x + sa + 15,
-  })
-  macro('vd', {
-    id: 'hWaistToChest',
-    from: points.waist,
     to: points.armhole,
-    x: points.armhole.x + sa + 15,
+    x: widestX + sa + 15,
   })
 
   if (options.bustDart == 'None') {
@@ -596,6 +599,29 @@ function draftfront({
       to: points.hem,
       d: -10,
     })
+    macro('vd', {
+      id: 'bustDartHeight',
+      from: points.hem,
+      to: points.sideSeamIntercept,
+      x: points.sideSeamIntercept.x - 30,
+    })
+    macro('hd', {
+      id: 'bustDartWidth',
+      from: points.cfHem,
+      to: points.sideSeamIntercept,
+      y: points.sideSeamIntercept.y,
+    })
+    macro('hd', {
+      id: 'bustPointWidth',
+      from: points.cfHem,
+      to: points.dartPoint,
+      y: points.dartPoint.y,
+    })
+    macro('ld', {
+      id: 'bustDartEdges',
+      from: points.dartTopEdge,
+      to: points.dartBottomEdge,
+    })
   }
 
   macro('vd', {
@@ -614,7 +640,7 @@ function draftfront({
     id: 'hShoulderSlope',
     from: points.s3ArmholeSplit,
     to: points.s3CollarSplit,
-    x: points.armhole.x + sa + 15,
+    x: points.s3ArmholeSplit.x + sa + 15,
   })
 
   if (options.frontWeltPockets) {

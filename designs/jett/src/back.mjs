@@ -134,6 +134,8 @@ function draftBack({
       to: points.centertop,
       x: points.cbHips.x - 30,
     })
+
+    points.title = points.centertop.shiftFractionTowards(points.hem, 0.5)
   } else {
     macro('vd', {
       id: 'hTotal',
@@ -190,8 +192,17 @@ function draftBack({
       y: points.backArmholePitch.y,
     })
 
-    //just copying the same code from brian. i'm not sure why just returning it
-    //without the other changes doesn't work
+    macro('cutonfold', {
+      from: points.cbNeck,
+      to: points.cbHem,
+      grainline: true,
+    })
+    delete paths.waist
+
+    points.title = points.cbNeck.shiftFractionTowards(points.hem, 0.5)
+
+    //Redrawing the seam to reflect the shifted hem points
+
     paths.saBase = new Path()
       .move(points.cbHem)
       .line(points.hem)
@@ -210,12 +221,12 @@ function draftBack({
   }
 
   macro('rmtitle')
+
   store.cutlist.addCut({ cut: false })
   store.cutlist.addCut({ cut: false, from: 'lining' })
   store.cutlist.addCut({ cut: 1, from: 'fabric', onFold: true })
   store.cutlist.addCut({ cut: 1, from: 'lining', onFold: true })
 
-  points.title = points.centertop.shiftFractionTowards(points.hem, 0.5)
   macro('title', { at: points.title, nr: 2, title: 'back' })
 
   return part
