@@ -678,6 +678,17 @@ function draftfront({
       to: points.pocketTop,
       y: points.pocketTop.y,
     })
+
+    macro('pd', {
+      id: 'lArmhole',
+      path: new Path()
+        .move(points.armhole)
+        .curve(points.armholeCp2, points.armholeHollowCp1, points.armholeHollow)
+        .curve(points.armholeHollowCp2, points.armholePitchCp1, points.armholePitch)
+        .reverse(),
+      //.join(paths[`${side}Armhole`]),
+      d: sa + 15,
+    })
   }
 
   return part
