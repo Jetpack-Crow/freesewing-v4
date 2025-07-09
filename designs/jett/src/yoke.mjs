@@ -133,7 +133,7 @@ function draftYoke({
 
   points.title = points.cbShoulder.shiftFractionTowards(points.armholesplit, 0.5)
   points.title = points.title.shift(180, points.s3ArmholeSplit.x / 4)
-  macro('title', { at: points.title, nr: 4, title: 'yoke' })
+  macro('title', { at: points.title, nr: 4, title: 'yoke', scale: 0.7 })
 
   return part
 }

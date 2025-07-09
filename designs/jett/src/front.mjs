@@ -335,7 +335,7 @@ function draftfront({
     points.sideSeamExtension = points.hem.shift(sideseamangle2, points.hem.y * 0.1)
     snippets['extension_button'] = new Snippet('button', points.sideSeamExtension)
 
-    paths.sideTarget = new Path().move(points.rotatePoint).line(points.sideSeamExtension)
+    paths.sideTarget = new Path().move(points.rotatePoint).line(points.sideSeamExtension).hide()
 
     points.waistIntersect = paths.sideTarget.intersectsY(waistY)[0]
 
@@ -579,7 +579,7 @@ function draftfront({
     x: widestX + sa + 15,
   })
 
-  if (options.bustDart == 'None') {
+  if (options.bustDart == 'None' || options.draftForHighBust == false) {
     macro('ld', {
       id: 'sideSeam',
       from: points.armhole,
@@ -605,6 +605,14 @@ function draftfront({
       to: points.sideSeamIntercept,
       x: points.sideSeamIntercept.x - 30,
     })
+
+    macro('vd', {
+      id: 'dartPointHeight',
+      from: points.dartPoint,
+      to: points.armhole,
+      x: points.dartPoint.x,
+    })
+
     macro('hd', {
       id: 'bustDartWidth',
       from: points.cfHem,
@@ -643,6 +651,16 @@ function draftfront({
     x: points.s3ArmholeSplit.x + sa + 15,
   })
 
+  macro('pd', {
+    id: 'lArmhole',
+    path: new Path()
+      .move(points.armhole)
+      .curve(points.armholeCp2, points.armholeHollowCp1, points.armholeHollow)
+      .curve(points.armholeHollowCp2, points.armholePitchCp1, points.armholePitch)
+      .reverse(),
+    d: sa + 15,
+  })
+
   if (options.frontWeltPockets) {
     macro('ld', {
       id: 'pocketLength',
@@ -651,8 +669,8 @@ function draftfront({
     })
     macro('ld', {
       id: 'pocketWidth',
-      to: points.pocketTopOuter,
-      from: points.pocketTopInner,
+      to: points.pocketTopOuter.shiftFractionTowards(points.pocketBottomOuter, 0.5),
+      from: points.pocketTopInner.shiftFractionTowards(points.pocketBottomInner, 0.5),
     })
     macro('vd', {
       id: 'pocketBottomHeight',
@@ -662,7 +680,7 @@ function draftfront({
     })
     macro('hd', {
       id: 'pocketBottomX',
-      from: points.centerPlacketBottom,
+      from: points.cfHem,
       to: points.pocketBottom,
       y: points.pocketBottom.y,
     })
@@ -674,20 +692,9 @@ function draftfront({
     })
     macro('hd', {
       id: 'pocketTopX',
-      from: points.centerPlacketBottom,
+      from: points.cfHem,
       to: points.pocketTop,
       y: points.pocketTop.y,
-    })
-
-    macro('pd', {
-      id: 'lArmhole',
-      path: new Path()
-        .move(points.armhole)
-        .curve(points.armholeCp2, points.armholeHollowCp1, points.armholeHollow)
-        .curve(points.armholeHollowCp2, points.armholePitchCp1, points.armholePitch)
-        .reverse(),
-      //.join(paths[`${side}Armhole`]),
-      d: sa + 15,
     })
   }
 
@@ -710,12 +717,12 @@ export const front = {
   ],
   hide: hidePresets.HIDE_TREE,
   options: {
-    hipsEase: { pct: 8, min: -10, max: 50, menu: 'fit' },
-    chestEase: { pct: 15, min: -10, max: 50, menu: 'fit' },
+    hipsEase: { pct: 8, min: 0, max: 50, menu: 'fit' },
+    chestEase: { pct: 15, min: 0, max: 50, menu: 'fit' },
 
     placketwidth: { pct: 3, min: 0, max: 10, menu: 'style.placket' },
     neckShiftForward: { pct: 0, min: 0, max: 40, menu: 'style' },
-    collarEase: { pct: 2, min: -10, max: 50, menu: 'fit' },
+    collarEase: { pct: 2, min: 0, max: 50, menu: 'fit' },
 
     draftForHighBust: { bool: false, menu: 'fit.bust' },
     bustDart: { dflt: 'None', list: ['None', 'Rotation', 'Original'], menu: 'fit.bust' },
