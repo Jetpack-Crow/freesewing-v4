@@ -37,7 +37,15 @@
     },
     "bustDart": {
       "t": "Bust dart (EXPERIMENTAL)",
-      "d": "Draft the pattern with a full bust adjustment and a bust dart. This only takes effect if Draft for High Bust is true.\nThese aren't guaranteed to preserve the armhole or side seam lengths. Proceed with caution."
+      "d": "Draft the pattern with a full bust adjustment and a bust dart. This only takes effect if Draft for High Bust is true.\nThis option isn't guaranteed to preserve the armhole or side seam lengths. Proceed with caution."
+    },
+    "bustDartNo": {
+      "t": "No",
+      "d": "Don't use a bust dart"
+    },
+    "bustDartYes": {
+      "t": "Yes",
+      "d": "Use a bust dart"
     },
     "bustDartHeight": {
       "t": "Bust dart height",

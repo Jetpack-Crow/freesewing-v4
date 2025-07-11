@@ -115,92 +115,7 @@ function draftfront({
   log.info('pre-adjustment side seam: ' + sideseamlength)
 
   //apply the full bust adjustment
-  if (options.bustDart == 'Original' && options.draftForHighBust) {
-    //Add a note to bustDart that it only works if draftForHighBust is selected
-    points.bustpoint = new Point(measurements.bustSpan / 2, measurements.hpsToBust)
-
-    snippets.bustpoint = new Snippet('notch', points.bustpoint)
-
-    log.info('chest is ' + measurements.bust)
-    log.info('high bust is ' + measurements.highBust)
-    let bustDifferential = measurements.bust - measurements.highBust
-    log.info('Bust differential is ' + bustDifferential)
-
-    if (bustDifferential <= 0) {
-      log.info('Bust error')
-      store.flag.note({
-        msg: 'jett:bustWarning',
-      })
-    }
-
-    log.info('hps to waist front is ' + measurements.hpsToWaistFront)
-    log.info('hps to waist back is ' + measurements.hpsToWaistBack)
-
-    let waistDifferential = measurements.hpsToWaistFront - measurements.hpsToWaistBack
-
-    if (waistDifferential <= 0) {
-      log.info('Waist error')
-      store.flag.info({
-        msg: 'jett:waistWarning',
-      })
-    }
-
-    if (bustDifferential > 0 && waistDifferential > 0) {
-      //Shift outer points by bust differential / 2
-      points.armhole = points.armhole.shift(0, bustDifferential / 2)
-      points.hem = points.hem.shift(0, bustDifferential / 2)
-
-      //shift lower points down by waist differential
-      points.hem = points.hem.shift(-90, waistDifferential)
-      points.outerPlacketBottom = points.outerPlacketBottom.shift(-90, waistDifferential)
-
-      //Define the point on the side seam that the dart should be centered on
-
-      let sideseamangle = points.hem.angle(points.armhole)
-      paths.sideSeam = new Path().move(points.armhole).line(points.hem).hide()
-
-      points.FBA_cut_A_end = points.bustpoint.shift(sideseamangle - 90, measurements.bust / 4)
-
-      paths.FBA_cut_A = new Path().move(points.bustpoint).line(points.FBA_cut_A_end).hide()
-
-      if (paths.sideSeam.intersects(paths.FBA_cut_A).length == 0) {
-        points.sideSeamIntercept = paths.sideSeam.shiftFractionAlong(options.bustDartHeight)
-      } else {
-        points.sideSeamIntercept = paths.sideSeam.intersects(paths.FBA_cut_A)[0]
-      }
-
-      /*if (!points.sideSeamIntercept) {
-          points.sideSeamIntercept = paths.sideSeam.shiftFractionAlong(options.bustDartOffset)
-        }*/
-
-      points.dartTopEdge = points.sideSeamIntercept.shift(sideseamangle, waistDifferential / 2)
-      points.dartBottomEdge = points.sideSeamIntercept.shift(
-        sideseamangle - 180,
-        waistDifferential / 2
-      )
-
-      points.dartPoint = points.bustpoint.shiftFractionTowards(
-        points.sideSeamIntercept,
-        options.bustDartOffset
-      )
-
-      points.armhole = points.armhole.shift(180, bustDifferential / 2)
-
-      paths.bustDart = new Path()
-        .move(points.dartTopEdge)
-        .line(points.dartPoint)
-        .line(points.dartBottomEdge)
-
-      paths.sideSeam = new Path()
-        .move(points.hem)
-        .line(points.dartBottomEdge)
-        .line(points.dartTopEdge)
-        .line(points.armhole)
-        .hide()
-    } else {
-      paths.sideSeam = new Path().move(points.hem).line(points.armhole)
-    }
-  } else if (options.bustDart == 'Rotation' && options.draftForHighBust) {
+  if (options.bustDart && options.draftForHighBust) {
     points.bustpoint = new Point(measurements.bustSpan / 2, measurements.hpsToBust)
     let sideseamangle = points.hem.angle(points.armhole)
     snippets.bustpoint = new Snippet('notch', points.bustpoint)
@@ -303,6 +218,7 @@ function draftfront({
       .line(points.dartPoint)
       .line(points.dartBottomEdge)
   } else {
+    log.info('No bust adjustment')
     paths.sideSeam = new Path().move(points.hem).line(points.armhole).hide()
   }
 
@@ -427,7 +343,7 @@ function draftfront({
     .join(paths.sideSeam)
     .curve(points.armholeCp2, points.armholeHollowCp1, points.armholeHollow)
 
-  if (options.bustDart == 'Rotation' && options.draftForHighBust) {
+  if (options.bustDart && options.draftForHighBust) {
     paths.saBase = paths.saBase.line(points.armholeIntercept)
   } else {
     paths.saBase = paths.saBase.curve(
@@ -579,7 +495,7 @@ function draftfront({
     x: widestX + sa + 15,
   })
 
-  if (options.bustDart == 'None' || options.draftForHighBust == false) {
+  if (!options.bustDart || options.draftForHighBust == false) {
     macro('ld', {
       id: 'sideSeam',
       from: points.armhole,
@@ -725,7 +641,7 @@ export const front = {
     collarEase: { pct: 2, min: 0, max: 50, menu: 'fit' },
 
     draftForHighBust: { bool: false, menu: 'fit.bust' },
-    bustDart: { dflt: 'None', list: ['None', 'Rotation', 'Original'], menu: 'fit.bust' },
+    bustDart: { bool: false, menu: 'fit.bust' },
     bustDartOffset: { pct: 25, min: 5, max: 90, menu: 'fit.bust' },
     bustDartHeight: { pct: 20, min: 5, max: 95, menu: 'fit.bust.advanced' },
     fullBustEase: { pct: 10, min: 0, max: 50, menu: 'fit.bust' },
