@@ -120,13 +120,13 @@ function draftfront({
     let sideseamangle = points.hem.angle(points.armhole)
     snippets.bustpoint = new Snippet('notch', points.bustpoint)
 
-    paths.sideSeam = new Path().move(points.hem).line(points.armhole).reverse()
+    paths.sideSeam = new Path().move(points.armhole).line(points.hem)
 
     points.FBA_cut_A_end = points.bustpoint.shift(sideseamangle - 90, measurements.bust / 4)
     paths.FBA_cut_A = new Path()
       .move(points.bustpoint)
       .line(points.FBA_cut_A_end)
-      .setClass('sa')
+      .setClass('sa lining')
       .hide()
 
     if (paths.sideSeam.intersects(paths.FBA_cut_A).length == 0) {
@@ -136,12 +136,14 @@ function draftfront({
     }
     points.FBA_cut_B_end = points.bustpoint.shift(
       -90,
-      (measurements.hpsToWaistFront + measurements.waistToHips - measurements.hpsToBust) * 1.1
+      (measurements.hpsToWaistFront + measurements.waistToHips - measurements.hpsToBust) *
+        1.1 *
+        (1 + options.lengthBonus)
     )
     paths.FBA_cut_B = new Path()
       .move(points.bustpoint)
       .line(points.FBA_cut_B_end)
-      .setClass('sa')
+      .setClass('sa lining')
       .hide()
     points.bottomHemIntercept = paths.FBA_cut_B.intersectsY(points.hem.y)[0]
 
@@ -154,7 +156,7 @@ function draftfront({
     paths.FBA_cut_C = new Path()
       .move(points.bustpoint)
       .line(points.FBA_cut_C_end)
-      .setClass('sa')
+      .setClass('sa lining')
       .hide()
 
     points.armholeIntercept = paths.FBA_cut_C.intersects(paths.seam)[0]
@@ -188,7 +190,14 @@ function draftfront({
     }
     log.info('Angle moved: ' + anglemoved)
 
+    paths.armCutRotated = new Path()
+      .move(points.armholeIntercept)
+      .line(points.bustPointRotated)
+      .setClass('sa lining')
+      .hide()
+
     points.hem = points.hem.rotate(-anglemoved, points.bustPointRotated)
+    points.sideSeamInterceptOld = points.sideSeamIntercept
     points.sideSeamIntercept = points.sideSeamIntercept.rotate(-anglemoved, points.bustPointRotated)
 
     paths.sideSeam = new Path()
@@ -204,6 +213,18 @@ function draftfront({
       points[p] = new Point(points[p].x, points.hem.y)
     }
 
+    points.dartTopEdge = points.sideSeamInterceptOld
+    points.dartBottomEdge = points.sideSeamIntercept
+    points.dartPoint = points.bustpoint.shiftFractionTowards(
+      points.sideSeamIntercept.shiftFractionTowards(points.sideSeamInterceptOld, 0.5),
+      options.bustDartOffset
+    )
+    paths.bustDart = new Path()
+      .move(points.dartTopEdge)
+      .line(points.dartPoint)
+      .line(points.dartBottomEdge)
+
+    /*
     points.dartTopEdge = points.sideSeamIntercept.shift(sideseamangle, verticaldifferential)
     points.dartBottomEdge = points.sideSeamIntercept.shift(
       sideseamangle - 180,
@@ -217,6 +238,7 @@ function draftfront({
       .move(points.dartTopEdge)
       .line(points.dartPoint)
       .line(points.dartBottomEdge)
+    */
   } else {
     log.info('No bust adjustment')
     paths.sideSeam = new Path().move(points.hem).line(points.armhole).hide()
@@ -295,7 +317,8 @@ function draftfront({
     } else {
       paths.sideSeam = new Path()
         .move(points.hem)
-        .line(points.rotatePoint)
+        .line(points.dartBottomEdge)
+        .line(points.dartTopEdge)
         .line(points.armhole)
         .hide()
     }
@@ -506,7 +529,7 @@ function draftfront({
     macro('ld', {
       id: 'sideSeamTop',
       from: points.armhole,
-      to: points.sideSeamIntercept,
+      to: points.dartTopEdge,
       d: -10,
     })
     macro('ld', {

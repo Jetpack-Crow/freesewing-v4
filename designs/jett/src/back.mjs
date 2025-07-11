@@ -227,6 +227,13 @@ function draftBack({
   store.cutlist.addCut({ cut: 1, from: 'fabric', onFold: true })
   store.cutlist.addCut({ cut: 1, from: 'lining', onFold: true })
 
+  macro('ld', {
+    id: 'sideSeamLength',
+    from: points.armhole,
+    to: points.hem,
+    d: -15 - sa,
+  })
+
   macro('title', { at: points.title, nr: 2, title: 'back' })
 
   return part
