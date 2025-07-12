@@ -47,9 +47,32 @@
       "t": "Yes",
       "d": "Use a bust dart"
     },
+    "fullBustEase": {
+      "t": "Full bust ease",
+      "d": "Allows you to independently control the ease in the bust adjustment without affecting the armscye"
+
+    },
     "bustDartHeight": {
       "t": "Bust dart height",
       "d": "Where to place the bust dart on the side seam. Only used if the code can't automatically find an intersection on the side seam"
+    },
+    "sideCutAngle": {
+      "t": "Side cut angle",
+      "d": "Tweaks the angle of the dart for the full bust adjustment"
+    },
+    "dartLegsTruing": {
+      "t": "Dart legs truing",
+      "d": "This option tweaks the side seam to keep the bust dart legs the same length."
+    },
+    "dartLegsTruingYes": 
+    {
+      "t": "Yes",
+      "d": "Adjust the dart leg lengths"
+    },
+    "dartLegsTruingNo": 
+    {
+      "t": "No",
+      "d": "Don't adjust the dart leg lengths"
     },
     "bustDartPercentage": {
       "t": "FBA adjustment percentage",
@@ -117,14 +140,6 @@
     },
     "useBellyAdjustmentNo": {
       "t": "No"
-    },
-    "bustDart.Original": {
-      "t": "Original",
-      "d": "The first FBA implementation written, shifting points directly instead of simulating the cuts and rotations of a paper adjustment. This causes problems when used with the belly adjustment - use Rotation if you need both adjustments."
-    },
-    "bustDart.Rotation": {
-      "t": "Rotation-based",
-      "d": "Rotation-based FBA implementation. This one actually cuts apart and pivots the pattern like it's making the adjustment on paper. More reliable results, but double-check the armhole carefully."
     },
     "bustDart.None": {
       "t": "None",

@@ -17,8 +17,6 @@ function draftBack({
   store,
   log,
 }) {
-  log.info('text: ' + store.get('Test'))
-
   // Shorten body to take ribbing into account
   if (options.ribbing) {
     //Just redefining ribbing height again until I figure out how to make it work with the store

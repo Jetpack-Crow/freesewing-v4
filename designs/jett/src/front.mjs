@@ -122,7 +122,10 @@ function draftfront({
 
     paths.sideSeam = new Path().move(points.armhole).line(points.hem)
 
-    points.FBA_cut_A_end = points.bustpoint.shift(sideseamangle - 90, measurements.bust / 4)
+    points.FBA_cut_A_end = points.bustpoint.shift(
+      sideseamangle - 90 * options.sideCutAngle,
+      measurements.bust / 4
+    )
     paths.FBA_cut_A = new Path()
       .move(points.bustpoint)
       .line(points.FBA_cut_A_end)
@@ -200,13 +203,6 @@ function draftfront({
     points.sideSeamInterceptOld = points.sideSeamIntercept
     points.sideSeamIntercept = points.sideSeamIntercept.rotate(-anglemoved, points.bustPointRotated)
 
-    paths.sideSeam = new Path()
-      .move(points.hem)
-      .line(points.sideSeamIntercept)
-      .line(points.armhole)
-      .hide()
-
-    let verticaldifferential = points.hem.y - points.cfHem.y
     let hemlower = ['outerPlacketBottom', 'centerPlacketBottom', 'cfHem', 'innerPlacketBottom']
 
     for (let p of hemlower) {
@@ -219,26 +215,41 @@ function draftfront({
       points.sideSeamIntercept.shiftFractionTowards(points.sideSeamInterceptOld, 0.5),
       options.bustDartOffset
     )
+
+    //Make sure dart legs are equal
+    if (options.dartLegsTruing) {
+      const sideSeamRatio =
+        points.armhole.dist(points.dartTopEdge) / points.hem.dist(points.dartBottomEdge)
+      log.info('side seam ratio is ' + sideSeamRatio)
+
+      let dartBottomLength = points.dartPoint.dist(points.dartBottomEdge)
+      let dartTopLength = points.dartPoint.dist(points.dartTopEdge)
+      let topDartRotateAngle = 0
+      log.info('Dart bottom length ' + dartBottomLength + ', dart top length ' + dartTopLength)
+      while (dartBottomLength > dartTopLength && topDartRotateAngle < 30) {
+        log.info('Bust dart bottom leg is longer by ' + (dartBottomLength - dartTopLength))
+        points.dartTopEdge = points.dartTopEdge.rotate(1 - sideSeamRatio, points.armhole)
+        points.dartBottomEdge = points.dartBottomEdge.rotate(sideSeamRatio, points.hem)
+
+        dartTopLength = points.dartPoint.dist(points.dartTopEdge)
+        dartBottomLength = points.dartPoint.dist(points.dartBottomEdge)
+        topDartRotateAngle += 1
+      }
+      log.info('Dart bottom length ' + dartBottomLength + ', dart top length ' + dartTopLength)
+    }
+
+    //Draw lines now that all the point manipulations are over
     paths.bustDart = new Path()
       .move(points.dartTopEdge)
       .line(points.dartPoint)
       .line(points.dartBottomEdge)
 
-    /*
-    points.dartTopEdge = points.sideSeamIntercept.shift(sideseamangle, verticaldifferential)
-    points.dartBottomEdge = points.sideSeamIntercept.shift(
-      sideseamangle - 180,
-      verticaldifferential
-    )
-    points.dartPoint = points.bustpoint.shiftFractionTowards(
-      points.sideSeamIntercept,
-      options.bustDartOffset
-    )
-    paths.bustDart = new Path()
-      .move(points.dartTopEdge)
-      .line(points.dartPoint)
+    paths.sideSeam = new Path()
+      .move(points.hem)
       .line(points.dartBottomEdge)
-    */
+      .line(points.dartTopEdge)
+      .line(points.armhole)
+      .hide()
   } else {
     log.info('No bust adjustment')
     paths.sideSeam = new Path().move(points.hem).line(points.armhole).hide()
@@ -534,7 +545,7 @@ function draftfront({
     })
     macro('ld', {
       id: 'sideSeamBottom',
-      from: points.sideSeamIntercept,
+      from: points.dartBottomEdge,
       to: points.hem,
       d: -10,
     })
@@ -669,6 +680,8 @@ export const front = {
     bustDartHeight: { pct: 20, min: 5, max: 95, menu: 'fit.bust.advanced' },
     fullBustEase: { pct: 10, min: 0, max: 50, menu: 'fit.bust' },
     armCutAngle: { pct: 100, min: 75, max: 125, menu: 'fit.bust.advanced' },
+    sideCutAngle: { pct: 100, min: 80, max: 120, menu: 'fit.bust.advanced' },
+    dartLegsTruing: { bool: true, menu: 'fit.bust.advanced' },
 
     ribbing: { bool: true, menu: 'construction' },
     ribbingHeight: { pct: 10, min: 5, max: 15, menu: 'style' },
