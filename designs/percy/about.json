@@ -1,0 +1,12 @@
+{
+  "id": "percy",
+  "code": "Your name here",
+  "design": "Your name here",
+  "description": "A FreeSewing pattern that needs a description",
+  "name": "Percy Something",
+  "difficulty": 2,
+  "tags": [],
+  "techniques": [],
+  "version": "4.0.0",
+  "pkg": "@freesewing/percy"
+}
