@@ -51,7 +51,10 @@ function draftPercyWaistFront({
   points.topRight = new Point(top_length / 2, 0)
   points.topCenter = new Point(0, 0)
   points.bottomCenter = new Point(0, width)
-  paths.centerMark = new Path().move(points.topCenter).line(points.bottomCenter).setClass('sa')
+  paths.centerMark = new Path()
+    .move(points.topCenter)
+    .line(points.bottomCenter)
+    .setClass('note help')
 
   paths.seam = new Path()
     .move(points.topLeft)

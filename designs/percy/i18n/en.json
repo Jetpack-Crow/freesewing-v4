@@ -4,7 +4,10 @@
   "p": {
     "front": "Front",
     "back": "Back",
-    "cuff": "Cuff"
+    "cuff": "Cuff",
+    "waist_back": "Waist Back",
+    "waist_front": "Waist Front",
+    "waist_side": "Waist Side"
   },
   "s": { },
   "o": { }

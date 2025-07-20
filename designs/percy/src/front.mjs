@@ -314,19 +314,19 @@ export const front = {
   from: titanFront,
   name: 'percy.front',
   hide: { from: true },
-  measurements: [],
+  measurements: ['inseam'],
   options: {
     lengthBonus: 0,
-    inseamPercent: { pct: 25, min: 5, max: 100, menu: 'style' },
+    inseamPercent: { pct: 25, min: 5, max: 100, menu: 'style', ...pctBasedOn('inseam') },
     slashIterations: { count: 4, min: 1, max: 8, menu: 'style.spread' },
     hemRatio: { pct: 200, min: 100, max: 400, menu: 'style.spread' },
     spread: { bool: true, menu: 'style.spread' },
 
     waistHeight: { pct: 75, min: 0, max: 100, menu: 'style' },
     waistbandWidth: {
-      pct: 6,
+      pct: 10,
       min: 4,
-      max: 12,
+      max: 20,
       //snap: elastics,
       ...pctBasedOn('waistToFloor'),
       menu: 'style.panel',
