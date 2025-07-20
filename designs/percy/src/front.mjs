@@ -78,7 +78,7 @@ function draftPercyFront({
   paths.waist = new Path().move(points.styleWaistIn).line(points.styleWaistOut).setClass('lining')
 
   if (options.spread) {
-    const rotationAmount = 50 / options.slashIterations
+    const rotationAmount = (options.angle * 100) / options.slashIterations
 
     //Slash and spread time
     let slashPointsHem = []
@@ -201,8 +201,9 @@ export const front = {
   options: {
     lengthBonus: 0,
     inseamPercent: { pct: 20, min: 5, max: 100, menu: 'style' },
-    slashIterations: { count: 4, min: 2, max: 8, menu: 'construction' },
+    slashIterations: { count: 4, min: 1, max: 8, menu: 'construction' },
     hemRatio: { pct: 200, min: 100, max: 400, menu: 'style' },
+    angle: { pct: 50, max: 90, min: 0, menu: 'style' },
     spread: { bool: true, menu: 'style' },
   },
   draft: draftPercyFront,

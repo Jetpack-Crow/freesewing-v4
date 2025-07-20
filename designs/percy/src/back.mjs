@@ -69,11 +69,100 @@ function draftPercyBack({
   paths.newInseam = paths.inseam.split(points.inseamShiftUpwards)[0]
   paths.newOutseam = paths.outseam.split(points.outseamShiftUpwards)[1]
 
+  paths.waist = new Path().move(points.styleWaistOut).line(points.styleWaistIn).setClass('various')
+
+  if (options.spread) {
+    const rotationAmount = (options.angle * 100) / options.slashIterations
+
+    //Slash and spread time
+    let slashPointsHem = []
+    let slashPointsWaist = []
+
+    //Define all the initial cut points
+    for (let i = 1; i <= options.slashIterations; i++) {
+      log.info('slash point ' + i + ' of ' + options.slashIterations)
+
+      points['slashPointsHem' + i] = points.outseamShiftUpwards.shiftFractionTowards(
+        points.inseamShiftUpwards,
+        1 - i / (Number(options.slashIterations) + 1)
+      )
+
+      slashPointsHem.push(points['slashPointsHem' + i])
+
+      points['slashPointsWaist' + i] = points.styleWaistOut.shiftFractionTowards(
+        points.styleWaistIn,
+        1 - i / (Number(options.slashIterations) + 1)
+      )
+      slashPointsWaist.push(points['slashPointsWaist' + i])
+    }
+
+    let slashPointsInner = slashPointsHem.slice()
+
+    const outseamRotatePoints = [
+      'styleWaistOut',
+      'waistOut',
+      'seatOutCp1',
+      'seatOutCp2',
+      'seatOut',
+      'seatY',
+      'upperLegY',
+    ]
+
+    for (let i = 0; i < options.slashIterations; i++) {
+      //Rotate all the waist points to the left of the active point
+      for (let j = i; j < options.slashIterations; j++) {
+        slashPointsWaist[j] = slashPointsWaist[j].rotate(rotationAmount, slashPointsWaist[i])
+      }
+
+      //Rotate all the hem points to the left of the active point
+      for (let j = i; j < options.slashIterations; j++) {
+        slashPointsHem[j] = slashPointsHem[j].rotate(rotationAmount, slashPointsWaist[i])
+      }
+
+      for (let j = i + 1; j < options.slashIterations; j++) {
+        slashPointsInner[j] = slashPointsInner[j].rotate(rotationAmount, slashPointsWaist[i])
+      }
+
+      //rotate the inseam
+      paths.newOutseam = paths.newOutseam.rotate(rotationAmount, slashPointsWaist[i])
+      //paths.hint = paths.hint.rotate(rotationAmount, slashPointsWaist[i]).setClass('note help')
+      for (let p of outseamRotatePoints) {
+        points[p] = points[p].rotate(rotationAmount, slashPointsWaist[i])
+      }
+    }
+
+    //draw the slash point snippets after all the rotation
+    snippets['button_0'] = new Snippet('button', slashPointsHem[0]).scale(2)
+    for (let b in slashPointsHem) {
+      snippets[b + '_button'] = new Snippet('button', slashPointsHem[b])
+    }
+
+    snippets['notch_0'] = new Snippet('notch', slashPointsWaist[0]).scale(2)
+    for (let c in slashPointsWaist) {
+      snippets[c + '_notch'] = new Snippet('notch', slashPointsWaist[c])
+    }
+    for (let c in slashPointsInner) {
+      snippets[c + '_notch'] = new Snippet('notch', slashPointsInner[c]).scale(0.5)
+    }
+
+    //draw the new curved waist
+    paths.waist = new Path().move(points.styleWaistIn).setClass('various')
+    for (let c in slashPointsWaist) {
+      paths.waist = paths.waist.line(slashPointsWaist[c])
+    }
+    paths.waist = paths.waist.line(points.styleWaistOut)
+
+    paths.shortshem = new Path().move(points.outseamShiftUpwards).setClass('various')
+    for (let i = 0; i < options.slashIterations; i++) {
+      paths.shortshem = paths.shortshem.line(slashPointsInner[i]).line(slashPointsHem[i])
+    }
+  }
+
   let waistIn = points.styleWaistIn || points.waistIn
   paths.seam = paths.newInseam
-    .line(points.outseamShiftUpwards)
+    .join(paths.shortshem)
     .join(paths.newOutseam)
-    .line(waistIn)
+    .join(paths.waist.reverse())
     .line(points.crossSeamCurveStart)
     .curve(points.crossSeamCurveCp1, points.crossSeamCurveCp2, points.fork)
     .close()
