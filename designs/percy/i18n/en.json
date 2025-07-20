@@ -3,7 +3,8 @@
   "d": "A description for Percy",
   "p": {
     "front": "Front",
-    "back": "Back"
+    "back": "Back",
+    "cuff": "Cuff"
   },
   "s": { },
   "o": { }

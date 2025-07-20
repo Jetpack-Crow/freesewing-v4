@@ -65,14 +65,27 @@ function draftPercyBack({
   points.outseamShiftUpwards = paths.outseam.shiftAlong(inseamShiftAmount + seamLengthDifference)
 
   paths.shortshem = new Path().move(points.inseamShiftUpwards).line(points.outseamShiftUpwards)
+  const originalHemLength = paths.shortshem.length()
+  store.set('original_hem_back', originalHemLength)
 
   paths.newInseam = paths.inseam.split(points.inseamShiftUpwards)[0]
   paths.newOutseam = paths.outseam.split(points.outseamShiftUpwards)[1]
 
-  paths.waist = new Path().move(points.styleWaistOut).line(points.styleWaistIn).setClass('various')
+  paths.waist = new Path().move(points.styleWaistIn).line(points.styleWaistOut).setClass('various')
 
   if (options.spread) {
-    const rotationAmount = (options.angle * 100) / options.slashIterations
+    points.hemcenter = points.outseamShiftUpwards.shiftFractionTowards(
+      points.inseamShiftUpwards,
+      0.5
+    )
+
+    points.waistcenter = points.styleWaistOut.shiftFractionTowards(points.styleWaistIn, 0.5)
+    const rotationradius = points.hemcenter.dist(points.waistcenter)
+    const targethemlength = originalHemLength * options.hemRatio
+
+    const totalRotationAmount = (50 * (targethemlength - originalHemLength)) / rotationradius
+
+    const rotationAmount = Math.min(totalRotationAmount, 90) / options.slashIterations
 
     //Slash and spread time
     let slashPointsHem = []
@@ -106,6 +119,7 @@ function draftPercyBack({
       'seatOut',
       'seatY',
       'upperLegY',
+      'outseamShiftUpwards',
     ]
 
     for (let i = 0; i < options.slashIterations; i++) {
@@ -132,6 +146,7 @@ function draftPercyBack({
     }
 
     //draw the slash point snippets after all the rotation
+    /*
     snippets['button_0'] = new Snippet('button', slashPointsHem[0]).scale(2)
     for (let b in slashPointsHem) {
       snippets[b + '_button'] = new Snippet('button', slashPointsHem[b])
@@ -144,6 +159,7 @@ function draftPercyBack({
     for (let c in slashPointsInner) {
       snippets[c + '_notch'] = new Snippet('notch', slashPointsInner[c]).scale(0.5)
     }
+    */
 
     //draw the new curved waist
     paths.waist = new Path().move(points.styleWaistIn).setClass('various')
@@ -152,11 +168,13 @@ function draftPercyBack({
     }
     paths.waist = paths.waist.line(points.styleWaistOut)
 
-    paths.shortshem = new Path().move(points.outseamShiftUpwards).setClass('various')
+    paths.shortshem = new Path().move(points.inseamShiftUpwards).setClass('various')
     for (let i = 0; i < options.slashIterations; i++) {
       paths.shortshem = paths.shortshem.line(slashPointsInner[i]).line(slashPointsHem[i])
     }
   }
+
+  store.set('back_waist_width', paths.waist.length())
 
   let waistIn = points.styleWaistIn || points.waistIn
   paths.seam = paths.newInseam
@@ -166,6 +184,11 @@ function draftPercyBack({
     .line(points.crossSeamCurveStart)
     .curve(points.crossSeamCurveCp1, points.crossSeamCurveCp2, points.fork)
     .close()
+
+  if (sa) {
+    paths.saBase = paths.seam.offset(sa).hide()
+    paths.sa = paths.saBase.offset(sa).setClass('sa')
+  }
 
   macro('rmGrainline', 'grainline')
   macro('rmScaleBox')
