@@ -171,16 +171,17 @@ function draftPercyBack({
     */
 
     //draw the new curved waist
-    paths.waist = new Path().move(points.styleWaistIn).setClass('various')
+    paths.waist = new Path().move(points.styleWaistIn)
     for (let c in slashPointsWaist) {
       paths.waist = paths.waist.line(slashPointsWaist[c])
     }
     paths.waist = paths.waist.line(points.styleWaistOut)
 
-    paths.shortshem = new Path().move(points.inseamShiftUpwards).setClass('various')
+    paths.shortshem = new Path().move(points.inseamShiftUpwards)
     for (let i = 0; i < totalSlashIterations; i++) {
       paths.shortshem = paths.shortshem.line(slashPointsInner[i]).line(slashPointsHem[i])
     }
+    paths.shortshem = paths.shortshem.line(points.outseamShiftUpwards)
 
     const rotationCorrection = 180 - points.outseamShiftUpwards.angle(points.inseamShiftUpwards)
 
@@ -201,19 +202,188 @@ function draftPercyBack({
 
   snippets['backNotch'] = new Snippet('bnotch', paths.waist.shiftFractionAlong(0.5))
 
+  paths.crossSeam = new Path()
+    .move(points.styleWaistInNoAngle)
+    .line(points.crossSeamCurveStart)
+    .curve(points.crossSeamCurveCp1, points.crossSeamCurveCp2, points.fork)
+
   paths.seam = paths.newInseam
     .join(paths.shortshem)
     .join(paths.newOutseam)
     .join(paths.waist.reverse())
-    .line(points.crossSeamCurveStart)
-    .curve(points.crossSeamCurveCp1, points.crossSeamCurveCp2, points.fork)
+    .join(paths.crossSeam)
     .close()
+    .hide()
 
   if (sa) {
     paths.saBase = paths.seam
     paths.sa = paths.saBase.offset(sa).setClass('sa')
   }
   if (paths.hemBase) delete paths.hemBase
+
+  //remove all broken paperless macros
+  macro('rmVd', 'hHemToSideWaist')
+  macro('rmVd', 'hFull')
+  macro('rmVd', 'hHemToFork')
+  macro('rmHd', 'wHem')
+  macro('rmHd', 'wHemLeft')
+  macro('rmHd', 'wHemRight')
+  macro('rmHd', 'wPleatToSideWaist')
+  macro('rmHd', 'wForkToPleat')
+  macro('rmHd', 'wForkProjectionToPleat')
+  macro('rmHd', 'wStartCrotchCurveToPleat')
+  macro('rmHd', 'wCbWaistToPleat')
+  macro('rmVd', 'hStartCrotchCurveToCbWaist')
+  macro('rmVd', 'hForkToCbWaist')
+
+  points.hemLowestPoint = points.outseamShiftUpwards
+  let x = 0
+  let ary = paths.shortshem.intersectsY(points.hemLowestPoint.y + 2)
+  while (ary.length > 0 && x < measurements.waistToSeat) {
+    log.info('Hem intersects ' + ary.length + ' times at y ' + points.hemLowestPoint.y)
+
+    points.hemLowestPoint = ary[0]
+    x = x + 2
+    ary = paths.shortshem.intersectsY(points.hemLowestPoint.y + 2)
+  }
+  //snippets['hemLowestPoint'] = new Snippet('notch', points.hemLowestPoint)
+
+  points.waistLowestPoint = points.styleWaistIn
+  x = 0
+  ary = paths.waist.intersectsY(points.waistLowestPoint.y + 2)
+  while (ary.length > 0 && x < measurements.waistToFloor) {
+    log.info('Waist intersects ' + ary.length + ' times at y ' + points.waistLowestPoint.y)
+
+    points.waistLowestPoint = ary[0]
+    x = x + 2
+    ary = paths.waist.intersectsY(points.waistLowestPoint.y + 2)
+  }
+  //snippets['waistLowestPoint'] = new Snippet('notch', points.waistLowestPoint)
+
+  macro('pd', {
+    id: 'lengthHem',
+    path: paths.shortshem,
+    d: -15,
+  })
+  macro('hd', {
+    id: 'wHem',
+    from: points.inseamShiftUpwards,
+    to: points.outseamShiftUpwards,
+    y: points.hemLowestPoint.y + 30 + sa,
+  })
+  macro('hd', {
+    id: 'wHemLeft',
+    from: points.inseamShiftUpwards,
+    to: points.hemLowestPoint,
+    y: points.hemLowestPoint.y + 15 + sa,
+  })
+  macro('hd', {
+    id: 'wHemRight',
+    from: points.hemLowestPoint,
+    to: points.outseamShiftUpwards,
+    y: points.hemLowestPoint.y + 15 + sa,
+  })
+
+  macro('vd', {
+    id: 'floorToOutseam',
+    from: points.hemLowestPoint,
+    to: points.outseamShiftUpwards,
+    x: points.outseamShiftUpwards.x + 15 + sa,
+  })
+  macro('vd', {
+    id: 'floorToInseam',
+    from: points.hemLowestPoint,
+    to: points.inseamShiftUpwards,
+    x: points.inseamShiftUpwards.x - 15 - sa,
+  })
+
+  macro('pd', {
+    path: paths.newOutseam.reverse(),
+    d: -15 - sa,
+  })
+
+  macro('vd', {
+    id: 'waistToInseam',
+    from: points.styleWaistOut,
+    to: points.outseamShiftUpwards,
+    x: points.outseamShiftUpwards.x + 15 + sa,
+  })
+  macro('hd', {
+    id: 'hWaistToInseam',
+    from: points.styleWaistOut,
+    to: points.outseamShiftUpwards,
+    y: points.styleWaistOut.y - 15 - sa,
+  })
+  macro('vd', {
+    id: 'heightWaistOut',
+    from: points.styleWaistOut,
+    to: points.hemLowestPoint,
+    x: points.styleWaistOut.x,
+  })
+  macro('vd', {
+    id: 'heightWaistIn',
+    from: points.styleWaistIn,
+    to: points.hemLowestPoint,
+    x: points.styleWaistIn.x,
+  })
+
+  macro('pd', {
+    id: 'lengthWaist',
+    path: paths.waist,
+    d: -15 - sa,
+  })
+
+  macro('hd', {
+    id: 'wWaist',
+    to: points.styleWaistOut,
+    from: points.styleWaistIn,
+    y: points.styleWaistIn.y - 15 - sa,
+  })
+
+  macro('vd', {
+    id: 'vWaistLowestPoint',
+    to: points.waistLowestPoint,
+    from: points.hemLowestPoint,
+    x: points.waistLowestPoint.x,
+  })
+
+  macro('vd', {
+    id: 'vInseam',
+    from: points.inseamShiftUpwards,
+    to: points.fork,
+    x: points.inseamShiftUpwards.x - sa - 15,
+  })
+
+  macro('hd', {
+    id: 'hInseam',
+    from: points.inseamShiftUpwards,
+    to: points.fork,
+    y: points.fork.y - sa - 15,
+  })
+
+  macro('pd', {
+    id: 'lengthInseam',
+    path: paths.newInseam,
+    d: -15 - sa,
+  })
+
+  macro('pd', {
+    id: 'lengthCrossSeam',
+    path: paths.crossSeam.reverse(),
+    d: -15 - sa,
+  })
+  macro('hd', {
+    id: 'hCrossSeam',
+    to: points.styleWaistIn,
+    from: points.fork,
+    y: points.styleWaistIn.y - sa - 15,
+  })
+  macro('vd', {
+    id: 'vCrossSeam',
+    to: points.styleWaistIn,
+    from: points.fork,
+    x: points.fork.x,
+  })
 
   points.titleAnchor = points.styleWaistOut.shiftFractionTowards(points.inseamShiftUpwards, 0.5)
   macro('title', {
