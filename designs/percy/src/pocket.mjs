@@ -68,8 +68,14 @@ function draftPercyPocket({
   delete paths.shortInseam
   delete paths.hint
   delete paths.crotchseam
+  delete paths.pleatInner
+  delete paths.pleatOuter
+  delete paths.pleatCenter
+
   delete snippets['opening_notch']
   delete snippets['logo']
+
+  macro('rmGrainline', 'grainline')
 
   paths.outseamTop = paths.shortOutseam.split(points.pocketSideSeamIntercept)[0]
   delete paths.shortOutseam
@@ -80,6 +86,11 @@ function draftPercyPocket({
   paths.pocketWaistEdge = paths.waist.split(points.pocketFacingEdge)[1]
   delete paths.waist
 
+  if (store.get('openingDepth') > 0) {
+    points.openingNotch = paths.pocketBottomEdge.reverse().shiftAlong(store.get('openingDepth'))
+    snippets['openingNotch'] = new Snippet('notch', points.openingNotch)
+  }
+
   paths.seam = paths.pocketWaistEdge.join(paths.outseamTop).join(paths.pocketBottomEdge).close()
   if (sa) {
     paths.saBase = paths.seam
@@ -87,7 +98,22 @@ function draftPercyPocket({
   }
   if (paths.hemBase) delete paths.hemBase
 
-  points.titleAnchor = points.styleWaistOut.shiftFractionTowards(points.pocketInnerCorner, 0.5)
+  points.grainlineBottom = points.pocketSideSeamIntercept.shiftFractionTowards(
+    points.pocketInnerCorner,
+    0.5
+  )
+  points.grainlineTop = paths.pocketWaistEdge
+    .shiftFractionAlong(0.5)
+    .shiftFractionTowards(points.grainlineBottom, 0.3)
+  macro('grainline', {
+    from: points.grainlineTop,
+    to: points.grainlineBottom,
+  })
+
+  points.titleAnchor = points.pocketBottomEdge.shiftFractionTowards(
+    points.pocketSideSeamInterceptHalfway,
+    0.5
+  )
   macro('title', {
     nr: 7,
     title: 'pocket',
@@ -103,9 +129,9 @@ export const pocket = {
   from: front,
   options: {
     pocketDepth: {
-      pct: 50,
-      max: 60,
-      min: 10,
+      pct: 55,
+      max: 65,
+      min: 20,
       menu: 'style',
     },
     pocketCurveControl: {

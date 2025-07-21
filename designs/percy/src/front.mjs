@@ -272,7 +272,7 @@ function draftPercyFront({
   points.pocketFacingEdge = paths.waist.shiftFractionAlong(
     options.frontPanelPercentage * options.pocketFacingUnderlap
   )
-  snippets['pocket_facing_notch'] = new Snippet('notch', points.pocketFacingEdge)
+  //snippets['pocket_facing_notch'] = new Snippet('notch', points.pocketFacingEdge)
 
   //send the side panel width to the store
   store.set(
@@ -289,7 +289,7 @@ function draftPercyFront({
 
   points.pocketBottomEdgeCp1 = points.pocketBottomEdge.shift(
     points.styleWaistOut.angle(points.outseamShiftUpwards) + 90,
-    paths.waist.length() / 3
+    paths.waist.length() * (1 - options.frontPanelPercentage) * options.pocketBottomCurve
   )
 
   points.pocketInnerEdgeCp2 = points.pocketInnerEdge.shift(
@@ -307,7 +307,6 @@ function draftPercyFront({
     log.info('This garment does not need a front opening deeper than the waistband.')
   } else {
     points.openingDepthDisplay = paths.pocketCutout.shiftAlong(openingDepth)
-    snippets['opening_notch'] = new Snippet('notch', points.openingDepthDisplay)
   }
 
   //Cut the waist and the outseam to account for the pocket chunk
@@ -324,15 +323,12 @@ function draftPercyFront({
 
     points.topPleatPoint = paths.trimmedWaist.shiftAlong(frontPleatShiftDistance)
     points.bottomPleatPoint = paths.shortHem.shiftFractionAlong(1 - frontPleatWaistRatio)
-    snippets['front_pleat_top'] = new Snippet('notch', points.topPleatPoint).scale(0.5)
-    snippets['front_pleat_bottom'] = new Snippet('notch', points.bottomPleatPoint).scale(0.5)
 
     const pleatAngle = points.topPleatPoint.angle(points.bottomPleatPoint) + 90
     const pleatOffset = measurements.waist * options.frontPleatWidth
     log.info('Pleat offset by ' + pleatOffset + ' mm at ' + pleatAngle + ' degrees')
 
     points.pleatShiftByAngle = points.topPleatPoint.shift(pleatAngle, pleatOffset)
-    snippets['frontPleatByAngle'] = new Snippet('notch', points.pleatShiftByAngle).scale(0.5)
 
     const pleatShiftX = points.pleatShiftByAngle.x - points.topPleatPoint.x
     const pleatShiftY = points.pleatShiftByAngle.y - points.topPleatPoint.y
@@ -426,6 +422,15 @@ function draftPercyFront({
   macro('rmHd', 'wPleastToStartCrotchCurve')
 
   macro('rmGrainline', 'grainline')
+
+  points.grainlineBottom = paths.shortHem.shiftFractionAlong(0.5)
+  points.grainlineTop = points.styleWaistOut
+    .shiftFractionTowards(points.styleWaistIn, 0.5)
+    .shiftFractionTowards(points.grainlineBottom, 0.1)
+  macro('grainline', {
+    from: points.grainlineTop,
+    to: points.grainlineBottom,
+  })
   return part
 }
 
@@ -437,13 +442,13 @@ export const front = {
   options: {
     lengthBonus: 0,
     inseamPercent: { pct: 25, min: 5, max: 100, menu: 'style', ...pctBasedOn('inseam') },
-    slashIterations: { count: 4, min: 1, max: 12, menu: 'style.spread' },
+    slashIterations: { count: 8, min: 1, max: 12, menu: 'style.spread' },
     hemRatio: { pct: 250, min: 100, max: 400, menu: 'style.spread' },
     spread: { bool: true, menu: 'style.spread' },
 
     frontPleat: { bool: true, menu: 'style.pleat' },
     frontPleatPosition: { pct: 50, min: 10, max: 90, menu: 'style.pleat' },
-    frontPleatWidth: { pct: 6.6, min: 0, max: 10, menu: 'style.pleat', ...pctBasedOn('waist') },
+    frontPleatWidth: { pct: 6.4, min: 0, max: 10, menu: 'style.pleat', ...pctBasedOn('waist') },
     frontPleatDisplayLength: {
       pct: 8,
       min: 1,
@@ -475,8 +480,14 @@ export const front = {
       menu: 'style.panel',
     },
     pocketFacingUnderlap: {
-      pct: 50,
+      pct: 60,
       min: 25,
+      max: 80,
+      menu: 'style.panel.advanced',
+    },
+    pocketBottomCurve: {
+      pct: 30,
+      min: 10,
       max: 75,
       menu: 'style.panel.advanced',
     },

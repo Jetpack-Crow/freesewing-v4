@@ -51,7 +51,7 @@ function draftPercyWaistBack({
   points.bottomLeft = points.bottomCenter.rotate(circle_angle / 2, points.circleCenter)
   points.bottomRight = points.bottomCenter.rotate(-circle_angle / 2, points.circleCenter)
 
-  const curveFactor = 2
+  const curveFactor = 2.1
   points.bottomLeftCp1 = points.bottomLeft.shift(
     circle_angle / 2 + 180,
     circle_outer_radius * circle_percentage * curveFactor
@@ -70,10 +70,18 @@ function draftPercyWaistBack({
     circle_inner_radius * circle_percentage * curveFactor
   )
 
+  paths.bottomCurve = new Path()
+    .move(points.bottomLeft)
+    .curve(points.bottomLeftCp1, points.bottomRightCp2, points.bottomRight)
+    .hide()
+
+  snippets['backNotch1'] = new Snippet('bnotch', paths.bottomCurve.shiftFractionAlong(0.25))
+  snippets['backNotch2'] = new Snippet('bnotch', paths.bottomCurve.shiftFractionAlong(0.75))
+
   paths.seam = new Path()
     .move(points.topLeft)
     .line(points.bottomLeft)
-    .curve(points.bottomLeftCp1, points.bottomRightCp2, points.bottomRight)
+    .join(paths.bottomCurve)
     .line(points.topRight)
     .curve(points.topRightCp2, points.topLeftCp1, points.topLeft)
     .close()
@@ -84,11 +92,18 @@ function draftPercyWaistBack({
     paths.sa = paths.saBase.offset(sa).setClass('sa')
   }
 
-  points.titleAnchor = points.topCenter.shiftFractionTowards(points.bottomRight, 0.5)
+  points.titleAnchor = points.topCenter.shiftFractionTowards(points.bottomRight, 0.7)
   macro('title', {
     nr: 6,
     title: 'waist_back',
     at: points.titleAnchor,
+  })
+
+  points.grainlineBottom = points.bottomCenter
+  points.grainlineTop = points.topCenter
+  macro('grainline', {
+    from: points.grainlineTop,
+    to: points.grainlineBottom,
   })
 
   return part

@@ -74,6 +74,8 @@ function draftPercyBack({
   paths.waist = new Path().move(points.styleWaistIn).line(points.styleWaistOut).setClass('various')
 
   if (options.spread) {
+    const totalSlashIterations = Math.floor(options.slashIterations * 1.5)
+
     points.hemcenter = points.outseamShiftUpwards.shiftFractionTowards(
       points.inseamShiftUpwards,
       0.5
@@ -85,24 +87,24 @@ function draftPercyBack({
 
     const totalRotationAmount = (50 * (targethemlength - originalHemLength)) / rotationradius
 
-    const rotationAmount = Math.min(totalRotationAmount, 90) / options.slashIterations
+    const rotationAmount = Math.min(totalRotationAmount, 90) / totalSlashIterations
 
     //Slash and spread time
     let slashPointsHem = []
     let slashPointsWaist = []
 
     //Define all the initial cut points
-    for (let i = 1; i <= options.slashIterations; i++) {
+    for (let i = 1; i <= totalSlashIterations; i++) {
       points['slashPointsHem' + i] = points.outseamShiftUpwards.shiftFractionTowards(
         points.inseamShiftUpwards,
-        1 - i / (Number(options.slashIterations) + 1)
+        1 - i / (totalSlashIterations + 1)
       )
 
       slashPointsHem.push(points['slashPointsHem' + i])
 
       points['slashPointsWaist' + i] = points.styleWaistOut.shiftFractionTowards(
         points.styleWaistIn,
-        1 - i / (Number(options.slashIterations) + 1)
+        1 - i / (totalSlashIterations + 1)
       )
       slashPointsWaist.push(points['slashPointsWaist' + i])
     }
@@ -120,19 +122,28 @@ function draftPercyBack({
       'outseamShiftUpwards',
     ]
 
-    for (let i = 0; i < options.slashIterations; i++) {
+    for (let i = 0; i < totalSlashIterations; i++) {
       //Rotate all the waist points to the left of the active point
-      for (let j = i; j < options.slashIterations; j++) {
-        slashPointsWaist[j] = slashPointsWaist[j].rotate(rotationAmount, slashPointsWaist[i])
+      for (let j = i; j < totalSlashIterations; j++) {
+        slashPointsWaist[j] = points['slashPointsWaist' + j] = slashPointsWaist[j].rotate(
+          rotationAmount,
+          slashPointsWaist[i]
+        )
       }
 
       //Rotate all the hem points to the left of the active point
-      for (let j = i; j < options.slashIterations; j++) {
-        slashPointsHem[j] = slashPointsHem[j].rotate(rotationAmount, slashPointsWaist[i])
+      for (let j = i; j < totalSlashIterations; j++) {
+        slashPointsHem[j] = points['slashPointsHem' + j] = slashPointsHem[j].rotate(
+          rotationAmount,
+          slashPointsWaist[i]
+        )
       }
 
-      for (let j = i + 1; j < options.slashIterations; j++) {
-        slashPointsInner[j] = slashPointsInner[j].rotate(rotationAmount, slashPointsWaist[i])
+      for (let j = i + 1; j < totalSlashIterations; j++) {
+        slashPointsInner[j] = points['slashPointsInner' + j] = slashPointsInner[j].rotate(
+          rotationAmount,
+          slashPointsWaist[i]
+        )
       }
 
       //rotate the inseam
@@ -167,7 +178,7 @@ function draftPercyBack({
     paths.waist = paths.waist.line(points.styleWaistOut)
 
     paths.shortshem = new Path().move(points.inseamShiftUpwards).setClass('various')
-    for (let i = 0; i < options.slashIterations; i++) {
+    for (let i = 0; i < totalSlashIterations; i++) {
       paths.shortshem = paths.shortshem.line(slashPointsInner[i]).line(slashPointsHem[i])
     }
 
@@ -188,7 +199,8 @@ function draftPercyBack({
 
   store.set('back_waist_width', paths.waist.length())
 
-  let waistIn = points.styleWaistIn || points.waistIn
+  snippets['backNotch'] = new Snippet('bnotch', paths.waist.shiftFractionAlong(0.5))
+
   paths.seam = paths.newInseam
     .join(paths.shortshem)
     .join(paths.newOutseam)
@@ -211,6 +223,13 @@ function draftPercyBack({
   })
 
   macro('rmGrainline', 'grainline')
+  points.grainlineBottom = paths.shortshem.shiftFractionAlong(0.5)
+  points.grainlineTop = paths.waist.shiftFractionAlong(0.5)
+  macro('grainline', {
+    from: points.grainlineTop,
+    to: points.grainlineBottom,
+  })
+
   macro('rmScaleBox')
 
   return part
