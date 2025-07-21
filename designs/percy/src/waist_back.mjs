@@ -106,6 +106,52 @@ function draftPercyWaistBack({
     to: points.grainlineBottom,
   })
 
+  macro('hd', {
+    id: 'topLength',
+    to: points.topLeft,
+    from: points.topRight,
+    y: points.topRight.y,
+  })
+  macro('hd', {
+    id: 'bottomLength',
+    to: points.bottomLeft,
+    from: points.bottomRight,
+    y: points.bottomRight.y,
+  })
+
+  macro('vd', {
+    id: 'height',
+    from: points.topLeft.shiftFractionTowards(points.topRight, 0.5),
+    to: points.bottomLeft.shiftFractionTowards(points.bottomRight, 0.5),
+    x: points.bottomLeft.shiftFractionTowards(points.bottomRight, 0.5).x + sa + 15,
+  })
+
+  macro('vd', {
+    id: 'topOffset',
+    from: points.topLeft.shiftFractionTowards(points.topRight, 0.5),
+    to: points.grainlineTop,
+    x: points.bottomLeft.shiftFractionTowards(points.bottomRight, 0.5).x,
+  })
+  macro('vd', {
+    id: 'bottomOffset',
+    from: points.grainlineBottom,
+    to: points.bottomLeft.shiftFractionTowards(points.bottomRight, 0.5),
+    x: points.bottomLeft.shiftFractionTowards(points.bottomRight, 0.5).x,
+  })
+
+  macro('ld', {
+    id: 'diagonalLeft',
+    from: points.bottomLeft,
+    to: points.topLeft,
+    d: 15,
+  })
+  macro('ld', {
+    id: 'diagonalRight',
+    to: points.bottomRight,
+    from: points.topRight,
+    d: 15,
+  })
+
   return part
 }
 

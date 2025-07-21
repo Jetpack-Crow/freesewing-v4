@@ -47,6 +47,20 @@ function draftPercyCuff({
     at: points.titleAnchor,
   })
 
+  macro('hd', {
+    id: 'length',
+    from: points.topLeft,
+    to: points.topRight,
+    y: points.topRight.y - 15 - sa,
+  })
+
+  macro('vd', {
+    id: 'width',
+    from: points.topLeft,
+    to: points.bottomLeft,
+    x: points.topLeft.x - 15 - sa,
+  })
+
   return part
 }
 

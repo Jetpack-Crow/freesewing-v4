@@ -76,6 +76,37 @@ function draftPercyWaistFront({
     at: points.titleAnchor,
   })
 
+  macro('hd', {
+    id: 'topLength',
+    from: points.topLeft,
+    to: points.topRight,
+    y: points.topRight.y - 15 - sa,
+  })
+  macro('hd', {
+    id: 'bottomLength',
+    from: points.bottomLeft,
+    to: points.bottomRight,
+    y: points.bottomRight.y + 15 + sa,
+  })
+  macro('vd', {
+    id: 'height',
+    from: points.topCenter,
+    to: points.bottomCenter,
+    x: points.bottomCenter.x,
+  })
+  macro('ld', {
+    id: 'diagonalLeft',
+    from: points.bottomLeft,
+    to: points.topLeft,
+    d: 15,
+  })
+  macro('ld', {
+    id: 'diagonalRight',
+    to: points.bottomRight,
+    from: points.topRight,
+    d: 15,
+  })
+
   return part
 }
 
