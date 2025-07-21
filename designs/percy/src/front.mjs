@@ -325,7 +325,7 @@ function draftPercyFront({
     points.topPleatPoint = paths.trimmedWaist.shiftAlong(frontPleatShiftDistance)
     points.bottomPleatPoint = paths.shortHem.shiftFractionAlong(1 - frontPleatWaistRatio)
 
-    const pleatAngle = points.topPleatPoint.angle(points.bottomPleatPoint) + 90
+    const pleatAngle = paths.trimmedWaist.angleAt(points.topPleatPoint) + 180
     const pleatOffset = measurements.waist * options.frontPleatWidth
     log.info('Pleat offset by ' + pleatOffset + ' mm at ' + pleatAngle + ' degrees')
 
@@ -440,8 +440,8 @@ function draftPercyFront({
     log.info('Hem intersects ' + ary.length + ' times at y ' + points.hemLowestPoint.y)
 
     points.hemLowestPoint = ary[0]
-    x = x + 2
-    ary = paths.shortHem.intersectsY(points.hemLowestPoint.y + 2)
+    x = x + 1
+    ary = paths.shortHem.intersectsY(points.hemLowestPoint.y + 1)
   }
   snippets['hemLowestPoint'] = new Snippet('notch', points.hemLowestPoint)
 
