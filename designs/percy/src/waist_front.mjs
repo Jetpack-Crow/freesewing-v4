@@ -65,7 +65,7 @@ function draftPercyWaistFront({
     .close()
 
   if (sa) {
-    paths.saBase = paths.seam.offset(sa).hide()
+    paths.saBase = paths.seam
     paths.sa = paths.saBase.offset(sa).setClass('sa')
   }
 

@@ -1,5 +1,5 @@
 import { front } from './front.mjs'
-import { pctBasedOn } from '@freesewing/core'
+import { waist_front } from './waist_front.mjs'
 
 function draftPercyWaistSide({
   points,
@@ -40,7 +40,7 @@ function draftPercyWaistSide({
     .close()
 
   if (sa) {
-    paths.saBase = paths.seam.offset(sa).hide()
+    paths.saBase = paths.seam
     paths.sa = paths.saBase.offset(sa).setClass('sa')
   }
 
@@ -57,7 +57,7 @@ function draftPercyWaistSide({
 export const waist_side = {
   name: 'percy.waist_side',
   measurements: [],
-  after: [front],
+  after: [front, waist_front],
   options: {},
   draft: draftPercyWaistSide,
 }

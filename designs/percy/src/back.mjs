@@ -172,6 +172,20 @@ function draftPercyBack({
     for (let i = 0; i < options.slashIterations; i++) {
       paths.shortshem = paths.shortshem.line(slashPointsInner[i]).line(slashPointsHem[i])
     }
+
+    const rotationCorrection = 180 - points.outseamShiftUpwards.angle(points.inseamShiftUpwards)
+
+    for (const p in paths) {
+      paths[p] = paths[p].rotate(rotationCorrection, points.styleWaistOut)
+    }
+    paths.inseam.hide()
+    paths.outseam.hide()
+    if (paths.hint) {
+      paths.hint.setClass('note help')
+    }
+    for (const p in points) {
+      points[p] = points[p].rotate(rotationCorrection, points.styleWaistOut)
+    }
   }
 
   store.set('back_waist_width', paths.waist.length())
@@ -186,9 +200,17 @@ function draftPercyBack({
     .close()
 
   if (sa) {
-    paths.saBase = paths.seam.offset(sa).hide()
+    paths.saBase = paths.seam
     paths.sa = paths.saBase.offset(sa).setClass('sa')
   }
+  if (paths.hemBase) delete paths.hemBase
+
+  points.titleAnchor = points.styleWaistOut.shiftFractionTowards(points.inseamShiftUpwards, 0.5)
+  macro('title', {
+    nr: 1,
+    title: 'back',
+    at: points.titleAnchor,
+  })
 
   macro('rmGrainline', 'grainline')
   macro('rmScaleBox')

@@ -7,7 +7,10 @@
     "cuff": "Cuff",
     "waist_back": "Waist Back",
     "waist_front": "Waist Front",
-    "waist_side": "Waist Side"
+    "waist_side": "Waist Side",
+    "pocket": "Pocket",
+    "pocket_facing": "Pocket Facing"
+
   },
   "s": { },
   "o": { }

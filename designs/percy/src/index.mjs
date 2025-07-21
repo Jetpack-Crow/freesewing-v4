@@ -7,16 +7,30 @@ import { waist_front } from './waist_front.mjs'
 import { waist_side } from './waist_side.mjs'
 import { waist_back } from './waist_back.mjs'
 import { cuff } from './cuff.mjs'
+import { pocket } from './pocket.mjs'
+import { pocket_facing } from './pocket_facing.mjs'
 import about from '../about.json' with { type: 'json' }
 
 // Setup our new design
 const Percy = new Design({
   data: about,
-  parts: [front, back, cuff, waist_front, waist_side, waist_back],
+  parts: [front, back, cuff, waist_front, waist_side, waist_back, pocket, pocket_facing],
 })
 
 // Merge translations
 const i18n = mergeI18n([titanI18n, percyI18n])
 
 // Named exports
-export { front, back, cuff, waist_front, waist_side, waist_back, Percy, i18n, about }
+export {
+  front,
+  back,
+  cuff,
+  waist_front,
+  waist_side,
+  waist_back,
+  pocket,
+  pocket_facing,
+  Percy,
+  i18n,
+  about,
+}

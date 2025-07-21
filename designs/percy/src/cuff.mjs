@@ -37,8 +37,7 @@ function draftPercyCuff({
     .close()
 
   if (sa) {
-    paths.saBase = paths.seam.offset(sa).hide()
-    paths.sa = paths.saBase.offset(sa).setClass('sa')
+    paths.sa = paths.seam.offset(sa).setClass('sa')
   }
 
   points.titleAnchor = points.topLeft.shiftFractionTowards(points.bottomRight, 0.5)
