@@ -93,8 +93,6 @@ function draftPercyBack({
 
     //Define all the initial cut points
     for (let i = 1; i <= options.slashIterations; i++) {
-      log.info('slash point ' + i + ' of ' + options.slashIterations)
-
       points['slashPointsHem' + i] = points.outseamShiftUpwards.shiftFractionTowards(
         points.inseamShiftUpwards,
         1 - i / (Number(options.slashIterations) + 1)

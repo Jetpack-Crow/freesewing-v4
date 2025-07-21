@@ -91,6 +91,21 @@ function draftPercyFront({
 
   paths.waist = new Path().move(points.styleWaistIn).line(points.styleWaistOut).setClass('lining')
 
+  const inseamRotatePoints = [
+    'styleWaistIn',
+    'styleWaistInNoAngle',
+    'crotchSeamCurveStart',
+    'cfSeat',
+    'cfWaist',
+    'crotchSeamCurveCp2',
+    'crotchSeamCurveMax',
+    'crotchSeamCurveCp1',
+    'fork',
+    'forkCp1',
+    'inseamShiftUpwards',
+    'waistIn',
+  ]
+
   if (options.spread) {
     points.hemcenter = points.outseamShiftUpwards.shiftFractionTowards(
       points.inseamShiftUpwards,
@@ -127,43 +142,28 @@ function draftPercyFront({
 
     let slashPointsInner = slashPointsHem.slice()
 
-    const outseamRotatePoints = [
-      'styleWaistOut',
-      'seatOutCp1',
-      'seatOut',
-      'seatY',
-      'upperLegY',
-      'seatOutCp2',
-      'outseamShiftUpwards',
-    ]
-    const inseamRotatePoints = [
-      'styleWaistIn',
-      'styleWaistInNoAngle',
-      'crotchSeamCurveStart',
-      'cfSeat',
-      'cfWaist',
-      'crotchSeamCurveCp2',
-      'crotchSeamCurveMax',
-      'crotchSeamCurveCp1',
-      'fork',
-      'forkCp1',
-      'inseamShiftUpwards',
-      'waistIn',
-    ]
-
     for (let i = 0; i < options.slashIterations; i++) {
       //Rotate all the waist points to the left of the active point
       for (let j = i; j < options.slashIterations; j++) {
-        slashPointsWaist[j] = slashPointsWaist[j].rotate(rotationAmount, slashPointsWaist[i])
+        slashPointsWaist[j] = points['slashPointsWaist' + j] = slashPointsWaist[j].rotate(
+          rotationAmount,
+          slashPointsWaist[i]
+        )
       }
 
       //Rotate all the hem points to the left of the active point
       for (let j = i; j < options.slashIterations; j++) {
-        slashPointsHem[j] = slashPointsHem[j].rotate(rotationAmount, slashPointsWaist[i])
+        slashPointsHem[j] = points['slashPointsHem' + j] = slashPointsHem[j].rotate(
+          rotationAmount,
+          slashPointsWaist[i]
+        )
       }
 
       for (let j = i + 1; j < options.slashIterations; j++) {
-        slashPointsInner[j] = slashPointsInner[j].rotate(rotationAmount, slashPointsWaist[i])
+        slashPointsInner[j] = points['slashPointsInner' + j] = slashPointsInner[j].rotate(
+          rotationAmount,
+          slashPointsWaist[i]
+        )
       }
 
       //rotate the inseam
@@ -205,7 +205,9 @@ function draftPercyFront({
       paths.shortHem = paths.shortHem.line(slashPointsInner[i]).line(slashPointsHem[i])
     }
 
+    //rotate all the paths back
     for (const p in paths) {
+      //log.info(paths[p].asRenderProps().name)
       paths[p] = paths[p].rotate(totalRotationAmount / -2, points.styleWaistOut)
     }
     paths.inseam.hide()
@@ -260,13 +262,6 @@ function draftPercyFront({
 
   log.info('The opening needs to go down the front piece by ' + openingDepth)
 
-  if (openingDepth < 0) {
-    log.info('This garment does not need a front opening deeper than the waistband.')
-  } else {
-    points.openingDepthDisplay = paths.crotchseam.reverse().shiftAlong(openingDepth)
-    snippets['opening_notch'] = new Snippet('notch', points.openingDepthDisplay)
-  }
-
   //Draw the pocket cutout
   points.pocketInnerEdge = paths.waist.shiftFractionAlong(options.frontPanelPercentage)
   log.info('Waist front panel width is ' + paths.waist.length() * options.frontPanelPercentage * 2)
@@ -307,6 +302,14 @@ function draftPercyFront({
     .curve(points.pocketBottomEdgeCp1, points.pocketInnerEdgeCp2, points.pocketInnerEdge)
     .reverse()
 
+  //Draw the pocket opening depth on the pocket path
+  if (openingDepth < 0) {
+    log.info('This garment does not need a front opening deeper than the waistband.')
+  } else {
+    points.openingDepthDisplay = paths.pocketCutout.shiftAlong(openingDepth)
+    snippets['opening_notch'] = new Snippet('notch', points.openingDepthDisplay)
+  }
+
   //Cut the waist and the outseam to account for the pocket chunk
   paths.trimmedOutseam = paths.shortOutseam.split(points.pocketBottomEdge)[1]
   paths.shortOutseam.hide()
@@ -315,9 +318,71 @@ function draftPercyFront({
 
   if (options.frontPleat) {
     //add front pleat
+    const frontPleatShiftDistance =
+      paths.trimmedWaist.length() * options.frontPleatPosition * options.pocketFacingUnderlap
+    const frontPleatWaistRatio = frontPleatShiftDistance / paths.waist.length()
 
-    points.frontPleatPoint = paths.trimmedWaist.shiftFractionAlong(options.frontPleatPosition)
-    snippets['front_pleat'] = new Snippet('notch', points.frontPleatPoint).scale(0.5)
+    points.topPleatPoint = paths.trimmedWaist.shiftAlong(frontPleatShiftDistance)
+    points.bottomPleatPoint = paths.shortHem.shiftFractionAlong(1 - frontPleatWaistRatio)
+    snippets['front_pleat_top'] = new Snippet('notch', points.topPleatPoint).scale(0.5)
+    snippets['front_pleat_bottom'] = new Snippet('notch', points.bottomPleatPoint).scale(0.5)
+
+    const pleatAngle = points.topPleatPoint.angle(points.bottomPleatPoint) + 90
+    const pleatOffset = measurements.waist * options.frontPleatWidth
+    log.info('Pleat offset by ' + pleatOffset + ' mm at ' + pleatAngle + ' degrees')
+
+    points.pleatShiftByAngle = points.topPleatPoint.shift(pleatAngle, pleatOffset)
+    snippets['frontPleatByAngle'] = new Snippet('notch', points.pleatShiftByAngle).scale(0.5)
+
+    const pleatShiftX = points.pleatShiftByAngle.x - points.topPleatPoint.x
+    const pleatShiftY = points.pleatShiftByAngle.y - points.topPleatPoint.y
+
+    //Shift the inseam points accordingly
+    for (let p of inseamRotatePoints) {
+      points[p] = points[p].translate(pleatShiftX, pleatShiftY)
+    }
+
+    //shift the inseam paths accordingly
+    paths.shortInseam = paths.shortInseam.translate(pleatShiftX, pleatShiftY)
+    if (paths.hint) {
+      paths.hint = paths.hint.translate(pleatShiftX, pleatShiftY).setClass('note help')
+    }
+    paths.crotchseam = paths.crotchseam.translate(pleatShiftX, pleatShiftY)
+
+    //Cut and reconnect the waist and hem paths
+    paths.trimmedWaist = paths.trimmedWaist
+      .split(points.topPleatPoint)[0]
+      .translate(pleatShiftX, pleatShiftY)
+      .join(paths.trimmedWaist.split(points.topPleatPoint)[1])
+    paths.shortHem = paths.shortHem
+      .split(points.bottomPleatPoint)[0]
+      .join(paths.shortHem.split(points.bottomPleatPoint)[1].translate(pleatShiftX, pleatShiftY))
+
+    //Draw the pleat marking
+    const pleatMarkingLength = options.frontPleatDisplayLength * measurements.waist
+    log.info('Pleat marking length is ' + pleatMarkingLength)
+    points.pleatInnerBottom = points.topPleatPoint.shift(pleatAngle - 90, pleatMarkingLength)
+    points.pleatOuterBottom = points.pleatShiftByAngle.shift(pleatAngle - 90, pleatMarkingLength)
+    points.pleatCenterBottom = points.pleatInnerBottom.shiftFractionTowards(
+      points.pleatOuterBottom,
+      0.5
+    )
+    points.pleatCenterTop = points.topPleatPoint.shiftFractionTowards(points.pleatShiftByAngle, 0.5)
+
+    paths.pleatInner = new Path()
+      .move(points.topPleatPoint)
+      .line(points.pleatInnerBottom)
+      .setClass('sa')
+
+    paths.pleatOuter = new Path()
+      .move(points.pleatShiftByAngle)
+      .line(points.pleatOuterBottom)
+      .setClass('sa')
+
+    paths.pleatCenter = new Path()
+      .move(points.pleatCenterTop)
+      .line(points.pleatCenterBottom)
+      .setClass('sa')
   }
 
   //draw the seam
@@ -345,6 +410,21 @@ function draftPercyFront({
     at: points.titleAnchor,
   })
 
+  //Remove all broken paperless macros
+  macro('rmVd', 'hHemToSideWaist')
+  macro('rmVd', 'hHemToFork')
+  macro('rmVd', 'hForkToCfWaist')
+  macro('rmVd', 'hStartCrotchCurveToCfWaist')
+  macro('rmHd', 'wHem')
+  macro('rmHd', 'wHemLeftToPleat')
+  macro('rmHd', 'wHemRightToPleat')
+  macro('rmHd', 'wSideWaistToPleat')
+  macro('rmHd', 'wPleatToCfWaist')
+  macro('rmHd', 'wPleastToFork')
+  macro('rmHd', 'wPleastToCrotchProjection')
+  macro('rmHd', 'hForkToCfWaist')
+  macro('rmHd', 'wPleastToStartCrotchCurve')
+
   macro('rmGrainline', 'grainline')
   return part
 }
@@ -361,8 +441,16 @@ export const front = {
     hemRatio: { pct: 250, min: 100, max: 400, menu: 'style.spread' },
     spread: { bool: true, menu: 'style.spread' },
 
-    frontPleat: { bool: true, menu: 'style' },
-    frontPleatPosition: { pct: 50, min: 10, max: 90, menu: 'style' },
+    frontPleat: { bool: true, menu: 'style.pleat' },
+    frontPleatPosition: { pct: 50, min: 10, max: 90, menu: 'style.pleat' },
+    frontPleatWidth: { pct: 6.6, min: 0, max: 10, menu: 'style.pleat', ...pctBasedOn('waist') },
+    frontPleatDisplayLength: {
+      pct: 8,
+      min: 1,
+      max: 20,
+      menu: 'style.pleat',
+      ...pctBasedOn('waist'),
+    },
 
     waistHeight: { pct: 75, min: 0, max: 100, menu: 'style' },
     waistbandWidth: {
