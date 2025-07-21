@@ -74,8 +74,38 @@ function draftPercyPocket({
 
   delete snippets['opening_notch']
   delete snippets['logo']
+  delete snippets['waistLowestPoint']
+  delete snippets['hemLowestPoint']
 
+  //Remove unused paperless macros (all the ones I added to the front, woof)
   macro('rmGrainline', 'grainline')
+  macro('rmHd', 'wHem')
+  macro('rmHd', 'hWaist')
+  macro('rmHd', 'hCrossSeam')
+  macro('rmHd', 'hPocket')
+  macro('rmHd', 'hWaistToInseam')
+  macro('rmHd', 'wHemRight')
+  macro('rmHd', 'wHemLeft')
+  macro('rmHd', 'hInseam')
+
+  macro('rmVd', 'vWaistToInseam')
+  macro('rmVd', 'floorToOutseam')
+  macro('rmVd', 'floorToInseam')
+  macro('rmVd', 'vInseam')
+  macro('rmVd', 'vCrossSeam')
+  macro('rmVd', 'heightWaistIn')
+  macro('rmVd', 'vCrossSeam')
+  macro('rmVd', 'heightPocketInner')
+  macro('rmVd', 'heightWaistOut')
+  macro('rmVd', 'vPocket')
+  macro('rmVd', 'heightWaistLowest')
+
+  macro('rmPd', 'lengthInseam')
+  macro('rmPd', 'lengthHem')
+  macro('rmPd', 'pd')
+  macro('rmPd', 'lengthCrossSeam')
+  macro('rmPd', 'lengthWaist')
+  macro('rmPd', 'lengthPocket')
 
   paths.outseamTop = paths.shortOutseam.split(points.pocketSideSeamIntercept)[0]
   delete paths.shortOutseam
@@ -91,7 +121,11 @@ function draftPercyPocket({
     snippets['openingNotch'] = new Snippet('notch', points.openingNotch)
   }
 
-  paths.seam = paths.pocketWaistEdge.join(paths.outseamTop).join(paths.pocketBottomEdge).close()
+  paths.seam = paths.pocketWaistEdge
+    .join(paths.outseamTop)
+    .join(paths.pocketBottomEdge)
+    .close()
+    .hide()
   if (sa) {
     paths.saBase = paths.seam
     paths.sa = paths.saBase.offset(sa).setClass('sa')
@@ -118,6 +152,93 @@ function draftPercyPocket({
     nr: 7,
     title: 'pocket',
     at: points.titleAnchor,
+  })
+
+  macro('pd', {
+    id: 'lengthOutseam',
+    path: paths.outseamTop.reverse(),
+    d: -15 - sa,
+  })
+  macro('pd', {
+    id: 'lengthWaist',
+    path: paths.pocketWaistEdge.reverse(),
+    d: -15 - sa,
+  })
+
+  macro('vd', {
+    id: 'vSide',
+    to: points.pocketSideSeamIntercept,
+    from: points.styleWaistOut,
+    x: points.pocketSideSeamIntercept.x - sa - 15,
+  })
+  macro('hd', {
+    id: 'hSide',
+    from: points.pocketSideSeamIntercept,
+    to: points.styleWaistOut,
+    y: points.styleWaistOut.y - sa - 15,
+  })
+  macro('hd', {
+    id: 'hTop',
+    from: points.styleWaistOut,
+    to: points.pocketFacingEdge,
+    y: points.styleWaistOut.y - sa - 15,
+  })
+  macro('vd', {
+    id: 'vTop',
+    from: points.styleWaistOut,
+    to: points.pocketFacingEdge,
+    x: points.pocketFacingEdge.x + sa + 15,
+  })
+
+  points.lowestPocketPoint = points.pocketSideSeamIntercept
+  let x = 0
+  let ary = paths.pocketBottomEdge.intersectsY(points.lowestPocketPoint.y + 1)
+  while (ary.length > 0 && x < measurements.waistToKnee) {
+    points.lowestPocketPoint = ary[0]
+    x = x + 1
+    ary = paths.pocketBottomEdge.intersectsY(points.lowestPocketPoint.y + 1)
+  }
+  //snippets['lowestPocketPoint'] = new Snippet('notch', points.lowestPocketPoint)
+
+  points.rightmostPocketPoint = points.pocketSideSeamIntercept
+  x = 0
+  ary = paths.pocketBottomEdge.intersectsX(points.rightmostPocketPoint.x + 1)
+  while (ary.length > 0 && x < measurements.waistToKnee) {
+    points.rightmostPocketPoint = ary[0]
+    x = x + 1
+    ary = paths.pocketBottomEdge.intersectsX(points.rightmostPocketPoint.x + 1)
+  }
+  //snippets['rightmostPocketPoint'] = new Snippet('notch', points.rightmostPocketPoint)
+
+  macro('hd', {
+    id: 'hBottom',
+    from: points.pocketSideSeamIntercept,
+    to: points.rightmostPocketPoint,
+    y: points.lowestPocketPoint.y + sa + 30,
+  })
+  macro('hd', {
+    id: 'hBottomLeft',
+    to: points.lowestPocketPoint,
+    from: points.pocketSideSeamIntercept,
+    y: points.lowestPocketPoint.y + sa + 15,
+  })
+  macro('hd', {
+    id: 'hBottomRight',
+    from: points.lowestPocketPoint,
+    to: points.rightmostPocketPoint,
+    y: points.lowestPocketPoint.y + sa + 15,
+  })
+  macro('vd', {
+    id: 'vBottomRight',
+    from: points.lowestPocketPoint,
+    to: points.pocketFacingEdge,
+    x: points.rightmostPocketPoint.x + sa + 15,
+  })
+  macro('vd', {
+    id: 'vBottomLeft',
+    from: points.lowestPocketPoint,
+    to: points.pocketSideSeamIntercept,
+    x: points.pocketSideSeamIntercept.x - sa - 15,
   })
 
   return part

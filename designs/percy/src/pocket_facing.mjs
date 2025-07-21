@@ -30,10 +30,63 @@ function draftPercyPocketFacing({
     .join(paths.pocketCutout)
     .join(paths.trimmedOutseam)
     .close()
+    .hide()
   if (sa) {
     paths.saBase = paths.seam
     paths.sa = paths.saBase.offset(sa).setClass('sa')
   }
+
+  //Remove unused paperless macros
+  macro('rmHd', 'hSide')
+  macro('rmHd', 'hTop')
+  macro('rmVd', 'vTop')
+  macro('rmVd', 'vSide')
+  macro('rmPd', 'lengthWaist')
+  macro('rmPd', 'lengthOutseam')
+
+  macro('pd', {
+    id: 'lengthOutseam',
+    path: paths.trimmedOutseam.reverse(),
+    d: -15 - sa,
+  })
+
+  macro('pd', {
+    id: 'lengthWaist',
+    path: paths.trimmedWaist.reverse(),
+    d: -15 - sa,
+  })
+
+  macro('pd', {
+    id: 'lengthPocket',
+    path: paths.pocketCutout.reverse(),
+    d: 15 + sa,
+  })
+
+  macro('vd', {
+    id: 'vOutseam',
+    from: points.pocketSideSeamIntercept,
+    to: points.pocketBottomEdge,
+    x: points.pocketSideSeamIntercept.x - sa - 15,
+  })
+  macro('hd', {
+    id: 'hOutseam',
+    from: points.pocketSideSeamIntercept,
+    to: points.pocketBottomEdge,
+    y: points.pocketBottomEdge.y - sa - 15,
+  })
+
+  macro('vd', {
+    id: 'vPocket',
+    from: points.pocketInnerEdge,
+    to: points.pocketBottomEdge,
+    x: points.pocketBottomEdge.x,
+  })
+  macro('hd', {
+    id: 'hPocket',
+    to: points.pocketInnerEdge,
+    from: points.pocketBottomEdge,
+    y: points.pocketInnerEdge.y,
+  })
 
   macro('title', {
     nr: 8,

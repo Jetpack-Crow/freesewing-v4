@@ -303,7 +303,7 @@ function draftPercyBack({
   })
 
   macro('vd', {
-    id: 'waistToInseam',
+    id: 'vWaistToInseam',
     from: points.styleWaistOut,
     to: points.outseamShiftUpwards,
     x: points.outseamShiftUpwards.x + 15 + sa,
