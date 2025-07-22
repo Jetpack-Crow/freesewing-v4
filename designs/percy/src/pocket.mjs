@@ -106,6 +106,12 @@ function draftPercyPocket({
   macro('rmPd', 'lengthCrossSeam')
   macro('rmPd', 'lengthWaist')
   macro('rmPd', 'lengthPocket')
+  if (options.frontPleat) {
+    macro('rmLd', 'pleatWidth')
+    macro('rmLd', 'pleatFromCenter')
+  }
+  macro('rmHd', 'waistLowestRight')
+  macro('rmHd', 'waistLowestLeft')
 
   paths.outseamTop = paths.shortOutseam.split(points.pocketSideSeamIntercept)[0]
   delete paths.shortOutseam
@@ -116,10 +122,8 @@ function draftPercyPocket({
   paths.pocketWaistEdge = paths.waist.split(points.pocketFacingEdge)[1]
   delete paths.waist
 
-  if (store.get('openingDepth') > 0) {
-    points.openingNotch = paths.pocketBottomEdge.reverse().shiftAlong(store.get('openingDepth'))
-    snippets['openingNotch'] = new Snippet('notch', points.openingNotch)
-  }
+  delete paths.inseam
+  delete paths.outseam
 
   paths.seam = paths.pocketWaistEdge
     .join(paths.outseamTop)
@@ -139,6 +143,31 @@ function draftPercyPocket({
   points.grainlineTop = paths.pocketWaistEdge
     .shiftFractionAlong(0.5)
     .shiftFractionTowards(points.grainlineBottom, 0.3)
+
+  const grainlineAngle = points.grainlineTop.angle(points.grainlineBottom) + 90
+
+  for (let p in points) {
+    points[p] = points[p].rotate(-grainlineAngle, points.grainlineTop)
+  }
+  for (let p in paths) {
+    paths[p] = paths[p].rotate(-grainlineAngle, points.grainlineTop)
+  }
+
+  if (store.get('openingDepth') > 0) {
+    points.openingNotch = paths.pocketBottomEdge.reverse().shiftAlong(store.get('openingDepth'))
+    snippets['openingNotch'] = new Snippet('notch', points.openingNotch)
+  }
+
+  points.lowestPocketPoint = points.pocketSideSeamIntercept
+  let x = 0
+  let ary = paths.pocketBottomEdge.intersectsY(points.lowestPocketPoint.y + 1)
+  while (ary.length > 0 && x < measurements.waistToKnee) {
+    points.lowestPocketPoint = ary[0]
+    x = x + 1
+    ary = paths.pocketBottomEdge.intersectsY(points.lowestPocketPoint.y + 1)
+  }
+  //snippets['lowestPocketPoint'] = new Snippet('notch', points.lowestPocketPoint)
+
   macro('grainline', {
     from: points.grainlineTop,
     to: points.grainlineBottom,
@@ -166,10 +195,16 @@ function draftPercyPocket({
   })
 
   macro('vd', {
-    id: 'vSide',
-    to: points.pocketSideSeamIntercept,
+    id: 'vLeft',
+    to: points.lowestPocketPoint,
     from: points.styleWaistOut,
-    x: points.pocketSideSeamIntercept.x - sa - 15,
+    x: points.styleWaistOut.x,
+  })
+  macro('vd', {
+    id: 'vRight',
+    to: points.lowestPocketPoint,
+    from: points.pocketFacingEdge,
+    x: points.pocketFacingEdge.x,
   })
   macro('hd', {
     id: 'hSide',
@@ -183,22 +218,13 @@ function draftPercyPocket({
     to: points.pocketFacingEdge,
     y: points.styleWaistOut.y - sa - 15,
   })
-  macro('vd', {
-    id: 'vTop',
-    from: points.styleWaistOut,
-    to: points.pocketFacingEdge,
-    x: points.pocketFacingEdge.x + sa + 15,
-  })
 
-  points.lowestPocketPoint = points.pocketSideSeamIntercept
-  let x = 0
-  let ary = paths.pocketBottomEdge.intersectsY(points.lowestPocketPoint.y + 1)
-  while (ary.length > 0 && x < measurements.waistToKnee) {
-    points.lowestPocketPoint = ary[0]
-    x = x + 1
-    ary = paths.pocketBottomEdge.intersectsY(points.lowestPocketPoint.y + 1)
-  }
-  //snippets['lowestPocketPoint'] = new Snippet('notch', points.lowestPocketPoint)
+  macro('ld', {
+    id: 'lengthOpening',
+    from: points.pocketFacingEdge,
+    to: points.openingNotch,
+    d: 7,
+  })
 
   points.rightmostPocketPoint = points.pocketSideSeamIntercept
   x = 0

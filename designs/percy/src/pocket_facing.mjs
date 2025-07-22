@@ -40,7 +40,7 @@ function draftPercyPocketFacing({
   macro('rmHd', 'hSide')
   macro('rmHd', 'hTop')
   macro('rmVd', 'vTop')
-  macro('rmVd', 'vSide')
+  macro('rmVd', 'vLeft')
   macro('rmPd', 'lengthWaist')
   macro('rmPd', 'lengthOutseam')
 
@@ -66,7 +66,7 @@ function draftPercyPocketFacing({
     id: 'vOutseam',
     from: points.pocketSideSeamIntercept,
     to: points.pocketBottomEdge,
-    x: points.pocketSideSeamIntercept.x - sa - 15,
+    x: points.pocketBottomEdge.x,
   })
   macro('hd', {
     id: 'hOutseam',

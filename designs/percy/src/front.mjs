@@ -191,7 +191,7 @@ function draftPercyFront({
     for (let c in slashPointsInner) {
       snippets[c + '_notch'] = new Snippet('notch', slashPointsInner[c]).scale(0.5)
     }
-    */
+      */
 
     //draw the new curved waist
     paths.waist = new Path().move(points.styleWaistOut)
@@ -432,9 +432,9 @@ function draftPercyFront({
     to: points.grainlineBottom,
   })
 
-  points.hemLowestPoint = points.outseamShiftUpwards
+  points.hemLowestPoint = paths.shortHem.shiftFractionAlong(0.5)
   let x = 0
-  let ary = paths.shortHem.intersectsY(points.hemLowestPoint.y + 2)
+  let ary = paths.shortHem.intersectsY(points.hemLowestPoint.y + 1)
 
   while (ary.length > 0 && x < measurements.waistToFloor) {
     log.info('Hem intersects ' + ary.length + ' times at y ' + points.hemLowestPoint.y)
@@ -443,9 +443,9 @@ function draftPercyFront({
     x = x + 1
     ary = paths.shortHem.intersectsY(points.hemLowestPoint.y + 1)
   }
-  snippets['hemLowestPoint'] = new Snippet('notch', points.hemLowestPoint)
+  //snippets['hemLowestPoint'] = new Snippet('notch', points.hemLowestPoint)
 
-  points.waistLowestPoint = points.styleWaistIn
+  points.waistLowestPoint = paths.trimmedWaist.shiftFractionAlong(0.5)
   x = 0
   ary = paths.waist.intersectsY(points.waistLowestPoint.y + 2)
   while (ary.length > 0 && x < measurements.waistToSeat) {
@@ -455,7 +455,7 @@ function draftPercyFront({
     x = x + 1
     ary = paths.waist.intersectsY(points.waistLowestPoint.y + 1)
   }
-  snippets['waistLowestPoint'] = new Snippet('notch', points.waistLowestPoint)
+  //snippets['waistLowestPoint'] = new Snippet('notch', points.waistLowestPoint)
 
   macro('pd', {
     id: 'lengthHem',
@@ -539,9 +539,24 @@ function draftPercyFront({
 
   macro('pd', {
     id: 'lengthWaist',
-    path: paths.trimmedWaist,
-    d: 15 + sa,
+    path: paths.trimmedWaist.reverse(),
+    d: -15 - sa,
   })
+
+  macro('hd', {
+    id: 'waistLowestLeft',
+    from: points.pocketInnerEdge,
+    to: points.waistLowestPoint,
+    y: points.waistLowestPoint.y + 15,
+  })
+
+  macro('hd', {
+    id: 'waistLowestRight',
+    from: points.waistLowestPoint,
+    to: points.styleWaistIn,
+    y: points.waistLowestPoint.y + 15,
+  })
+
   macro('pd', {
     id: 'lengthPocket',
     path: paths.pocketCutout,
@@ -604,6 +619,22 @@ function draftPercyFront({
     from: points.pocketInnerEdge,
     y: points.styleWaistIn.y - sa - 15,
   })
+
+  if (options.frontPleat) {
+    macro('ld', {
+      id: 'pleatWidth',
+      from: points.topPleatPoint,
+      to: points.pleatShiftByAngle,
+      d: 7,
+    })
+
+    macro('ld', {
+      id: 'pleatFromCenter',
+      from: points.pleatShiftByAngle,
+      to: points.styleWaistIn,
+      d: 7,
+    })
+  }
 
   return part
 }

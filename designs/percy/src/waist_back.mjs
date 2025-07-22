@@ -75,8 +75,8 @@ function draftPercyWaistBack({
     .curve(points.bottomLeftCp1, points.bottomRightCp2, points.bottomRight)
     .hide()
 
-  snippets['backNotch1'] = new Snippet('bnotch', paths.bottomCurve.shiftFractionAlong(0.25))
-  snippets['backNotch2'] = new Snippet('bnotch', paths.bottomCurve.shiftFractionAlong(0.75))
+  snippets['backNotch1'] = new Snippet('bnotch', paths.bottomCurve.shiftFractionAlong(0.33))
+  snippets['backNotch2'] = new Snippet('bnotch', paths.bottomCurve.shiftFractionAlong(0.67))
 
   paths.seam = new Path()
     .move(points.topLeft)
@@ -150,6 +150,37 @@ function draftPercyWaistBack({
     to: points.bottomRight,
     from: points.topRight,
     d: 15,
+  })
+
+  macro('hd', {
+    id: 'hLeft',
+    to: points.bottomLeft,
+    from: points.topLeft,
+    y: points.topLeft.y,
+  })
+  macro('vd', {
+    id: 'vLeft',
+    to: points.bottomLeft,
+    from: points.topLeft,
+    x: points.bottomLeft.x,
+  })
+
+  macro('hd', {
+    id: 'hRight',
+    from: points.bottomRight,
+    to: points.topRight,
+    y: points.topRight.y,
+  })
+  macro('vd', {
+    id: 'vRight',
+    from: points.bottomRight,
+    to: points.topRight,
+    x: points.bottomRight.x,
+  })
+  macro('pd', {
+    id: 'lengthBottom',
+    path: paths.bottomCurve.reverse(),
+    d: 15 + sa,
   })
 
   return part

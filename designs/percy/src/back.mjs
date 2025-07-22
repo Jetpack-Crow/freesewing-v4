@@ -200,7 +200,7 @@ function draftPercyBack({
 
   store.set('back_waist_width', paths.waist.length())
 
-  snippets['backNotch'] = new Snippet('bnotch', paths.waist.shiftFractionAlong(0.5))
+  snippets['backNotch'] = new Snippet('bnotch', paths.waist.shiftFractionAlong(0.33))
 
   paths.crossSeam = new Path()
     .move(points.styleWaistInNoAngle)
@@ -236,19 +236,19 @@ function draftPercyBack({
   macro('rmVd', 'hStartCrotchCurveToCbWaist')
   macro('rmVd', 'hForkToCbWaist')
 
-  points.hemLowestPoint = points.outseamShiftUpwards
+  points.hemLowestPoint = paths.shortshem.shiftFractionAlong(0.5)
   let x = 0
-  let ary = paths.shortshem.intersectsY(points.hemLowestPoint.y + 2)
+  let ary = paths.shortshem.intersectsY(points.hemLowestPoint.y + 1)
   while (ary.length > 0 && x < measurements.waistToSeat) {
     log.info('Hem intersects ' + ary.length + ' times at y ' + points.hemLowestPoint.y)
 
     points.hemLowestPoint = ary[0]
-    x = x + 2
-    ary = paths.shortshem.intersectsY(points.hemLowestPoint.y + 2)
+    x = x + 1
+    ary = paths.shortshem.intersectsY(points.hemLowestPoint.y + 1)
   }
   //snippets['hemLowestPoint'] = new Snippet('notch', points.hemLowestPoint)
 
-  points.waistLowestPoint = points.styleWaistIn
+  points.waistLowestPoint = paths.waist.shiftFractionAlong(0.5)
   x = 0
   ary = paths.waist.intersectsY(points.waistLowestPoint.y + 2)
   while (ary.length > 0 && x < measurements.waistToFloor) {
@@ -383,6 +383,12 @@ function draftPercyBack({
     to: points.styleWaistIn,
     from: points.fork,
     x: points.fork.x,
+  })
+  macro('hd', {
+    id: 'hWaistToLowest',
+    from: points.styleWaistIn,
+    to: points.waistLowestPoint,
+    y: points.waistLowestPoint.y,
   })
 
   points.titleAnchor = points.styleWaistOut.shiftFractionTowards(points.inseamShiftUpwards, 0.5)
