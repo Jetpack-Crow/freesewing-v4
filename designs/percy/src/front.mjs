@@ -142,6 +142,7 @@ function draftPercyFront({
 
     let slashPointsInner = slashPointsHem.slice()
 
+    //For each active point ...
     for (let i = 0; i < options.slashIterations; i++) {
       //Rotate all the waist points to the left of the active point
       for (let j = i; j < options.slashIterations; j++) {
@@ -318,14 +319,17 @@ function draftPercyFront({
 
   if (options.frontPleat) {
     //add front pleat
-    const frontPleatShiftDistance =
-      paths.trimmedWaist.length() * options.frontPleatPosition * options.pocketFacingUnderlap
+    const frontPleatShiftDistance = paths.trimmedWaist.length() * options.frontPleatPosition //* options.pocketFacingUnderlap
     const frontPleatWaistRatio = frontPleatShiftDistance / paths.waist.length()
 
     points.topPleatPoint = paths.trimmedWaist.shiftAlong(frontPleatShiftDistance)
     points.bottomPleatPoint = paths.shortHem.shiftFractionAlong(1 - frontPleatWaistRatio)
 
-    const pleatAngle = paths.trimmedWaist.angleAt(points.topPleatPoint) + 180
+    const pleatAngle =
+      (paths.trimmedWaist.angleAt(points.topPleatPoint) +
+        paths.shortHem.angleAt(points.bottomPleatPoint)) /
+        2 -
+      90
     const pleatOffset = measurements.waist * options.frontPleatWidth
     log.info('Pleat offset by ' + pleatOffset + ' mm at ' + pleatAngle + ' degrees')
 
