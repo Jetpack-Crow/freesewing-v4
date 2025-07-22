@@ -1,12 +1,12 @@
 {
   "id": "percy",
-  "code": "Your name here",
-  "design": "Your name here",
-  "description": "A FreeSewing pattern that needs a description",
-  "name": "Percy Something",
-  "difficulty": 2,
+  "code": "Gawain (Candle)",
+  "design": "Gawain (Candle)",
+  "description": "A FreeSewing pattern for fall-front puffy shorts",
+  "name": "Percy Puffy Pants",
+  "difficulty": 3,
   "tags": [],
   "techniques": [],
-  "version": "4.0.0",
+  "version": "4.1.0",
   "pkg": "@freesewing/percy"
 }

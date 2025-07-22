@@ -21,39 +21,65 @@
     
   },
   "o": {
-    "cuffWidth.t": "Cuff Width",
-    "cuffWidth.d": "How wide to make the leg cuffs.",
+    "cuffWidth":  {
+      "t": "Cuff Width",
+      "d": "How wide to make the leg cuffs."
+    },
 
-    "pocketDepth.t": "Pocket Depth",
-    "pocketDepth.d": "How far below the waist the pockets should end. Measure from your waist to where your fingertips fall on your side.",
-    "pocketOpeningDepth.t": "Pocket Opening Depth",
-    "pocketOpeningDepth.d": "How deep the pocket openings should be. They can't be shallower than the necessary front opening.",
-    "pocketCurveControl.t": "Pocket Curve Control",
-    "pocketCurveControl.d": "",
-    "pocketBottomCurve.t": "Pocket Bottom Curve",
-    "pocketBottomCurve.d": "",
-    "pocketFacingUnderlap.t": "Pocket Facing Underlap",
-    "pocketFacingUnderlap.d": "",
+    "pocketDepth": {
+      "t": "Pocket Depth",
+      "d": "How far below the waist the pockets should end. Measure from your waist to where your fingertips fall on your side."
+    },
+    "pocketOpeningDepth": {
+      "t": "Pocket Opening Depth",
+      "d": "How deep the pocket openings should be. They can't be shallower than the necessary front opening."
+    },
+    "pocketBottomCurve": {
+      "t": "Pocket Bottom Curve",
+      "d": ""
+    },
+    "pocketFacingUnderlap": {
+      "t": "Pocket Facing Underlap",
+      "d": ""
+    },
 
-    "frontPleat.t": "Front Pleat",
-    "frontPleat.d": "Whether to generate a pleat on the front panel.",
-    "frontPleatPosition.t": "Front Pleat Position",
-    "frontPleatPosition.d": "Where to generate a pleat on the front panel.",
-    "frontPleatWidth.t": "Front Pleat Width",
-    "frontPleatWidth.d": "How big of a pleat to generate on the front panel.",
-    "frontPleatDisplayLength.t": "Front Pleat Preview Length",
-    "frontPleatDisplayLength.d": "How far to draw the pleat preview lines. This doesn't affect shaping at all.",
+    "frontPleat": {
+      "t": "Front Pleat",
+      "d": "Whether to generate a pleat on the front panel."
+    },
 
-    "inseamPercent.t": "Inseam Percent",
-    "inseamPercent.d": "How long the inseam of the shorts should be. 100% = floor length, 40-50% = knee length.",
+    "frontPleatPosition": {
+      "t": "Front Pleat Position",
+      "d": "Where to generate a pleat on the front panel."
+    },
+    "frontPleatWidth": {
+      "t": "Front Pleat Width",
+      "d": "How big of a pleat to generate on the front panel."
+    },
 
-    "frontPanelPercentage.t": "Front Panel Width",
-    "frontPanelPercentage.d": "What proportion of the front of the pants should be taken up by the front panel.",
+    "frontPleatDisplayLength": {
+      "t": "Front Pleat Preview Length",
+      "d": "How far to draw the pleat preview lines. This doesn't affect shaping at all."
+    },
 
-    "hemRatio.t": "Hem Ratio",
-    "hemRatio.d": "How far the bottom hem should be flared, relative to the same height on a basic Titan",
+    "inseamPercent": {
+      "t": "Inseam Percent",
+      "d": "How long the inseam of the shorts should be. 100% = floor length, 40-50% = knee length."
+    },
 
-    "slashIterations.t": "Slash Iterations",
-    "slashIterations.d": "How many cuts to make to spread the body panels. Turn this up if it looks jagged."
+    "frontPanelPercentage": {
+      "t": "Front Panel Width",
+      "d": "What proportion of the front of the pants should be taken up by the front panel."
+    },
+
+    "hemRatio": {
+      "t": "Hem Ratio",
+      "d": "How far the bottom hem should be flared, relative to the same height on a basic Titan"
+    },
+
+    "slashIterations": {
+      "t": "Slash Iterations",
+      "d": "How many cuts to make to spread the body panels. Turn this up if it looks jagged."
+    }
    }
 }
