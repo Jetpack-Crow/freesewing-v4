@@ -9,24 +9,54 @@ function draftPercyCuff({
   Path,
   options,
   complete,
+  expand,
   measurements,
   store,
   macro,
   utils,
+  units,
   snippets,
   Snippet,
   sa,
   log,
   part,
 }) {
-  const length = Number(store.get('original_hem_back')) + Number(store.get('original_hem_front'))
-  log.info('Cuff length is ' + length)
-  const width = options.cuffWidth * measurements.waistToFloor * 2
+  const l = Number(store.get('original_hem_back')) + Number(store.get('original_hem_front'))
+  log.info('Cuff length is ' + l)
+  const w = options.cuffWidth * measurements.waistToFloor * 2
+
+  if (!expand) {
+    // Expand is off, do not draw the part but flag this to the user
+
+    store.flag.note({
+      msg: `percy:cutCuff`,
+
+      replace: {
+        width: units(w),
+        length: units(l),
+      },
+      suggest: {
+        text: 'flag:show',
+        icon: 'expand',
+        update: {
+          settings: ['expand', 1],
+        },
+      },
+    })
+    // Also hint about expand
+    store.flag.preset('expand')
+    return part.hide()
+  }
 
   points.topLeft = new Point(0, 0)
-  points.bottomLeft = new Point(0, width)
-  points.bottomRight = new Point(length, width)
-  points.topRight = new Point(length, 0)
+  points.bottomLeft = new Point(0, w)
+  points.bottomRight = new Point(l, w)
+  points.topRight = new Point(l, 0)
+
+  points.centerLeft = new Point(0, w / 2)
+  points.centerRight = new Point(l, w / 2)
+
+  paths.foldHere = new Path().move(points.centerLeft).line(points.centerRight).setClass('note help')
 
   paths.seam = new Path()
     .move(points.topLeft)

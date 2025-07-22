@@ -49,12 +49,14 @@ function draftPercyWaistFront({
   points.bottomLeft = new Point(-length / 2, width)
   points.bottomRight = new Point(length / 2, width)
   points.topRight = new Point(top_length / 2, 0)
+
   points.topCenter = new Point(0, 0)
   points.bottomCenter = new Point(0, width)
-  paths.centerMark = new Path()
+  /*paths.centerMark = new Path()
     .move(points.topCenter)
     .line(points.bottomCenter)
     .setClass('note help')
+    */
 
   paths.seam = new Path()
     .move(points.topLeft)
@@ -64,12 +66,20 @@ function draftPercyWaistFront({
     .line(points.topLeft)
     .close()
 
+  if (options.frontPleat) {
+    const centerToPleat = store.get('centerToPleat')
+    points.pleatLeft = new Point(-centerToPleat, width)
+    points.pleatRight = new Point(centerToPleat, width)
+    snippets['pleatLeftNotch'] = new Snippet('notch', points.pleatLeft)
+    snippets['pleatRightNotch'] = new Snippet('notch', points.pleatRight)
+  }
+
   if (sa) {
     paths.saBase = paths.seam
     paths.sa = paths.saBase.offset(sa).setClass('sa')
   }
 
-  points.titleAnchor = points.topLeft.shiftFractionTowards(points.bottomRight, 0.5)
+  points.titleAnchor = points.topRight.shiftFractionTowards(points.bottomLeft, 0.7)
   macro('title', {
     nr: 4,
     title: 'waist_front',

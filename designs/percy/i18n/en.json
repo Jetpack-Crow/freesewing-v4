@@ -12,6 +12,14 @@
     "pocket_facing": "Pocket Facing"
 
   },
-  "s": { },
+  "s": { 
+    "cutCuff.t": "The cuff is not shown",
+    "cutCuff.d": "The **Cuffs** are two strips of fabric {{{ width }}} wide and {{{ length }}} long.",
+    
+    "cutPocketFacing.t": "The pocket facing is not shown",
+    "cutPocketFacing.d": "The **Pocket Facing** (8) is not shown, but you can trace it from the Pocket (7) piece. Cut off the corner along the outline left from the green lining boundary, but remember your seam allowance."
+    
+    
+  },
   "o": { }
 }

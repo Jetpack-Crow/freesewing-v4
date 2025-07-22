@@ -1,4 +1,5 @@
 import { front } from './front.mjs'
+import { pctBasedOn } from '@freesewing/core'
 
 function draftPercyPocket({
   points,
@@ -31,7 +32,7 @@ function draftPercyPocket({
   //snippets['pocketSideSeamIntercept'] = new Snippet('notch', points.pocketSideSeamIntercept)
 
   points.pocketInnerCorner = points.pocketFacingEdge.shift(
-    points.styleWaistOut.angle(points.styleWaistIn) - 90,
+    paths.waist.angleAt(points.pocketFacingEdge) + 90,
     pocketDepth
   )
   //snippets['pocketInnerCorner'] = new Snippet('notch', points.pocketInnerCorner)
@@ -152,6 +153,8 @@ function draftPercyPocket({
   for (let p in paths) {
     paths[p] = paths[p].rotate(-grainlineAngle, points.grainlineTop)
   }
+
+  paths.pocketCutout = paths.pocketCutout.setClass('lining')
 
   if (store.get('openingDepth') > 0) {
     points.openingNotch = paths.pocketBottomEdge.reverse().shiftAlong(store.get('openingDepth'))
@@ -276,10 +279,11 @@ export const pocket = {
   from: front,
   options: {
     pocketDepth: {
-      pct: 55,
-      max: 65,
+      pct: 66,
+      max: 80,
       min: 20,
       menu: 'style',
+      ...pctBasedOn('waistToKnee'),
     },
     pocketCurveControl: {
       pct: 50,

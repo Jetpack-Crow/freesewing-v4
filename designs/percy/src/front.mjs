@@ -350,6 +350,8 @@ function draftPercyFront({
     }
     paths.crotchseam = paths.crotchseam.translate(pleatShiftX, pleatShiftY)
 
+    store.set('centerToPleat', paths.trimmedWaist.split(points.topPleatPoint)[0].length())
+
     //Cut and reconnect the waist and hem paths
     paths.trimmedWaist = paths.trimmedWaist
       .split(points.topPleatPoint)[0]

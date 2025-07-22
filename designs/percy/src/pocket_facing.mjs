@@ -7,6 +7,7 @@ function draftPercyPocketFacing({
   Path,
   options,
   complete,
+  expand,
   measurements,
   store,
   macro,
@@ -17,6 +18,24 @@ function draftPercyPocketFacing({
   log,
   part,
 }) {
+  if (!expand) {
+    // Expand is off, do not draw the part but flag this to the user
+
+    store.flag.note({
+      msg: `percy:cutPocketFacing`,
+      suggest: {
+        text: 'flag:show',
+        icon: 'expand',
+        update: {
+          settings: ['expand', 1],
+        },
+      },
+    })
+    // Also hint about expand
+    store.flag.preset('expand')
+    return part.hide()
+  }
+
   delete paths.seam
 
   paths.trimmedOutseam = paths.outseamTop.split(points.pocketBottomEdge)[1]
