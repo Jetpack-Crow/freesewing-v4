@@ -194,24 +194,27 @@ function draftPercyBack({
     //paths.crossSeam = new Path().move(points.fork)
     paths.crossSeam = paths.crossSeam.reverse()
 
-    for (let i = 0; i < crossSeamSlashCount; i++) {
-      points.crossSeamRotationPoint = paths.crossSeam.shiftFractionAlong(
-        (i + 0.5) / crossSeamSlashCount
-      )
+    for (let i = 1; i < crossSeamSlashCount; i++) {
+      points.crossSeamRotationPoint = paths.crossSeam.shiftFractionAlong(i / crossSeamSlashCount)
 
       let halves = paths.crossSeam.split(
-        paths.crossSeam.shiftFractionAlong((i + 0.5) / crossSeamSlashCount)
+        paths.crossSeam.shiftFractionAlong(i / crossSeamSlashCount)
       )
-
-      paths.crossSeam = halves[0].join(
-        halves[1].rotate(rotationAmount, points.crossSeamRotationPoint)
-      )
+      if (!halves[0]) {
+        paths.crossSeam = paths.crossSeam.rotate(rotationAmount, points.crossSeamRotationPoint)
+      } else {
+        paths.crossSeam = halves[0].join(
+          halves[1].rotate(rotationAmount, points.crossSeamRotationPoint)
+        )
+      }
     }
     //paths.crossSeam = paths.crossSeam.line(points.styleWaistIn)
 
     //draw the new curved waist
     log.info(pointsWaistOnly.length + ' points in pointsWaistOnly')
-    paths.waist = new Path().move(paths.crossSeam.end())
+    //paths.waist = new Path().move(paths.crossSeam.end())
+    paths.waist = new Path().move(points.styleWaistIn)
+
     for (let i = 0; i < waistSlashCount; i++) {
       paths.waist = paths.waist.line(pointsWaistOnly[i])
     }

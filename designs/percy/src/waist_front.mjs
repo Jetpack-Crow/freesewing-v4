@@ -41,9 +41,9 @@ function draftPercyWaistFront({
   log.info('Front panel length is ' + length)
   const width = options.waistbandWidth * measurements.waistToFloor
 
-  const front_piece_percentage = length / garment_top_circumference
+  const waistband_top_ratio = waistband_top_circumference / garment_top_circumference
 
-  const top_length = front_piece_percentage * waistband_top_circumference
+  const top_length = length * waistband_top_ratio
 
   points.topLeft = new Point(-top_length / 2, 0)
   points.bottomLeft = new Point(-length / 2, width)
@@ -73,6 +73,36 @@ function draftPercyWaistFront({
     snippets['pleatLeftNotch'] = new Snippet('notch', points.pleatLeft)
     snippets['pleatRightNotch'] = new Snippet('notch', points.pleatRight)
   }
+
+  //draw the buttonholes
+  let overlap = store.get('frontPanelOverlap') / 2
+  points.overlapTopLeft = new Point(-waistband_top_ratio * (length / 2 - overlap), 0)
+  points.overlapTopRight = new Point(waistband_top_ratio * (length / 2 - overlap), 0)
+  points.overlapBottomLeft = new Point(-(length / 2 - overlap), width)
+  points.overlapBottomRight = new Point(length / 2 - overlap, width)
+  paths.overlapLeft = new Path().move(points.overlapTopLeft).line(points.overlapBottomLeft).hide()
+  paths.overlapRight = new Path()
+    .move(points.overlapTopRight)
+    .line(points.overlapBottomRight)
+    .hide()
+
+  overlap = Math.min(overlap, paths.overlapRight.length() / 3)
+  snippets['buttonhole_0'] = new Snippet(
+    'buttonhole',
+    paths.overlapLeft.shiftAlong(overlap)
+  ).rotate(90)
+  snippets['buttonhole_1'] = new Snippet(
+    'buttonhole',
+    paths.overlapRight.shiftAlong(overlap)
+  ).rotate(90)
+  snippets['buttonhole_2'] = new Snippet(
+    'buttonhole',
+    paths.overlapLeft.reverse().shiftAlong(overlap)
+  ).rotate(90)
+  snippets['buttonhole_3'] = new Snippet(
+    'buttonhole',
+    paths.overlapRight.reverse().shiftAlong(overlap)
+  ).rotate(90)
 
   if (sa) {
     paths.saBase = paths.seam

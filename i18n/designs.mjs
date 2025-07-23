@@ -112,6 +112,7 @@ export const designs = {
   otis: otis.en,
   paco: paco.en,
   penelope: penelope.en,
+  percy: percy.en,
   plugintest: plugintest.en,
   rendertest: rendertest.en,
   sandy: sandy.en,

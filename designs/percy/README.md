@@ -32,7 +32,7 @@
 
 # @freesewing/percy
 
-A FreeSewing pattern that needs a description
+A FreeSewing pattern for fall-front puffy shorts
 
 
 
