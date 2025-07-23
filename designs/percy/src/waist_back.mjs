@@ -92,6 +92,8 @@ function draftPercyWaistBack({
     paths.sa = paths.saBase.offset(sa).setClass('sa')
   }
 
+  store.cutlist.addCut()
+
   points.titleAnchor = points.topCenter.shiftFractionTowards(points.bottomRight, 0.7)
   macro('title', {
     nr: 6,

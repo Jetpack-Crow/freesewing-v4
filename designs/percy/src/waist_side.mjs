@@ -44,7 +44,8 @@ function draftPercyWaistSide({
     paths.sa = paths.saBase.offset(sa).setClass('sa')
   }
 
-  points.titleAnchor = points.topRight.shiftFractionTowards(points.bottomLeft, 0.7)
+  store.cutlist.addCut({ cut: 4 })
+  points.titleAnchor = new Point(-length / 3, width / 2)
   macro('title', {
     nr: 5,
     title: 'waist_side',

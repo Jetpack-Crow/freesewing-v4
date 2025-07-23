@@ -70,6 +70,7 @@ function draftPercyCuff({
     paths.sa = paths.seam.offset(sa).setClass('sa')
   }
 
+  store.cutlist.addCut({ identical: true })
   points.titleAnchor = points.topLeft.shiftFractionTowards(points.bottomRight, 0.5)
   macro('title', {
     nr: 3,

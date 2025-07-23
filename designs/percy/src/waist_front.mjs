@@ -79,7 +79,9 @@ function draftPercyWaistFront({
     paths.sa = paths.saBase.offset(sa).setClass('sa')
   }
 
-  points.titleAnchor = points.topRight.shiftFractionTowards(points.bottomLeft, 0.7)
+  store.cutlist.addCut()
+
+  points.titleAnchor = new Point(-length / 4, width / 2)
   macro('title', {
     nr: 4,
     title: 'waist_front',

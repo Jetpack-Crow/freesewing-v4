@@ -81,6 +81,7 @@ function draftPercyFront({
   paths.shortHem = new Path()
     .move(points.inseamShiftUpwards)
     .line(points.outseamShiftUpwards)
+    .reverse()
     .setClass('various')
 
   const originalHemLength = paths.shortHem.length()

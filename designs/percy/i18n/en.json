@@ -74,7 +74,7 @@
 
     "hemRatio": {
       "t": "Hem Ratio",
-      "d": "How far the bottom hem should be flared, relative to the same height on a basic Titan"
+      "d": "How far the bottom hem should be flared, relative to the same height on a basic Titan. This is very approximate."
     },
 
     "slashIterations": {
