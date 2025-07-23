@@ -191,15 +191,27 @@ function draftPercyBack({
 
     //draw the new curved cross seam
     log.info(pointsCrossOnly.length + ' points in pointsCrossOnly')
-    paths.crossSeam = new Path().move(points.fork)
+    //paths.crossSeam = new Path().move(points.fork)
+    paths.crossSeam = paths.crossSeam.reverse()
+
     for (let i = 0; i < crossSeamSlashCount; i++) {
-      paths.crossSeam = paths.crossSeam.line(pointsCrossOnly[i])
+      points.crossSeamRotationPoint = paths.crossSeam.shiftFractionAlong(
+        (i + 0.5) / crossSeamSlashCount
+      )
+
+      let halves = paths.crossSeam.split(
+        paths.crossSeam.shiftFractionAlong((i + 0.5) / crossSeamSlashCount)
+      )
+
+      paths.crossSeam = halves[0].join(
+        halves[1].rotate(rotationAmount, points.crossSeamRotationPoint)
+      )
     }
-    paths.crossSeam = paths.crossSeam.line(points.styleWaistIn)
+    //paths.crossSeam = paths.crossSeam.line(points.styleWaistIn)
 
     //draw the new curved waist
     log.info(pointsWaistOnly.length + ' points in pointsWaistOnly')
-    paths.waist = new Path().move(points.styleWaistIn)
+    paths.waist = new Path().move(paths.crossSeam.end())
     for (let i = 0; i < waistSlashCount; i++) {
       paths.waist = paths.waist.line(pointsWaistOnly[i])
     }
@@ -211,6 +223,8 @@ function draftPercyBack({
       paths.shortshem = paths.shortshem.line(slashPointsInner[i]).line(slashPointsHem[i])
     }
     paths.shortshem = paths.shortshem.line(points.outseamShiftUpwards)
+
+    //rotation correction
 
     const rotationCorrection = 180 - points.outseamShiftUpwards.angle(points.inseamShiftUpwards)
 
@@ -253,6 +267,7 @@ function draftPercyBack({
   macro('rmHd', 'wHemLeft')
   macro('rmHd', 'wHemRight')
   macro('rmHd', 'wPleatToSideWaist')
+  macro('rmHd', 'wPleatToSideWaistAlt')
   macro('rmHd', 'wForkToPleat')
   macro('rmHd', 'wForkProjectionToPleat')
   macro('rmHd', 'wStartCrotchCurveToPleat')
@@ -409,10 +424,16 @@ function draftPercyBack({
     x: points.fork.x,
   })
   macro('hd', {
-    id: 'hWaistToLowest',
+    id: 'hWaistToLowestLeft',
     from: points.styleWaistIn,
     to: points.waistLowestPoint,
-    y: points.waistLowestPoint.y,
+    y: points.waistLowestPoint.y + 15,
+  })
+  macro('hd', {
+    id: 'hWaistToLowestRight',
+    from: points.waistLowestPoint,
+    to: points.styleWaistOut,
+    y: points.waistLowestPoint.y + 15,
   })
 
   points.titleAnchor = points.styleWaistOut.shiftFractionTowards(points.inseamShiftUpwards, 0.5)

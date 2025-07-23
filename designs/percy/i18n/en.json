@@ -47,6 +47,26 @@
       "t": "Front Pleat",
       "d": "Whether to generate a pleat on the front panel."
     },
+    "frontPleatYes": {
+      "t": "Yes",
+      "d": "Generate a pleat on the front panel."
+    },
+    "frontPleatNo": {
+      "t": "No",
+      "d": "Don't generate a pleat on the front panel."
+    },
+    "spread": {
+      "t": "Spread",
+      "d": "Whether to slash and spread the body panels."
+    },
+    "spreadYes": {
+      "t": "Yes",
+      "d": "Slash and spread the body panels."
+    },
+    "spreadNo": {
+      "t": "No",
+      "d": "Don't slash and spread the body panels."
+    },
 
     "frontPleatPosition": {
       "t": "Front Pleat Position",
@@ -74,7 +94,7 @@
 
     "hemRatio": {
       "t": "Hem Ratio",
-      "d": "How far the bottom hem should be flared, relative to the same height on a basic Titan. This is very approximate."
+      "d": "How far the bottom hem should be flared, relative to the same height on a basic Titan. This is very approximate. The flare won't go past 90 degrees total."
     },
 
     "slashIterations": {
