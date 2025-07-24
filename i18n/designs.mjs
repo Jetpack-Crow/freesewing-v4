@@ -19,6 +19,7 @@ import { i18n as carlton } from '@freesewing/carlton'
 import { i18n as cathrin } from '@freesewing/cathrin'
 import { i18n as charlie } from '@freesewing/charlie'
 import { i18n as cornelius } from '@freesewing/cornelius'
+import { i18n as devon } from '@freesewing/devon'
 import { i18n as diana } from '@freesewing/diana'
 import { i18n as examples } from '@freesewing/examples'
 import { i18n as florence } from '@freesewing/florence'
@@ -87,6 +88,7 @@ export const designs = {
   cathrin: cathrin.en,
   charlie: charlie.en,
   cornelius: cornelius.en,
+  devon: devon.en,
   diana: diana.en,
   examples: examples.en,
   florence: florence.en,
