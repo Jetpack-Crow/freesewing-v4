@@ -36,11 +36,15 @@
     },
     "pocketBottomCurve": {
       "t": "Pocket Bottom Curve",
-      "d": ""
+      "d": "Adjusts the curve of the bottom of the pocket opening"
+    },
+    "pocketCurveControl": {
+      "t": "Pocket Curve Control",
+      "d": "Adjust the curve of the bottom of the pocket bag"
     },
     "pocketFacingUnderlap": {
       "t": "Pocket Facing Underlap",
-      "d": ""
+      "d": "How far the pockets, pocket facings, and waist side pieces extend under the front panel"
     },
 
     "frontPleat": {
