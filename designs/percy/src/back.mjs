@@ -439,7 +439,10 @@ function draftPercyBack({
     y: points.waistLowestPoint.y + 15,
   })
 
-  points.titleAnchor = points.styleWaistOut.shiftFractionTowards(points.inseamShiftUpwards, 0.5)
+  points.logoAnchor = points.styleWaistOut.shiftFractionTowards(points.hemLowestPoint, 0.5)
+  snippets.logo = new Snippet('logo', points.logoAnchor)
+
+  points.titleAnchor = points.fork.shiftFractionTowards(points.hemLowestPoint, 0.5)
   macro('title', {
     nr: 1,
     title: 'back',

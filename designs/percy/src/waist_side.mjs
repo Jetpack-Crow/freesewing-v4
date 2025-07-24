@@ -26,10 +26,30 @@ function draftPercyWaistSide({
 
   const top_length = length_percentage * store.get('waistband_top_circumference')
 
+  const waistband_top_ratio = top_length / length
+
   points.topLeft = new Point(-top_length / 2, 0)
   points.bottomLeft = new Point(-length / 2, width)
   points.bottomRight = new Point(length / 2, width)
   points.topRight = new Point(top_length / 2, 0)
+
+  //draw the buttonholes
+  let overlap = store.get('frontPanelOverlap') / 2
+  points.overlapTopRight = new Point(waistband_top_ratio * (length / 2 - overlap), 0)
+  points.overlapBottomRight = new Point(length / 2 - overlap, width)
+  paths.overlapRight = new Path()
+    .move(points.overlapTopRight)
+    .line(points.overlapBottomRight)
+    .setClass('sa')
+    .hide()
+
+  overlap = Math.min(overlap, paths.overlapRight.length() / 3)
+
+  snippets['button_0'] = new Snippet('button', paths.overlapRight.shiftAlong(overlap)).rotate(90)
+  snippets['button_1'] = new Snippet(
+    'button',
+    paths.overlapRight.reverse().shiftAlong(overlap)
+  ).rotate(90)
 
   paths.seam = new Path()
     .move(points.topLeft)
@@ -50,6 +70,7 @@ function draftPercyWaistSide({
     nr: 5,
     title: 'waist_side',
     at: points.titleAnchor,
+    scale: 0.7,
   })
 
   macro('hd', {

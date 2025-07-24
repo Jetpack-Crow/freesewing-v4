@@ -5,8 +5,17 @@
   "description": "A FreeSewing pattern for fall-front puffy shorts",
   "name": "Percy Puffy Pants",
   "difficulty": 3,
-  "tags": [],
-  "techniques": [],
+  "tags": [
+    "bottoms",
+    "trousers"
+  ],
+  "techniques": [
+    "button",
+    "hem",
+    "interfacing",
+    "pocket",
+    "curved-seam"
+  ],
   "version": "4.0.0",
   "pkg": "@freesewing/percy"
 }

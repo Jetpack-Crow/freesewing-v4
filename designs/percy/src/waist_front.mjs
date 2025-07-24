@@ -116,6 +116,7 @@ function draftPercyWaistFront({
     nr: 4,
     title: 'waist_front',
     at: points.titleAnchor,
+    scale: 0.8,
   })
 
   macro('hd', {
