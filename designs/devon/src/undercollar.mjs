@@ -5,7 +5,7 @@ export const underCollar = {
   name: 'devon.underCollar',
   from: collar,
   hide: {
-    self: true,
+    self: false,
     from: true,
     inherited: true,
   },
