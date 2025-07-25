@@ -35,7 +35,7 @@ export const topSleeve = {
     macro('title', {
       at: points.armCenter.shiftFractionTowards(points.top, 0.5),
       nr: 8,
-      title: 'topsleeve',
+      title: 'topSleeve',
       rotation: 90,
     })
 

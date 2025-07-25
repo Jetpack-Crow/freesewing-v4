@@ -33,7 +33,7 @@ export const underSleeve = {
     macro('title', {
       at: points.armCenter,
       nr: 9,
-      title: 'undersleeve',
+      title: 'underSleeve',
       rotation: 90,
     })
 
