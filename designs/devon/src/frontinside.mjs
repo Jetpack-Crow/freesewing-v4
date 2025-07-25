@@ -20,6 +20,10 @@ export const frontInside = {
       delete paths[i]
     }
 
+    const waistbandWidth = store.get('waistbandWidth')
+    points.stitchTop = points.frontYoke.shift(0, waistbandWidth)
+    points.stitchBottom = points.frontHem.shift(0, waistbandWidth)
+
     // const panelLength = store.get('panelLength')
     // const frontLength = store.get('frontLength')
 
@@ -65,9 +69,6 @@ export const frontInside = {
         .attr('data-text', 'topStitchLine')
         .attr('data-text-class', 'lining center')
 
-      const waistbandWidth = store.get('waistbandWidth')
-      points.stitchTop = points.frontYoke.shift(0, waistbandWidth)
-      points.stitchBottom = points.frontHem.shift(0, waistbandWidth)
       paths.stitchLine = new Path()
         .move(points.stitchTop)
         .line(points.stitchBottom)
