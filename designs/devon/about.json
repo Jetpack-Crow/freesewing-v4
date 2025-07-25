@@ -1,12 +1,20 @@
 {
   "id": "devon",
-  "code": "Your name here",
-  "design": "Your name here",
-  "description": "A FreeSewing pattern that needs a description",
-  "name": "Devon Something",
-  "difficulty": 2,
-  "tags": [],
-  "techniques": [],
+  "name": "Devon denim jacket",
+  "code": "Wouter Van Wageningen",
+  "description": "A FreeSewing pattern for a denim jacket, based on the Bent block",
+  "design": "Wouter Van Wageningen",
+  "difficulty": 4,
+  "tags": [
+    "tops",
+    "coats"
+  ],
+  "techniques": [
+    "pocket",
+    "precision",
+    "set-sleeve",
+    "buttonhole"
+  ],
   "version": "4.1.0",
   "pkg": "@freesewing/devon",
   "collection": true
