@@ -220,7 +220,7 @@ export const frontSidePanel = {
     store.cutlist.addCut({ cut: 2, from: 'fabric', onFold: false })
 
     points.title = points.frontYokeSidePanel.shiftFractionTowards(points.hem, 0.3)
-    macro('title', { nr: 6, title: 'frontSide', at: points.title, rotation: 90, scale: 0.75 })
+    macro('title', { nr: 6, title: 'frontSidePanel', at: points.title, rotation: 90, scale: 0.75 })
 
     points.frontPanelSnippet = points.frontHemSidePanelSaved.copy()
     snippets.frontPanel = new Snippet('notch', points.frontPanelSnippet)
