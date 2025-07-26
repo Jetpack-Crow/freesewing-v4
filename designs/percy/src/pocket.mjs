@@ -22,11 +22,13 @@ function draftPercyPocket({
   paths.waist.unhide()
   paths.pocketCutout.setClass('note help')
 
-  const pocketDepth =
+  let pocketDepth =
     (measurements.waistToKnee -
       options.waistbandWidth * measurements.waistToFloor -
       (1 - options.waistHeight) * measurements.waistToHips) *
     options.pocketDepth
+
+  pocketDepth = Math.min(pocketDepth, paths.shortOutseam.length())
 
   points.pocketSideSeamIntercept = paths.shortOutseam.shiftAlong(pocketDepth)
   //snippets['pocketSideSeamIntercept'] = new Snippet('notch', points.pocketSideSeamIntercept)
