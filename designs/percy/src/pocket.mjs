@@ -39,13 +39,16 @@ function draftPercyPocket({
   )
   //snippets['pocketInnerCorner'] = new Snippet('notch', points.pocketInnerCorner)
 
-  points.pocketSideSeamInterceptHalfway = points.pocketSideSeamIntercept.shiftFractionTowards(
-    points.pocketInnerCorner,
-    options.pocketCurveControl
-  )
-  points.pocketSideSeamInterceptCp1 = points.pocketSideSeamInterceptHalfway.shiftFractionTowards(
-    points.pocketInnerCorner,
-    options.pocketCurveControl
+  paths.pocketWaistEdge = paths.waist.split(points.pocketFacingEdge)[1]
+
+  points.waistHalfway = paths.pocketWaistEdge.shiftFractionAlong(0.5)
+  const waistHalfwayAngle = paths.pocketWaistEdge.angleAt(points.waistHalfway)
+  points.pocketHalfwayBottom = points.waistHalfway.shift(waistHalfwayAngle + 90, pocketDepth)
+
+  points.pocketSideSeamInterceptHalfway = points.pocketHalfwayBottom
+  points.pocketSideSeamInterceptCp1 = points.pocketSideSeamInterceptHalfway.shift(
+    waistHalfwayAngle + 180,
+    options.pocketCurveControl * pocketDepth
   )
   points.pocketFacingEdgeHalfway = points.pocketFacingEdge.shiftFractionTowards(
     points.pocketInnerCorner,
@@ -122,7 +125,6 @@ function draftPercyPocket({
 
   delete paths.trimmedWaist
 
-  paths.pocketWaistEdge = paths.waist.split(points.pocketFacingEdge)[1]
   delete paths.waist
 
   delete paths.inseam
@@ -163,7 +165,7 @@ function draftPercyPocket({
     snippets['openingNotch'] = new Snippet('notch', points.openingNotch)
   }
 
-  points.lowestPocketPoint = points.pocketSideSeamIntercept
+  points.lowestPocketPoint = points.pocketSideSeamInterceptHalfway
   let x = 0
   let ary = paths.pocketBottomEdge.intersectsY(points.lowestPocketPoint.y + 1)
   while (ary.length > 0 && x < measurements.waistToKnee) {
@@ -281,7 +283,7 @@ export const pocket = {
   from: front,
   options: {
     pocketDepth: {
-      pct: 66,
+      pct: 60,
       max: 80,
       min: 20,
       menu: 'style',
