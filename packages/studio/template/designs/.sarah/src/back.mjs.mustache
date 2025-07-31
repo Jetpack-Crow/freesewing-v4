@@ -1,0 +1,11 @@
+import { back as sarahBack } from '@freesewing/sarah'
+
+export const back = {
+  from: sarahBack,
+  name: '{{ name }}.back',
+  hide: { from: true },
+  options: {},
+  draft: ({ part }) => {
+    return part
+  },
+}

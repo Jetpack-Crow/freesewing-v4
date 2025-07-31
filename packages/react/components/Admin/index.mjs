@@ -210,6 +210,17 @@ const User = ({ user, Link }) => {
   }
 
   /*
+   * Unfreeze accounts for those users who froze themselves
+   */
+  const unfreezeAccount = async () => {
+    setLoadingStatus([true, 'Contacting backend'])
+    const [status, body] = await backend.adminUpdateUser({ id: user.id, data: { status: 1 } })
+    if (status === 200 && body.result === 'success') {
+      setLoadingStatus([true, 'Status updated', true, true])
+    } else setLoadingStatus([true, 'An error occured', true, false])
+  }
+
+  /*
    * Disable MFA for users who locked themselves out
    */
   const disableMfa = async () => {
@@ -278,6 +289,15 @@ const User = ({ user, Link }) => {
               onClick={setConsent}
             >
               Grant Consent
+            </button>
+          ) : null}
+
+          {user.status === -1 ? (
+            <button
+              className="tw:daisy-btn tw:daisy-btn-warning tw:daisy-btn-sm"
+              onClick={unfreezeAccount}
+            >
+              Unfreeze Account
             </button>
           ) : null}
         </div>

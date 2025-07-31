@@ -405,8 +405,8 @@ function octoplushyHeadSection(
     points.eyeLeft = paths.sectionLeft.shiftFractionAlong(0.465)
     points.eyeRight = points.eyeLeft.flipX(points.sectionTop)
     if (complete) {
-      points.eyeLeft.addText('eye', 'center')
-      points.eyeRight.addText('eye', 'center')
+      points.eyeLeft.addText('octoplushy:eye', 'center')
+      points.eyeRight.addText('octoplushy:eye', 'center')
     }
     snippets.eyeLeft = new Snippet('button', points.eyeLeft)
     snippets.eyeRight = new Snippet('button', points.eyeRight)
@@ -424,7 +424,7 @@ function octoplushyHeadSection(
       .curve(points.mouthLeftCp1, points.mouthBottomCp2, points.mouthBottom)
       .curve(points.mouthBottomCp1, points.mouthRightCp2, points.mouthRight)
       .attr('class', 'stroke-lg')
-    if (complete) paths.mouth.addText('mouth', 'text-xs center')
+    if (complete) paths.mouth.addText('octoplushy:mouth', 'text-xs center')
   }
 
   if (options.type == 'squid' && partNumber == 1 && complete) {
@@ -432,7 +432,7 @@ function octoplushyHeadSection(
       .move(points.sectionTop)
       .line(points.finFold)
       .addClass('hint dotted')
-      .addText('foldLine', 'center')
+      .addText('octoplushy:foldLine', 'center')
   }
   if (options.type == 'octopus') {
     points.skirtArmLeft = utils.curveIntersectsX(
@@ -448,12 +448,12 @@ function octoplushyHeadSection(
         .move(points.skirtArmLeft)
         .line(points.armTopLeft)
         .addClass('class', 'hint dotted')
-        .addText('stitchLine', 'center')
+        .addText('octoplushy:stitchLine', 'center')
       paths.armRightLine = new Path()
         .move(points.armTopRight)
         .line(points.skirtArmRight)
         .addClass('class', 'hint dotted')
-        .addText('stitchLine', 'center')
+        .addText('octoplushy:stitchLine', 'center')
     }
   }
   if (complete) {

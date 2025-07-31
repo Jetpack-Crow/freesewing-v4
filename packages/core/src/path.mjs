@@ -121,6 +121,9 @@ const opAsrenderProp = (op) => {
     if (op[p]) props[p] = op[p].asRenderProps()
   }
 
+  // preserve id attribute of noop command
+  if (op.id) props.id = op.id
+
   return props
 }
 

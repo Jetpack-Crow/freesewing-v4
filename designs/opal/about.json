@@ -16,6 +16,7 @@
     "button",
     "pocket"
   ],
-  "version": "4.0.0",
-  "pkg": "@freesewing/opal"
+  "version": "4.1.0",
+  "pkg": "@freesewing/opal",
+  "collection": true
 }

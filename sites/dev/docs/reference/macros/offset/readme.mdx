@@ -10,7 +10,6 @@ macro can extend line ends to meet in a sharp corner and will automatically
 trim useless path ends when adjacent paths in the array are intersecting.
 
 :::note
-
 ##### Not a core-plugins macro
 
 The `offset` macro is not provided by the [core plugins](/reference/plugins/core),
@@ -34,7 +33,7 @@ Path macro('offset', {
 <Example caption="An example of the offset macro">
 
 ```js
-;({ Point, points, Path, paths, macro, part }) => {
+({ Point, points, Path, paths, macro, part }) => {
   paths.outline = new Path()
     .move(new Point(10, 30))
     .line(new Point(30, 30))
@@ -72,7 +71,7 @@ Path macro('offset', {
 | Property | Default    | Type     | Description                                                                                                                                                                     |
 | -------: | ---------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 |  `paths` |            | `array`  | An array of paths with their offset and visibility. You can use path names in the `paths` array or reference `Path` objects directly, or insert `null` elements to create gaps. |
-|   `mode` | `'corner'` | `string` | Mode for joining paths. Either `'corner'` or `'cut'`. `'cut'` will join the paths directly (like `Path.join()`) without extending the corners.                                  |
+|   `mode` | `'corner'` | `string` | Mode for joining paths. Either `'corner'` or `'cut'`. `'cut'` will join the paths directly (like `Path.join()`) without extending the corners.                               |
 |  `limit` | `null`     | `number` | Allows limiting the length of extended path corners in `'corner'` mode. Prevents overly long joins on very sharp angles. Ignored if `null` or `false`.                          |
 |  `class` | `'offset'` | `string` | CSS class that is automatically applied to the resulting path.                                                                                                                  |
 

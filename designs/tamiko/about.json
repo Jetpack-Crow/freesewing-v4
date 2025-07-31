@@ -11,6 +11,7 @@
   "techniques": [
     "curved-seam"
   ],
-  "version": "4.0.0",
-  "pkg": "@freesewing/tamiko"
+  "version": "4.1.0",
+  "pkg": "@freesewing/tamiko",
+  "collection": true
 }

@@ -8,6 +8,7 @@ import BlogPostItemHeaderInfo from '@theme/BlogPostItem/Header/Info'
 import BlogPostItemHeaderAuthors from '@theme/BlogPostItem/Header/Authors'
 import { Breadcrumbs } from '../BlogPostItems/index.js'
 import { capitalize } from '@site/src/lib/utils.mjs'
+import { ModalContext, ModalContextProvider } from '@freesewing/react/context/Modal'
 
 // apply a bottom margin in list view
 function useContainerClassName() {
@@ -72,17 +73,23 @@ export default function BlogPostItem(props) {
   if (location.pathname === '/newsletter/unsubscribe')
     return (
       <BlogPostItemContainer className={clsx(containerClassName, className)}>
-        {children}
+        <PostWrapper>{children}</PostWrapper>
       </BlogPostItemContainer>
     )
 
   return (
     <BlogPostItemContainer className={clsx(containerClassName, className)}>
-      <BlogPostHeader type={type} />
-      <BlogPostItemContent>
-        <div className="mdx">{children}</div>
-      </BlogPostItemContent>
-      <BlogPostItemFooter />
+      <PostWrapper>
+        <BlogPostHeader type={type} />
+        <BlogPostItemContent>
+          <div className="mdx">{children}</div>
+        </BlogPostItemContent>
+        <BlogPostItemFooter />
+      </PostWrapper>
     </BlogPostItemContainer>
   )
+}
+
+function PostWrapper({ children }) {
+  return <ModalContextProvider>{children}</ModalContextProvider>
 }

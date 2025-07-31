@@ -1,20 +1,20 @@
 @import 'tailwindcss' prefix(tw);
+
 @plugin "daisyui" {
   prefix: 'daisy-';
 }
+@layer theme, base, components, utilities, docusaurus, docusaurus.theme-classic, freesewing;
+
 @import './light.css';
 @import './dark.css';
 
-/*
- * Add CSS for code
- */
-@import './code.css' layer(base);
+/* Add CSS for code */
+@import './code.css' layer(freesewing);
 
-/*
- * Add styling for FreeSewing patterns
- */
-@import './patterns.css' layer(base);
+/* Add styling for FreeSewing patterns */
+@import './patterns.css' layer(freesewing);
 
+/* Source definitions for tailwind */
 @source '../**/*.{js,mjs,mdx}';
 @source '../../docs/**/*.mdx';
 @source '../../tailwind-force.html';
@@ -24,7 +24,7 @@
 @source '../../../../packages/react/hooks/**/*.mjs';
 @source '../../../../packages/utils/src/*.mjs';
 
-@custom-variant dark (&:where(data-theme="dark"], data-theme="dark"] *));
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 @theme {
   --aspect-9\/16: 9 / 16;
@@ -54,7 +54,7 @@
   }
 }
 
-@layer base {
+@layer freesewing {
   div.footer__copyright {
     font-size: 0.8rem;
   }
@@ -175,6 +175,13 @@ a.tw\:daisy-btn-primary.tw\:daisy-btn-outline:hover {
 }
 
 /*
+ * Don't add whitespace after the last line of text.
+ */
+div.mini > p:last-child {
+  margin-bottom: 0;
+}
+
+/*
  * Make the 'edit this page' link look consistent
  */
 
@@ -206,6 +213,9 @@ a.tw\:daisy-btn-primary.tw\:daisy-btn-outline:hover {
 nav.navbar {
   background-color: var(--ifm-background-surface-color);
 }
+.navbar__logo img {
+  height: 100%;
+}
 
 /*
  * People want the 'account' link in the navbar to show the username
@@ -235,4 +245,23 @@ html[data-fs-embed='true'] nav,
 html[data-fs-embed='true'] aside,
 html[data-fs-embed='true'] footer {
   display: none;
+}
+
+/*
+ * Add Example code highlight/strikeout
+ */
+.fs-code-block-highlight-line {
+  background-color: #00ff0020;
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+  border-left: 3px solid #00ff0080;
+}
+.fs-code-block-strikeout-line {
+  background-color: #ff000020;
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+  border-left: 3px solid #ff000080;
+  text-decoration: line-through;
 }

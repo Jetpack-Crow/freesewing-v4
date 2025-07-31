@@ -1,4 +1,15 @@
-export function draftPanel1ab({ macro, utils, sa, points, paths, Point, Path, store, part }) {
+export function draftPanel1ab({
+  macro,
+  utils,
+  sa,
+  points,
+  paths,
+  Point,
+  Path,
+  store,
+  complete,
+  part,
+}) {
   points.anchor = points.topCF.clone()
 
   let top = new Path()
@@ -184,6 +195,22 @@ export function draftPanel1ab({ macro, utils, sa, points, paths, Point, Path, st
     to: points.underbustGap1Left.translate(translation, 0),
     y: points.topABsplit.y - sa - 15,
   })
+
+  // Waist line
+  if (complete) {
+    points.waistGap0Left = new Point(points.topCF.x, points.waistCF.y)
+    paths.panel1aWaist = new Path()
+      .move(points.waistGap0Left)
+      .line(points.waistAB)
+      .attr('class', 'dashed mark stroke-sm')
+      .addText('cathrin:waistLine', 'text-xs mark')
+    paths.panel1bWaist = new Path()
+      .move(points.waistAB)
+      .line(points.waistGap1Left)
+      .attr('class', 'dashed mark stroke-sm')
+      .addText('cathrin:waistLine', 'text-xs mark')
+    paths.panel1bWaist = paths.panel1bWaist.translate(translation, 0)
+  }
 
   return part
 }

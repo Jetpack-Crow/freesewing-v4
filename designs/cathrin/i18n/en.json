@@ -13,7 +13,9 @@
     "panel6": "Panel 6",
     "panels": "Panels"
   },
-  "s": {},
+  "s": {
+    "waistLine": "waist line"
+  },
   "o": {
     "panels": {
       "t": "Number of panels",

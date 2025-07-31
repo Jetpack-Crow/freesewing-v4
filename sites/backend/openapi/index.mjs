@@ -1,4 +1,4 @@
-import pkg from '../package.json' assert { type: 'json' }
+import pkg from '../package.json' with { type: 'json' }
 import { schemas } from './lib.mjs'
 import { paths as apikeyPaths } from './apikeys.mjs'
 //import { paths as confirmationPaths, schemas as confirmationSchemas } from './confirmations.mjs'

@@ -1,6 +1,12 @@
 # Change log for: @freesewing/shin
 
 
+## 4.0.1 (2025-06-09)
+
+### Fixed
+
+ - Fix rise option in the front part
+
 ## 3.1.0 (2023-12-26)
 
 ### Changed

@@ -24,15 +24,14 @@ This method is chainable as it returns the `Path` object
   points.from = new Point(5, 10)
   points.to = new Point(95, 10)
 
-paths.line = new Path()
-.move(points.from)
-.line(points.to)
-.addText('FreeSewing rocks')
+  paths.line = new Path()
+    .move(points.from)
+    .line(points.to)
+    .addText('FreeSewing rocks')
 
-return part
+  return part
 }
-
-````
+```
 </Example>
 
 ## Notes
@@ -43,7 +42,7 @@ as the two following calls yield the same result:
 ```js
 path.attr('data-text', 'Hello')
 path.addText('Hello')
-````
+```
 
 The difference with [Path.setText()](/reference/api/path/addtext) is that this
 method will add to the existing text whereas `Path.setText()` will overwrite

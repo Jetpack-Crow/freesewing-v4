@@ -1,6 +1,13 @@
 # Change log for: @freesewing/opal
 
 
+## 4.0.1 (2025-06-09)
+
+### Fixed
+
+ - Corrected path names
+ - Corrected part name translation
+
 ## 3.0.0 (2023-09-30)
 
 ### Changed

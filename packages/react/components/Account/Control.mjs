@@ -27,7 +27,7 @@ export const Control = ({ welcome = false }) => {
   const nextHref = welcome
     ? welcomeSteps[control].length > 1
       ? '/welcome/' + welcomeSteps[control][1]
-      : '/docs/about/guide'
+      : '/docs/about/'
     : false
 
   return (

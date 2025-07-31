@@ -3,6 +3,62 @@
 
 ## Unreleased
 
+
+## 4.1.0 (2025-06-29)
+
+### octoplushy
+
+#### Fixed
+
+ - Use full translation keys (#454)
+
+### sabrina
+
+#### Added
+
+ - Initial release of the Sabrina design
+
+### core
+
+#### Added
+
+ - Added the snappedPctOption named export for wrapping snapped percentage options
+
+### react
+
+#### Added
+
+ - Added ARCH D and ARCH E paper sizes to export
+ - Added ability to unfreeze an account in the in Admin component
+
+#### Fixed
+
+ - Fix Pattern Layout counter-clockwise button (#453)
+ - Fixed issue with custom pattern layout not getting applied (#241)
+ - Fixed crash in pattern layout view (#340)
+ - Show snapped value for snapped percentage options with toAbs() set
+
+
+## 4.0.3 (2025-06-09)
+
+### studio
+
+#### Added
+
+ - Include signup / signin pages in studio
+
+
+## 4.0.2 (2025-06-09)
+
+### studio
+
+#### Fixed
+
+ - Add @freesewing/plugin-svgattr as a dependency to the studio
+
+
+## 4.0.1 (2025-06-09)
+
 ### bee
 
 #### Added
@@ -31,21 +87,149 @@
  - Neck ties no longer shown to be cut on fold
  - Band tie locks in duo colours when `options.crossBackTies` is true (fixes incorrect notch placements)
 
+### bonny
+
+#### Fixed
+
+ - Corrected path names
+
+### cathrin
+
+#### Added
+
+ - Added waistline markings
+
+### gozer
+
+#### Added
+
+ - Added expand handling
+
+### hugo
+
+#### Added
+
+ - Add Collar Ease option to allow neck opening size adjustments
+
+### magde
+
+#### Fixed
+
+ - Corrected path names
+
+### opal
+
+#### Fixed
+
+ - Corrected path names
+ - Corrected part name translation
+
+### otis
+
+#### Fixed
+
+ - Corrected path names
+
+### shin
+
+#### Fixed
+
+ - Fix rise option in the front part
+
+### simone
+
+#### Fixed
+
+ - Hide buttonFreeLength option when bustAlignedButtons is even
+
+### wahid
+
+#### Fixed
+
+ - Added waist, hips, and pocket calculations (#352)
+ - Add interfacing to front cut list (#262)
+
 ### plugin-annotations
 
 #### Fixed
 
- - Fixed incorrect anchor point of the logo due to share pathstring (#202)
+ - Fixed incorrect anchor point of the logo due to shared pathstring (#202)
+
+### plugin-path-utils
+
+#### Added
+
+ - Added the new @freesewing/plugins-path-utils plugin
+
+### core
+
+#### Changed
+
+ - Override the reduce function in the BezierJS dependency with FreeSewing's own version
+
+#### Fixed
+
+ - Fix stack anchoring (#258)
 
 ### react
+
+#### Added
+
+ - Add inline help to the Editor
+ - Added new useFilter hook
+
+#### Changed
+
+ - Changed maximum value for margin between parts to 3 cm
+ - Improvements to the Editor inspect view
+ - PDF cover pages improvements in Editor
+ - Change imperial step to 1/16 inch
+ - Replace the flag number with a colored badge
+ - Migrated from helpProvider to Help components in the Editor
 
 #### Fixed
 
  - Fixed issues with the pattern export feature in the Editor (#218)
  - Added Jane to the Linedrawing component (#211)
+ - Do not apply null layout in the editor (#219)
+ - Fixed Editor to force the measurements view when measurements are missing
+ - Seam allowance slider (#210)
+ - Fix issues with pattern export (#218)
+ - When sampling options, also test different settings for sa, paperless, and complete (#225)
+ - Do not rely on initial settings in the Editor
+ - Fixed issue with translations (#244)
+ - Fix weird slider behaviour when entering the default value ()#246)
+ - Fix the inspect view popup when clicking on a path or point, fix missing translations in the xray path and point components (#256)
+ - Fix pattern reset button (#258)
+ - Fix deselecting included parts (#259)
+ - Fix sampleMeasurement button
+ - Fix button state for boolean core options (#229)
+ - Respect user account units in the editor
+ - Fixes to the Editor header
+ - Always add bounding box in tiler plugin (#273)
+ - Escape user-provided text in SVG (#260)
+ - Pattern layout print settings UI fixes (#351)
+ - Allow bookmark title to be edited
+ - Fix Collection background image URL
+ - Ignore pointer events on tooltip text of Xray point component
+ - Add URL formats to Bookmarked Set picker
+ - Improve resilience of Editor sample menu when translations are missing
+ - Change the expand icon to have the arrows point inwards if expand is disabled
+ - Gracefully fail the Editor when a part translation is not available
+
+### studio
+
+#### Changed
+
+ - Update to docusaurus 3.8.1
+
+#### Fixed
+
+ - Remove submenus from account sets and patterns pages (#355)
+ - Use a dedicated logo image for dark mode
 
 
-## 4.0.0 (2024-04-01)
+## 4.0.0 (2025-04-01)
 
 ### bibi
 

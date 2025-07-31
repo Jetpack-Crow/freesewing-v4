@@ -15,6 +15,7 @@ plugins/plugin-theme/css
 # Code coverage reports
 packages/core/coverage
 packages/*/report
+sites/backend/coverage
 
 # Any Yarn lock files
 designs/*/package-lock.json

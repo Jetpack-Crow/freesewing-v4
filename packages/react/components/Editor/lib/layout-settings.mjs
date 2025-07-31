@@ -27,6 +27,8 @@ export function menuLayoutSettingsStructure(units) {
     letter: 'Letter',
     legal: 'Legal',
     tabloid: 'Tabloid',
+    'arch d': 'ARCH D (24" x 36")',
+    'arch e': 'ARCH E (36" x 48")',
   }
 
   return {

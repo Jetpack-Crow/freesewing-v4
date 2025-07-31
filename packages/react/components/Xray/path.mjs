@@ -218,6 +218,7 @@ const PathXrayInfo = ({ path, pathName, stackName }) => {
                   </div>
                 </td>
               ) : null}
+              {op.type === 'noop' ? <td>{op.id}</td> : null}
             </tr>
           ))}
         </tbody>

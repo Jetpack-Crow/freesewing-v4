@@ -39,24 +39,14 @@ UserModel.prototype.oauthInit = async function ({ body }) {
   )
     return this.setResponse(403, 'invalidProvider')
 
-  /*
-   * Is the language set and a known langauge?
-   */
-  if (
-    typeof body.language === 'undefined' ||
-    !this.config.languages.includes(body.language.toLowerCase())
-  )
-    return this.setResponse(403, 'invalidLanguage')
-
   const provider = body.provider.toLowerCase()
-  const language = body.language.toLowerCase()
 
   /*
    * Create confirmation
    */
   await this.Confirmation.createRecord({
     type: 'oauth-init',
-    data: { provider, language },
+    data: { provider },
   })
 
   /*
@@ -64,7 +54,7 @@ UserModel.prototype.oauthInit = async function ({ body }) {
    * authentication URL the client should use.
    */
   return this.setResponse200({
-    authUrl: this.config.oauth[provider].url(this.Confirmation.record.id, language),
+    authUrl: this.config.oauth[provider].url(this.Confirmation.record.id),
   })
 }
 
@@ -158,7 +148,7 @@ UserModel.prototype.oauthSignIn = async function ({ body }) {
     initial: this.encrypt(email),
     username: lusername,
     lusername: lusername,
-    language: this.Confirmation.clear.data.language,
+    language: 'en',
     mfaEnabled: false,
     mfaSecret: '',
     password: asJson(hashPassword(randomString())),
@@ -625,17 +615,6 @@ UserModel.prototype.guardedCreate = async function ({ body }) {
   if (!body.email) return this.setResponse(400, 'emailMissing')
 
   /*
-   * Is language set?
-   */
-  if (!body.language) return this.setResponse(400, 'languageMissing')
-
-  /*
-   * Is language a supported language?
-   */
-  if (!this.config.languages.includes(body.language))
-    return this.setResponse(400, 'unsupportedLanguage')
-
-  /*
    * Create ehash and check
    */
   const ehash = hash(clean(body.email))
@@ -680,7 +659,7 @@ UserModel.prototype.guardedCreate = async function ({ body }) {
       this.confirmation = await this.Confirmation.createRecord({
         type,
         data: {
-          language: body.language,
+          language: 'en',
           email: this.clear.email,
           id: this.record.id,
           ehash: ehash,
@@ -695,15 +674,9 @@ UserModel.prototype.guardedCreate = async function ({ body }) {
      */
     let actionUrl = false
     if (this.record.status === 0)
-      actionUrl = i18nUrl(
-        body.language,
-        `/confirm/${type}?id=${this.Confirmation.record.id}&check=${check}`
-      )
+      actionUrl = i18nUrl('en', `/confirm/${type}?id=${this.Confirmation.record.id}&check=${check}`)
     else if (this.record.status === 1)
-      actionUrl = i18nUrl(
-        body.language,
-        `/confirm/signin?id=${this.Confirmation.record.id}&check=${check}`
-      )
+      actionUrl = i18nUrl('en', `/confirm/signin?id=${this.Confirmation.record.id}&check=${check}`)
 
     /*
      * Send email unless it's a test and we don't want to send test emails
@@ -711,12 +684,12 @@ UserModel.prototype.guardedCreate = async function ({ body }) {
     if (!isTest || this.config.tests.sendEmail)
       await this.mailer.send({
         template: type,
-        language: body.language,
+        language: 'en',
         to: this.clear.email,
         replacements: {
           actionUrl,
-          whyUrl: i18nUrl(body.language, `/docs/faq/email/why-${type}`),
-          supportUrl: i18nUrl(body.language, `/patrons/join`),
+          whyUrl: i18nUrl('en', `/docs/faq/email/why-${type}`),
+          supportUrl: i18nUrl('en', `/patrons/join`),
         },
       })
 
@@ -732,7 +705,7 @@ UserModel.prototype.guardedCreate = async function ({ body }) {
   try {
     this.clear.email = clean(body.email)
     this.clear.initial = this.clear.email
-    this.language = body.language
+    this.language = 'en'
     const email = this.encrypt(this.clear.email)
     /*
      * Create a temporary username because we need one
@@ -754,7 +727,7 @@ UserModel.prototype.guardedCreate = async function ({ body }) {
       initial: email,
       username,
       lusername: username,
-      language: body.language,
+      language: 'en',
       mfaEnabled: false,
       mfaSecret: '',
       /*
@@ -808,7 +781,7 @@ UserModel.prototype.guardedCreate = async function ({ body }) {
   this.confirmation = await this.Confirmation.createRecord({
     type: 'signup',
     data: {
-      language: this.language,
+      language: 'en',
       email: this.clear.email,
       id: this.record.id,
       ehash: ehash,
@@ -823,15 +796,15 @@ UserModel.prototype.guardedCreate = async function ({ body }) {
   if (!this.isTest(body) || this.config.tests.sendEmail)
     await this.mailer.send({
       template: 'signup',
-      language: this.language,
+      language: 'en',
       to: this.clear.email,
       replacements: {
         actionUrl: i18nUrl(
-          this.language,
+          'en',
           `/confirm/signup?id=${this.Confirmation.record.id}&check=${check}`
         ),
-        whyUrl: i18nUrl(this.language, `/docs/faq/email/why-signup`),
-        supportUrl: i18nUrl(this.language, `/patrons/join`),
+        whyUrl: i18nUrl('en', `/docs/faq/email/why-signup`),
+        supportUrl: i18nUrl('en', `/patrons/join`),
       },
     })
 
@@ -1340,13 +1313,18 @@ UserModel.prototype.guardedUpdate = async function ({ body, user }) {
   const isTest = this.isTest(body)
 
   /*
+   * If it is, we'll need to raise this to a higher scope
+   */
+  let check
+
+  /*
    * If there's an email change, we need to trigger confirmation
    */
   if (typeof body.email === 'string' && this.clear.email !== clean(body.email)) {
     /*
      * Generate the check
      */
-    const check = randomString()
+    check = randomString()
 
     /*
      * Generate the confirmation record
@@ -1453,7 +1431,10 @@ UserModel.prototype.guardedUpdate = async function ({ body, user }) {
   /*
    * If it is a unit test, include the confirmation id
    */
-  if (isTest && this.Confirmation.record?.id) returnData.confirmation = this.Confirmation.record.id
+  if (isTest && this.Confirmation.record?.id) {
+    returnData.confirmation = this.Confirmation.record.id
+    returnData.check = check
+  }
 
   /*
    * Return data

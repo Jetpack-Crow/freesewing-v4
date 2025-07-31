@@ -39,7 +39,9 @@ import { i18n as otis } from '@freesewing/otis'
 import { i18n as paco } from '@freesewing/paco'
 import { i18n as penelope } from '@freesewing/penelope'
 import { i18n as percy } from '@freesewing/percy'
+import { i18n as sabrina } from '@freesewing/sabrina'
 import { i18n as sandy } from '@freesewing/sandy'
+import { i18n as sarah } from '@freesewing/sarah'
 import { i18n as shelly } from '@freesewing/shelly'
 import { i18n as shin } from '@freesewing/shin'
 import { i18n as simon } from '@freesewing/simon'
@@ -103,7 +105,9 @@ export const i18n = {
   paco,
   penelope,
   percy,
+  sabrina,
   sandy,
+  sarah,
   shelly,
   shin,
   simon,
@@ -121,5 +125,5 @@ export const i18n = {
   wahid,
   walburga,
   waralee,
-  yuri,
+  yuri
 }

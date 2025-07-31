@@ -58,10 +58,11 @@ using Bézier curves.
 An approximate quarter circle curve is:
 
 ```js
+import { cbqc } from '@freesewing/core'
 const quarterCircle = new Path()
   .move(new Point(0, radius))
-  .curve(new Point(cbqc, radius),
-    new Point(radius, cbqc),
+  .curve(new Point(cbqc * radius, radius),
+    new Point(radius, cbqc * radius),
     new Point(radius, 0))
 ```
 

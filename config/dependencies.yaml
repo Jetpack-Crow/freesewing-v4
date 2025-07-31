@@ -97,6 +97,9 @@ plugintest:
     '@freesewing/plugin-sprinkle': *freesewing
     '@freesewing/plugin-svgattr': *freesewing
     '@freesewing/plugin-theme': *freesewing
+sabrina:
+  peer:
+    '@freesewing/snapseries': *freesewing
 sandy:
   _:
     '@freesewing/plugin-ringsector': *freesewing

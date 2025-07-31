@@ -10,12 +10,11 @@ part of [core-plugins](/reference/plugins/core) (so it is available by default).
 ## Signature
 
 ```js
-macro('round', { 
+macro('round', {
   String id = 'round',
   String class,
   Point from,
   Boolean hide,
-  String prefix,
   Number radius,
   Point to,
   Point via,
@@ -50,7 +49,6 @@ macro('round', {
 | `to`        |         | [Point](/reference/api/point) | The endpoint away from the corner to round |
 | `via`       |         | [Point](/reference/api/point) | The cornerpoint to round |
 | `radius`    | Maximum | Number              | The radius in mm if not the maximum possible |
-| `prefix`    |         | String              | A prefix to give to the points and paths created by this macro |
 | `hide`      | `true`  | Boolean             | Whether to hide the path created by this macro |
 | `class`     |         | String              | Class(es) to assign to the path created by this macro |
 

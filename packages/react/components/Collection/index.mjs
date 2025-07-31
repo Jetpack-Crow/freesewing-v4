@@ -461,7 +461,7 @@ export const DesignInfo = ({ Link = false, design = false, noDocsLink = false })
               <Link
                 key={tech}
                 className="tw:daisy-badge tw:daisy-badge-accent tw:font-medium tw:hover:shadow tw:hover:cursor-pointer"
-                href={`/designs/#filter={"example"%3Atrue%2C"tag"%3A["${tech}"]}`}
+                href={`/designs/#filter={"example"%3Atrue%2C"tech"%3A["${tech}"]}`}
               >
                 <span className="tw:text-accent-content">{tech}</span>
               </Link>

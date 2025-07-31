@@ -174,7 +174,7 @@ describe('Path', () => {
       const curve = new Path().move(new Point(0, 0))._curve(new Point(123, 34), new Point(23, 4))
       const offset = curve.offset(10)
       const bbox = offset.bbox()
-      expect(round(bbox.bottomRight.x)).to.equal(72.63)
+      expect(round(bbox.bottomRight.x)).to.equal(72.61)
       expect(round(bbox.bottomRight.y)).to.equal(26.47)
     })
 

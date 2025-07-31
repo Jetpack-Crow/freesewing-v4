@@ -16,6 +16,7 @@ import TabItem from '@theme/TabItem'
 // Custom FreeSewing components
 import { Example } from './example.mjs'
 import { ReadMore } from './readmore.js'
+import { Term } from './term.js'
 // Components
 import { SearchIcon } from '@freesewing/react/components/Icon'
 
@@ -90,6 +91,7 @@ const MDXComponents = {
   PropsTable,
   ParamsTable,
   // Custom FreeSewing components
+  em: Term,
   Example,
   ReadMore,
   ConsoleButton: ({ data }) => (

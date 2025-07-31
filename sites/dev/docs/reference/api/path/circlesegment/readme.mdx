@@ -36,23 +36,22 @@ This method is chainable as it returns the `Path` object
 ```js
 ({ Point, points, Path, paths, part }) => {
 
-points.from = new Point(10, 20)
-points.origin = new Point(40, 0)
+  points.from = new Point(10, 20)
+  points.origin = new Point(40, 0)
 
-paths.line = new Path()
-.move(points.from)
-.circleSegment(90, points.origin)
-.setText("→ Path.circleSegment() →", "text-sm center fill-note")
+  paths.line = new Path()
+    .move(points.from)
+    .circleSegment(90, points.origin)
+    .setText("→ Path.circleSegment() →", "text-sm center fill-note")
 
-paths.helper = new Path()
-.move(paths.line.start())
-.line(points.origin)
-.line(paths.line.end())
-.setClass('dotted stroke-sm')
+  paths.helper = new Path()
+    .move(paths.line.start())
+    .line(points.origin)
+    .line(paths.line.end())
+    .setClass('dotted stroke-sm')
 
-return part
+  return part
 }
 
 ```
 </Example>
-```

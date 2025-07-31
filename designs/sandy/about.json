@@ -17,6 +17,7 @@
     "button",
     "hem"
   ],
-  "version": "4.0.0",
-  "pkg": "@freesewing/sandy"
+  "version": "4.1.0",
+  "pkg": "@freesewing/sandy",
+  "collection": true
 }

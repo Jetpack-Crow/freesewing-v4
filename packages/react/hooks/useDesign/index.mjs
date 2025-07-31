@@ -38,7 +38,9 @@ import { Otis as otis } from '@freesewing/otis'
 import { Paco as paco } from '@freesewing/paco'
 import { Penelope as penelope } from '@freesewing/penelope'
 import { Percy as percy } from '@freesewing/percy'
+import { Sabrina as sabrina } from '@freesewing/sabrina'
 import { Sandy as sandy } from '@freesewing/sandy'
+import { Sarah as sarah } from '@freesewing/sarah'
 import { Shelly as shelly } from '@freesewing/shelly'
 import { Shin as shin } from '@freesewing/shin'
 import { Simon as simon } from '@freesewing/simon'
@@ -99,7 +101,9 @@ export const designs = {
   paco,
   penelope,
   percy,
+  sabrina,
   sandy,
+  sarah,
   shelly,
   shin,
   simon,
@@ -117,7 +121,7 @@ export const designs = {
   wahid,
   walburga,
   waralee,
-  yuri,
+  yuri
 }
 
 export const useDesign = (design) => (designs[design] ? designs[design] : false)

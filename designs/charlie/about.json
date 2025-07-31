@@ -20,6 +20,7 @@
     "hem",
     "seam-pocket"
   ],
-  "version": "4.0.0",
-  "pkg": "@freesewing/charlie"
+  "version": "4.1.0",
+  "pkg": "@freesewing/charlie",
+  "collection": true
 }

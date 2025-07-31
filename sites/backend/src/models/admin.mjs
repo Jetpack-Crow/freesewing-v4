@@ -119,6 +119,12 @@ AdminModel.prototype.updateUser = async function ({ params, body, user }) {
   const data = {}
 
   /*
+   * Update consent?
+   */
+  if (typeof body.consent !== 'undefined' && [0, 1, 2].includes(body.consent))
+    data.consent = body.consent
+
+  /*
    * Update role?
    */
   if (body.role && Object.keys(this.config.roles.levels).includes(body.role)) data.role = body.role

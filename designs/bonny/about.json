@@ -7,7 +7,7 @@
   "difficulty": 1,
   "tags": [],
   "techniques": [],
-  "version": "4.0.0",
+  "version": "4.1.0",
   "pkg": "@freesewing/bonny",
-  "hide": true
+  "collection": false
 }

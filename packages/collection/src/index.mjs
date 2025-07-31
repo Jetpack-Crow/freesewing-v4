@@ -39,7 +39,9 @@ import { Otis as otis } from '@freesewing/otis'
 import { Paco as paco } from '@freesewing/paco'
 import { Penelope as penelope } from '@freesewing/penelope'
 import { Percy as percy } from '@freesewing/percy'
+import { Sabrina as sabrina } from '@freesewing/sabrina'
 import { Sandy as sandy } from '@freesewing/sandy'
+import { Sarah as sarah } from '@freesewing/sarah'
 import { Shelly as shelly } from '@freesewing/shelly'
 import { Shin as shin } from '@freesewing/shin'
 import { Simon as simon } from '@freesewing/simon'
@@ -107,7 +109,9 @@ export const designs = {
   paco,
   penelope,
   percy,
+  sabrina,
   sandy,
+  sarah,
   shelly,
   shin,
   simon,
@@ -125,7 +129,7 @@ export const designs = {
   wahid,
   walburga,
   waralee,
-  yuri,
+  yuri
 }
 
 /*
@@ -154,11 +158,13 @@ for (const design in designs) {
     ...designs[design].patternConfig.optionalMeasurements,
   ]
   about[design] = { ...designs[design].designConfig.data }
-  if (about[design].tags) _tags.add(...about[design].tags)
-  if (about[design].techniques) _techniques.add(...about[design].techniques)
-  if (Array.isArray(about[design].code)) _devs.add(...about[design].code)
+  if (about[design].tags) about[design].tags.forEach((tag) => _tags.add(tag))
+  if (about[design].techniques)
+    about[design].techniques.forEach((technique) => _techniques.add(technique))
+  if (Array.isArray(about[design].code)) about[design].code.forEach((code) => _devs.add(code))
   else _devs.add(about[design].code)
-  if (Array.isArray(about[design].design)) _dess.add(...about[design].design)
+  if (Array.isArray(about[design].design))
+    about[design].design.forEach((design) => _dess.add(design))
   else _dess.add(about[design].design)
 }
 export const tags = Array.from(_tags)

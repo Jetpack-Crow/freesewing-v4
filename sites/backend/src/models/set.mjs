@@ -191,11 +191,6 @@ SetModel.prototype.guardedClone = async function ({ params, user }) {
   await this.createRecord(data)
 
   /*
-   * Decrypt data at rest
-   */
-  this.reveal()
-
-  /*
    * Return 200 and the cloned data
    */
   return this.setResponse201({ set: this.asSet() })

@@ -415,6 +415,42 @@ export function generateStackTransform(
 }
 
 /**
+ * Returns the absolute value of a snapped percentage option
+ *
+ * @param {number} abs - The absolute value prior to snapping
+ * @param {object} conf - The option configuration
+ * @param {string} units - The units to use
+ * @return {number} abs - The snapped absolute value
+ */
+export function getSnappedPercentageValue(abs, conf, units) {
+  // Handle units-specific config - Side-step immutability for the snap conf
+  let snapConf = conf.snap
+  if (!Array.isArray(snapConf) && snapConf.metric && snapConf.imperial) snapConf = snapConf[units]
+  // Simple steps
+  if (typeof snapConf === 'number') return Math.round(abs / snapConf) * snapConf
+  // List of snaps
+  if (Array.isArray(snapConf) && snapConf.length > 1) {
+    for (const snap of snapConf
+      .sort((a, b) => a - b)
+      .map((snap, i) => {
+        const margin =
+          i < snapConf.length - 1
+            ? (snapConf[Number(i) + 1] - snap) / 2 // Look forward
+            : (snap - snapConf[i - 1]) / 2 // Final snap, look backward
+
+        return {
+          min: snap - margin,
+          max: snap + Number(margin),
+          snap,
+        }
+      }))
+      if (abs <= snap.max && abs >= snap.min) return snap.snap
+  }
+
+  return abs
+}
+
+/**
  * Find the intersections between a line segment and a circle
  *
  * @param {Point} c - The center Point of the circle
@@ -574,6 +610,18 @@ export function mergeOptions(settings = {}, optionsConfig) {
 export function pctBasedOn(measurement) {
   return {
     toAbs: (val, { measurements }) => measurements[measurement] * val,
+    fromAbs: (val, { measurements }) =>
+      Math.round((10000 * val) / measurements[measurement]) / 10000,
+  }
+}
+
+export function snappedPctOption(measurement, config) {
+  return {
+    ...config,
+    toAbs: (val, { measurements, units }) => {
+      const abs = measurements[measurement] * val
+      return getSnappedPercentageValue(abs, config, units)
+    },
     fromAbs: (val, { measurements }) =>
       Math.round((10000 * val) / measurements[measurement]) / 10000,
   }

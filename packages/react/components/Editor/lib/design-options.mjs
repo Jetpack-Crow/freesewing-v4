@@ -35,9 +35,9 @@ export function menuDesignOptionsStructure(design, options, settings, asFullList
         option.choiceTitles = {}
         option.choiceDescriptions = {}
         for (const entry of option.list) {
-          option.choiceTitles[entry] = eno[`${option.name}.${entry}`]?.t || option.name
+          option.choiceTitles[entry] = eno[`${option.name}.${entry}`]?.t || entry
           option.choiceDescriptions[entry] = eno[`${option.name}.${entry}`]?.d || ''
-          option.valueTitles[entry] = eno[`${option.name}.${entry}`]?.t || option.name
+          option.valueTitles[entry] = eno[`${option.name}.${entry}`]?.t || entry
         }
       }
       // Bool option tweaks
@@ -46,14 +46,12 @@ export function menuDesignOptionsStructure(design, options, settings, asFullList
         option.valueTitles = {}
         option.choiceTitles = {}
         option.choiceDescriptions = {}
-        option.list.forEach(() => {
-          option.choiceTitles.false = eno[`${option.name}No`]?.t || option.name
-          option.choiceDescriptions.false = eno[`${option.name}No`]?.d || 'No'
-          option.valueTitles.false = 'No'
-          option.choiceTitles.true = eno[`${option.name}Yes`]?.t || 'Yes'
-          option.choiceDescriptions.true = eno[`${option.name}Yes`]?.d || 'No'
-          option.valueTitles.true = 'Yes'
-        })
+        option.choiceTitles.false = eno[`${option.name}No`]?.t || 'No'
+        option.choiceDescriptions.false = eno[`${option.name}No`]?.d || ''
+        option.valueTitles.false = 'No'
+        option.choiceTitles.true = eno[`${option.name}Yes`]?.t || 'Yes'
+        option.choiceDescriptions.true = eno[`${option.name}Yes`]?.d || ''
+        option.valueTitles.true = 'Yes'
       }
       if (typeof option.menu === 'function')
         option.menu = asFullList

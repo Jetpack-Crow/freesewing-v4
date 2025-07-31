@@ -658,7 +658,7 @@ function draftSide({ measurements, Point, Path, points, paths, complete, store, 
 }
 
 export const side = {
-  name: 'side',
+  name: 'bonny.side',
   options: {},
   measurements: [
     'ankle',

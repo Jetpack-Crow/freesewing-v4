@@ -50,7 +50,7 @@ export const Avatar = ({ welcome = false, Link = false }) => {
   }
 
   // Next page in welcome flow
-  const nextHref = '/docs/about/guide'
+  const nextHref = '/docs/about/'
 
   return (
     <div className="tw:w-full">

@@ -48,7 +48,7 @@ export const Units = ({ welcome = false }) => {
   const nextHref =
     welcomeSteps[account?.control].length > 3
       ? '/welcome/' + welcomeSteps[account?.control][3]
-      : '/docs/about/guide'
+      : '/docs/about/'
 
   return (
     <div className="tw:w-full">

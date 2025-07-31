@@ -1,7 +1,23 @@
 # Change log for: @freesewing/core
 
 
-## 4.0.0 (2024-04-01)
+## 4.1.0 (2025-06-29)
+
+### Added
+
+ - Added the snappedPctOption named export for wrapping snapped percentage options
+
+## 4.0.1 (2025-06-09)
+
+### Changed
+
+ - Override the reduce function in the BezierJS dependency with FreeSewing's own version
+
+### Fixed
+
+ - Fix stack anchoring (#258)
+
+## 4.0.0 (2025-04-01)
 
 ### Breaking
 

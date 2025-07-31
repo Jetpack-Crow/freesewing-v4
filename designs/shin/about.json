@@ -15,6 +15,7 @@
     "curved-seam",
     "elastic"
   ],
-  "version": "4.0.0",
-  "pkg": "@freesewing/shin"
+  "version": "4.1.0",
+  "pkg": "@freesewing/shin",
+  "collection": true
 }

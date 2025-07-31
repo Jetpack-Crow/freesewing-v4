@@ -129,7 +129,7 @@ export const ExportView = (props) => {
           </div>
           <div className="tw:flex tw:flex-col tw:gap-2 tw:max-w-md">
             <H3>Other paper sizes</H3>
-            {['letter', 'legal', 'tabloid'].map((format) => (
+            {['letter', 'legal', 'tabloid', 'arch d', 'arch e'].map((format) => (
               <button
                 key={format}
                 className={`${horFlexClasses} tw:daisy-btn tw:daisy-btn-primary tw:uppercase`}

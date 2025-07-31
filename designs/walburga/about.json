@@ -12,6 +12,7 @@
   "techniques": [
     "hem"
   ],
-  "version": "4.0.0",
-  "pkg": "@freesewing/walburga"
+  "version": "4.1.0",
+  "pkg": "@freesewing/walburga",
+  "collection": true
 }

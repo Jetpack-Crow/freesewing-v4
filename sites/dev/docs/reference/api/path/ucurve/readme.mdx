@@ -23,20 +23,19 @@ This method is chainable as it returns the `Path` object
 ```js
 ({ Point, points, Path, paths, part }) => {
 
-points.from = new Point(5, 20)
-points.cp2 = new Point(60, 50)
-points.to = new Point(90, 20)
+  points.from = new Point(5, 20)
+  points.cp2 = new Point(60, 50)
+  points.to = new Point(90, 20)
 
-paths.line = new Path()
-.move(points.from)
-.\_curve(points.cp2, points.to)
-.setText("Path.\_curve()", "text-sm center fill-note")
-.attr("data-text-dy", -1)
+  paths.line = new Path()
+    .move(points.from)
+    ._curve(points.cp2, points.to)
+    .setText("Path._curve()", "text-sm center fill-note")
+    .attr("data-text-dy", -1)
 
-return part
+  return part
 }
-
-````
+```
 </Example>
 
 
@@ -48,4 +47,4 @@ as the two following calls yield the same result:
 ```js
 path.curve(point1, point1, point2)
 path._curve(point1, point2)
-````
+```

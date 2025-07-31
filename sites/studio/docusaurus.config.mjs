@@ -68,6 +68,7 @@ const config = {
       logo: {
         alt: 'FreeSewing Logo',
         src: 'img/logo.svg',
+        srcDark: 'img/logo-white.svg',
       },
       items: [
         { label: 'FreeSewing Collection', to: '/collection', position: 'left' },

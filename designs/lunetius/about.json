@@ -13,6 +13,7 @@
   "techniques": [
     "hem"
   ],
-  "version": "4.0.0",
-  "pkg": "@freesewing/lunetius"
+  "version": "4.1.0",
+  "pkg": "@freesewing/lunetius",
+  "collection": true
 }

@@ -291,6 +291,9 @@ export const MenuSliderInput = ({
           {typeof config.toAbs === 'function' ? (
             <span>
               <span className="tw:px-2">|</span>
+              {typeof config.snap !== 'undefined' ? (
+                <span className="tw:pr-1">Snapped to</span>
+              ) : null}
               <span
                 dangerouslySetInnerHTML={{
                   __html: formatMm(
@@ -435,7 +438,7 @@ export const MenuOnlySettingInput = (props) => {
       <span>
         <span className="tw:font-medium tw:opacity-80 tw:capitalize">{design}</span>
         <span className="tw:font-medium tw:opacity-80 tw:capitalize tw:px-2">&raquo;</span>
-        {i18n[design].en.p[name]}
+        {i18n[design]?.en?.p[name]}
       </span>
     )
   }

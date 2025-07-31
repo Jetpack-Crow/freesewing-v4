@@ -1,6 +1,6 @@
 import { panels } from './panels.mjs'
 
-function draftCathrinPanel2({ macro, sa, points, paths, Point, store, part }) {
+function draftCathrinPanel2({ macro, sa, points, paths, Point, store, complete, Path, part }) {
   points.anchor = points.underbustGap1Right.clone()
 
   delete paths.outline
@@ -31,6 +31,14 @@ function draftCathrinPanel2({ macro, sa, points, paths, Point, store, part }) {
     from: points.grainlineBottom,
     to: points.grainlineTop,
   })
+
+  // Waist line
+  if (complete)
+    paths.panel2Waist = new Path()
+      .move(points.waistGap1Right)
+      .line(points.waistGap2Left)
+      .attr('class', 'dashed mark stroke-sm')
+      .addText('cathrin:waistLine', 'text-xs mark')
 
   // Title
   points.title = points.grainlineTop.shift(-90, points.grainlineTop.dy(points.waistGap2Left) / 2)

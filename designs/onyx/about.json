@@ -18,6 +18,7 @@
     "zipper",
     "ribbing"
   ],
-  "version": "4.0.0",
-  "pkg": "@freesewing/onyx"
+  "version": "4.1.0",
+  "pkg": "@freesewing/onyx",
+  "collection": true
 }

@@ -21,11 +21,18 @@ export const LayoutSettingsMenu = ({ update, state, Design }) => {
     iconSize: (props) => <MenuPctInput {...drillProps} {...props} />,
   }
   const values = {
-    size: ({ current, changed, config }) => (
-      <MenuHighlightValue changed={changed}>
-        {capitalize(current ? current : config.dflt)}
-      </MenuHighlightValue>
-    ),
+    size: ({ current, changed, config }) => {
+      const sizeNames = {
+        // non-breaking space character to avoid wrap
+        'arch d': 'ARCH\u00A0D',
+        'arch e': 'ARCH\u00A0E',
+      }
+      return (
+        <MenuHighlightValue changed={changed}>
+          {capitalize(current ? sizeNames[current] || current : config.dflt)}
+        </MenuHighlightValue>
+      )
+    },
     orientation: ({ current, changed }) => (
       <MenuHighlightValue changed={changed}>
         <PatternIcon

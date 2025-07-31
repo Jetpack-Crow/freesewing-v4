@@ -1,6 +1,12 @@
 # Change log for: @freesewing/magde
 
 
+## 4.0.1 (2025-06-09)
+
+### Fixed
+
+ - Corrected path names
+
 ## 3.0.0 (2023-09-30)
 
 ### Changed

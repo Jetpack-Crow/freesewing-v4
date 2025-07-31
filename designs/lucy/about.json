@@ -13,6 +13,7 @@
   "techniques": [
     "curved-seam"
   ],
-  "version": "4.0.0",
-  "pkg": "@freesewing/lucy"
+  "version": "4.1.0",
+  "pkg": "@freesewing/lucy",
+  "collection": true
 }

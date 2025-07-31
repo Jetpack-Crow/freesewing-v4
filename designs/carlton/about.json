@@ -23,6 +23,7 @@
     "interfacing",
     "button"
   ],
-  "version": "4.0.0",
-  "pkg": "@freesewing/carlton"
+  "version": "4.1.0",
+  "pkg": "@freesewing/carlton",
+  "collection": true
 }

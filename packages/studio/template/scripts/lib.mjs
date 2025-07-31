@@ -69,6 +69,7 @@ export const getInput = async () => {
         { title: 'Extend the Bent block (two-part-sleeve block for menswear)', value: 'bent' },
         { title: 'Extend the Bella block (womenswear bodice block)', value: 'bella' },
         { title: 'Extend the Breanna block (womenswear bodice block)', value: 'breanna' },
+        { title: 'Extend the Sarah block (unisex skirt block)', value: 'sarah' },
         { title: 'Extend the Titan block (unisex trouser block)', value: 'titan' },
       ],
       initial: 0,

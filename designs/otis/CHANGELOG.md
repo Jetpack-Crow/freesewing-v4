@@ -1,6 +1,12 @@
 # Change log for: @freesewing/otis
 
 
+## 4.0.1 (2025-06-09)
+
+### Fixed
+
+ - Corrected path names
+
 ## 3.1.0 (2023-12-26)
 
 ### Added

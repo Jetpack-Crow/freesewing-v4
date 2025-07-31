@@ -5,12 +5,9 @@ sidebar_class_name: 'tw:hidden'
 
 import { getSearchParam } from '@freesewing/utils'
 import { DocusaurusDoc } from '@freesewing/react/components/Docusaurus'
-import { RoleBlock } from '@freesewing/react/components/Role'
 import { Set } from '@freesewing/react/components/Account'
 import Link from '@docusaurus/Link'
 
 <DocusaurusDoc>
-  <RoleBlock role="user">
-    <Set Link={Link} id={getSearchParam('id')} publicOnly={true} />
-  </RoleBlock>
+  <Set Link={Link} id={getSearchParam('id')} publicOnly={true} />
 </DocusaurusDoc>

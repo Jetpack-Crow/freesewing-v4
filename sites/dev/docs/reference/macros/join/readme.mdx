@@ -10,7 +10,6 @@ will automatically trim useless path ends when adjacent paths in the
 array are intersecting.
 
 :::note
-
 ##### Not a core-plugins macro
 
 The `join` macro is not provided by the [core plugins](/reference/plugins/core),
@@ -33,7 +32,7 @@ Path macro('join', {
 <Example caption="An example of the join macro">
 
 ```js
-;({ Point, points, Path, paths, macro, part }) => {
+({ Point, points, Path, paths, macro, part }) => {
   paths.a = new Path().move(new Point(10, 10)).line(new Point(10, 20))
 
   paths.b = new Path().move(new Point(25, 30)).line(new Point(55, 30))
@@ -61,7 +60,7 @@ Path macro('join', {
 | Property | Default    | Type     | Description                                                                                                                                                       |
 | -------: | ---------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 |  `paths` |            | `array`  | An array of pathnames, the names of Paths in the `paths` array to join (you can also reference `Path` objects directly, or insert `null` elements to create gaps) |
-|   `mode` | `'corner'` | `string` | Mode for joining paths. Either `'corner'` or `'cut'`. `'cut'` will join the paths directly without extending them (like `Path.join()`).                           |
+|   `mode` | `'corner'` | `string` | Mode for joining paths. Either `'corner'` or `'cut'`. `'cut'` will join the paths directly without extending them (like `Path.join()`).                        |
 |  `limit` | `null`     | `number` | Allows limiting the length of corners in `'corner'` mode. Prevents overly long joins on very sharp angles. Ignored if `null` or `false`.                          |
 
 ## Notes
