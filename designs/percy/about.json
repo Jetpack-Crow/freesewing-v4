@@ -17,5 +17,6 @@
     "curved-seam"
   ],
   "version": "4.0.0",
+  "collection": true,
   "pkg": "@freesewing/percy"
 }

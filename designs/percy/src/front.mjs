@@ -706,6 +706,12 @@ export const front = {
       max: 75,
       menu: 'style.panel.advanced',
     },
+    seatEase: {
+      pct: 7,
+      min: 2,
+      max: 12,
+      menu: 'fit',
+    },
   },
   draft: draftPercyFront,
 }
