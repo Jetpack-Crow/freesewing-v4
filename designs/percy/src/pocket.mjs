@@ -23,10 +23,9 @@ function draftPercyPocket({
   paths.pocketCutout.setClass('note help')
 
   let pocketDepth =
-    (measurements.waistToKnee -
-      options.waistbandWidth * measurements.waistToFloor -
-      (1 - options.waistHeight) * measurements.waistToHips) *
-    options.pocketDepth
+    measurements.waistToKnee * options.pocketDepth -
+    options.waistbandWidth * measurements.waistToFloor -
+    (1 - options.waistHeight) * measurements.waistToHips
 
   pocketDepth = Math.min(pocketDepth, paths.shortOutseam.length())
 

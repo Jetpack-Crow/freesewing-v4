@@ -40,68 +40,108 @@ function draftPercyWaistFront({
   const length = store.get('front_panel_width')
   log.info('Front panel length is ' + length)
   const width = options.waistbandWidth * measurements.waistToFloor
+  store.set('waistband_width', width)
 
   const waistband_top_ratio = waistband_top_circumference / garment_top_circumference
+  store.set('waistband_top_ratio', waistband_top_ratio)
 
   const top_length = length * waistband_top_ratio
 
-  points.topLeft = new Point(-top_length / 2, 0)
-  points.bottomLeft = new Point(-length / 2, width)
-  points.bottomRight = new Point(length / 2, width)
-  points.topRight = new Point(top_length / 2, 0)
+  const circle_outer_radius = width / (1 - waistband_top_ratio)
+  store.set('waistband_outer_radius', circle_outer_radius)
+  const circle_inner_radius = circle_outer_radius - width
+  store.set('waistband_inner_radius', circle_inner_radius)
 
-  points.topCenter = new Point(0, 0)
-  points.bottomCenter = new Point(0, width)
-  /*paths.centerMark = new Path()
+  const circle_percentage = length / (2 * 3.14 * circle_outer_radius)
+  const circle_angle = circle_percentage * 360
+  log.info(
+    'side waistband is ' + circle_percentage + ' of total circle, or ' + circle_angle + ' degrees'
+  )
+
+  points.circleCenter = new Point(0, 0)
+  points.topCenter = new Point(0, circle_inner_radius)
+  points.bottomCenter = new Point(0, circle_outer_radius)
+  paths.centerLine = new Path()
     .move(points.topCenter)
     .line(points.bottomCenter)
     .setClass('note help')
-    */
 
   paths.seam = new Path()
-    .move(points.topLeft)
+    .move(points.bottomCenter)
+    .circleSegment(circle_angle / 2, points.circleCenter)
+
+  points.bottomRight = paths.seam.end()
+  points.topRight = points.bottomRight.shiftTowards(points.circleCenter, width)
+
+  paths.seam = paths.seam.line(points.topRight).circleSegment(-circle_angle, points.circleCenter)
+
+  points.topLeft = paths.seam.end()
+  points.bottomLeft = points.topLeft.shiftTowards(points.circleCenter, -width)
+
+  paths.seam = paths.seam
     .line(points.bottomLeft)
-    .line(points.bottomRight)
-    .line(points.topRight)
-    .line(points.topLeft)
+    .circleSegment(circle_angle / 2, points.circleCenter)
     .close()
+
+  paths.bottomCurve = new Path()
+    .move(points.bottomLeft)
+    .circleSegment(circle_angle, points.circleCenter)
+    .hide()
+
+  paths.topCurve = new Path()
+    .move(points.topLeft)
+    .circleSegment(circle_angle, points.circleCenter)
+    .hide()
+
+  if (sa) {
+    paths.saBase = paths.seam
+    paths.sa = paths.saBase.offset(sa).setClass('sa')
+  }
 
   if (options.frontPleat) {
     const centerToPleat = store.get('centerToPleat')
-    points.pleatLeft = new Point(-centerToPleat, width)
-    points.pleatRight = new Point(centerToPleat, width)
+    points.pleatLeft = paths.bottomCurve.shiftAlong(paths.bottomCurve.length() / 2 + centerToPleat)
+    points.pleatRight = paths.bottomCurve.shiftAlong(paths.bottomCurve.length() / 2 - centerToPleat)
     snippets['pleatLeftNotch'] = new Snippet('notch', points.pleatLeft)
     snippets['pleatRightNotch'] = new Snippet('notch', points.pleatRight)
   }
 
   //draw the buttonholes
   let overlap = store.get('frontPanelOverlap') / 2
-  points.overlapTopLeft = new Point(-waistband_top_ratio * (length / 2 - overlap), 0)
-  points.overlapTopRight = new Point(waistband_top_ratio * (length / 2 - overlap), 0)
-  points.overlapBottomLeft = new Point(-(length / 2 - overlap), width)
-  points.overlapBottomRight = new Point(length / 2 - overlap, width)
-  paths.overlapLeft = new Path().move(points.overlapTopLeft).line(points.overlapBottomLeft).hide()
+  points.overlapBottomRight = paths.bottomCurve.reverse().shiftAlong(overlap)
+  points.overlapTopRight = paths.topCurve.reverse().shiftAlong(overlap * waistband_top_ratio)
+  //points.overlapTopRightRight = new Point(waistband_top_ratio * (bottom_length / 2 - overlap), 0)
   paths.overlapRight = new Path()
     .move(points.overlapTopRight)
     .line(points.overlapBottomRight)
+    .setClass('sa')
+    .hide()
+
+  points.overlapBottomLeft = paths.bottomCurve.shiftAlong(overlap)
+  points.overlapTopLeft = paths.topCurve.shiftAlong(overlap * waistband_top_ratio)
+  paths.overlapLeft = new Path()
+    .move(points.overlapTopLeft)
+    .line(points.overlapBottomLeft)
+    .setClass('sa')
     .hide()
 
   overlap = Math.min(overlap, paths.overlapRight.length() / 3)
+
   snippets['buttonhole_0'] = new Snippet(
-    'buttonhole',
-    paths.overlapLeft.shiftAlong(overlap)
-  ).rotate(90)
-  snippets['buttonhole_1'] = new Snippet(
     'buttonhole',
     paths.overlapRight.shiftAlong(overlap)
   ).rotate(90)
+  snippets['buttonhole_1'] = new Snippet(
+    'buttonhole',
+    paths.overlapRight.reverse().shiftAlong(overlap)
+  ).rotate(90)
   snippets['buttonhole_2'] = new Snippet(
     'buttonhole',
-    paths.overlapLeft.reverse().shiftAlong(overlap)
+    paths.overlapLeft.shiftAlong(overlap)
   ).rotate(90)
   snippets['buttonhole_3'] = new Snippet(
     'buttonhole',
-    paths.overlapRight.reverse().shiftAlong(overlap)
+    paths.overlapLeft.reverse().shiftAlong(overlap)
   ).rotate(90)
 
   if (sa) {
@@ -111,7 +151,8 @@ function draftPercyWaistFront({
 
   store.cutlist.addCut()
 
-  points.titleAnchor = new Point(-length / 4, width / 2)
+  points.titleAnchor = points.topCenter.shiftFractionTowards(points.bottomLeft, 0.5)
+
   macro('title', {
     nr: 4,
     title: 'waist_front',
@@ -123,31 +164,77 @@ function draftPercyWaistFront({
     id: 'topLength',
     from: points.topLeft,
     to: points.topRight,
-    y: points.topRight.y - 15 - sa,
+    y: points.topRight.y,
   })
   macro('hd', {
     id: 'bottomLength',
     from: points.bottomLeft,
     to: points.bottomRight,
-    y: points.bottomRight.y + 15 + sa,
+    y: points.bottomRight.y,
   })
+
   macro('vd', {
     id: 'height',
-    from: points.topCenter,
-    to: points.bottomCenter,
-    x: points.bottomCenter.x,
+    from: points.topLeft.shiftFractionTowards(points.topRight, 0.5),
+    to: points.bottomLeft.shiftFractionTowards(points.bottomRight, 0.5),
+    x: points.bottomLeft.shiftFractionTowards(points.bottomRight, 0.5).x + sa + 15,
   })
+
+  macro('vd', {
+    id: 'topOffset',
+    from: points.topLeft.shiftFractionTowards(points.topRight, 0.5),
+    to: points.topCenter,
+    x: points.bottomLeft.shiftFractionTowards(points.bottomRight, 0.5).x,
+  })
+  macro('vd', {
+    id: 'bottomOffset',
+    from: points.bottomCenter,
+    to: points.bottomLeft.shiftFractionTowards(points.bottomRight, 0.5),
+    x: points.bottomLeft.shiftFractionTowards(points.bottomRight, 0.5).x,
+  })
+
   macro('ld', {
     id: 'diagonalLeft',
     from: points.bottomLeft,
     to: points.topLeft,
-    d: 15,
+    d: -15,
   })
   macro('ld', {
     id: 'diagonalRight',
     to: points.bottomRight,
     from: points.topRight,
-    d: 15,
+    d: -15,
+  })
+
+  macro('hd', {
+    id: 'hLeft',
+    to: points.bottomLeft,
+    from: points.topLeft,
+    y: points.topLeft.y,
+  })
+  macro('vd', {
+    id: 'vLeft',
+    to: points.bottomLeft,
+    from: points.topLeft,
+    x: points.bottomLeft.x,
+  })
+
+  macro('hd', {
+    id: 'hRight',
+    from: points.bottomRight,
+    to: points.topRight,
+    y: points.topRight.y,
+  })
+  macro('vd', {
+    id: 'vRight',
+    from: points.bottomRight,
+    to: points.topRight,
+    x: points.bottomRight.x,
+  })
+  macro('pd', {
+    id: 'lengthBottom',
+    path: paths.bottomCurve,
+    d: 15 + sa,
   })
 
   return part
