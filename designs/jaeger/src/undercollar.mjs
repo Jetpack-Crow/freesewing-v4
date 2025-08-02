@@ -56,7 +56,7 @@ function jaegerUnderCollar({ sa, snippets, points, macro, store, paths, Path, pa
    */
   // Cutlist
   store.cutlist.setCut([
-    { cut: 1, from: 'special' },
+    { cut: 1, from: 'specialty' },
     { cut: 1, from: 'canvas' },
   ])
 

@@ -107,7 +107,7 @@ export const forehead = {
 
     store.set('eyeTop', paths.eyeTop.length())
 
-    store.cutlist.addCut({ cut: 2, from: 'Fabric' })
+    store.cutlist.addCut({ cut: 2, from: 'fabric' })
 
     points.gridAnchor = points.point0.clone()
     points.title = points.point3Cp1.shiftFractionTowards(points.point0, 0.3)
