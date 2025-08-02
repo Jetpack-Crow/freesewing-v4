@@ -108,7 +108,7 @@ export const neckTie = {
     //cutlist
     store.cutlist.addCut({ cut: 2, from: 'fabric', identical: 'true' })
     if (options.duoNeckTieColours)
-      store.cutlist.addCut({ cut: 2, from: 'constrast', identical: 'true' })
+      store.cutlist.addCut({ cut: 2, from: 'contrast', identical: 'true' })
     //title
     points.title = points.topLeft.translate(
       absoluteOptions.neckTieWidth / 8,
