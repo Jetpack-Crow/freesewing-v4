@@ -91,7 +91,7 @@ export const eye = {
 
     points.gridAnchor = points.ps3.clone()
 
-    store.cutlist.addCut({ cut: 2, from: 'Fabric' })
+    store.cutlist.addCut({ cut: 2, from: 'fabric' })
 
     macro('sewtogether', {
       from: points.ps3a,
