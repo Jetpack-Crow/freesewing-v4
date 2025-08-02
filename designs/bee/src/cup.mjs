@@ -214,7 +214,7 @@ export const cup = {
     //cutlist
     if (options.reversible) {
       store.cutlist.setCut({ cut: 2, from: 'fabric', identical: 'true' })
-      store.cutlist.addCut({ cut: 2, from: 'constrast', identical: 'true' })
+      store.cutlist.addCut({ cut: 2, from: 'contrast', identical: 'true' })
     } else {
       store.cutlist.setCut({ cut: 4, from: 'fabric', identical: 'true' })
     }
