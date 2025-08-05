@@ -208,6 +208,8 @@ function draftPercyBack({
         )
       }
     }
+
+    paths.crossSeam = paths.crossSeam.reverse()
     //paths.crossSeam = paths.crossSeam.line(points.styleWaistIn)
 
     //draw the new curved waist
