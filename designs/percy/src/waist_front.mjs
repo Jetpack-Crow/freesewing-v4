@@ -128,19 +128,19 @@ function draftPercyWaistFront({
   overlap = Math.min(overlap, paths.overlapRight.length() / 3)
 
   snippets['buttonhole_0'] = new Snippet(
-    'buttonhole',
+    'buttonhole-end',
     paths.overlapRight.shiftAlong(overlap)
   ).rotate(90)
   snippets['buttonhole_1'] = new Snippet(
-    'buttonhole',
+    'buttonhole-end',
     paths.overlapRight.reverse().shiftAlong(overlap)
   ).rotate(90)
   snippets['buttonhole_2'] = new Snippet(
-    'buttonhole',
+    'buttonhole-start',
     paths.overlapLeft.shiftAlong(overlap)
   ).rotate(90)
   snippets['buttonhole_3'] = new Snippet(
-    'buttonhole',
+    'buttonhole-start',
     paths.overlapLeft.reverse().shiftAlong(overlap)
   ).rotate(90)
 

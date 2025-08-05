@@ -329,11 +329,26 @@ function draftPercyFront({
     points.topPleatPoint = paths.trimmedWaist.shiftAlong(frontPleatShiftDistance)
     points.bottomPleatPoint = paths.shortHem.shiftFractionAlong(1 - frontPleatWaistRatio)
 
-    const pleatAngle =
-      (paths.trimmedWaist.angleAt(points.topPleatPoint) +
-        paths.shortHem.angleAt(points.bottomPleatPoint)) /
-        2 -
-      90
+    //log.info("Waist angle at pleat point is " + paths.trimmedWaist.angleAt(points.topPleatPoint))
+    //log.info("Hem angle at pleat point is " + paths.shortHem.angleAt(points.bottomPleatPoint))
+
+    //This is ridiculous spaghetti. I don't know why it's necessary, i'll come back to it later
+    let pleatAngle = 0
+
+    if (options.spread) {
+      pleatAngle =
+        (paths.trimmedWaist.angleAt(points.topPleatPoint) +
+          paths.shortHem.angleAt(points.bottomPleatPoint)) /
+          2 -
+        90
+    } else {
+      pleatAngle =
+        (paths.trimmedWaist.angleAt(points.topPleatPoint) +
+          paths.shortHem.reverse().angleAt(points.bottomPleatPoint)) /
+          2 +
+        180
+    }
+
     const pleatOffset = measurements.waist * options.frontPleatWidth
     log.info('Pleat offset by ' + pleatOffset + ' mm at ' + pleatAngle + ' degrees')
 
