@@ -2,13 +2,13 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="106.8725mm"
-   height="131.05034mm"
-   viewBox="0 0 106.87249 131.05034"
+   width="101.02814mm"
+   height="131.07002mm"
+   viewBox="0 0 101.02817 131.07"
    version="1.1"
    id="svg1"
    inkscape:version="1.4 (86a8ad7, 2024-10-11)"
-   sodipodi:docname="front3.svg"
+   sodipodi:docname="front5.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -24,9 +24,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="2.9405047"
-     inkscape:cx="108.9949"
-     inkscape:cy="335.14655"
+     inkscape:zoom="2.0792508"
+     inkscape:cx="-69.977128"
+     inkscape:cy="187.80803"
      inkscape:window-width="2560"
      inkscape:window-height="1369"
      inkscape:window-x="-8"
@@ -35,88 +35,14 @@
      inkscape:current-layer="layer1" />
   <defs
      id="defs1">
-    <marker
-       style="overflow:visible"
-       id="Legs"
-       refX="0"
-       refY="0"
-       orient="auto-start-reverse"
-       inkscape:stockid="Legs"
-       markerWidth="1"
-       markerHeight="1"
-       viewBox="0 0 1 1"
-       inkscape:isstock="true"
-       inkscape:collect="always"
-       preserveAspectRatio="xMidYMid">
-      <g
-         transform="scale(-0.7)"
-         id="g41">
-        <g
-           transform="matrix(0,-1,-1,0,20.70862,21.31391)"
-           id="g39">
-          <path
-             style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
-             d="m 21.22125,20.67536 c -6.910151,4.721157 -2.454525,6.606844 -5.841071,13.443235"
-             id="path38" />
-          <path
-             style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
-             d="m 21.39811,20.54812 c -1.360509,8.347524 3.536072,8.76994 4.505041,13.824958"
-             id="path39" />
-        </g>
-        <path
-           style="fill:context-stroke;fill-rule:evenodd;stroke-width:1pt"
-           d="m -14.09007,-6.7318716 -0.922168,4.043383 3.962751,-1.22307 z"
-           id="path40" />
-        <path
-           style="fill:context-stroke;fill-rule:evenodd;stroke-width:1pt"
-           d="m -15.215679,4.5567534 1.874127,3.699613 2.266874,-3.472855 z"
-           id="path41" />
-      </g>
-    </marker>
-    <marker
-       style="overflow:visible"
-       id="marker8"
-       refX="0"
-       refY="0"
-       orient="auto-start-reverse"
-       inkscape:stockid="Legs"
-       markerWidth="1"
-       markerHeight="1"
-       viewBox="0 0 1 1"
-       inkscape:isstock="true"
-       inkscape:collect="always"
-       preserveAspectRatio="xMidYMid">
-      <g
-         transform="scale(-0.7)"
-         id="g8">
-        <g
-           transform="matrix(0,-1,-1,0,20.70862,21.31391)"
-           id="g6">
-          <path
-             style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
-             d="m 21.22125,20.67536 c -6.910151,4.721157 -2.454525,6.606844 -5.841071,13.443235"
-             id="path5" />
-          <path
-             style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
-             d="m 21.39811,20.54812 c -1.360509,8.347524 3.536072,8.76994 4.505041,13.824958"
-             id="path6" />
-        </g>
-        <path
-           style="fill:context-stroke;fill-rule:evenodd;stroke-width:1pt"
-           d="m -14.09007,-6.7318716 -0.922168,4.043383 3.962751,-1.22307 z"
-           id="path7" />
-        <path
-           style="fill:context-stroke;fill-rule:evenodd;stroke-width:1pt"
-           d="m -15.215679,4.5567534 1.874127,3.699613 2.266874,-3.472855 z"
-           id="path8" />
-      </g>
-    </marker>
     <pattern
        inkscape:collect="always"
-       xlink:href="#pattern16"
+       xlink:href="#pattern24"
        preserveAspectRatio="xMidYMid"
-       id="pattern21"
-       patternTransform="matrix(-0.01150338,-1.1206013e-4,1.379161e-4,0.01007747,-3763.271,1745.7277)" />
+       id="pattern6"
+       patternTransform="matrix(0.3,0,0,0.3,2449.6626,1438.5313)"
+       x="0"
+       y="0" />
     <pattern
        inkscape:collect="always"
        xlink:href="#pattern24"
@@ -131,14 +57,6 @@
        preserveAspectRatio="xMidYMid"
        id="pattern18"
        patternTransform="matrix(0.3,0,0,0.3,2449.6626,1438.5313)"
-       x="0"
-       y="0" />
-    <pattern
-       inkscape:collect="always"
-       xlink:href="#pattern37"
-       preserveAspectRatio="xMidYMid"
-       id="pattern16"
-       patternTransform="matrix(0.01148399,6.7695297e-4,-8.2857116e-4,0.0100443,3238.2379,1986.0453)"
        x="0"
        y="0" />
     <pattern
@@ -439,18 +357,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(264.3627,-146.06067)">
-    <path
-       class="fabric"
-       id="path20"
-       d="m -213.72293,210.57289 -44.15591,0.0185 0.90051,65.79898 49.20029,0.47928 0.34272,-15.06412 c -2.64844,-13.92288 -0.67972,-38.86965 1.85635,-50.97812 z"
-       style="display:inline;fill:url(#pattern21);fill-opacity:1;stroke:none;stroke-width:0.366474;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
-       inkscape:label="fs-3"
-       sodipodi:nodetypes="ccccccc" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:2.26772, 1.51181;stroke-dashoffset:0.756;stroke-opacity:1;marker-start:url(#marker8);marker-end:url(#Legs)"
-       d="m -205.87104,212.64504 -52.09778,-0.09"
-       id="path4" />
+     transform="translate(258.42909,-146.03374)">
     <g
        id="fs-stack-devon.frontSidePanel"
        transform="matrix(0.29752405,0,0,0.29752405,-251.21028,95.207855)"
@@ -462,7 +369,7 @@
         <path
            class="fabric"
            id="fs-3"
-           d="M 153.19,391.03 144.82,610.4 258.31606,608.52304 315,260.7 c -25.42,0 -65.44,-17.32 -74.91,-26.79 -15.21,-15.21 -23.27,-33.86 -25.85,-62.99 0,0 -24.64,0 -52.69,0.74 z"
+           d="M 153.19,391.03 144.82,610.4 258.46727,610.64002 315,260.7 c -25.42,0 -65.44,-17.32 -74.91,-26.79 -15.21,-15.21 -23.34561,-33.17954 -25.92561,-62.30954 0,0 -24.41318,-0.15122 -52.61439,0.0595 z"
            style="fill:url(#pattern20);fill-opacity:1;stroke:#000000;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
            sodipodi:nodetypes="ccccsccc" />
       </g>
@@ -479,7 +386,7 @@
         <path
            class="fabric"
            id="fs-1-7"
-           d="m 144.82,610.4 1.56682,-54.43724 c 0.70173,-27.41477 7.02204,-137.27196 8.16925,-166.39615 L 164.96,170.92 H 64.27 L 84.41,610.4 Z"
+           d="m 144.82,610.4 1.56682,-54.43724 c 0.70173,-27.41477 7.02204,-137.27196 8.16925,-166.39615 L 164.96,170.92 H 64.27 l 20.14302,439.17706 z"
            style="fill:url(#pattern18);fill-opacity:1;stroke:#000000;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
            sodipodi:nodetypes="ccccccc" />
       </g>
@@ -503,5 +410,52 @@
        style="fill:none;stroke:#d3ab1d;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:2.4, 2.4;stroke-dashoffset:5.28"
        d="m -210.19003,256.7347 h 2.69936"
        id="path3" />
+    <g
+       id="fs-stack-devon.frontInside"
+       transform="matrix(0.29678242,0,0,0.29678242,-250.89082,95.841462)"
+       style="fill:url(#pattern6);fill-opacity:1;stroke:#000000;stroke-opacity:1">
+      <!-- Start of group #fs-stack-devon.frontInside-part-devon.frontInside -->
+      <g
+         id="fs-stack-devon.frontInside-part-devon.frontInside"
+         style="fill:url(#pattern6);fill-opacity:1;stroke:#000000;stroke-opacity:1">
+        <path
+           class="fabric"
+           id="fs-9"
+           d="M 84.713181,609.79364 64.27,170.92 H -25.1 v 439.02523 z"
+           style="fill:url(#pattern6);fill-opacity:1;stroke:#000000;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+           sodipodi:nodetypes="ccccc" />
+      </g>
+      <!-- end of group #fs-stack-devon.frontInside-part-devon.frontInside -->
+    </g>
+    <path
+       style="fill:none;stroke:#d3ab1d;stroke-width:0.600001;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:2.26772, 1.51181;stroke-dashoffset:0.755904;stroke-opacity:1"
+       d="m -224.82044,276.60837 c 0,0 -5.58035,-129.96442 -5.66204,-130.28268"
+       id="path7"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#d3ab1d;stroke-width:0.600001;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:2.26772, 1.51181;stroke-dashoffset:0.755904;stroke-opacity:1"
+       d="m -223.1662,276.60837 c 0,0 -5.58035,-129.96442 -5.66204,-130.28268"
+       id="path9"
+       sodipodi:nodetypes="cc" />
+    <g
+       id="g11">
+      <rect
+         style="fill:#fefefe;fill-opacity:1;stroke:#ffffff;stroke-width:0.7;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:2.85732;stroke-opacity:1"
+         id="rect15"
+         width="30.592821"
+         height="4.85886"
+         x="-232.60515"
+         y="146.38374" />
+    </g>
+    <path
+       style="fill:none;stroke:#d3ab1d;stroke-width:0.600001;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:2.26772, 1.51181;stroke-dashoffset:0.755904;stroke-opacity:1"
+       d="m -201.97918,152.33393 -30.73017,-0.0911"
+       id="path15"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#d3ab1d;stroke-width:0.600001;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:2.26772, 1.51181;stroke-dashoffset:0.755904;stroke-opacity:1"
+       d="m -201.95669,153.52615 -30.73017,-0.0911"
+       id="path16"
+       sodipodi:nodetypes="cc" />
   </g>
 </svg>
