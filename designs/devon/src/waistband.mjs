@@ -25,8 +25,6 @@ export const waistband = {
     const waistbandWidth = store.get('waistbandWidth')
     const frontAdd = store.get('waistbandWidth') * 0.5
 
-    console.log({ hemLength: hemLength, waistbandWidth: waistbandWidth })
-
     points.midLeft = new Point(0, 0)
     points.midRight = new Point(hemLength, 0)
     points.topLeft = new Point(0, waistbandWidth * -1)
@@ -86,6 +84,15 @@ export const waistband = {
 
     points.title = points.topLeft.shiftFractionTowards(points.bottomRight, 0.5)
     macro('title', { nr: 13, title: 'waistband', at: points.title })
+
+    points.wbGrainFrom = points.topLeft.shift(335, points.topLeft.dist(points.topRight) * 0.1)
+    points.wbGrainTo = points.wbGrainFrom.copy()
+    points.wbGrainTo.y = points.bottomLeft.y - (points.wbGrainFrom.y - points.topLeft.y)
+
+    macro('grainline', {
+      from: points.wbGrainFrom,
+      to: points.wbGrainTo,
+    })
 
     dim(part, [
       ['h', 'topLeft', 'topRight', 'topLeft', -15],

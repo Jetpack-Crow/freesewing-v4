@@ -12,33 +12,10 @@ export const back = {
     backYokePanelWidth: 0.66,
     backHemPanelWidth: 0.33,
   },
-  draft: ({
-    measurements,
-    options,
-    store,
-    points,
-    // snippets,
-    // Point,
-    // Snippet,
-    Path,
-    paths,
-    utils,
-    // macro,
-    part,
-  }) => {
-    // let maxBack = Math.max(measurements.waistBack, measurements.seatBack) /2
+  draft: ({ measurements, options, store, points, Path, paths, utils, part }) => {
     let maxBack = Math.max(measurements.hips / 2, measurements.waistBack) / 2
     maxBack *= 1 + options.hemEase
 
-    console.log({
-      maxBack: maxBack,
-      waistBack: measurements.waistBack / 2,
-      seatBack: measurements.seatBack / 2,
-      hips: measurements.hips / 4,
-      hem: points.cfHem.dist(points.hem),
-    })
-
-    console.log({ hemOldBack: points.hem })
     points.hemBackOriginal = points.hem.copy()
     points.hemBack = points.hem.copy()
     let hemCircleIntersect = utils.circlesIntersect(
@@ -52,7 +29,6 @@ export const back = {
     } else {
       points.hemBack = hemCircleIntersect[1]
     }
-    console.log({ hemNewBack: points.hemBack })
 
     // Adapt the shoulder seam according to the relevant options
     // Note: s3 stands for Shoulder Seam Shift
@@ -84,8 +60,6 @@ export const back = {
         .hide()
 
       store.set('sss', paths.backCollarS3.length())
-
-      console.log({ bPaths: JSON.parse(JSON.stringify(paths)) })
     } else if (options.s3Collar < 0) {
       // Shift shoulder seam backward on the collar side
       points.s3CollarSplit = utils.curveIntersectsY(
@@ -101,14 +75,6 @@ export const back = {
         .split(points.s3CollarSplit)[0]
         .reverse()
         .hide()
-
-      console.log({
-        s3: new Path()
-          .move(points.cbNeck)
-          ._curve(points.neckCp2, points.neck)
-          .split(points.s3CollarSplit)[1]
-          .length(),
-      })
     }
     // Don't bother with less than 10% as that's just asking for trouble
     if (options.s3Armhole < 0.1 && options.s3Armhole > -0.1) {
@@ -156,23 +122,6 @@ export const back = {
         .hide()
     }
 
-    // Seamline
-    // paths.saBase = new Path()
-    //   .move(points.cbHem)
-    //   .line(points.hem)
-    //   .line(points.armhole)
-    //   .curve(points.armholeCp2, points.armholeHollowCp1, points.armholeHollow)
-    //   .curve(points.armholeHollowCp2, points.armholePitchCp1, points.armholePitch)
-    //   .join(paths.backArmhole)
-    //   .line(points.s3CollarSplit)
-    //   .join(paths.backCollar)
-    //   .hide()
-    // paths.seam = new Path()
-    //   .move(points.cbNeck)
-    //   .line(points.cbHips)
-    //   .join(paths.saBase)
-    //   .attr('class', 'fabric')
-
     paths.backArmholeComplete = new Path()
       .move(points.armhole)
       .curve(points.armholeCp2, points.armholeHollowCp1, points.armholeHollow)
@@ -190,14 +139,6 @@ export const back = {
       points.hemBack,
       options.backHemPanelWidth
     )
-
-    console.log({
-      side: 'back',
-      shoulder: points.shoulder.dist(points.neck),
-      yoke: points.cbYoke.dist(points.backArmholeYoke),
-      yokeDown: points.cbYoke.y,
-      hem: points.cbHem.dist(points.hemBack),
-    })
 
     store.set(
       'armholeYokeBack',

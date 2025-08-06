@@ -22,11 +22,6 @@ export const sleeve = {
     store.set('cuffWidth', cuffWidth)
     store.set('sleeveSlit', sleeveSlit)
 
-    console.log({
-      cuffLength:
-        points.tsWristLeft.dist(points.tsWristRight) + points.usWristLeft.dist(points.usWristRight),
-    })
-
     points.tsOriginalWristRight = points.tsWristRight.copy()
     points.usOriginalWristRight = points.usWristRight.copy()
     points.tsWristRight = points.tsWristRight.shift(
@@ -95,7 +90,6 @@ export const sleeve = {
       'cuffLength',
       points.tsCuffLeft.dist(points.tsCuffRight) + points.usCuffLeft.dist(points.usCuffRight)
     )
-    console.log({ cuffLength: store.get('cuffLength') })
 
     if (sa) {
       points.tsCuffRight = points.tsCuffLeft.shiftOutwards(points.tsCuffRight, sa)
@@ -133,7 +127,6 @@ export const sleeve = {
       .close()
       .attr('class', 'interfacing')
 
-    return part
     return part.hide()
   },
 }

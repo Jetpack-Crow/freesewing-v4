@@ -19,7 +19,6 @@ export const pocket = {
         delete points[i]
       }
     }
-    console.log({ pocketpoints: JSON.parse(JSON.stringify(points)) })
 
     paths.seam = new Path()
       .move(points.pocketTopLeft)
@@ -43,6 +42,17 @@ export const pocket = {
 
     points.title = points.pocketTopLeft.shiftFractionTowards(points.pocketBottomMiddle, 0.3)
     macro('title', { nr: 10, title: 'pocket', at: points.title, scale: 0.6 })
+
+    points.pGrainTo = points.pocketBottomMiddle.copy()
+    points.pGrainTo.y = points.pocketBottomLeft.y
+    points.pGrainFrom = points.pGrainTo.copy()
+    points.pGrainFrom.y =
+      points.pocketTopLeft.y - (points.pocketBottomLeft.y - points.pocketBottomMiddle.y)
+
+    macro('grainline', {
+      from: points.pGrainFrom,
+      to: points.pGrainTo,
+    })
 
     dim(part, [
       ['h', 'pocketTopLeft', 'pocketTopRight', 'pocketTopLeft', -15],

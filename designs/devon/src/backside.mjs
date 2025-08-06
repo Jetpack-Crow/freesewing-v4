@@ -36,7 +36,6 @@ export const backSide = {
       0,
       points.backYokePanel.dist(points.backArmholeYoke) * 0.5
     )
-    console.log({ Ppoints: JSON.parse(JSON.stringify(points)) })
 
     points.backYokeArmhole = paths.backYokeArmhole.start()
 
@@ -62,6 +61,17 @@ export const backSide = {
 
     points.title = points.backYokePanel.shiftFractionTowards(points.hem, 0.3)
     macro('title', { nr: 2, title: 'backSide', at: points.title, rotation: 90, scale: 0.75 })
+    points.bsGrainFrom = points.backYokePanel.shift(
+      315,
+      points.backYokePanel.dist(points.backArmholeYoke) * 0.1
+    )
+    points.bsGrainTo = points.bsGrainFrom.copy()
+    points.bsGrainTo.y = points.backHemPanel.y - (points.backYokePanel.y - points.bsGrainFrom.y)
+
+    macro('grainline', {
+      from: points.bsGrainFrom,
+      to: points.bsGrainTo,
+    })
 
     dim(part, [
       ['h', 'backHemPanel', 'backYokePanel', 'backYokePanel', -15],
@@ -82,11 +92,6 @@ export const backSide = {
         ['h', 'hemBackOriginal', 'backYokeArmhole', 'hemBackOriginal', 15],
       ])
     }
-    console.log({
-      hemBackLength: points.cbHem.dist(
-        options.waistAdjustment ? points.hemBack : points.hemBackOriginal
-      ),
-    })
     store.set(
       'hemBackLength',
       points.cbHem.dist(options.waistAdjustment ? points.hemBack : points.hemBackOriginal)

@@ -57,11 +57,27 @@ export const pocketflap = {
     /*
      * Annotatinos
      */
+    macro('rmgrainline')
+
     store.cutlist.removeCut('fabric')
     store.cutlist.addCut({ cut: 4, from: 'fabric', onFold: false })
 
     points.title = points.pocketflapTopLeft.shiftFractionTowards(points.pocketflapBottomMiddle, 0.4)
     macro('title', { nr: 11, title: 'pocketflap', at: points.title, scale: 0.5 })
+
+    points.pfGrainTo = points.pocketflapBottomMiddle.copy()
+    points.pfGrainTo.y =
+      points.pocketflapBottomMiddle.y -
+      (points.pocketflapBottomMiddle.y - points.pocketflapBottomLeft.y) * 0.3
+    points.pfGrainFrom = points.pfGrainTo.copy()
+    points.pfGrainFrom.y =
+      points.pocketTopLeft.y -
+      (points.pocketflapBottomLeft.y - points.pocketflapBottomMiddle.y) * 0.3
+
+    macro('grainline', {
+      from: points.pfGrainFrom,
+      to: points.pfGrainTo,
+    })
 
     macro('rmad')
 

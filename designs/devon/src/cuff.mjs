@@ -73,6 +73,15 @@ export const cuff = {
     points.title = points.topLeft.shiftFractionTowards(points.bottomRight, 0.5)
     macro('title', { nr: 14, title: 'cuff', at: points.title, scale: 0.4 })
 
+    points.cGrainFrom = points.topLeft.shift(335, points.topLeft.dist(points.topRight) * 0.3)
+    points.cGrainTo = points.cGrainFrom.copy()
+    points.cGrainTo.y = points.bottomLeft.y - (points.cGrainFrom.y - points.topLeft.y)
+
+    macro('grainline', {
+      from: points.cGrainFrom,
+      to: points.cGrainTo,
+    })
+
     if (complete) {
       points.midLeft = points.topLeft.shift(270, cuffWidth)
       points.midRight = points.topRight.shift(270, cuffWidth)

@@ -19,10 +19,6 @@ export const frontFacing = {
       if (['frontCollar', 'collarFacing'].indexOf(i) === -1) delete paths[i]
     }
 
-    console.log({ frontpoints: JSON.parse(JSON.stringify(points)) })
-    console.log({ p: points.frontCollarPoint })
-    console.log({ s: paths.frontCollar.split(points.frontCollarPoint), p: points.frontCollarPoint })
-
     paths.seam = new Path()
       .move(points.facingHem)
       .line(points.facingYoke)
@@ -47,6 +43,15 @@ export const frontFacing = {
 
     points.title = points.frontNeck.shiftFractionTowards(points.facingYoke, 0.5)
     macro('title', { nr: 12, title: 'frontFacing', at: points.title, scale: 0.5, rotation: 90 })
+
+    points.ffGrainFrom = points.frontNeck.shift(315, points.frontNeck.dist(points.cfNeck) * 0.3)
+    points.ffGrainTo = points.ffGrainFrom.copy()
+    points.ffGrainTo.y = points.cfHem.y - (points.ffGrainFrom.y - points.cfNeck.y)
+
+    macro('grainline', {
+      from: points.ffGrainFrom,
+      to: points.ffGrainTo,
+    })
 
     dim(part, [
       ['h', 'frontNeck', 'facingCollar', 'facingCollar', -15],

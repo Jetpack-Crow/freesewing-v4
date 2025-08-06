@@ -24,12 +24,6 @@ export const frontInside = {
     points.stitchTop = points.frontYoke.shift(0, waistbandWidth)
     points.stitchBottom = points.frontHem.shift(0, waistbandWidth)
 
-    // const panelLength = store.get('panelLength')
-    // const frontLength = store.get('frontLength')
-
-    // points.frontHemPanel = points.frontYokePanel.shiftTowards(points.frontHemPanel, panelLength)
-    // points.cfHem = points.cfYoke.shiftTowards(points.cfHem, frontLength)
-
     paths.seam = new Path()
       .move(points.frontHemPanel)
       .line(points.frontYokePanel)
@@ -78,9 +72,13 @@ export const frontInside = {
       dim(part, [['h', 'stitchTop', 'frontYokePanel', 'frontYoke', -25]])
     }
 
-    // points.title = points.frontYokePanel.shiftFractionTowards(points.cfChest, 0.5)
     points.title = points.stitchTop.shiftFractionTowards(points.stitchBottom, 0.25)
     macro('title', { nr: 4, title: 'frontInside', at: points.title, rotation: 90, scale: 0.75 })
+
+    macro('grainline', {
+      from: points.frontYoke.shiftFractionTowards(points.stitchTop, 0.25),
+      to: points.frontHem.shiftFractionTowards(points.stitchBottom, 0.25),
+    })
 
     dim(part, [
       ['h', 'frontYoke', 'frontYokePanel', 'frontYoke', -15],

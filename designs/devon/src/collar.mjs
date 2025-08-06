@@ -9,7 +9,6 @@ function CreateCollarPoints(
   collarWidth,
   collarLengthBack
 ) {
-  console.log({ side: side, collarWave: collarWave, cWave3: collarWave * 3, cw: collarWidth * 0.3 })
   points[side + 'CollarWaveTop'] = points[side + 'CollarTopRight'].shift(270, collarWave)
   // .addCircle(3)
   points[side + 'CollarWaveBottom'] = points[side + 'CollarBottomLeft'].shift(90, collarWave)
@@ -73,12 +72,6 @@ export const collar = {
 
     store.set('collarUpperUnderRatio', options.upperUnderRatio + 1)
 
-    console.log({
-      collarLength: collarLength,
-      total: store.get('collarLength'),
-      collarWidth: collarWidth,
-    })
-
     points.boxTopLeft = new Point(0, 0)
     points.boxTopRight = new Point(collarLength, 0)
     points.boxBottomLeft = new Point(0, collarWidth)
@@ -138,8 +131,6 @@ export const collar = {
       collarWidth,
       collarLengthBack
     )
-
-    console.log({ collarpoints: JSON.parse(JSON.stringify(points)) })
 
     return part
   },
