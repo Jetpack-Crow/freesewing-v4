@@ -30,8 +30,6 @@ export const frontYoke = {
     for (const i in paths) {
       if (['frontArmholeComplete', 'frontCollar'].indexOf(i) === -1) delete paths[i]
     }
-    console.log({ paths: JSON.parse(JSON.stringify(paths)) })
-
     paths.frontYokeSeam = new Path()
       .move(points.frontYoke)
       .line(points.frontArmholeYoke)
@@ -69,15 +67,6 @@ export const frontYoke = {
         .attr('class', 'lining dashed')
         .attr('data-text', 'topStitchLine')
         .attr('data-text-class', 'lining center')
-      // const waistbandWidth = store.get('waistbandWidth')
-      // points.stitchBottom = points.frontYoke.shift(0, waistbandWidth)
-      // points.stitchTop = paths.frontCollar.intersectsX(points.stitchBottom.x)[0]
-      // paths.stitchLine = new Path()
-      //   .move(points.stitchTop)
-      //   .line(points.stitchBottom)
-      //   .attr('class', 'lining dashed')
-      //   .attr('data-text', 'topStitchLine')
-      //   .attr('data-text-class', 'lining center')
       dim(part, [['h', 'frontNeck', 'button1', 'button1', 0]])
     }
 
@@ -90,6 +79,18 @@ export const frontYoke = {
       .shiftFractionTowards(points.frontArmholeYoke, 0.4)
       .shiftFractionTowards(points.frontYoke, 0.45)
     macro('title', { nr: 7, title: 'frontYoke', at: points.title })
+
+    points.fyGrainFrom = points.s3CollarSplit.shift(
+      330,
+      points.s3CollarSplit.dist(points.s3ArmholeSplit) * 0.35
+    )
+    points.fyGrainTo = points.fyGrainFrom.copy()
+    points.fyGrainTo.y = points.frontYoke.y - (points.fyGrainFrom.y - points.s3CollarSplit.y) * 1.5
+
+    macro('grainline', {
+      from: points.fyGrainFrom,
+      to: points.fyGrainTo,
+    })
 
     dim(part, [
       ['h', 'frontNeck', 's3CollarSplit', 's3CollarSplit', -15],

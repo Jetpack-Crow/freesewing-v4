@@ -39,6 +39,15 @@ export const topSleeve = {
       rotation: 90,
     })
 
+    points.tsGrainFrom = points.usTip.copy()
+    points.tsGrainTo = points.tsGrainFrom.copy()
+    points.tsGrainTo.y = points.tsSlitRight.y
+
+    macro('grainline', {
+      from: points.tsGrainFrom,
+      to: points.tsGrainTo,
+    })
+
     if (complete) {
       paths.topSleeveText = new Path()
         .move(points.top)

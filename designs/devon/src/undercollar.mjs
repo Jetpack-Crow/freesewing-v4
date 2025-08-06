@@ -14,8 +14,6 @@ export const underCollar = {
     // Parameters
   },
   draft: ({ points, Path, paths, macro, store, sa, snippets, Snippet, complete, part }) => {
-    console.log({ underpoints: JSON.parse(JSON.stringify(points)) })
-
     paths.seamBase = new Path()
       .move(points.underCollarWaveBottom)
       .curve(

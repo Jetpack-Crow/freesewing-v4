@@ -37,6 +37,15 @@ export const underSleeve = {
       rotation: 90,
     })
 
+    points.usGrainFrom = points.usTipCpBottom.copy()
+    points.usGrainTo = points.usGrainFrom.copy()
+    points.usGrainTo.y = points.usSlitRight.y
+
+    macro('grainline', {
+      from: points.usGrainFrom,
+      to: points.usGrainTo,
+    })
+
     dim(part, [
       ['h', 'usLeftEdge', 'backPitchPoint', 'usTip', -30],
       ['h', 'usLeftEdge', 'elbowRight', 'usCuffRight', 60],

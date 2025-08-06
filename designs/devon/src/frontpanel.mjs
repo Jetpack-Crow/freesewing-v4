@@ -100,6 +100,11 @@ export const frontPanel = {
       )
     macro('title', { nr: 5, title: 'frontPanel', at: points.title, rotation: 90, scale: 0.75 })
 
+    macro('grainline', {
+      from: points.frontYokePanelMiddle,
+      to: points.frontHemPanelMiddle,
+    })
+
     points.frontPanelSnippet = points.frontHemSidePanelSaved.copy()
     snippets.frontPanel = new Snippet('notch', points.frontPanelSnippet)
 

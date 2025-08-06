@@ -41,8 +41,6 @@ export const frontSidePanel = {
     const useFBA = store.get('useFBA')
     let angleFBA = 0
 
-    console.log({ upShift: upShift })
-
     points.frontYokeSidePanelCP1 = points.frontYokeSidePanel.shift(
       0,
       points.frontYokeSidePanel.dist(points.frontArmholeYoke) * 0.5
@@ -101,11 +99,6 @@ export const frontSidePanel = {
       if (diff > 0) {
         angle = Math.abs(angle) * -0.7
       } else angle = Math.abs(angle) * 0.6
-      console.log({
-        iter: iter,
-        diff: diff,
-        angle: angle,
-      })
     } while (iter++ < 100 && (diff > 1 || diff < -1))
 
     if (useFBA) {
@@ -154,7 +147,6 @@ export const frontSidePanel = {
           .line(points.cfPocketTop)
           .line(points.cfPocketBottom)
           .line(points.frontHemSidePanelSaved)
-        // .hide()
       } else {
         paths.pocket = new Path().move(points.frontHemSidePanelSaved).hide()
       }
@@ -221,6 +213,19 @@ export const frontSidePanel = {
 
     points.title = points.frontYokeSidePanel.shiftFractionTowards(points.hem, 0.3)
     macro('title', { nr: 6, title: 'frontSidePanel', at: points.title, rotation: 90, scale: 0.75 })
+
+    points.fsGrainFrom = points.frontYokeSidePanel.shift(
+      315,
+      points.frontYokePanel.dist(points.step1frontArmholeYoke) * 0.5
+    )
+    points.fsGrainTo = points.fsGrainFrom.copy()
+    points.fsGrainTo.y =
+      points.frontHemPanel.y - (points.fsGrainFrom.y - points.frontYokeSidePanel.y)
+
+    macro('grainline', {
+      from: points.fsGrainFrom,
+      to: points.fsGrainTo,
+    })
 
     points.frontPanelSnippet = points.frontHemSidePanelSaved.copy()
     snippets.frontPanel = new Snippet('notch', points.frontPanelSnippet)

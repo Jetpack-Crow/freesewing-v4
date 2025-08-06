@@ -72,8 +72,6 @@ export const backYoke = {
       ['v', 'backArmholeYoke', 's3CollarSplit', 's3ArmholeSplit', 15],
     ])
 
-    console.log({ shoulderLength: points.hps.dist(points.shoulder) })
-
     return part
   },
 }
