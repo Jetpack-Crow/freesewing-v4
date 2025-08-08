@@ -14,8 +14,6 @@ export const upperCollar = {
     // Parameters
   },
   draft: ({ points, Path, paths, macro, store, sa, snippets, Snippet, complete, part }) => {
-    console.log({ upperpoints: JSON.parse(JSON.stringify(points)) })
-
     paths.seamBase = new Path()
       .move(points.upperCollarWaveBottom)
       .curve(
