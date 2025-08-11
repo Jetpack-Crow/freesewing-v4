@@ -32,7 +32,7 @@
 
 # @freesewing/devon
 
-A FreeSewing pattern that needs a description
+A FreeSewing pattern for a denim jacket, based on the Bent block
 
 
 
