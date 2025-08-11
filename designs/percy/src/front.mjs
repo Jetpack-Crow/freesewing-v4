@@ -272,7 +272,7 @@ function draftPercyFront({
   log.info('Waist front panel width is ' + paths.waist.length() * options.frontPanelPercentage * 2)
 
   //Send the front panel width to the store
-  store.set('front_panel_width', paths.waist.length() * options.frontPanelPercentage * 2)
+  store.set('frontPanelWidth', paths.waist.length() * options.frontPanelPercentage * 2)
 
   points.pocketFacingEdge = paths.waist.shiftFractionAlong(
     options.frontPanelPercentage * options.pocketFacingUnderlap

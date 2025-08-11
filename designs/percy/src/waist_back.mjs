@@ -21,25 +21,20 @@ function draftPercyWaistBack({
 }) {
   const bottom_length = store.get('back_waist_width') * 2
   log.info('back panel length is ' + bottom_length)
-  const width = store.get('waistband_width')
+  const width = store.get('waistbandWidth')
 
-  const length_percentage = bottom_length / store.get('garment_top_circumference')
-  const top_length = length_percentage * store.get('waistband_top_circumference')
+  const circleOuterRadius = store.get('waistband_outer_radius')
+  const circleInnerRadius = store.get('waistband_inner_radius')
 
-  const lengths_ratio = store.get('waistband_top_ratio')
-
-  const circle_outer_radius = store.get('waistband_outer_radius')
-  const circle_inner_radius = store.get('waistband_inner_radius')
-
-  const circle_percentage = bottom_length / (2 * 3.14 * circle_outer_radius)
-  const circle_angle = circle_percentage * 360
+  const circlePercentage = bottom_length / (2 * 3.14 * circleOuterRadius)
+  const circleAngle = circlePercentage * 360
   log.info(
-    'back waistband is ' + circle_percentage + ' of total circle, or ' + circle_angle + ' degrees'
+    'back waistband is ' + circlePercentage + ' of total circle, or ' + circleAngle + ' degrees'
   )
 
   points.circleCenter = new Point(0, 0)
-  points.topCenter = new Point(0, circle_inner_radius)
-  points.bottomCenter = new Point(0, circle_outer_radius)
+  points.topCenter = new Point(0, circleInnerRadius)
+  points.bottomCenter = new Point(0, circleOuterRadius)
   paths.centerLine = new Path()
     .move(points.topCenter)
     .line(points.bottomCenter)
@@ -47,29 +42,29 @@ function draftPercyWaistBack({
 
   paths.seam = new Path()
     .move(points.bottomCenter)
-    .circleSegment(circle_angle / 2, points.circleCenter)
+    .circleSegment(circleAngle / 2, points.circleCenter)
 
   points.bottomRight = paths.seam.end()
   points.topRight = points.bottomRight.shiftTowards(points.circleCenter, width)
 
-  paths.seam = paths.seam.line(points.topRight).circleSegment(-circle_angle, points.circleCenter)
+  paths.seam = paths.seam.line(points.topRight).circleSegment(-circleAngle, points.circleCenter)
 
   points.topLeft = paths.seam.end()
   points.bottomLeft = points.topLeft.shiftTowards(points.circleCenter, -width)
 
   paths.seam = paths.seam
     .line(points.bottomLeft)
-    .circleSegment(circle_angle / 2, points.circleCenter)
+    .circleSegment(circleAngle / 2, points.circleCenter)
     .close()
 
   paths.bottomCurve = new Path()
     .move(points.bottomLeft)
-    .circleSegment(circle_angle, points.circleCenter)
+    .circleSegment(circleAngle, points.circleCenter)
     .hide()
 
   paths.topCurve = new Path()
     .move(points.topLeft)
-    .circleSegment(circle_angle, points.circleCenter)
+    .circleSegment(circleAngle, points.circleCenter)
     .hide()
 
   if (sa) {
