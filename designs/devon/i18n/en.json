@@ -130,14 +130,6 @@
       "t": "Neck drop",
       "d": "The amount the front of the neck will drop."
     },
-    "s3Collar": {
-      "t": "Shoulder seam shift: collar side",
-      "d": "Increase this option to shift the shoulder seam forward on the collar side. Decreasing it shifts it backwards."
-    },
-    "s3Armhole": {
-      "t": "Shoulder seam shift: armhole side",
-      "d": "Increase this option to shift the shoulder seam forward on the armhole side. Decreasing it shifts it backwards."
-    },
     "shoulderEase": {
       "t": "Shoulder ease",
       "d": "The amount of ease at your shoulder. This increases the shoulder to shoulder distance to accommodate additional layers or thickness."
@@ -154,9 +146,17 @@
       "t": "Sleeve length bonus",
       "d": "The amount to lengthen the sleeve. A negative value will shorten it."
     },
+    "sleeveBend": {
+      "t": "Sleeve bend",
+      "d": "The angle of the sleeve at the elbow."
+    },
     "sleevecapEase": {
       "t": "Sleevecap ease",
       "d": "The amount by which the sleevecap seam is longer than the armhole seam."
+    },
+    "sleevecapHeight": {
+      "t": "Sleevecap height",
+      "d": "Controls the height of the sleevecap."
     },
     "sleevecapTopFactorX": {
       "t": "Sleevecap top X",
