@@ -88,7 +88,7 @@ export const sleeve = {
 
     store.set(
       'cuffLength',
-      points.tsCuffLeft.dist(points.tsCuffRight) + points.usCuffLeft.dist(points.usCuffRight)
+      points.tsCuffLeft.dist(points.tsCuffRight) + points.usCuffLeft.dist(points.usCuffRight) + sa
     )
 
     if (sa) {
