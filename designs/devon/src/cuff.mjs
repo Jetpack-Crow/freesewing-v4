@@ -24,8 +24,6 @@ export const cuff = {
     const cuffLength = store.get('cuffLength')
     const cuffWidth = store.get('cuffWidth')
 
-    console.log({ cuffLength: cuffLength, cuffWidth: cuffWidth })
-
     points.topLeft = new Point(0, 0)
     points.topRight = new Point(cuffLength * 0.5, 0)
     points.bottomLeft = new Point(0, cuffWidth * 2)
