@@ -95,6 +95,7 @@ function draftPercyWaistSide({
   )
 
   store.cutlist.addCut({ cut: 4 })
+  store.cutlist.addCut({ cut: 2, material: 'interfacing' })
 
   points.titleAnchor = points.topCenter
     .shiftFractionTowards(points.bottomCenter, 0.5)

@@ -257,10 +257,12 @@ function draftPercyFront({
         (1 - options.waistHeight) * measurements.waistToHips)
   )
 
-  const openingDepth =
+  const openingDepth = Math.max(
     openingYBelowWaist -
-    (options.waistbandWidth * measurements.waistToFloor +
-      (1 - options.waistHeight) * measurements.waistToHips)
+      (options.waistbandWidth * measurements.waistToFloor +
+        (1 - options.waistHeight) * measurements.waistToHips),
+    measurements.waistToSeat * 0.1
+  )
   store.set('openingDepth', openingDepth)
 
   log.info('The opening needs to go down the front piece by ' + openingDepth)

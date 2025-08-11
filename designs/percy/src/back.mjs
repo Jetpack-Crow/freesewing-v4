@@ -66,8 +66,8 @@ function draftPercyBack({
 
   points.outseamShiftUpwards = paths.outseam.shiftAlong(inseamShiftAmount + seamLengthDifference)
 
-  paths.shortshem = new Path().move(points.inseamShiftUpwards).line(points.outseamShiftUpwards)
-  const originalHemLength = paths.shortshem.length()
+  paths.shortHem = new Path().move(points.inseamShiftUpwards).line(points.outseamShiftUpwards)
+  const originalHemLength = paths.shortHem.length()
   store.set('original_hem_back', originalHemLength)
 
   paths.newInseam = paths.inseam.split(points.inseamShiftUpwards)[0]
@@ -83,7 +83,7 @@ function draftPercyBack({
   if (options.spread) {
     const totalSlashIterations = Math.floor(options.slashIterations * 2)
 
-    points.hemcenter = points.outseamShiftUpwards.shiftFractionTowards(
+    points.hemCenter = points.outseamShiftUpwards.shiftFractionTowards(
       points.inseamShiftUpwards,
       0.5
     )
@@ -92,16 +92,16 @@ function draftPercyBack({
     points.crossSeamCenter = paths.crossSeam.shiftFractionAlong(0.5)
     points.topCenter = points.waistcenter.shiftFractionTowards(points.crossSeamCenter, 0.5)
 
-    const rotationradius = points.hemcenter.dist(points.topCenter)
+    const rotationradius = points.hemCenter.dist(points.topCenter)
 
-    const targethemlength = originalHemLength * options.hemRatio
-    const totalRotationAmount = (50 * (targethemlength - originalHemLength)) / rotationradius
+    const targetHemLength = originalHemLength * options.hemRatio
+    const totalRotationAmount = (50 * (targetHemLength - originalHemLength)) / rotationradius
     const rotationAmount = Math.min(totalRotationAmount, 90) / totalSlashIterations
 
-    points.crossSeamDrop = paths.shortshem.intersectsX(points.styleWaistInNoAngle.x)[0]
+    points.crossSeamDrop = paths.shortHem.intersectsX(points.styleWaistInNoAngle.x)[0]
 
     const crossSeamRatio =
-      points.inseamShiftUpwards.dist(points.crossSeamDrop) / paths.shortshem.length()
+      points.inseamShiftUpwards.dist(points.crossSeamDrop) / paths.shortHem.length()
     const crossSeamSlashCount = Math.floor(totalSlashIterations * crossSeamRatio)
     const waistSlashCount = totalSlashIterations - crossSeamSlashCount
 
@@ -223,11 +223,11 @@ function draftPercyBack({
     paths.waist = paths.waist.line(points.styleWaistOut)
 
     //draw the new curved hem
-    paths.shortshem = new Path().move(points.inseamShiftUpwards)
+    paths.shortHem = new Path().move(points.inseamShiftUpwards)
     for (let i = 0; i < totalSlashIterations; i++) {
-      paths.shortshem = paths.shortshem.line(slashPointsInner[i]).line(slashPointsHem[i])
+      paths.shortHem = paths.shortHem.line(slashPointsInner[i]).line(slashPointsHem[i])
     }
-    paths.shortshem = paths.shortshem.line(points.outseamShiftUpwards)
+    paths.shortHem = paths.shortHem.line(points.outseamShiftUpwards)
 
     //rotation correction
 
@@ -251,7 +251,7 @@ function draftPercyBack({
   snippets['backNotch'] = new Snippet('bnotch', paths.waist.shiftFractionAlong(0.33))
 
   paths.seam = paths.newInseam
-    .join(paths.shortshem)
+    .join(paths.shortHem)
     .join(paths.newOutseam)
     .join(paths.waist.reverse())
     .join(paths.crossSeam)
@@ -280,15 +280,15 @@ function draftPercyBack({
   macro('rmVd', 'hStartCrotchCurveToCbWaist')
   macro('rmVd', 'hForkToCbWaist')
 
-  points.hemLowestPoint = paths.shortshem.shiftFractionAlong(0.5)
+  points.hemLowestPoint = paths.shortHem.shiftFractionAlong(0.5)
   let x = 0
-  let ary = paths.shortshem.intersectsY(points.hemLowestPoint.y + 1)
+  let ary = paths.shortHem.intersectsY(points.hemLowestPoint.y + 1)
   while (ary.length > 0 && x < measurements.waistToSeat) {
     log.info('Hem intersects ' + ary.length + ' times at y ' + points.hemLowestPoint.y)
 
     points.hemLowestPoint = ary[0]
     x = x + 1
-    ary = paths.shortshem.intersectsY(points.hemLowestPoint.y + 1)
+    ary = paths.shortHem.intersectsY(points.hemLowestPoint.y + 1)
   }
   //snippets['hemLowestPoint'] = new Snippet('notch', points.hemLowestPoint)
 
@@ -306,7 +306,7 @@ function draftPercyBack({
 
   macro('pd', {
     id: 'lengthHem',
-    path: paths.shortshem,
+    path: paths.shortHem,
     d: -15,
   })
   macro('hd', {
@@ -452,7 +452,7 @@ function draftPercyBack({
   })
 
   macro('rmGrainline', 'grainline')
-  points.grainlineBottom = paths.shortshem.shiftFractionAlong(0.5)
+  points.grainlineBottom = paths.shortHem.shiftFractionAlong(0.5)
   points.grainlineTop = new Point(points.grainlineBottom.x, paths.waist.shiftFractionAlong(0.5).y)
   macro('grainline', {
     from: points.grainlineTop,
