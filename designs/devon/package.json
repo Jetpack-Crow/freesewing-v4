@@ -2,8 +2,8 @@
   "name": "@freesewing/devon",
   "version": "4.1.0",
   "description": "A FreeSewing pattern for a denim jacket, based on the Bent block",
-  "author": "woutervdub (https://github.com/woutervdub)",
- "homepage": "https://freesewing.org/",
+  "author": "Joost De Cock <joost@joost.at> (https://github.com/joostdecock)",
+  "homepage": "https://freesewing.org/",
   "repository": "github:freesewing/freesewing",
   "license": "MIT",
   "bugs": {
