@@ -74,11 +74,11 @@ function draftPercyBack({
   paths.newOutseam = paths.outseam.split(points.outseamShiftUpwards)[1]
 
   paths.crossSeam = new Path()
-    .move(points.styleWaistInNoAngle)
+    .move(points.styleWaistIn)
     .line(points.crossSeamCurveStart)
     .curve(points.crossSeamCurveCp1, points.crossSeamCurveCp2, points.fork)
 
-  paths.waist = new Path().move(points.styleWaistIn).line(points.styleWaistOut).setClass('various')
+  paths.waist = new Path().move(points.styleWaistIn).line(points.styleWaistOut) //.setClass('various')
 
   if (options.spread) {
     const totalSlashIterations = Math.floor(options.slashIterations * 2)
@@ -453,7 +453,7 @@ function draftPercyBack({
 
   macro('rmGrainline', 'grainline')
   points.grainlineBottom = paths.shortshem.shiftFractionAlong(0.5)
-  points.grainlineTop = paths.waist.shiftFractionAlong(0.5)
+  points.grainlineTop = new Point(points.grainlineBottom.x, paths.waist.shiftFractionAlong(0.5).y)
   macro('grainline', {
     from: points.grainlineTop,
     to: points.grainlineBottom,

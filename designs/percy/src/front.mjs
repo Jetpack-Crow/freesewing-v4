@@ -449,9 +449,7 @@ function draftPercyFront({
 
   macro('rmGrainline', 'grainline')
   points.grainlineBottom = paths.shortHem.shiftFractionAlong(0.5)
-  points.grainlineTop = points.styleWaistOut
-    .shiftFractionTowards(points.styleWaistIn, 0.5)
-    .shiftFractionTowards(points.grainlineBottom, 0.1)
+  points.grainlineTop = new Point(points.grainlineBottom.x, paths.waist.shiftFractionAlong(0.5).y)
   macro('grainline', {
     from: points.grainlineTop,
     to: points.grainlineBottom,

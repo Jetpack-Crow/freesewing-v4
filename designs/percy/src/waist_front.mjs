@@ -61,10 +61,10 @@ function draftPercyWaistFront({
   points.circleCenter = new Point(0, 0)
   points.topCenter = new Point(0, circle_inner_radius)
   points.bottomCenter = new Point(0, circle_outer_radius)
-  paths.centerLine = new Path()
-    .move(points.topCenter)
-    .line(points.bottomCenter)
-    .setClass('note help')
+  macro('grainline', {
+    from: points.topCenter,
+    to: points.bottomCenter,
+  })
 
   paths.seam = new Path()
     .move(points.bottomCenter)
