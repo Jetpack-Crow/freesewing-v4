@@ -183,15 +183,16 @@ function titanBack({
       run++
       // Remedy A: Slash and spread
 
-      if (options.legacyFitCrossSeamBack) {
+      if (options.legacyFitCrossSeamBack == 'both' || options.legacyFitCrossSeamBack == 'legacy') {
         for (const i of rotate) {
           saved[i] = points[i]
           points[i] = points[i].rotate(delta / 15, points.seatOut)
         }
-      } else {
+      }
+      if (options.legacyFitCrossSeamBack == 'both' || options.legacyFitCrossSeamBack == 'shift') {
         for (const i of shift) {
           saved[i] = points[i]
-          points[i] = points[i].shift(180, delta / 4)
+          points[i] = points[i].shift(180, delta / 2)
         }
       }
       // Remedy B: Nudge the fork inwards/outwards
@@ -452,7 +453,7 @@ export const back = {
     fitCrossSeamFront: true,
     fitCrossSeamBack: true,
 
-    legacyFitCrossSeamBack: { bool: false, menu: 'advanced' },
+    legacyFitCrossSeamBack: { dflt: 'both', menu: 'advanced', list: ['both', 'legacy', 'shift'] },
     fitGuides: true,
     // Fit
     waistEase: { pct: 2, min: 0, max: 10, ...pctBasedOn('waist'), menu: 'fit' },
