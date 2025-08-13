@@ -173,6 +173,7 @@ function titanBack({
   // Should we fit the cross seam?
   if (options.fitCrossSeam && options.fitCrossSeamBack) {
     let rotate = ['waistIn', 'waistOut']
+    let shift = ['waistIn', 'waistOut', 'seatOut', 'seatOutCp1', 'seatOutCp2', 'cbSeat']
     let saved = []
     let delta = crossSeamDelta()
     let previous_delta
@@ -181,9 +182,17 @@ function titanBack({
       previous_delta = delta
       run++
       // Remedy A: Slash and spread
-      for (const i of rotate) {
-        saved[i] = points[i]
-        points[i] = points[i].rotate(delta / 15, points.seatOut)
+
+      if (options.legacyFitCrossSeamBack) {
+        for (const i of rotate) {
+          saved[i] = points[i]
+          points[i] = points[i].rotate(delta / 15, points.seatOut)
+        }
+      } else {
+        for (const i of shift) {
+          saved[i] = points[i]
+          points[i] = points[i].shift(180, delta / 4)
+        }
       }
       // Remedy B: Nudge the fork inwards/outwards
       saved.fork = points.fork
@@ -193,7 +202,7 @@ function titanBack({
       drawCrossSeam()
       delta = crossSeamDelta()
       // Uncomment the line beloe this to see all iterations
-      // paths[`try${run}`] = drawPath().attr('class', 'dotted')
+      //paths[`try${run}`] = drawPath().setClass('lining dotted')
     } while (Math.abs(delta) > 1 && run < 15 && Math.abs(delta) < Math.abs(previous_delta))
     if (Math.abs(delta) > Math.abs(previous_delta)) {
       // The rotations started to produce worse results.
@@ -442,6 +451,8 @@ export const back = {
     fitCrossSeam: true,
     fitCrossSeamFront: true,
     fitCrossSeamBack: true,
+
+    legacyFitCrossSeamBack: { bool: false, menu: 'advanced' },
     fitGuides: true,
     // Fit
     waistEase: { pct: 2, min: 0, max: 10, ...pctBasedOn('waist'), menu: 'fit' },
