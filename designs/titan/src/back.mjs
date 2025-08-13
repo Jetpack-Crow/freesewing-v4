@@ -168,16 +168,32 @@ function titanBack({
   drawCrossSeam()
 
   //Uncomment the line below to see the seam prior to fitting the cross seam
+  //THIS DOESN'T WORK. i'm not sure why.
   // paths.seam1 = drawPath().attr('class', 'dashed lining')
 
   // Should we fit the cross seam?
   if (options.fitCrossSeam && options.fitCrossSeamBack) {
     let rotate = ['waistIn', 'waistOut']
     let shift = ['waistIn', 'waistOut', 'seatOut', 'seatOutCp1', 'seatOutCp2', 'cbSeat']
+
+    let grainlineshift = [
+      'grainlineTop',
+      'grainlineBottom',
+      'knee',
+      'kneeIn',
+      'kneeOut',
+      'kneeInCp1',
+      'kneeOutCp2',
+      'floor',
+      'floorIn',
+      'floorOut',
+      'upperLegY',
+    ]
     let saved = []
     let delta = crossSeamDelta()
     let previous_delta
     let run = 0
+
     do {
       previous_delta = delta
       run++
@@ -186,29 +202,43 @@ function titanBack({
       if (options.legacyFitCrossSeamBack == 'both' || options.legacyFitCrossSeamBack == 'legacy') {
         for (const i of rotate) {
           saved[i] = points[i]
-          points[i] = points[i].rotate(delta / 15, points.seatOut)
+          points[i] = points[i].rotate(delta / 20, points.seatOut)
         }
       }
       if (options.legacyFitCrossSeamBack == 'both' || options.legacyFitCrossSeamBack == 'shift') {
         for (const i of shift) {
           saved[i] = points[i]
-          points[i] = points[i].shift(180, delta / 2)
+          points[i] = points[i].shift(180, delta / 3)
+        }
+
+        for (const i of grainlineshift) {
+          saved[i] = points[i]
+          points[i] = points[i].shift(180, delta / 3)
         }
       }
+
       // Remedy B: Nudge the fork inwards/outwards
       saved.fork = points.fork
-      points.fork = points.fork.shift(0, delta / 5)
+      points.fork = points.fork.shift(0, delta / 4)
       saved.forkCp2 = points.forkCp2
       points.forkCp2 = points.crossSeamCurveCp2.rotate(-90, points.fork)
+
       drawCrossSeam()
       delta = crossSeamDelta()
-      // Uncomment the line beloe this to see all iterations
+
+      // Uncomment the line below this to see all iterations
       //paths[`try${run}`] = drawPath().setClass('lining dotted')
-    } while (Math.abs(delta) > 1 && run < 15 && Math.abs(delta) < Math.abs(previous_delta))
+    } while (Math.abs(delta) > 1 && run < 20 && Math.abs(delta) < Math.abs(previous_delta))
     if (Math.abs(delta) > Math.abs(previous_delta)) {
       // The rotations started to produce worse results.
       // Revert back to the previous rotation.
       for (const i of rotate) {
+        points[i] = saved[i]
+      }
+      for (const i of shift) {
+        points[i] = saved[i]
+      }
+      for (const i of grainlineshift) {
         points[i] = saved[i]
       }
       points.fork = saved.fork
@@ -454,6 +484,8 @@ export const back = {
     fitCrossSeamBack: true,
 
     legacyFitCrossSeamBack: { dflt: 'both', menu: 'advanced', list: ['both', 'legacy', 'shift'] },
+    legacyFitCrossSeamBalance: { pct: 50, min: 0, max: 100, menu: 'advanced' },
+
     fitGuides: true,
     // Fit
     waistEase: { pct: 2, min: 0, max: 10, ...pctBasedOn('waist'), menu: 'fit' },
