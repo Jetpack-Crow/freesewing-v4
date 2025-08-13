@@ -193,7 +193,7 @@ function titanBack({
       drawCrossSeam()
       delta = crossSeamDelta()
       // Uncomment the line beloe this to see all iterations
-      // paths[`try${run}`] = drawPath().attr('class', 'dotted')
+      paths[`try${run}`] = drawPath().setClass('lining dotted')
     } while (Math.abs(delta) > 1 && run < 15 && Math.abs(delta) < Math.abs(previous_delta))
     if (Math.abs(delta) > Math.abs(previous_delta)) {
       // The rotations started to produce worse results.
