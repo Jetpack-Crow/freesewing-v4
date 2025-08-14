@@ -28,6 +28,7 @@ import { Lucy, LucyFront } from './lucy.mjs'
 import { Lumina, LuminaFront, LuminaBack } from './lumina.mjs'
 import { Lumira, LumiraFront, LumiraBack } from './lumira.mjs'
 import { Lunetius, LunetiusFront } from './lunetius.mjs'
+import { Percy, PercyFront } from './percy.mjs'
 import { Noble, NobleFront, NobleBack } from './noble.mjs'
 import { Sabrina, SabrinaFront, SabrinaBack } from './sabrina.mjs'
 import { Simon, SimonFront, SimonBack } from './simon.mjs'
@@ -75,6 +76,7 @@ export const lineDrawingsFront = {
   lumina: LuminaFront,
   lumira: LumiraFront,
   lunetius: LunetiusFront,
+  percy: PercyFront,
   noble: NobleFront,
 
   sabrina: SabrinaFront,
@@ -162,6 +164,7 @@ export const lineDrawings = {
   lumina: Lumina,
   lumira: Lumira,
   lunetius: Lunetius,
+  percy: Percy,
   noble: Noble,
   sabrina: Sabrina,
   simon: Simon,
@@ -286,6 +289,9 @@ export {
   // Lunetius
   Lunetius,
   LunetiusFront,
+  // Percy
+  Percy,
+  PercyFront,
   // Noble
   Noble,
   NobleFront,
