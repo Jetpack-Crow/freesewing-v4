@@ -204,11 +204,11 @@ function titanBack({
       }
       for (const i of shift) {
         saved[i] = points[i]
-        points[i] = points[i].shift(180, (delta * (1 - options.legacyFitCrossSeamPct)) / 2)
+        points[i] = points[i].shift(180, (delta * (1 - options.legacyFitCrossSeamPct)) / 4)
       }
       for (const i of grainlineShift) {
         saved[i] = points[i]
-        points[i] = points[i].shift(180, (delta * (1 - options.legacyFitCrossSeamPct)) / 2)
+        points[i] = points[i].shift(180, (delta * (1 - options.legacyFitCrossSeamPct)) / 4)
       }
 
       // Remedy B: Nudge the fork inwards/outwards
@@ -474,7 +474,7 @@ export const back = {
     fitCrossSeamBack: true,
 
     legacyFitCrossSeamPct: { pct: 50, min: 0, max: 100, menu: 'advanced' },
-    legacyForkShift: { bool: false, menu: 'advanced' },
+    legacyForkShift: { bool: true, menu: 'advanced' },
     crotchDepthOrUpperLeg: { bool: false, menu: 'advanced' },
 
     fitGuides: true,
