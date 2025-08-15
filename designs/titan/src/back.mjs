@@ -78,7 +78,8 @@ function titanBack({
       .move(points.waistIn)
       .line(points.crossSeamCurveStart)
       .curve(points.crossSeamCurveCp1, points.crossSeamCurveCp2, points.fork)
-      .length() - measurements.crossSeamBack
+      .length() -
+    measurements.crossSeamBack * (1 + options.crossSeamEase)
   /*
    * Helper method to (re)draw the cross seam
    */
@@ -174,6 +175,17 @@ function titanBack({
   if (options.fitCrossSeam && options.fitCrossSeamBack) {
     let rotate = ['waistIn', 'waistOut']
     let shift = ['waistIn', 'waistOut', 'seatOut', 'seatOutCp1', 'seatOutCp2', 'cbSeat']
+    let grainlineShift = [
+      'grainlineBottom',
+      'grainlineTop',
+      'floorOut',
+      'floorIn',
+      'floor',
+      'kneeInCp1',
+      'kneeOutCp2',
+      'kneeIn',
+      'kneeOut',
+    ]
     let saved = []
     let delta = crossSeamDelta()
     let previous_delta
@@ -191,10 +203,16 @@ function titanBack({
         saved[i] = points[i]
         points[i] = points[i].shift(180, (delta * (1 - options.legacyFitCrossSeamPct)) / 2)
       }
+      for (const i of grainlineShift) {
+        saved[i] = points[i]
+        points[i] = points[i].shift(180, (delta * (1 - options.legacyFitCrossSeamPct)) / 2)
+      }
 
       // Remedy B: Nudge the fork inwards/outwards
       saved.fork = points.fork
-      points.fork = points.fork.shift(0, delta / 5)
+      if (options.legacyForkShift) {
+        points.fork = points.fork.shift(0, delta / 5)
+      }
       saved.forkCp2 = points.forkCp2
       points.forkCp2 = points.crossSeamCurveCp2.rotate(-90, points.fork)
       drawCrossSeam()
@@ -452,8 +470,8 @@ export const back = {
     fitCrossSeamFront: true,
     fitCrossSeamBack: true,
 
-    legacyFitCrossSeamBack: { dflt: 'both', menu: 'advanced', list: ['both', 'legacy', 'shift'] },
     legacyFitCrossSeamPct: { pct: 50, min: 0, max: 100, menu: 'advanced' },
+    legacyForkShift: { bool: false, menu: 'advanced' },
 
     fitGuides: true,
     // Fit
