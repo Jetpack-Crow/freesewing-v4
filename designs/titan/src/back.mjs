@@ -105,7 +105,10 @@ function titanBack({
 
   // Let's get to work
   points.waistX = new Point(-1 * measurements.waistBackArc * (1 + options.waistEase), 0)
-  points.upperLegY = new Point(0, measurements.waistToUpperLeg)
+  points.upperLegY = new Point(
+    0,
+    options.crotchDepthOrUpperLeg ? measurements.crotchDepth : measurements.waistToUpperLeg
+  )
   points.seatX = new Point(-1 * measurements.seatBackArc * (1 + options.seatEase), 0)
   points.seatY = new Point(0, measurements.waistToSeat)
   points.seatOut = points.seatY
@@ -133,7 +136,7 @@ function titanBack({
   let kneeTotal = measurements.knee * (1 + options.kneeEase)
   if (!options.fitKnee) {
     // Based the knee width on the seat, unless that ends up being less
-    let altKneeTotal = measurements.seatFront
+    let altKneeTotal = (measurements.seat * (1 + options.kneeEase)) / 2
     if (altKneeTotal > kneeTotal) kneeTotal = altKneeTotal
   }
   // Store for re-use in front part
@@ -472,6 +475,7 @@ export const back = {
 
     legacyFitCrossSeamPct: { pct: 50, min: 0, max: 100, menu: 'advanced' },
     legacyForkShift: { bool: false, menu: 'advanced' },
+    crotchDepthOrUpperLeg: { bool: false, menu: 'advanced' },
 
     fitGuides: true,
     // Fit
