@@ -183,18 +183,15 @@ function titanBack({
       run++
       // Remedy A: Slash and spread
 
-      if (options.legacyFitCrossSeamBack == 'both' || options.legacyFitCrossSeamBack == 'legacy') {
-        for (const i of rotate) {
-          saved[i] = points[i]
-          points[i] = points[i].rotate(delta / 15, points.seatOut)
-        }
+      for (const i of rotate) {
+        saved[i] = points[i]
+        points[i] = points[i].rotate((delta * options.legacyFitCrossSeamPct) / 15, points.seatOut)
       }
-      if (options.legacyFitCrossSeamBack == 'both' || options.legacyFitCrossSeamBack == 'shift') {
-        for (const i of shift) {
-          saved[i] = points[i]
-          points[i] = points[i].shift(180, delta / 2)
-        }
+      for (const i of shift) {
+        saved[i] = points[i]
+        points[i] = points[i].shift(180, (delta * (1 - options.legacyFitCrossSeamPct)) / 2)
       }
+
       // Remedy B: Nudge the fork inwards/outwards
       saved.fork = points.fork
       points.fork = points.fork.shift(0, delta / 5)
@@ -446,6 +443,8 @@ export const back = {
     'waistToHips',
     'waistToSeat',
     'waistToUpperLeg',
+
+    'crotchDepth',
   ],
   options: {
     // Constants
@@ -454,11 +453,14 @@ export const back = {
     fitCrossSeamBack: true,
 
     legacyFitCrossSeamBack: { dflt: 'both', menu: 'advanced', list: ['both', 'legacy', 'shift'] },
+    legacyFitCrossSeamPct: { pct: 50, min: 0, max: 100, menu: 'advanced' },
+
     fitGuides: true,
     // Fit
     waistEase: { pct: 2, min: 0, max: 10, ...pctBasedOn('waist'), menu: 'fit' },
     seatEase: { pct: 2, min: 0, max: 10, ...pctBasedOn('seat'), menu: 'fit' },
     kneeEase: { pct: 6, min: 1, max: 25, ...pctBasedOn('knee'), menu: 'fit' },
+    crossSeamEase: { pct: 6, min: 1, max: 25, ...pctBasedOn('crossSeam'), menu: 'fit' },
     // Style
     waistHeight: { pct: 100, min: 0, max: 100, menu: 'style' },
     lengthBonus: { pct: 2, min: -20, max: 10, menu: 'style' },
