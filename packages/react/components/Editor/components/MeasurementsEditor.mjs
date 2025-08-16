@@ -19,7 +19,6 @@ import { modalMeasurementHelp } from '@freesewing/react/components/Help'
 export const MeasurementsEditor = ({ Design, update, state }) => {
   // Context
   const { setModal, modalContent } = useContext(ModalContext)
-  console.log({ modalContent })
 
   /*
    * Helper method to handle state updates for measurements
@@ -63,7 +62,7 @@ export const MeasurementsEditor = ({ Design, update, state }) => {
           <MeasurementInput
             key={m}
             m={m}
-            imperial={settings.units === 'umperial' ? true : false}
+            imperial={settings.units === 'imperial' ? true : false}
             original={settings.measurements?.[m]}
             update={(m, newVal) => onUpdate(m, newVal)}
             id={`edit-${m}`}
