@@ -313,7 +313,7 @@ const linkBuilders = {
 }
 
 const noExample =
-  'https://images.pexels.com/photos/5626595/pexels-photo-5626595.jpeg?cs=srgb&fm=jpg&w=640&h=427'
+  'https://imagedelivery.net/ouSuR9yY1bHt-fuAokSA5Q/a03ec4da-d29f-4dd6-1931-60aad603a800/public'
 
 /**
  * A component to show info about a FreeSewing design

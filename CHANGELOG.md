@@ -3,6 +3,55 @@
 
 ## Unreleased
 
+### bella
+
+#### Fixed
+
+ - Regression bug when dart fabric is zero (#504)
+
+### cornelius
+
+#### Fixed
+
+ - Add missing baste line (#493)
+ - Fix incorrect number in cut list (#498)
+
+### devon
+
+#### Added
+
+ - Initial release of Devon, a denim jacket
+
+### jane
+
+#### Fixed
+
+ - Fix cutlist error and gusset sizing (#517)
+
+### jett
+
+#### Added
+
+ - Initial release of the Jett jacket
+
+### sarah
+
+#### Added
+
+ - Initial release of Sarah, a basic skirt block based on the Aldrich drafting method
+
+### sunny
+
+#### Added
+
+ - Initial release of Sunny, an 18th century split side skirt
+
+### plugin-annotations
+
+#### Fixed
+
+ - Title macro now uses the set name from pattern metadata
+
 
 ## 4.1.0 (2025-06-29)
 
