@@ -36,13 +36,15 @@ export const zipperguard = {
     store.cutlist.addCut({ cut: 1, from: 'fabric' })
 
     points.logo = points.pA.shiftFractionTowards(points.pC, 0.5)
-    snippets.logo = new Snippet('logo', points.logo)
+    snippets.logo = new Snippet('logo', points.logo).attr('data-scale', 0.7)
     points.title = points.logo.shiftFractionTowards(points.pDcpC, 0.5)
     macro('title', {
       nr: 4,
       at: points.title,
       title: 'ZipperGuard',
       align: 'center',
+      rotation: 90,
+      scale: 0.5,
     })
 
     if (sa) {

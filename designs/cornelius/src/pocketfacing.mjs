@@ -47,14 +47,16 @@ export const pocketFacing = {
 
     points.gridAnchor = points.pU.clone()
 
-    points.logo = points.pUcpA.shiftFractionTowards(points.pocketFacingTL, 0.5).shift(270, 30)
-    snippets.logo = new Snippet('logo', points.logo)
-    points.title = points.logo.shiftFractionTowards(points.pocketFacingBR, 0.35)
+    points.title = points.pUcpA.shiftFractionTowards(points.pocketFacingTL, 0.5).shift(270, 40)
+    points.logo = points.title.shiftFractionTowards(points.pocketFacingBR, 0.35)
+    snippets.logo = new Snippet('logo', points.logo).attr('data-scale', 0.7)
     macro('title', {
       nr: 3,
       at: points.title,
       title: 'PocketFacing',
       align: 'center',
+      rotation: 90,
+      scale: 0.5,
     })
 
     macro('grainline', {
