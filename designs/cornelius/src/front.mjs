@@ -51,7 +51,7 @@ export const front = {
     }
 
     const flyConst = 14
-    store.set('flyConst',flyConst)
+    store.set('flyConst', flyConst)
 
     points.flyTop = points.pW.shift(
       points.pW.angle(points.pZ) - 180 + waistAngle,
@@ -75,7 +75,12 @@ export const front = {
       .curve(points.pFBcpZ, points.pZcpFB, points.pZ)
       .hide()
 
-    paths.flyFold = new Path().move(points.pW).line(points.pZ).attr('class', 'fabric dashed')
+    paths.flyFold = new Path()
+      .move(points.pW)
+      .line(points.pZ)
+      .attr('class', 'fabric dashed')
+      .setText('basteHere', 'text-xs center')
+
     store.set('flyLength', paths.flyFold.length())
 
     store.set('frontWaistLength', paths.waistSeam.line(points.flyTop).length())
@@ -166,7 +171,7 @@ export const front = {
 
     points.logo = points.pE.clone()
     snippets.logo = new Snippet('logo', points.logo)
-    points.title = points.logo.shift(270, 50)
+    points.title = points.logo.shift(270, 80)
     macro('title', {
       nr: 5,
       at: points.title,

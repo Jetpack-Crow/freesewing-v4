@@ -70,7 +70,7 @@ export const pocket = {
 
     points.logo = points.pocketSide.shiftFractionTowards(points.pocketTL, 0.5)
     snippets.logo = new Snippet('logo', points.logo)
-    points.title = points.logo.shift(270, 50)
+    points.title = points.logo.shift(270, 80)
     macro('title', {
       nr: 2,
       at: points.title,
