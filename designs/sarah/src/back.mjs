@@ -10,6 +10,7 @@ export const back = {
   from: base,
   draft: ({
     points,
+    Point,
     Path,
     paths,
     options,
@@ -113,6 +114,13 @@ export const back = {
       })
     } else {
       store.cutlist.addCut({ cut: 2, onFold: false })
+      points.gtop = points.cbTop.shift(0, options.paperlessOffset)
+      points.gbottom = points.cbBottom.shift(0, options.paperlessOffset)
+      macro('grainline', {
+        from: points.gtop,
+        to: points.gbottom,
+        grainline: true,
+      })
     }
 
     macro('vd', {
@@ -209,7 +217,7 @@ export const back = {
     macro('title', {
       at: points.title,
       nr: 1,
-      title: 'Back',
+      title: 'back',
       align: 'center',
       scale: 0.8,
     })
