@@ -73,6 +73,10 @@ jaeger:
     '@freesewing/brian': *freesewing
     '@freesewing/bent': *freesewing
     '@freesewing/plugin-bust': *freesewing
+jett:
+  peer:
+    '@freesewing/brian': *freesewing
+    '@freesewing/plugin-bust': *freesewing
 lily:
   peer:
     '@freesewing/titan': *freesewing

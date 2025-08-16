@@ -25,6 +25,7 @@ import { Hortensia, HortensiaFront } from './hortensia.mjs'
 import { Huey, HueyFront, HueyBack } from './huey.mjs'
 import { Hugo, HugoFront, HugoBack } from './hugo.mjs'
 import { Jane, JaneFront, JaneBack } from './jane.mjs'
+import { Jett, JettFront, JettBack } from './jett.mjs'
 import { Lucy, LucyFront } from './lucy.mjs'
 import { Lumina, LuminaFront, LuminaBack } from './lumina.mjs'
 import { Lumira, LumiraFront, LumiraBack } from './lumira.mjs'
@@ -72,6 +73,7 @@ export const lineDrawingsFront = {
   huey: HueyFront,
   hugo: HugoFront,
   jane: JaneFront,
+  jett: JettFront,
 
   lucy: LucyFront,
   lumina: LuminaFront,
@@ -116,6 +118,7 @@ export const lineDrawingsBack = {
   huey: HueyBack,
   hugo: HugoBack,
   jane: JaneBack,
+  jett: JettBack,
   lumina: LuminaBack,
   lumira: LumiraBack,
   noble: NobleBack,
@@ -162,6 +165,7 @@ export const lineDrawings = {
   huey: Huey,
   hugo: Hugo,
   jane: Jane,
+  jett: Jett,
   lucy: Lucy,
   lumina: Lumina,
   lumira: Lumira,
@@ -280,6 +284,10 @@ export {
   Jane,
   JaneFront,
   JaneBack,
+  // Jett
+  Jett,
+  JettFront,
+  JettBack,
   // Lucy
   Lucy,
   LucyFront,
