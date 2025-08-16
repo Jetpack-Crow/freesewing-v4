@@ -184,6 +184,7 @@ function titanBack({
       'floorOut',
       'floorIn',
       'floor',
+      'knee',
       'kneeInCp1',
       'kneeOutCp2',
       'kneeIn',
@@ -202,6 +203,8 @@ function titanBack({
         saved[i] = points[i]
         points[i] = points[i].rotate((delta * options.legacyFitCrossSeamPct) / 15, points.seatOut)
       }
+
+      //Remedy C: Scoop the curve and shift the outseam
       for (const i of shift) {
         saved[i] = points[i]
         points[i] = points[i].shift(180, (delta * (1 - options.legacyFitCrossSeamPct)) / 4)
