@@ -153,7 +153,7 @@ export const cheek = {
     store.set('noseSide', paths.nose.length())
     store.set('noseHeight', points.point1.dist(points.point2))
 
-    store.cutlist.addCut({ cut: 2, from: 'Fabric' })
+    store.cutlist.addCut({ cut: 2, from: 'fabric' })
 
     points.title = points.point4Cp2.shiftFractionTowards(points.point0, 0.3)
     macro('title', {

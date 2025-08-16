@@ -30,7 +30,7 @@ export const head1 = {
 
     points.gridAnchor = points.point0.clone()
 
-    store.cutlist.addCut({ cut: 2, from: 'Fabric' })
+    store.cutlist.addCut({ cut: 2, from: 'fabric' })
 
     store.set(
       'upperJawToLowerJaw',

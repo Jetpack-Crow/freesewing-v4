@@ -52,7 +52,7 @@ export const lowermouth = {
       .line(points.point0)
       .close()
 
-    store.cutlist.addCut({ cut: 1, from: 'Fabric' })
+    store.cutlist.addCut({ cut: 1, from: 'fabric' })
 
     points.gridAnchor = points.point1.clone()
     points.title = points.point0

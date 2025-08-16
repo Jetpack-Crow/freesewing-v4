@@ -15,7 +15,6 @@ import { i18n as carlton } from '@freesewing/carlton'
 import { i18n as cathrin } from '@freesewing/cathrin'
 import { i18n as charlie } from '@freesewing/charlie'
 import { i18n as cornelius } from '@freesewing/cornelius'
-import { i18n as devon } from '@freesewing/devon'
 import { i18n as diana } from '@freesewing/diana'
 import { i18n as florence } from '@freesewing/florence'
 import { i18n as florent } from '@freesewing/florent'
@@ -47,6 +46,7 @@ import { i18n as shin } from '@freesewing/shin'
 import { i18n as simon } from '@freesewing/simon'
 import { i18n as simone } from '@freesewing/simone'
 import { i18n as skully } from '@freesewing/skully'
+import { i18n as sunny } from '@freesewing/sunny'
 import { i18n as sven } from '@freesewing/sven'
 import { i18n as tamiko } from '@freesewing/tamiko'
 import { i18n as teagan } from '@freesewing/teagan'
@@ -81,7 +81,6 @@ export const i18n = {
   cathrin,
   charlie,
   cornelius,
-  devon,
   diana,
   florence,
   florent,
@@ -113,6 +112,7 @@ export const i18n = {
   simon,
   simone,
   skully,
+  sunny,
   sven,
   tamiko,
   teagan,

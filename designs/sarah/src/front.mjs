@@ -72,6 +72,13 @@ export const front = {
         offset: -paperlessOffset,
       })
     } else {
+      points.gftop = points.cfTop.shift(0, -options.paperlessOffset)
+      points.gfbottom = points.cfBottom.shift(0, -options.paperlessOffset)
+      macro('grainline', {
+        from: points.gftop,
+        to: points.gfbottom,
+        grainline: true,
+      })
       store.cutlist.addCut({ cut: 2, onFold: false })
     }
 
@@ -176,7 +183,7 @@ export const front = {
     macro('title', {
       at: points.title,
       nr: 2,
-      title: 'Front',
+      title: 'front',
       align: 'center',
       scale: 0.8,
     })

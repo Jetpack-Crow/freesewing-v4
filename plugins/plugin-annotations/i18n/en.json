@@ -1,6 +1,7 @@
 {
   "plugin-annotations:canvas": "canvas",
   "plugin-annotations:cut": "Cut",
+  "plugin-annotations:contrast": "contrasting fabric",
   "plugin-annotations:cutOnFold": "Cut on fold",
   "plugin-annotations:cutOnFoldAndGrainline": "Cut on fold / Grainline",
   "plugin-annotations:fabric": "main fabric",
@@ -20,7 +21,11 @@
   "plugin-annotations:onBias": "on the bias",
   "plugin-annotations:onFold": "on the fold",
   "plugin-annotations:onFoldAndBias": "on the fold, and on bias",
+  "plugin-annotations:ribbing": "ribbing",
+  "plugin-annotations:rigidinterfacing": "rigid interfacing",
   "plugin-annotations:sewTogether": "Sew together",
+  "plugin-annotations:specialty": "specialty fabric (see pattern instructions)",
+  "plugin-annotations:underside": "underside fabric",
   "plugin-annotations:supportFreeSewingBecomeAPatron": "Support FreeSewing, become a patron",
   "plugin-annotations:theBlackOutsideOfThisBoxShouldMeasure": "The (black) outside of this box should measure",
   "plugin-annotations:theWhiteInsideOfThisBoxShouldMeasure": "The (white) inside of this box should measure"

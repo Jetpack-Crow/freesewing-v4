@@ -140,7 +140,20 @@ async function generateDesignsDocs() {
         .sort()
         .map(
           (opt) =>
-            `import ${capitalize(opt.toLowerCase())} from '@site/docs/docs/designs/${name}/options/${opt.toLowerCase()}/readme.mdx'`
+            `import ${capitalize(opt.toLowerCase())} from '@site/docs/docs/designs/${
+              [
+                ...new Set([
+                  name,
+                  ...Object.keys(designs[name].patternConfig.resolvedDependencies).map(
+                    (dep) => dep.split('.')[0]
+                  ),
+                ]),
+              ].find((n) =>
+                fs.existsSync(
+                  path.resolve(`./docs/docs/designs/${n}/options/${opt.toLowerCase()}/readme.mdx`)
+                )
+              ) || name
+            }/options/${opt.toLowerCase()}/readme.mdx'`
         )
       const content = [
         `---`,
