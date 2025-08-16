@@ -19,6 +19,7 @@ import Chestease from '@site/docs/docs/designs/jett/options/chestease/readme.mdx
 import Closurecount from '@site/docs/docs/designs/jett/options/closurecount/readme.mdx'
 import Collarease from '@site/docs/docs/designs/jett/options/collarease/readme.mdx'
 import Cuffease from '@site/docs/docs/designs/jett/options/cuffease/readme.mdx'
+import Dartlegstruing from '@site/docs/docs/designs/jett/options/dartlegstruing/readme.mdx'
 import Draftforhighbust from '@site/docs/docs/designs/jett/options/draftforhighbust/readme.mdx'
 import Frontarmholedeeper from '@site/docs/docs/designs/jett/options/frontarmholedeeper/readme.mdx'
 import Frontweltpockets from '@site/docs/docs/designs/jett/options/frontweltpockets/readme.mdx'
@@ -44,6 +45,7 @@ import S3armhole from '@site/docs/docs/designs/jett/options/s3armhole/readme.mdx
 import S3collar from '@site/docs/docs/designs/jett/options/s3collar/readme.mdx'
 import Shoulderease from '@site/docs/docs/designs/jett/options/shoulderease/readme.mdx'
 import Shoulderslopereduction from '@site/docs/docs/designs/jett/options/shoulderslopereduction/readme.mdx'
+import Sidecutangle from '@site/docs/docs/designs/jett/options/sidecutangle/readme.mdx'
 import Sleevelengthbonus from '@site/docs/docs/designs/jett/options/sleevelengthbonus/readme.mdx'
 import Sleevewidthguarantee from '@site/docs/docs/designs/jett/options/sleevewidthguarantee/readme.mdx'
 import Sleevecapbackfactorx from '@site/docs/docs/designs/jett/options/sleevecapbackfactorx/readme.mdx'
@@ -144,7 +146,7 @@ import Yokesplit from '@site/docs/docs/designs/jett/options/yokesplit/readme.mdx
 **The amount of ease at your chest.**
 - Type: **Percentage**
 - Default: **15%**
-- Minimum: **-10%**
+- Minimum: **0%**
 - Maximum: **50%**
 
 <Chestease />
@@ -154,7 +156,7 @@ import Yokesplit from '@site/docs/docs/designs/jett/options/yokesplit/readme.mdx
 **The amount of ease around your neck**
 - Type: **Percentage**
 - Default: **2%**
-- Minimum: **-10%**
+- Minimum: **0%**
 - Maximum: **50%**
 
 <Collarease />
@@ -174,7 +176,7 @@ import Yokesplit from '@site/docs/docs/designs/jett/options/yokesplit/readme.mdx
 **The amount of ease at your hips**
 - Type: **Percentage**
 - Default: **8%**
-- Minimum: **-10%**
+- Minimum: **0%**
 - Maximum: **50%**
 
 <Hipsease />
@@ -222,13 +224,9 @@ import Yokesplit from '@site/docs/docs/designs/jett/options/yokesplit/readme.mdx
 #### Bust dart (EXPERIMENTAL) {#bustdart}
 
 **Draft the pattern with a full bust adjustment and a bust dart. This only takes effect if Draft for High Bust is true.
-These aren't guaranteed to preserve the armhole or side seam lengths. Proceed with caution.**
-- Type: **List**
-- Default: **None**
-- options:
-  - None
-  - Rotation
-  - Original
+This option isn't guaranteed to preserve the armhole or side seam lengths. Proceed with caution.**
+- Type: **Boolean**
+- Default: **false**
 
 <Bustdart />
 
@@ -250,9 +248,9 @@ These aren't guaranteed to preserve the armhole or side seam lengths. Proceed wi
 
 <Draftforhighbust />
 
-#### fullBustEase {#fullbustease}
+#### Full bust ease {#fullbustease}
 
-**undefined**
+**Allows you to independently control the ease in the bust adjustment without affecting the armscye**
 - Type: **Percentage**
 - Default: **10%**
 - Minimum: **0%**

@@ -32,7 +32,7 @@
 
 # @freesewing/sabrina
 
-A FreeSewing pattern for sports bras
+A FreeSewing pattern for sports tops
 
 
 
