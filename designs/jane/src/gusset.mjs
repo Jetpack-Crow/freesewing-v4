@@ -2,7 +2,7 @@ export const gusset = {
   name: 'jane.gusset',
   measurements: ['biceps', 'shoulderToElbow'],
   options: {
-    gussetSize: { pct: 44, min: 44, max: 50, menu: 'fit' },
+    gussetSize: { pct: 41, min: 41, max: 50, menu: 'fit' },
   },
 
   draft: function draftJaneGusset({
@@ -18,7 +18,7 @@ export const gusset = {
     part,
     store,
   }) {
-    const gussetMeasure = measurements.biceps * (0.5 + 0.85) * options.gussetSize
+   const gussetMeasure = measurements.biceps * options.gussetSize
 
     points.gussetLeft = new Point(0, 0)
     points.gussetRight = new Point(gussetMeasure, 0)
@@ -34,7 +34,7 @@ export const gusset = {
       .addClass('fabric')
       .close()
 
-    store.cutlist.setCut({ cut: 2, from: 'fabric' })
+    store.cutlist.setCut({ cut: 2, from: 'fabric', identical: 'true'})
 
     points.title = points.gussetLeft.shift(300, gussetMeasure / 2)
     macro('title', {
