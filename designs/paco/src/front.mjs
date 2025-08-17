@@ -93,11 +93,16 @@ function pacoFront({
   points.seatOut = points.seatOut.shift(angle, delta)
 
   // Cut the top of our pants short to make room for the waistband/elastic
+  //This doesn't actually need doing, because Titan already does it!
+
+  points.styleWaistOut = drawOutseam(true).start()
+  /*
   points.styleWaistOut = drawOutseam(true).shiftAlong(store.get('waistbandWidth'))
   points.styleWaistIn = points.styleWaistIn.shiftTowards(
     points.crotchSeamCurveStart,
     store.get('waistbandWidth')
   )
+  */
 
   // Our style changes will have influenced the inseam & outseam a bit
   // but not enough to do a full slash & rotate. So let's just fix the

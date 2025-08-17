@@ -81,12 +81,18 @@ function pacoBack({
   points.seatOut = points.seatOut.shift(angle, delta)
 
   // Cut the top of our pants short to make room for the waistband/elastic
+  //This doesn't actually need doing, because Titan already does it!
+  // So I've replaced the shift numbers with zeroes
+
   store.set('waistbandWidth', absoluteOptions.waistbandWidth)
+  points.styleWaistOut = drawOutseam(true).end()
+  /*
   points.styleWaistOut = drawOutseam(true).reverse().shiftAlong(store.get('waistbandWidth'))
   points.styleWaistIn = points.styleWaistIn.shiftTowards(
     points.crossSeamCurveStart,
     store.get('waistbandWidth')
   )
+  */
 
   // Add the (optional) front pocket extention
   if (options.frontPockets) {
