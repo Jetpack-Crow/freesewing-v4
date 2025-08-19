@@ -107,7 +107,7 @@ function titanBack({
   points.waistX = new Point(-1 * measurements.waistBackArc * (1 + options.waistEase), 0)
   points.upperLegY = new Point(
     0,
-    options.crotchDepthOrUpperLeg ? measurements.crotchDepth : measurements.waistToUpperLeg
+    options.crotchDepthOrUpperLeg ? measurements.waistToUpperLeg : measurements.crotchDepth
   )
   points.seatX = new Point(-1 * measurements.seatBackArc * (1 + options.seatEase), 0)
   points.seatY = new Point(0, measurements.waistToSeat)

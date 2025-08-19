@@ -179,7 +179,7 @@ function titanFront({
   points.waistX = new Point(measurements.waistFrontArc * (1 + options.waistEase), 0)
   points.upperLegY = new Point(
     0,
-    options.crotchDepthOrUpperLeg ? measurements.crotchDepth : measurements.waistToUpperLeg
+    options.crotchDepthOrUpperLeg ? measurements.waistToUpperLeg : measurements.crotchDepth
   )
   points.seatX = new Point(measurements.seatFrontArc * (1 + options.seatEase), 0)
   points.seatY = new Point(0, measurements.waistToSeat)
