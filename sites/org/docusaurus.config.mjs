@@ -242,7 +242,7 @@ const config = {
           title: 'Help & Support',
           items: [
             { label: 'About FreeSewing', to: '/docs/about/' },
-            { label: 'Getting Started', to: '/docs/about/guide/' },
+            { label: 'Getting Started', to: '/docs/about/' },
             { label: 'Frequently Asked Questions', href: '/docs/about/faq/' },
             { label: 'Documentation', href: '/docs/' },
             { label: 'Need Help?', href: '/support' },
