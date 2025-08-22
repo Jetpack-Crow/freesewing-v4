@@ -346,6 +346,25 @@ function titanFront({
     log.info(['heightReductionCenterFront', units(-triangleHeight)])
   }
 
+  //Calculate and report total upper leg ease
+  const frontThighSpace = points.fork.x - drawOutseam().intersectsY(points.fork.y)[0].x
+  log.info('Front upper leg space is ' + frontThighSpace)
+
+  const totalThighSpace = frontThighSpace + store.get('backThighSpace')
+  log.info(
+    'Total upper leg space is ' +
+      totalThighSpace +
+      ' for a total ease of ' +
+      (totalThighSpace / measurements.upperLeg - 1)
+  )
+
+  store.flag.note({
+    msg: 'titan:upperLegEase',
+    replace: {
+      ease: totalThighSpace / measurements.upperLeg - 1,
+    },
+  })
+
   // Seamline
   paths.seam = drawPath().attr('class', 'fabric')
 
@@ -493,5 +512,6 @@ function titanFront({
 export const front = {
   name: 'titan.front',
   after: back,
+  measurements: ['upperLeg'],
   draft: titanFront,
 }
