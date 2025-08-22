@@ -245,6 +245,11 @@ function titanBack({
   store.set('inseamBack', drawInseam().length())
   store.set('outseamBack', drawOutseam().length())
 
+  //Store upper leg space
+  const backThighSpace = drawOutseam().intersectsY(points.fork.y)[0].x - points.fork.x
+  log.info('Back upper leg space is ' + backThighSpace)
+  store.set('backThighSpace', backThighSpace)
+
   // Only now style the waist lower if requested
   if (options.waistHeight < 1 || absoluteOptions.waistbandWidth > 0) {
     points.styleWaistOut = drawOutseam()
@@ -485,7 +490,7 @@ export const back = {
     waistEase: { pct: 2, min: 0, max: 10, ...pctBasedOn('waist'), menu: 'fit' },
     seatEase: { pct: 2, min: 0, max: 10, ...pctBasedOn('seat'), menu: 'fit' },
     kneeEase: { pct: 6, min: 1, max: 25, ...pctBasedOn('knee'), menu: 'fit' },
-    crossSeamEase: { pct: 6, min: 1, max: 25, ...pctBasedOn('crossSeam'), menu: 'fit' },
+    crossSeamEase: { pct: 2, min: 0, max: 25, ...pctBasedOn('crossSeam'), menu: 'fit' },
     // Style
     waistHeight: { pct: 100, min: 0, max: 100, menu: 'style' },
     lengthBonus: { pct: 2, min: -20, max: 10, menu: 'style' },

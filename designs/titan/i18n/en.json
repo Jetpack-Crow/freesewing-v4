@@ -13,7 +13,9 @@
     "lowFrontHeight.t": "Front waist too low",
     "lowFrontHeight.d": "The front cross seam curve was adjusted as the front waistband was unexpectedly low.\n\nThe generated pattern is likely not correct. Please verify your measurements before contacting support.",
     "lowBackHeight.t": "Back waist too low",
-    "lowBackHeight.d": "The back cross seam curve was adjusted as the back waistband was unexpectedly low.\n\nThe generated pattern is likely not correct. Please verify your measurements before contacting support."
+    "lowBackHeight.d": "The back cross seam curve was adjusted as the back waistband was unexpectedly low.\n\nThe generated pattern is likely not correct. Please verify your measurements before contacting support.",
+    "upperLegEase.t": "Upper leg ease",
+    "upperLegEase.d": "Upper leg ease is {{{ ease }}}. To change this, change the cross seam fitting method or seat or knee eases."
   },
   "o": {
     "kneeEase": {
