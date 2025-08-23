@@ -2,6 +2,7 @@
 dump
 production.sqlite
 .husky
+local
 
 # .env
 .env

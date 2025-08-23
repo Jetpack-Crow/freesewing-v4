@@ -820,8 +820,9 @@ export const MeasurementInput = ({
       update(m, isDegree ? parsedVal : measurementAsMm(parsedVal, units))
       setValid(true)
       setValidatedVal(parsedVal)
-    } else if (newVal === undefined) update(m, undefined)
-    else setValid(false)
+    } else if (newVal === undefined) {
+      update(m, '__UNSET__')
+    } else setValid(false)
   }
 
   // Clear value

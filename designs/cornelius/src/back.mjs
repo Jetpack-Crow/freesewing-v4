@@ -239,7 +239,7 @@ export const back = {
 
     points.logo = points.pE.clone()
     snippets.logo = new Snippet('logo', points.logo)
-    points.title = points.logo.shift(270, 50)
+    points.title = points.logo.shift(270, 80)
     macro('title', {
       nr: 6,
       at: points.title,

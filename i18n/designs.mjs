@@ -19,6 +19,7 @@ import { i18n as carlton } from '@freesewing/carlton'
 import { i18n as cathrin } from '@freesewing/cathrin'
 import { i18n as charlie } from '@freesewing/charlie'
 import { i18n as cornelius } from '@freesewing/cornelius'
+import { i18n as devon } from '@freesewing/devon'
 import { i18n as diana } from '@freesewing/diana'
 import { i18n as examples } from '@freesewing/examples'
 import { i18n as florence } from '@freesewing/florence'
@@ -31,6 +32,7 @@ import { i18n as huey } from '@freesewing/huey'
 import { i18n as hugo } from '@freesewing/hugo'
 import { i18n as jaeger } from '@freesewing/jaeger'
 import { i18n as jane } from '@freesewing/jane'
+import { i18n as jett } from '@freesewing/jett'
 import { i18n as legend } from '@freesewing/legend'
 import { i18n as lily } from '@freesewing/lily'
 import { i18n as lucy } from '@freesewing/lucy'
@@ -56,6 +58,7 @@ import { i18n as shin } from '@freesewing/shin'
 import { i18n as simon } from '@freesewing/simon'
 import { i18n as simone } from '@freesewing/simone'
 import { i18n as skully } from '@freesewing/skully'
+import { i18n as sunny } from '@freesewing/sunny'
 import { i18n as sven } from '@freesewing/sven'
 import { i18n as tamiko } from '@freesewing/tamiko'
 import { i18n as teagan } from '@freesewing/teagan'
@@ -88,6 +91,7 @@ export const designs = {
   cathrin: cathrin.en,
   charlie: charlie.en,
   cornelius: cornelius.en,
+  devon: devon.en,
   diana: diana.en,
   examples: examples.en,
   florence: florence.en,
@@ -100,6 +104,7 @@ export const designs = {
   hugo: hugo.en,
   jaeger: jaeger.en,
   jane: jane.en,
+  jett: jett.en,
   legend: legend.en,
   lily: lily.en,
   lucy: lucy.en,
@@ -125,6 +130,7 @@ export const designs = {
   simon: simon.en,
   simone: simone.en,
   skully: skully.en,
+  sunny: sunny.en,
   sven: sven.en,
   tamiko: tamiko.en,
   teagan: teagan.en,

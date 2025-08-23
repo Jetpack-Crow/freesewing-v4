@@ -129,6 +129,8 @@ const title = function (config, { Point, points, scale, locale, store, part, log
     store.set(['partTitles', part.name], mc.title)
   } else delete ids.title
 
+  const settings = part.context.settings
+
   /*
    * Title: name
    */
@@ -142,7 +144,7 @@ const title = function (config, { Point, points, scale, locale, store, part, log
 
       `${mc.classes.name} ${mc.align}`
     )
-    .addText(store.data?.setName ? store.data.setName : 'ephemeral')
+    .addText(settings.metadata?.setName ? settings.metadata.setName : 'ephemeral')
     .addText(')')
     .attr('data-text-transform', transform)
     .attr('data-render-always', 1) // Render even when outside the part bounding box

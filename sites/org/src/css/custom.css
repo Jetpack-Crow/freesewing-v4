@@ -217,6 +217,10 @@ nav.navbar {
   height: 100%;
 }
 
+.navbar__logo img {
+  height: 100%;
+}
+
 /*
  * People want the 'account' link in the navbar to show the username
  * when people are logged in. I probably should have said No instead.

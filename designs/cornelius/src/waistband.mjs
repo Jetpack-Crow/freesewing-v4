@@ -74,18 +74,20 @@ export const waistband = {
       to: points.pB,
     })
 
-    store.cutlist.addCut({ cut: 1, from: 'fabric' })
+    store.cutlist.addCut({ cut: 2, from: 'fabric' })
 
     points.gridAnchor = points.pA.clone()
 
     points.logo = points.pA.shiftFractionTowards(points.pC, 0.5)
-    snippets.logo = new Snippet('logo', points.logo)
+    snippets.logo = new Snippet('logo', points.logo).attr('data-scale', 0.7)
     points.title = points.logo.shift(90, 70)
     macro('title', {
       nr: 1,
       at: points.title,
       title: 'WaistBand',
       align: 'center',
+      rotation: 90,
+      scale: 0.5,
     })
 
     if (sa) {

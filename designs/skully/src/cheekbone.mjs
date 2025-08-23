@@ -27,7 +27,7 @@ export const cheekbone = {
 
     paths.seam = new Path().move(points.point0).join(paths.seam6).join(paths.seam5).close()
 
-    store.cutlist.addCut({ cut: 2, from: 'Fabric' })
+    store.cutlist.addCut({ cut: 2, from: 'fabric' })
 
     points.gridAnchor = points.point0.clone()
     points.title = points.point0

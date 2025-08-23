@@ -15,6 +15,7 @@ import { Carlton as carlton } from '@freesewing/carlton'
 import { Cathrin as cathrin } from '@freesewing/cathrin'
 import { Charlie as charlie } from '@freesewing/charlie'
 import { Cornelius as cornelius } from '@freesewing/cornelius'
+import { Devon as devon } from '@freesewing/devon'
 import { Diana as diana } from '@freesewing/diana'
 import { Florence as florence } from '@freesewing/florence'
 import { Florent as florent } from '@freesewing/florent'
@@ -26,6 +27,7 @@ import { Huey as huey } from '@freesewing/huey'
 import { Hugo as hugo } from '@freesewing/hugo'
 import { Jaeger as jaeger } from '@freesewing/jaeger'
 import { Jane as jane } from '@freesewing/jane'
+import { Jett as jett } from '@freesewing/jett'
 import { Lily as lily } from '@freesewing/lily'
 import { Lucy as lucy } from '@freesewing/lucy'
 import { Lumina as lumina } from '@freesewing/lumina'
@@ -47,6 +49,7 @@ import { Shin as shin } from '@freesewing/shin'
 import { Simon as simon } from '@freesewing/simon'
 import { Simone as simone } from '@freesewing/simone'
 import { Skully as skully } from '@freesewing/skully'
+import { Sunny as sunny } from '@freesewing/sunny'
 import { Sven as sven } from '@freesewing/sven'
 import { Tamiko as tamiko } from '@freesewing/tamiko'
 import { Teagan as teagan } from '@freesewing/teagan'
@@ -85,6 +88,7 @@ export const designs = {
   cathrin,
   charlie,
   cornelius,
+  devon,
   diana,
   florence,
   florent,
@@ -96,6 +100,7 @@ export const designs = {
   hugo,
   jaeger,
   jane,
+  jett,
   lily,
   lucy,
   lumina,
@@ -117,6 +122,7 @@ export const designs = {
   simon,
   simone,
   skully,
+  sunny,
   sven,
   tamiko,
   teagan,
@@ -129,7 +135,7 @@ export const designs = {
   wahid,
   walburga,
   waralee,
-  yuri
+  yuri,
 }
 
 /*

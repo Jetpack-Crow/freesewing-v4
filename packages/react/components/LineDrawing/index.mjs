@@ -14,6 +14,7 @@ import { Carlton, CarltonFront, CarltonBack } from './carlton.mjs'
 import { Cathrin, CathrinFront, CathrinBack } from './cathrin.mjs'
 import { Charlie, CharlieFront, CharlieBack } from './charlie.mjs'
 import { Cornelius, CorneliusFront, CorneliusBack } from './cornelius.mjs'
+import { Devon, DevonFront /*, DevonBack*/ } from './devon.mjs'
 import { Diana, DianaFront, DianaBack } from './diana.mjs'
 import { Florence, FlorenceFront } from './florence.mjs'
 import { Florent, FlorentFront } from './florent.mjs'
@@ -24,6 +25,7 @@ import { Hortensia, HortensiaFront } from './hortensia.mjs'
 import { Huey, HueyFront, HueyBack } from './huey.mjs'
 import { Hugo, HugoFront, HugoBack } from './hugo.mjs'
 import { Jane, JaneFront, JaneBack } from './jane.mjs'
+import { Jett, JettFront, JettBack } from './jett.mjs'
 import { Lucy, LucyFront } from './lucy.mjs'
 import { Lumina, LuminaFront, LuminaBack } from './lumina.mjs'
 import { Lumira, LumiraFront, LumiraBack } from './lumira.mjs'
@@ -61,6 +63,7 @@ export const lineDrawingsFront = {
   cathrin: CathrinFront,
   charlie: CharlieFront,
   cornelius: CorneliusFront,
+  devon: DevonFront,
   diana: DianaFront,
   florence: FlorenceFront,
   florent: FlorentFront,
@@ -71,6 +74,7 @@ export const lineDrawingsFront = {
   huey: HueyFront,
   hugo: HugoFront,
   jane: JaneFront,
+  jett: JettFront,
 
   lucy: LucyFront,
   lumina: LuminaFront,
@@ -110,11 +114,13 @@ export const lineDrawingsBack = {
   cathrin: CathrinBack,
   charlie: CharlieBack,
   cornelius: CorneliusBack,
+  /*devon: DevonBack,*/
   diana: DianaBack,
   gozer: GozerBack,
   huey: HueyBack,
   hugo: HugoBack,
   jane: JaneBack,
+  jett: JettBack,
   lumina: LuminaBack,
   lumira: LumiraBack,
   noble: NobleBack,
@@ -150,6 +156,7 @@ export const lineDrawings = {
   cathrin: Cathrin,
   charlie: Charlie,
   cornelius: Cornelius,
+  devon: Devon,
   diana: Diana,
   florence: Florence,
   florent: Florent,
@@ -160,6 +167,7 @@ export const lineDrawings = {
   huey: Huey,
   hugo: Hugo,
   jane: Jane,
+  jett: Jett,
   lucy: Lucy,
   lumina: Lumina,
   lumira: Lumira,
@@ -240,6 +248,10 @@ export {
   Cornelius,
   CorneliusFront,
   CorneliusBack,
+  // Devon
+  Devon,
+  DevonFront,
+  /*DevonBack,*/
   // Diana
   Diana,
   DianaFront,
@@ -275,6 +287,10 @@ export {
   Jane,
   JaneFront,
   JaneBack,
+  // Jett
+  Jett,
+  JettFront,
+  JettBack,
   // Lucy
   Lucy,
   LucyFront,

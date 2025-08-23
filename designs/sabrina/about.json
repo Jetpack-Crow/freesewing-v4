@@ -1,8 +1,8 @@
 {
   "id": "sabrina",
-  "name": "Sabrina sports bra",
+  "name": "Sabrina sports top",
   "code": "Jonathan Haas",
-  "description": "A FreeSewing pattern for sports bras",
+  "description": "A FreeSewing pattern for sports tops",
   "design": "Jonathan Haas",
   "difficulty": 2,
   "tags": [
@@ -14,7 +14,7 @@
     "curved-seam",
     "elastic"
   ],
-  "version": "4.1.0",
+  "version": "4.2.0",
   "pkg": "@freesewing/sabrina",
   "collection": true
 }

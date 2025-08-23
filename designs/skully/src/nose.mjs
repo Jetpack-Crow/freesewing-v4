@@ -83,7 +83,7 @@ export const nose = {
       .join(paths.p2)
       .close()
 
-    store.cutlist.addCut({ cut: 1, from: 'Fabric' })
+    store.cutlist.addCut({ cut: 1, from: 'fabric' })
 
     points.gridAnchor = points.point0.clone()
     points.title = points.point0.shiftFractionTowards(points.point3, 0.5)

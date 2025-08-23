@@ -134,16 +134,18 @@ export const legband = {
 
     points.gridAnchor = (traditional ? points.pF : points.pG).clone()
 
-    store.cutlist.addCut({ cut: 2, from: 'fabric' })
+    store.cutlist.addCut({ cut: 4, from: 'fabric' })
 
     points.logo = points.pA.shiftFractionTowards(points.pE, 0.5) //.shift(180,70).shift(270,30);
-    snippets.logo = new Snippet('logo', points.logo)
+    snippets.logo = new Snippet('logo', points.logo).attr('data-scale', 0.7)
     points.title = points.logo.shift(270, 70)
     macro('title', {
       nr: 7,
       at: points.title,
       title: 'LegBand',
       align: 'center',
+      rotation: 90,
+      scale: 0.5,
     })
 
     if (sa) {
