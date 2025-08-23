@@ -242,6 +242,16 @@ function titanFront({
     let delta = crotchSeamDelta()
     let previous_delta
     let rotate = ['waistIn', 'waistOut', 'cfWaist']
+    let shift = [
+      'waistOut',
+      'seatOut',
+      'waistIn',
+      'crotchSeamCurveStart',
+      'crotchSeamCurveMax',
+      'seatOutCp1',
+      'seatOutCp2',
+      'cfSeat',
+    ]
     let saved = []
     let run = 0
     do {
@@ -250,15 +260,25 @@ function titanFront({
       // Remedy A: Slash and spread
       for (const i of rotate) {
         saved[i] = points[i]
-        points[i] = points[i].rotate(delta / -15, points.seatOut)
+        points[i] = points[i].rotate(
+          (delta * options.legacyFitCrossSeamPctFront) / -15,
+          points.seatOut
+        )
       }
       // Remedy B: Nudge the fork inwards/outwards
       saved.fork = points.fork
-      points.fork = points.fork.shift(180, delta / 5)
+      points.fork = points.fork.shift(180, (delta * (1 - options.legacyFitCrossSeamPctFront)) / 5)
+
+      //remedy C: scoop the side seam
+      for (const i of shift) {
+        saved[i] = points[i]
+        points[i] = points[i].shift(0, delta / 5)
+      }
+
       drawCrotchSeam()
       delta = crotchSeamDelta()
       // Uncomment the line below this to see all iterations
-      // paths[`try${run}`] = drawPath().attr('class', 'dotted')
+      // paths[`try${run}`] = drawPath().setClass('lining dotted')
     } while (Math.abs(delta) > 1 && run < 15 && Math.abs(delta) < Math.abs(previous_delta))
     if (Math.abs(delta) > Math.abs(previous_delta)) {
       // The rotations started to produce worse results.
@@ -346,24 +366,26 @@ function titanFront({
     log.info(['heightReductionCenterFront', units(-triangleHeight)])
   }
 
-  //Calculate and report total upper leg ease
-  const frontThighSpace = points.fork.x - drawOutseam().intersectsY(points.fork.y)[0].x
-  log.info('Front upper leg space is ' + frontThighSpace)
+  if (measurements.upperLeg) {
+    //Calculate and report total upper leg ease
+    const frontThighSpace = points.fork.x - drawOutseam().intersectsY(points.fork.y)[0].x
+    log.info('Front upper leg space is ' + frontThighSpace)
 
-  const totalThighSpace = frontThighSpace + store.get('backThighSpace')
-  log.info(
-    'Total upper leg space is ' +
-      totalThighSpace +
-      ' for a total ease of ' +
-      (totalThighSpace / measurements.upperLeg - 1)
-  )
+    const totalThighSpace = frontThighSpace + store.get('backThighSpace')
+    log.info(
+      'Total upper leg space is ' +
+        totalThighSpace +
+        ' for a total ease of ' +
+        (totalThighSpace / measurements.upperLeg - 1)
+    )
 
-  store.flag.note({
-    msg: 'titan:upperLegEase',
-    replace: {
-      ease: totalThighSpace / measurements.upperLeg - 1,
-    },
-  })
+    store.flag.note({
+      msg: 'titan:upperLegEase',
+      replace: {
+        ease: totalThighSpace / measurements.upperLeg - 1,
+      },
+    })
+  }
 
   // Seamline
   paths.seam = drawPath().attr('class', 'fabric')
@@ -512,6 +534,9 @@ function titanFront({
 export const front = {
   name: 'titan.front',
   after: back,
-  measurements: ['upperLeg'],
+  optionalMeasurements: ['upperLeg'],
+  options: {
+    legacyFitCrossSeamPctFront: { pct: 50, min: 0, max: 100, menu: 'advanced' },
+  },
   draft: titanFront,
 }
