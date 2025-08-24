@@ -31,6 +31,9 @@ import { Lumina, LuminaFront, LuminaBack } from './lumina.mjs'
 import { Lumira, LumiraFront, LumiraBack } from './lumira.mjs'
 import { Lunetius, LunetiusFront } from './lunetius.mjs'
 import { Noble, NobleFront, NobleBack } from './noble.mjs'
+import { Octoplushy, OctoplushyFront /*, OctoplushyBack*/ } from './octoplushy.mjs'
+import { Otis, OtisFront /*, OtisBack*/ } from './otis.mjs'
+import { Penelope, PenelopeFront /*, PenelopeBack*/ } from './penelope.mjs'
 import { Sabrina, SabrinaFront, SabrinaBack } from './sabrina.mjs'
 import { Simon, SimonFront, SimonBack } from './simon.mjs'
 import { Teagan, TeaganFront, TeaganBack } from './teagan.mjs'
@@ -38,6 +41,7 @@ import { Tristan, TristanFront, TristanBack } from './tristan.mjs'
 import { Uma, UmaFront, UmaBack } from './uma.mjs'
 import { Umbra, UmbraFront, UmbraBack } from './umbra.mjs'
 import { Wahid, WahidFront, WahidBack } from './wahid.mjs'
+import { Waralee, WaraleeFront /*, WaraleeBack*/ } from './waralee.mjs'
 
 /**
  * An object where the key is the design name and the value the front LineDrawing component
@@ -80,6 +84,9 @@ export const lineDrawingsFront = {
   lumira: LumiraFront,
   lunetius: LunetiusFront,
   noble: NobleFront,
+  octoplushy: OctoplushyFront,
+  otis: OtisFront,
+  penelope: PenelopeFront,
 
   sabrina: SabrinaFront,
   simon: SimonFront,
@@ -90,6 +97,7 @@ export const lineDrawingsFront = {
   uma: UmaFront,
   umbra: UmbraFront,
   wahid: WahidFront,
+  waralee: WaraleeFront,
 }
 
 /**
@@ -122,6 +130,9 @@ export const lineDrawingsBack = {
   lumina: LuminaBack,
   lumira: LumiraBack,
   noble: NobleBack,
+  /*octoplushy: OctoplushyBack,*/
+  /*otis: OtisBack,*/
+  /*penelope: PenelopeBack,*/
   sabrina: SabrinaBack,
   simon: SimonBack,
   teagan: TeaganBack,
@@ -129,6 +140,7 @@ export const lineDrawingsBack = {
   uma: UmaBack,
   umbra: UmbraBack,
   wahid: WahidBack,
+  /*waralee: WaraleeBack,*/
 }
 
 /**
@@ -171,6 +183,9 @@ export const lineDrawings = {
   lumira: Lumira,
   lunetius: Lunetius,
   noble: Noble,
+  octoplushy: Octoplushy,
+  otis: Otis,
+  penelope: Penelope,
   sabrina: Sabrina,
   simon: Simon,
   teagan: Teagan,
@@ -178,6 +193,7 @@ export const lineDrawings = {
   uma: Uma,
   umbra: Umbra,
   wahid: Wahid,
+  waralee: Waralee,
 }
 
 /*
@@ -306,6 +322,18 @@ export {
   Noble,
   NobleFront,
   NobleBack,
+  // Octoplushy
+  Octoplushy,
+  OctoplushyFront,
+  /*OctoplushyBack,*/
+  // Otis
+  Otis,
+  OtisFront,
+  /*OtisBack,*/
+  // Penelope
+  Penelope,
+  PenelopeFront,
+  /*PenelopeBack,*/
   // Simon
   Simon,
   SimonFront,
@@ -330,4 +358,8 @@ export {
   Wahid,
   WahidFront,
   WahidBack,
+  // Waralee
+  Waralee,
+  WaraleeFront,
+  /*WaraleeBack,*/
 }
