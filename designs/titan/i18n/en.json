@@ -15,7 +15,7 @@
     "lowBackHeight.t": "Back waist too low",
     "lowBackHeight.d": "The back cross seam curve was adjusted as the back waistband was unexpectedly low.\n\nThe generated pattern is likely not correct. Please verify your measurements before contacting support.",
     "upperLegEase.t": "Upper leg ease",
-    "upperLegEase.d": "Upper leg ease (at a point 20% of the way toward the knee) is {{{ ease }}}%. To change this, change the cross seam fitting method or seat or knee eases.",
+    "upperLegEase.d": "Upper leg ease is {{{ ease }}}%. To change this, change the cross seam fitting method or seat or knee eases.",
     "crotchDepthTooSmall.t": "Crotch depth too small",
     "crotchDepthTooSmall.d": "The crotch depth measurement is shorter than the waist-to-seat measurement. Because you sit on your seat, crotch depth should be the same length as waist-to-seat or higher."
 
@@ -81,6 +81,10 @@
       "t": "Seat ease",
       "d": "Controls the amount of ease at your seat"
     },
+    "crossSeamEase": {
+      "t": "Cross seam ease",
+      "d": "Controls the amount of ease through your cross seam"
+    },
     "waistBalance": {
       "t": "Waist balance",
       "d": "Controls the horizontal position of the waist relative to the seat"
@@ -128,7 +132,32 @@
     },
     "crotchDepthOrUpperLegYes": {
       "t": "Upper leg",
-      "d": "Place the fork based on the waist to upper leg measurement"
+      "d": "Place the fork based on the waist to upper leg measurement (Legacy)"
+    },
+
+    "fitCrossSeamMethodBack": {
+      "t": "Cross seam fit method back",
+      "d": "The method used to fit the back cross seam. 100% = all slash and spread (legacy), 0% = all horizontal scoop."
+    },
+    "fitCrossSeamMethodFront": {
+      "t": "Cross seam fit method front",
+      "d": "The method used to fit the back cross seam. 100% = all slash and spread (legacy), 0% = all horizontal scoop."
+    },
+    "legacyForkShift": {
+      "t": "Fork shift",
+      "d": "How far to scoot the fork inward while adapting cross seam. 100% = legacy behavior."
+    },
+    "legacyLegWidth": {
+      "t": "Legacy leg width", 
+      "d": "How to determine the width of the leg"
+    },
+    "legacyLegWidthNo": {
+      "t": "Full seat", 
+      "d": "Scale the width of the leg based on the full seat with ease"
+    },
+    "legacyLegWidthYes": {
+      "t": "Seat front", 
+      "d": "Scale the width of the leg based on the seat front (Legacy)"
     }
   }
 }
