@@ -13,7 +13,21 @@ export const cuff = {
     // Constants
     // Parameters
   },
-  draft: ({ Point, points, Path, paths, Snippet, snippets, macro, sa, complete, store, part }) => {
+  draft: ({
+    Point,
+    points,
+    Path,
+    paths,
+    Snippet,
+    snippets,
+    macro,
+    sa,
+    complete,
+    store,
+    units,
+    expand,
+    part,
+  }) => {
     for (const i in paths) {
       delete paths[i]
     }
@@ -23,6 +37,28 @@ export const cuff = {
 
     const cuffLength = store.get('cuffLength')
     const cuffWidth = store.get('cuffWidth')
+
+    if (!expand) {
+      // Expand is on, do not draw the part but flag this to the user
+      store.flag.note({
+        msg: `devon:cutCuff`,
+        replace: {
+          width: units(cuffLength),
+          length: units(cuffWidth * 2),
+        },
+        suggest: {
+          text: 'flag:show',
+          icon: 'expand',
+          update: {
+            settings: ['expand', 1],
+          },
+        },
+      })
+      // Also hint about expand
+      store.flag.preset('expand')
+
+      return part.hide()
+    }
 
     points.topLeft = new Point(0, 0)
     points.topRight = new Point(cuffLength * 0.5, 0)
