@@ -542,7 +542,7 @@ export const front = {
   after: back,
   optionalMeasurements: ['upperLeg'],
   options: {
-    fitCrossSeamMethodFront: { pct: 50, min: 0, max: 100, menu: 'advanced.cross' },
+    fitCrossSeamMethodFront: { pct: 50, min: 0, max: 100, menu: 'advanced' },
   },
   draft: titanFront,
 }

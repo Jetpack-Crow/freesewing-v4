@@ -505,8 +505,8 @@ export const back = {
     fitCrossSeamFront: true,
     fitCrossSeamBack: true,
 
-    fitCrossSeamMethodBack: { pct: 50, min: 0, max: 100, menu: 'advanced.cross' },
-    legacyForkShift: { pct: 100, min: 0, max: 100, menu: 'advanced.cross' },
+    fitCrossSeamMethodBack: { pct: 50, min: 0, max: 100, menu: 'advanced' },
+    legacyForkShift: { pct: 100, min: 0, max: 100, menu: 'advanced' },
     crotchDepthOrUpperLeg: { bool: false, menu: 'advanced' },
     legacyLegWidth: { bool: false, menu: 'advanced' },
 
