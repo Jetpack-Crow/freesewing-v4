@@ -103,11 +103,18 @@ function titanBack({
       .rotate(options.crossSeamCurveAngle, points.fork)
   }
 
+  //Warn the user if the crotch depth doesn't look right
+  if (!options.crotchDepthOrUpperLeg && measurements.crotchDepth < measurements.waistToSeat) {
+    store.flag.warn({ msg: 'titan:crotchDepthTooSmall' })
+  }
+
   // Let's get to work
   points.waistX = new Point(-1 * measurements.waistBackArc * (1 + options.waistEase), 0)
   points.upperLegY = new Point(
     0,
-    options.crotchDepthOrUpperLeg ? measurements.waistToUpperLeg : measurements.crotchDepth
+    options.crotchDepthOrUpperLeg || !measurements.crotchDepth
+      ? measurements.waistToUpperLeg
+      : measurements.crotchDepth
   )
   points.seatX = new Point(-1 * measurements.seatBackArc * (1 + options.seatEase), 0)
   points.seatY = new Point(0, measurements.waistToSeat)
@@ -137,6 +144,9 @@ function titanBack({
   if (!options.fitKnee) {
     // Based the knee width on the seat, unless that ends up being less
     let altKneeTotal = (measurements.seat * (1 + options.kneeEase)) / 2
+    if (options.legacyLegWidth) {
+      altKneeTotal = measurements.seatFront
+    }
     if (altKneeTotal > kneeTotal) kneeTotal = altKneeTotal
   }
   // Store for re-use in front part
@@ -210,18 +220,18 @@ function titanBack({
 
       for (const i of rotate) {
         saved[i] = points[i]
-        points[i] = points[i].rotate((delta * options.legacyFitCrossSeamPct) / 15, points.seatOut)
+        points[i] = points[i].rotate((delta * options.fitCrossSeamMethodBack) / 15, points.seatOut)
       }
 
       //Remedy C: Scoop the curve and shift the outseam
       for (const i of shift) {
         saved[i] = points[i]
-        points[i] = points[i].shift(180, (delta * (1 - options.legacyFitCrossSeamPct)) / 4)
+        points[i] = points[i].shift(180, (delta * (1 - options.fitCrossSeamMethodBack)) / 4)
       }
 
       for (const i of grainlineShift) {
         saved[i] = points[i]
-        points[i] = points[i].shift(180, (delta * (1 - options.legacyFitCrossSeamPct)) / 8)
+        points[i] = points[i].shift(180, (delta * (1 - options.fitCrossSeamMethodBack)) / 8)
       }
 
       // Remedy B: Nudge the fork inwards/outwards
@@ -234,7 +244,7 @@ function titanBack({
       delta = crossSeamDelta()
       // Uncomment the line below this to see all iterations
       // paths[`try${run}`] = drawPath().setClass('lining dotted')
-    } while (Math.abs(delta) > 1 && run < 15 && Math.abs(delta) < Math.abs(previous_delta))
+    } while (Math.abs(delta) > 1 && run < 30 && Math.abs(delta) < Math.abs(previous_delta))
     if (Math.abs(delta) > Math.abs(previous_delta)) {
       // The rotations started to produce worse results.
       // Revert back to the previous rotation.
@@ -255,7 +265,13 @@ function titanBack({
   store.set('outseamBack', drawOutseam().length())
 
   //Store upper leg space
-  const backThighSpace = drawOutseam().intersectsY(points.fork.y)[0].x - points.fork.x
+  const upperLegIntersectY =
+    measurements.waistToUpperLeg + 0.2 * (measurements.waistToKnee - measurements.waistToUpperLeg)
+  store.set('upperLegIntersectY', upperLegIntersectY)
+
+  const backThighSpace =
+    drawOutseam().intersectsY(upperLegIntersectY)[0].x -
+    drawInseam().intersectsY(upperLegIntersectY)[0].x
   log.info('Back upper leg space is ' + backThighSpace)
   store.set('backThighSpace', backThighSpace)
 
@@ -481,18 +497,18 @@ export const back = {
     'waistToHips',
     'waistToSeat',
     'waistToUpperLeg',
-
-    'crotchDepth',
   ],
+  optionalMeasurements: ['crotchDepth'],
   options: {
     // Constants
     fitCrossSeam: true,
     fitCrossSeamFront: true,
     fitCrossSeamBack: true,
 
-    legacyFitCrossSeamPct: { pct: 50, min: 0, max: 100, menu: 'advanced' },
-    legacyForkShift: { pct: 100, min: 0, max: 100, menu: 'advanced' },
+    fitCrossSeamMethodBack: { pct: 50, min: 0, max: 100, menu: 'advanced.cross' },
+    legacyForkShift: { pct: 100, min: 0, max: 100, menu: 'advanced.cross' },
     crotchDepthOrUpperLeg: { bool: false, menu: 'advanced' },
+    legacyLegWidth: { bool: false, menu: 'advanced' },
 
     fitGuides: true,
     // Fit

@@ -15,7 +15,10 @@
     "lowBackHeight.t": "Back waist too low",
     "lowBackHeight.d": "The back cross seam curve was adjusted as the back waistband was unexpectedly low.\n\nThe generated pattern is likely not correct. Please verify your measurements before contacting support.",
     "upperLegEase.t": "Upper leg ease",
-    "upperLegEase.d": "Upper leg ease is {{{ ease }}}. To change this, change the cross seam fitting method or seat or knee eases."
+    "upperLegEase.d": "Upper leg ease (at a point 20% of the way toward the knee) is {{{ ease }}}%. To change this, change the cross seam fitting method or seat or knee eases.",
+    "crotchDepthTooSmall.t": "Crotch depth too small",
+    "crotchDepthTooSmall.d": "The crotch depth measurement is shorter than the waist-to-seat measurement. Because you sit on your seat, crotch depth should be the same length as waist-to-seat or higher."
+
   },
   "o": {
     "kneeEase": {
@@ -113,6 +116,19 @@
     "grainlinePosition": {
       "t": "Grainline position",
       "d": "Controls the horizontal position of the leg relative to the seat"
+    },
+
+    "crotchDepthOrUpperLeg": {
+      "t": "Crotch depth or upper leg",
+      "d": "Place the fork based on the crotch depth or based on waist-to-upper-leg. If crotch depth is not set, it uses upper leg."
+    },
+    "crotchDepthOrUpperLegNo": {
+      "t": "Crotch depth",
+      "d": "Place the fork based on the crotch depth measurement"
+    },
+    "crotchDepthOrUpperLegYes": {
+      "t": "Upper leg",
+      "d": "Place the fork based on the waist to upper leg measurement"
     }
   }
 }
