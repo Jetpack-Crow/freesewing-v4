@@ -134,8 +134,13 @@ const joinMacro = function (conf, props) {
         const intersections = paths[prevPathIndex].intersects(path)
         if (intersections.length > 0) {
           const intersection = intersections.pop()
+          const prevHidden = paths[prevPathIndex].hidden
+          const hidden = path.hidden
           paths[prevPathIndex] = paths[prevPathIndex].split(intersection)[0] ?? paths[prevPathIndex]
           paths[index] = path.split(intersection).pop() ?? path
+          // preserve hidden attribute over split
+          if (prevHidden) paths[prevPathIndex].hide()
+          if (hidden) paths[index].hide()
         }
       }
     }
@@ -202,7 +207,7 @@ const offsetMacro = function (conf, props) {
         if (firstPath === 'unset') {
           firstPath = null
         }
-        if (prevPath.ops) {
+        if (prevPath && prevPath.ops) {
           // insert dummy node to make path go to the endpoint of the previous path (to return to the baseline)
           segments.push(new Path().move(prevPath.end()).line(prevPath.end()))
           segments.push(null)
@@ -225,9 +230,9 @@ const offsetMacro = function (conf, props) {
           ) {
             continue
           }
-          const offsetPath = divisionElement.offset(offset)
+          const offsetPath = offset === 0 ? divisionElement : divisionElement.offset(offset)
+          // skip degenerate paths
           if (offsetPath.ops.length > 1) {
-            // skip degenerate paths
             if (hide) offsetPath.hide()
             segments.push(offsetPath)
             prevPath = divisionElement
