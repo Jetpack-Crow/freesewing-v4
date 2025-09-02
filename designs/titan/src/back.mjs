@@ -126,6 +126,10 @@ function titanBack({
     measurements.seatBackArc * (1 + options.seatEase) * -1.25,
     points.upperLegY.y * (1 + options.crotchDrop)
   )
+  if (measurements.upperLeg && options.upperLegFork) {
+    points.fork.x =
+      -measurements.upperLeg * (measurements.seatBack / measurements.seat) * (1 + options.forkEase)
+  }
 
   // Grainline location, map out center of knee and floor
   points.grainlineTop = points.upperLegY.shiftFractionTowards(
@@ -144,7 +148,9 @@ function titanBack({
   if (!options.fitKnee) {
     // Based the knee width on the seat, unless that ends up being less
     let altKneeTotal = (measurements.seat * (1 + options.kneeEase)) / 2
-    if (options.legacyLegWidth) {
+    if (options.legacyLegWidth == 'upperLeg' && measurements.upperLeg) {
+      altKneeTotal = measurements.upperLeg * (1 + options.kneeEase)
+    } else if (options.legacyLegWidth == 'seatFront') {
       altKneeTotal = measurements.seatFront
     }
     if (altKneeTotal > kneeTotal) kneeTotal = altKneeTotal
@@ -274,6 +280,17 @@ function titanBack({
     drawInseam().intersectsY(upperLegIntersectY)[0].x
   log.info('Back upper leg space is ' + backThighSpace)
   store.set('backThighSpace', backThighSpace)
+
+  //Warn if the back waist angle is too far from horizontal
+  const backWaistAngle = points.waistOut.angle(points.waistIn)
+  if (Math.abs(backWaistAngle - 180) > 15) {
+    store.flag.warn({
+      msg: 'titan:backWaistAngle',
+      replace: {
+        angle: Math.abs(Math.round(backWaistAngle - 180)),
+      },
+    })
+  }
 
   // Only now style the waist lower if requested
   if (options.waistHeight < 1 || absoluteOptions.waistbandWidth > 0) {
@@ -498,7 +515,7 @@ export const back = {
     'waistToSeat',
     'waistToUpperLeg',
   ],
-  optionalMeasurements: ['crotchDepth'],
+  optionalMeasurements: ['crotchDepth', 'upperLeg'],
   options: {
     // Constants
     fitCrossSeam: true,
@@ -507,8 +524,13 @@ export const back = {
 
     fitCrossSeamMethodBack: { pct: 50, min: 0, max: 100, menu: 'advanced' },
     legacyForkShift: { pct: 100, min: 0, max: 100, menu: 'advanced' },
-    crotchDepthOrUpperLeg: { bool: false, menu: 'advanced' },
-    legacyLegWidth: { bool: false, menu: 'advanced' },
+    crotchDepthOrUpperLeg: { bool: true, menu: 'advanced' },
+    legacyLegWidth: {
+      list: ['seatFront', 'seatWhole', 'upperLeg'],
+      dflt: 'seatWhole',
+      menu: 'advanced',
+    },
+    upperLegFork: { bool: true, menu: 'advanced' },
 
     fitGuides: true,
     // Fit
@@ -516,6 +538,7 @@ export const back = {
     seatEase: { pct: 2, min: 0, max: 10, ...pctBasedOn('seat'), menu: 'fit' },
     kneeEase: { pct: 6, min: 1, max: 25, ...pctBasedOn('knee'), menu: 'fit' },
     crossSeamEase: { pct: 2, min: 0, max: 25, ...pctBasedOn('crossSeam'), menu: 'fit' },
+    forkEase: { pct: 6, min: 0, max: 25, menu: 'fit' },
     // Style
     waistHeight: { pct: 100, min: 0, max: 100, menu: 'style' },
     lengthBonus: { pct: 2, min: -20, max: 10, menu: 'style' },

@@ -193,6 +193,10 @@ function titanFront({
     measurements.seatFrontArc * (1 + options.seatEase) * 1.25,
     points.upperLegY.y * (1 + options.crotchDrop)
   )
+  if (measurements.upperLeg && options.upperLegFork) {
+    points.fork.x =
+      measurements.upperLeg * (measurements.seatFront / measurements.seat) * (1 + options.forkEase)
+  }
 
   // Grainline location, map out center of knee and floor
   points.grainlineTop = points.upperLegY.shiftFractionTowards(
@@ -386,7 +390,7 @@ function titanFront({
     )
 
     store.flag.note({
-      msg: 'titan:upperLegEase',
+      msg: 'titan:upperLegEaseReport',
       replace: {
         ease: Math.round((totalThighSpace / measurements.upperLeg - 1) * 1000) / 10,
       },
