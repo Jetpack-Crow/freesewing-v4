@@ -14,10 +14,12 @@
     "lowFrontHeight.d": "The front cross seam curve was adjusted as the front waistband was unexpectedly low.\n\nThe generated pattern is likely not correct. Please verify your measurements before contacting support.",
     "lowBackHeight.t": "Back waist too low",
     "lowBackHeight.d": "The back cross seam curve was adjusted as the back waistband was unexpectedly low.\n\nThe generated pattern is likely not correct. Please verify your measurements before contacting support.",
-    "upperLegEase.t": "Upper leg ease",
-    "upperLegEase.d": "Upper leg ease is {{{ ease }}}%. To change this, change the cross seam fitting method or seat or knee eases.",
+    "upperLegEaseReport.t": "Upper leg ease",
+    "upperLegEaseReport.d": "Upper leg ease is {{{ ease }}}%. To change this, change the cross seam fitting method or seat or knee eases.",
     "crotchDepthTooSmall.t": "Crotch depth too small",
-    "crotchDepthTooSmall.d": "The crotch depth measurement is shorter than the waist-to-seat measurement. Because you sit on your seat, crotch depth should be the same length as waist-to-seat or higher."
+    "crotchDepthTooSmall.d": "The crotch depth measurement is shorter than the waist-to-seat measurement. Because you sit on your seat, crotch depth should be the same length as waist-to-seat or higher.",
+    "backWaistAngle.t": "Back waist angle", 
+    "backWaistAngle.d": "The waist of the back seam is {{{ angle }}} degrees away from the grain of the fabric. This might cause diagonal pulling when the fabric is worn.\nTo decrease this, you can decrease the 'back cross seam fitting' option, or add a small amount to your cross seam front measurement."
 
   },
   "o": {
@@ -148,16 +150,32 @@
       "d": "How far to scoot the fork inward while adapting cross seam. 100% = legacy behavior."
     },
     "legacyLegWidth": {
-      "t": "Legacy leg width", 
+      "t": "Leg width basis", 
       "d": "How to determine the width of the leg"
     },
-    "legacyLegWidthNo": {
+    "legacyLegWidth.seatWhole": {
       "t": "Full seat", 
       "d": "Scale the width of the leg based on the full seat with ease"
     },
-    "legacyLegWidthYes": {
+    "legacyLegWidth.seatFront": {
       "t": "Seat front", 
       "d": "Scale the width of the leg based on the seat front (Legacy)"
+    },
+    "legacyLegWidth.upperLeg": {
+      "t": "Upper leg", 
+      "d": "Scale the width of the leg based on the upper leg measurement (if available)"
+    },
+    "upperLegFork": {
+      "t": "Fork from upper leg", 
+      "d": "Use the upper leg measurement (if available) to set the initial fork horizontal position"
+    },
+    "upperLegForkYes": {
+      "t": "Yes", 
+      "d": "Use the upper leg measurement to set the initial fork position"
+    },
+    "upperLegForkNo": {
+      "t": "No", 
+      "d": "Guess the initial fork position"
     }
   }
 }
