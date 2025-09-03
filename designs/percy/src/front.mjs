@@ -83,6 +83,7 @@ function draftPercyFront({
     .line(points.outseamShiftUpwards)
     .reverse()
     .setClass('various')
+    .hide()
 
   const originalHemLength = paths.shortHem.length()
   store.set('original_hem_front', originalHemLength)
@@ -320,7 +321,7 @@ function draftPercyFront({
   //Cut the waist and the outseam to account for the pocket chunk
   paths.trimmedOutseam = paths.shortOutseam.split(points.pocketBottomEdge)[1]
   paths.shortOutseam.hide()
-  paths.trimmedWaist = paths.waist.split(points.pocketInnerEdge)[0].setClass('lining')
+  paths.trimmedWaist = paths.waist.split(points.pocketInnerEdge)[0].setClass('lining').hide()
   paths.waist.hide()
 
   if (options.frontPleat) {
@@ -334,7 +335,7 @@ function draftPercyFront({
     //log.info("Waist angle at pleat point is " + paths.trimmedWaist.angleAt(points.topPleatPoint))
     //log.info("Hem angle at pleat point is " + paths.shortHem.angleAt(points.bottomPleatPoint))
 
-    //This is ridiculous spaghetti. I don't know why it's necessary, i'll come back to it later
+    //Determine the angle for the pleat offset.
     let pleatAngle = 0
 
     if (options.spread) {
@@ -349,6 +350,10 @@ function draftPercyFront({
           paths.shortHem.reverse().angleAt(points.bottomPleatPoint)) /
           2 +
         180
+    }
+    //Sometimes it still ends up backwards, so just flip it if so
+    if (pleatAngle < 190 && pleatAngle > 170) {
+      pleatAngle = pleatAngle - 180
     }
 
     const pleatOffset = measurements.waist * options.frontPleatWidth
