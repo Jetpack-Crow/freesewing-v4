@@ -86,8 +86,8 @@
       "d": "How far to draw the pleat preview lines. This doesn't affect shaping at all."
     },
 
-    "inseamPercent": {
-      "t": "Inseam Percent",
+    "lengthInseam": {
+      "t": "Length at Inseam",
       "d": "How long the inseam of the shorts should be. 100% = floor length, 40-50% = knee length."
     },
 

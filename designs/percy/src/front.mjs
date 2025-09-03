@@ -72,8 +72,8 @@ function draftPercyFront({
     .curve(points.crotchSeamCurveCp1, points.crotchSeamCurveCp2, points.crotchSeamCurveStart)
     .line(points.styleWaistIn)
 
-  points.inseamShiftUpwards = paths.inseam.shiftFractionAlong(1 - options.inseamPercent)
-  const inseamShiftAmount = paths.inseam.length() * options.inseamPercent
+  points.inseamShiftUpwards = paths.inseam.shiftFractionAlong(1 - options.lengthInseam)
+  const inseamShiftAmount = paths.inseam.length() * options.lengthInseam
   const seamLengthDifference = paths.outseam.length() - paths.inseam.length()
 
   points.outseamShiftUpwards = paths.outseam.shiftAlong(inseamShiftAmount + seamLengthDifference)
@@ -676,7 +676,7 @@ export const front = {
   measurements: ['inseam'],
   options: {
     lengthBonus: 0,
-    inseamPercent: { pct: 25, min: 5, max: 100, menu: 'style', ...pctBasedOn('inseam') },
+    lengthInseam: { pct: 25, min: 5, max: 100, menu: 'style', ...pctBasedOn('inseam') },
     slashIterations: { count: 8, min: 1, max: 24, menu: 'style.spread' },
     hemRatio: { pct: 250, min: 100, max: 400, menu: 'style.spread' },
     spread: { bool: true, menu: 'style.spread' },

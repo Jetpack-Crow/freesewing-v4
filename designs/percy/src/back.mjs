@@ -60,8 +60,8 @@ function draftPercyBack({
   paths.outseam = drawOutseam().setClass('lining').hide()
   paths.inseam = drawInseam().setClass('lining').hide()
 
-  points.inseamShiftUpwards = paths.inseam.shiftFractionAlong(options.inseamPercent)
-  const inseamShiftAmount = paths.inseam.length() * (1 - options.inseamPercent)
+  points.inseamShiftUpwards = paths.inseam.shiftFractionAlong(options.lengthInseam)
+  const inseamShiftAmount = paths.inseam.length() * (1 - options.lengthInseam)
   const seamLengthDifference = 0
 
   points.outseamShiftUpwards = paths.outseam.shiftAlong(inseamShiftAmount + seamLengthDifference)
