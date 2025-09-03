@@ -20,7 +20,12 @@
       "bustWarning.t": "The bust dart won't be generated",
       "bustWarning.d": "Chest is smaller than high bust. If these measurements are accurate, you don't need a bust dart.",
       "waistWarning.t": "The bust dart won't be generated",
-      "waistWarning.d": "HPS to waist front is smaller than HPS to waist back.\nDid you take the HPS to waist front measurement down over the bust?"
+      "waistWarning.d": "HPS to waist front is smaller than HPS to waist back.\nDid you take the HPS to waist front measurement down over the bust?",
+      "cutCuff.t": "The cuff is not shown",
+      "cutCuff.d": "The **Cuff** (7) is a rectangular piece of ribbing fabric {{{ w }}} wide and {{{ l }}} long.",
+      "cutWaistband.t": "The waistband is not shown",
+      "cutWaistband.d": "The **Waistband** (6) is a rectangular piece of ribbing fabric {{{ w }}} wide and {{{ l }}} long."
+    
    },
   "o": {
     "hipsEase": {
