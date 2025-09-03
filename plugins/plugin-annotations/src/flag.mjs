@@ -84,9 +84,9 @@ const presets = {
     desc: 'flag:expandIsOn.d',
     suggest: {
       text: 'flag:disable',
-      icon: 'expand',
+      icon: 'compact',
       update: {
-        settings: ['expand', null],
+        settings: ['expand', 0],
       },
     },
   },

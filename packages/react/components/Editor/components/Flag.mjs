@@ -12,6 +12,7 @@ import {
   TipIcon,
   WarningIcon,
   WrenchIcon,
+  CompactIcon,
 } from '@freesewing/react/components/Icon'
 import { SubAccordion } from './Accordion.mjs'
 import { MiniTip, MiniNote } from '@freesewing/react/components/Mini'
@@ -23,6 +24,7 @@ import Markdown from 'react-markdown'
 const flagIcons = {
   error: ErrorIcon,
   expand: ExpandIcon,
+  compact: CompactIcon,
   fixme: WrenchIcon,
   info: DocsIcon,
   note: ChatIcon,
