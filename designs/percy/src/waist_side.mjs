@@ -25,7 +25,7 @@ function draftPercyWaistSide({
   //const length_percentage = bottom_length / store.get('garmentTopCircumference')
   //const top_length = length_percentage * store.get('waistbandTopCircumference')
 
-  const waistbandTopRatio = store.get('waistbandTopRatio')
+  const waistbandTopRatioFront = store.get('waistbandTopRatioFront')
 
   const circleOuterRadius = store.get('waistband_outer_radius')
   const circleInnerRadius = store.get('waistband_inner_radius')
@@ -36,9 +36,9 @@ function draftPercyWaistSide({
     'side waistband is ' + circlePercentage + ' of total circle, or ' + circleAngle + ' degrees'
   )
 
-  points.circleCenter = new Point(0, 0)
-  points.topCenter = new Point(0, circleInnerRadius)
-  points.bottomCenter = new Point(0, circleOuterRadius)
+  points.circleCenter = new Point(0, -circleInnerRadius)
+  points.topCenter = new Point(0, 0)
+  points.bottomCenter = new Point(0, circleOuterRadius - circleInnerRadius)
   paths.centerLine = new Path()
     .move(points.topCenter)
     .line(points.bottomCenter)
@@ -79,8 +79,8 @@ function draftPercyWaistSide({
   //draw the buttons
   let overlap = store.get('frontPanelOverlap') / 2
   points.overlapBottom = paths.bottomCurve.reverse().shiftAlong(overlap)
-  points.overlapTop = paths.topCurve.reverse().shiftAlong(overlap * waistbandTopRatio)
-  //points.overlapTopRight = new Point(waistbandTopRatio * (bottom_length / 2 - overlap), 0)
+  points.overlapTop = paths.topCurve.reverse().shiftAlong(overlap * waistbandTopRatioFront)
+  //points.overlapTopRight = new Point(waistbandTopRatioFront * (bottom_length / 2 - overlap), 0)
   paths.overlap = new Path()
     .move(points.overlapTop)
     .line(points.overlapBottom)

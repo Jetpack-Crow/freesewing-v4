@@ -26,16 +26,33 @@ function draftPercyWaistFront({
 
   const seatHeightCircumference = measurements.seat * (1 + options.seatEase)
   const waistHeightCircumference = measurements.waist * (1 + options.waistEase)
+  const waistHeightFront = measurements.waistFront * (1 + options.waistEase)
+  const waistHeightBack = measurements.waistBack * (1 + options.waistEase)
+
   const waistToSeatSlope =
     (seatHeightCircumference - waistHeightCircumference) / measurements.waistToSeat
+
+  const waistToSeatSlopeFront =
+    (store.get('front_waist_width') - waistHeightFront) / measurements.waistToSeat
+  const waistToSeatSlopeBack =
+    (store.get('back_waist_width') - waistHeightBack) / measurements.waistToSeat
 
   //Total cicumference of top of waistband
   const waistbandTopCircumference =
     waistHeightCircumference +
     waistToSeatSlope * measurements.waistToHips * (1 - options.waistHeight)
 
+  //total length of front top of waistband
+  const waistbandTopFront =
+    waistHeightFront + waistToSeatSlopeFront * measurements.waistToHips * (1 - options.waistHeight)
+  //total length of back top of waistband
+  const waistbandTopBack =
+    waistHeightBack + waistToSeatSlopeBack * measurements.waistToHips * (1 - options.waistHeight)
+
   store.set('garmentTopCircumference', garmentTopCircumference)
   store.set('waistbandTopCircumference', waistbandTopCircumference)
+  store.set('waistbandTopFront', waistbandTopFront)
+  store.set('waistbandTopBack', waistbandTopBack)
 
   const length = store.get('frontPanelWidth')
   log.info('Front panel length is ' + length)
@@ -43,11 +60,13 @@ function draftPercyWaistFront({
   store.set('waistbandWidth', width)
 
   const waistbandTopRatio = waistbandTopCircumference / garmentTopCircumference
+  const waistbandTopRatioFront = waistbandTopFront / (store.get('front_waist_width') * 2)
+  const waistbandTopRatioBack = waistbandTopBack / (store.get('back_waist_width') * 2)
   store.set('waistbandTopRatio', waistbandTopRatio)
+  store.set('waistbandTopRatioFront', waistbandTopRatioFront)
+  store.set('waistbandTopRatioBack', waistbandTopRatioBack)
 
-  //const top_length = length * waistbandTopRatio
-
-  const circleOuterRadius = width / (1 - waistbandTopRatio)
+  const circleOuterRadius = width / (1 - waistbandTopRatioFront)
   store.set('waistband_outer_radius', circleOuterRadius)
   const circleInnerRadius = circleOuterRadius - width
   store.set('waistband_inner_radius', circleInnerRadius)
@@ -55,12 +74,12 @@ function draftPercyWaistFront({
   const circlePercentage = length / (2 * 3.14 * circleOuterRadius)
   const circleAngle = circlePercentage * 360
   log.info(
-    'side waistband is ' + circlePercentage + ' of total circle, or ' + circleAngle + ' degrees'
+    'front waistband is ' + circlePercentage + ' of total circle, or ' + circleAngle + ' degrees'
   )
 
-  points.circleCenter = new Point(0, 0)
-  points.topCenter = new Point(0, circleInnerRadius)
-  points.bottomCenter = new Point(0, circleOuterRadius)
+  points.circleCenter = new Point(0, -circleInnerRadius)
+  points.topCenter = new Point(0, 0)
+  points.bottomCenter = new Point(0, circleOuterRadius - circleInnerRadius)
   macro('grainline', {
     from: points.topCenter,
     to: points.bottomCenter,

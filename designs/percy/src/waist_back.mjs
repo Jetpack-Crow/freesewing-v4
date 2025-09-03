@@ -23,8 +23,8 @@ function draftPercyWaistBack({
   log.info('back panel length is ' + bottom_length)
   const width = store.get('waistbandWidth')
 
-  const circleOuterRadius = store.get('waistband_outer_radius')
-  const circleInnerRadius = store.get('waistband_inner_radius')
+  const circleOuterRadius = width / (1 - store.get('waistbandTopRatioBack'))
+  const circleInnerRadius = circleOuterRadius - width
 
   const circlePercentage = bottom_length / (2 * 3.14 * circleOuterRadius)
   const circleAngle = circlePercentage * 360
@@ -32,9 +32,9 @@ function draftPercyWaistBack({
     'back waistband is ' + circlePercentage + ' of total circle, or ' + circleAngle + ' degrees'
   )
 
-  points.circleCenter = new Point(0, 0)
-  points.topCenter = new Point(0, circleInnerRadius)
-  points.bottomCenter = new Point(0, circleOuterRadius)
+  points.circleCenter = new Point(0, -circleInnerRadius)
+  points.topCenter = new Point(0, 0)
+  points.bottomCenter = new Point(0, circleOuterRadius - circleInnerRadius)
   paths.centerLine = new Path()
     .move(points.topCenter)
     .line(points.bottomCenter)
