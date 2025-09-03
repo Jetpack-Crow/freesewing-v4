@@ -17,7 +17,7 @@ const strokeScale = 1
  * @returns {JSX.Element}
  */
 export const Devon = ({ className, stroke = 1 }) => (
-  <LineDrawingWrapper viewBox="0 0 210 297" {...{ className }}>
+  <LineDrawingWrapper viewBox="0 100 200 70" {...{ className }}>
     <Front stroke={stroke * strokeScale} />
     <Back stroke={stroke * strokeScale} />
   </LineDrawingWrapper>
@@ -33,7 +33,7 @@ export const Devon = ({ className, stroke = 1 }) => (
  * @returns {JSX.Element}
  */
 export const DevonFront = ({ className, stroke = 1 }) => (
-  <LineDrawingWrapper viewBox="0 0 210 297" {...{ className }}>
+  <LineDrawingWrapper viewBox="0 100 200 70" {...{ className }}>
     <Front stroke={stroke * strokeScale} />
   </LineDrawingWrapper>
 )

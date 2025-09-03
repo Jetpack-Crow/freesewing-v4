@@ -159,7 +159,7 @@ export default function Home() {
           </CardLink>
           <CardLink
             Link={Link}
-            href="/docs/about/guide"
+            href="/docs/about"
             title="Getting Started"
             icon={<DocsIcon className="tw:w-12 tw:h-12 tw:shrink-0" />}
           >

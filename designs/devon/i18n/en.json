@@ -27,7 +27,11 @@
   },
   "s": { 
     "largeShoulderWidth.t": "Shoulder Width larger than anticipated",
-    "largeShoulderWidth.d": "The pattern was not able to generate an optimal armhole shape using the given measurements and options. Please be aware that the generated pattern may not be correct. Please retake your measurements, verify that they are correct, and try generating a new pattern with the new measurements."
+    "largeShoulderWidth.d": "The pattern was not able to generate an optimal armhole shape using the given measurements and options. Please be aware that the generated pattern may not be correct. Please retake your measurements, verify that they are correct, and try generating a new pattern with the new measurements.",
+    "cutWaistband.t": "The waist band is not shown",
+    "cutWaistband.d": "The **waist band** is a strip of fabric {{{ width }}} wide and {{{ length }}} long.",
+    "cutCuff.t": "The cuffs are not shown",
+    "cutCuff.d": "The **cuffs** require two strips of fabric {{{ width }}} wide and {{{ length }}} long."
   },
   "o": {
     "fullBustAdjustment": {

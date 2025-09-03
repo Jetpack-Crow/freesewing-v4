@@ -13,17 +13,53 @@ export const waistband = {
     // Constants
     // Parameters
   },
-  draft: ({ Point, points, Path, paths, Snippet, snippets, macro, sa, store, complete, part }) => {
+  draft: ({
+    Point,
+    points,
+    Path,
+    paths,
+    Snippet,
+    snippets,
+    macro,
+    sa,
+    store,
+    units,
+    complete,
+    expand,
+    part,
+  }) => {
+    const hemLength = store.get('hemLength')
+    const waistbandWidth = store.get('waistbandWidth')
+    const frontAdd = store.get('waistbandWidth') * 0.5
+
+    if (!expand) {
+      // Expand is on, do not draw the part but flag this to the user
+      store.flag.note({
+        msg: `devon:cutWaistband`,
+        replace: {
+          width: units(hemLength * 2),
+          length: units(waistbandWidth * 2),
+        },
+        suggest: {
+          text: 'flag:show',
+          icon: 'expand',
+          update: {
+            settings: ['expand', 1],
+          },
+        },
+      })
+      // Also hint about expand
+      store.flag.preset('expand')
+
+      return part.hide()
+    }
+
     for (const i in paths) {
       delete paths[i]
     }
     for (const i in points) {
       delete points[i]
     }
-
-    const hemLength = store.get('hemLength')
-    const waistbandWidth = store.get('waistbandWidth')
-    const frontAdd = store.get('waistbandWidth') * 0.5
 
     points.midLeft = new Point(0, 0)
     points.midRight = new Point(hemLength, 0)
