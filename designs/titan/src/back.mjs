@@ -104,7 +104,7 @@ function titanBack({
   }
 
   //Warn the user if the crotch depth doesn't look right
-  if (!options.crotchDepthOrUpperLeg && measurements.crotchDepth < measurements.waistToSeat) {
+  if (!options.crotchDepthOrUpperLeg && measurements.crotchDepth < measurements.waistToSeat * 0.8) {
     store.flag.warn({ msg: 'titan:crotchDepthTooSmall' })
   }
 
