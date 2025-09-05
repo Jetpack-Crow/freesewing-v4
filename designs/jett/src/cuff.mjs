@@ -27,10 +27,14 @@ function draftJettCuff({ points, measurements, options, macro, store, part }) {
   return part
 }
 
+// Option is true by default, so if it's missing it's also true
+const onlyWithRibbing = (_settings, mergedOptions) =>
+  mergedOptions?.ribbing || typeof mergedOptions?.ribbing === 'undefined' ? 'construction' : false
+
 export const cuff = {
   name: 'jett.cuff',
   options: {
-    ribbingStretch: { pct: 15, min: 0, max: 30, menu: 'construction' },
+    ribbingStretch: { pct: 15, min: 0, max: 30, menu: onlyWithRibbing },
   },
   draft: draftJettCuff,
 }

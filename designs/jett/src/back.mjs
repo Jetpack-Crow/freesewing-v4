@@ -237,6 +237,10 @@ function draftBack({
   return part
 }
 
+// Option is true by default, so if it's missing it's also true
+const onlyWithYoke = (_settings, mergedOptions) =>
+  mergedOptions?.yoke || typeof mergedOptions?.yoke === 'undefined' ? 'style' : false
+
 export const back = {
   name: 'jett.back',
   from: brianBack,
@@ -248,7 +252,7 @@ export const back = {
     chestEase: { pct: 10, min: -15, max: 50, menu: 'fit' },
     hipsEase: { pct: 10, min: -15, max: 50, menu: 'fit' },
     yoke: { bool: true, menu: 'construction' },
-    yokesplit: { pct: 30, min: 5, max: 80, menu: 'style' },
+    yokesplit: { pct: 30, min: 5, max: 80, menu: onlyWithYoke },
   },
   draft: draftBack,
 }

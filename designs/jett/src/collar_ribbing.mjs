@@ -80,8 +80,8 @@ export const collar_ribbing = {
   measurements: ['neck'],
   options: {
     collarEase: { pct: 2, min: -10, max: 50, menu: 'fit' },
-    ribbedCollarWidth: { pct: 20, min: 1, max: 80, menu: 'style.collar' },
-    ribbedCollarCurve: { pct: 40, min: 0, max: 50, menu: 'style.collar' },
+    ribbedCollarWidth: 0.2,
+    ribbedCollarCurve: 0.4,
   },
   draft: draftJettCollarRibbing,
 }

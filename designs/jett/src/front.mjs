@@ -651,6 +651,20 @@ function draftfront({
   return part
 }
 
+/*
+ * Helper methods to conditionally show/hide options in the menu
+ */
+
+// Option is true by default, so if it's missing it's also true
+const onlyWithPockets = (_settings, mergedOptions) =>
+  mergedOptions?.frontWeltPockets || typeof mergedOptions?.frontWeltPockets === 'undefined'
+    ? 'style.pocket'
+    : false
+
+// Option is true by default, so if it's missing it's also true
+const onlyWithRibbing = (_settings, mergedOptions) =>
+  mergedOptions?.ribbing || typeof mergedOptions?.ribbing === 'undefined' ? 'style' : false
+
 export const front = {
   name: 'jett.front',
   from: brianFront,
@@ -684,15 +698,15 @@ export const front = {
     dartLegsTruing: { bool: true, menu: 'fit.bust.advanced' },
 
     ribbing: { bool: true, menu: 'construction' },
-    ribbingHeight: { pct: 10, min: 5, max: 15, menu: 'style' },
+    ribbingHeight: { pct: 10, min: 5, max: 15, menu: onlyWithRibbing },
 
     frontWeltPockets: { bool: true, menu: 'style.pocket' },
-    pocketBottomX: { pct: 70, min: 40, max: 95, menu: 'style.pocket' },
-    pocketTopX: { pct: 60, min: 40, max: 95, menu: 'style.pocket' },
-    pocketBottomY: { pct: 7, min: 0, max: 20, menu: 'style.pocket' },
-    pocketTopY: { pct: 30, min: 20, max: 50, menu: 'style.pocket' },
+    pocketBottomX: { pct: 70, min: 40, max: 95, menu: onlyWithPockets },
+    pocketTopX: { pct: 60, min: 40, max: 95, menu: onlyWithPockets },
+    pocketBottomY: { pct: 7, min: 0, max: 20, menu: onlyWithPockets },
+    pocketTopY: { pct: 30, min: 20, max: 50, menu: onlyWithPockets },
 
-    pocketWeltWidth: { pct: 7, min: 0, max: 20, menu: 'style.pocket' },
+    pocketWeltWidth: { pct: 7, min: 0, max: 20, menu: onlyWithPockets },
 
     closureCount: { count: 7, min: 3, max: 12, menu: 'style.placket' },
 
