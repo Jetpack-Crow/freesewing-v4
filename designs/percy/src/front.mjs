@@ -669,6 +669,19 @@ function draftPercyFront({
   return part
 }
 
+/*
+ * Helper methods to conditionally show/hide options in the menu
+ */
+
+// Option is true by default, so if it's missing it's also true
+const onlyWithSpread = (_settings, mergedOptions) =>
+  mergedOptions?.spread || typeof mergedOptions?.spread === 'undefined' ? 'style.spread' : false
+
+const onlyWithPleat = (_settings, mergedOptions) =>
+  mergedOptions?.frontPleat || typeof mergedOptions?.frontPleat === 'undefined'
+    ? 'style.pleat'
+    : false
+
 export const front = {
   from: titanFront,
   name: 'percy.front',
@@ -677,18 +690,18 @@ export const front = {
   options: {
     lengthBonus: 0,
     lengthInseam: { pct: 25, min: 5, max: 100, menu: 'style', ...pctBasedOn('inseam') },
-    slashIterations: { count: 8, min: 1, max: 24, menu: 'style.spread' },
-    hemRatio: { pct: 250, min: 100, max: 400, menu: 'style.spread' },
+    slashIterations: { count: 8, min: 1, max: 24, menu: onlyWithSpread },
+    hemRatio: { pct: 250, min: 100, max: 400, menu: onlyWithSpread },
     spread: { bool: true, menu: 'style.spread' },
 
     frontPleat: { bool: true, menu: 'style.pleat' },
-    frontPleatPosition: { pct: 50, min: 10, max: 90, menu: 'style.pleat' },
-    frontPleatWidth: { pct: 6.4, min: 0, max: 10, menu: 'style.pleat', ...pctBasedOn('waist') },
+    frontPleatPosition: { pct: 50, min: 10, max: 90, menu: onlyWithPleat },
+    frontPleatWidth: { pct: 6.4, min: 0, max: 10, menu: onlyWithPleat, ...pctBasedOn('waist') },
     frontPleatDisplayLength: {
       pct: 8,
       min: 1,
       max: 20,
-      menu: 'style.pleat',
+      menu: onlyWithPleat,
       ...pctBasedOn('waist'),
     },
 

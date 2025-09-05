@@ -172,7 +172,16 @@ function draftPercyPocket({
     x = x + 1
     ary = paths.pocketBottomEdge.intersectsY(points.lowestPocketPoint.y + 1)
   }
-  //snippets['lowestPocketPoint'] = new Snippet('notch', points.lowestPocketPoint)
+
+  points.lowestWaistPoint = points.waistHalfway
+  x = 0
+  ary = paths.pocketWaistEdge.intersectsY(points.lowestWaistPoint.y + 1)
+  while (ary.length > 0 && x < measurements.waistToKnee) {
+    points.lowestPocketPoint = ary[0]
+    x = x + 1
+    ary = paths.pocketBottomEdge.intersectsY(points.lowestPocketPoint.y + 1)
+  }
+  //snippets['lowestWaistPoint'] = new Snippet('notch', points.lowestWaistPoint)
 
   macro('grainline', {
     from: points.grainlineTop,
@@ -211,6 +220,12 @@ function draftPercyPocket({
     to: points.lowestPocketPoint,
     from: points.pocketFacingEdge,
     x: points.pocketFacingEdge.x,
+  })
+  macro('vd', {
+    id: 'vWaistLowest',
+    to: points.lowestPocketPoint,
+    from: points.lowestWaistPoint,
+    x: points.lowestWaistPoint.x,
   })
   macro('hd', {
     id: 'hSide',
@@ -290,7 +305,7 @@ export const pocket = {
     },
     pocketCurveControl: {
       pct: 50,
-      max: 100,
+      max: 80,
       min: 10,
       menu: 'style.panel.advanced',
     },
