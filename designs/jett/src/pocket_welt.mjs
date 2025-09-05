@@ -14,6 +14,8 @@ function draftJettPocketWelt({
   measurements,
   store,
   log,
+  expand,
+  units,
 }) {
   if (!options.frontWeltPockets) {
     part.hide()
@@ -23,6 +25,35 @@ function draftJettPocketWelt({
 
   const width = store.get('pocketLength')
   const length = store.get('pocketWidth') * 2
+
+  if (expand) {
+    store.flag.preset('expandIsOn')
+  } else {
+    // Expand is off, do not draw the part but flag this to the user
+    const extraSa = sa ? 2 * sa : 0
+
+    store.flag.note({
+      msg: `jett:cutPocketWelt`,
+      notes: [sa ? 'flag:saIncluded' : 'flag:saExcluded', 'flag:partHiddenByExpand'],
+      replace: {
+        w: units(2 * width + extraSa),
+        l: units(length + extraSa),
+      },
+
+      suggest: {
+        text: 'flag:show',
+        icon: 'expand',
+        update: {
+          settings: ['expand', 1],
+        },
+      },
+    })
+
+    // Also hint about expand
+    store.flag.preset('expandIsOff')
+
+    return part.hide()
+  }
 
   points.topLeft = new Point(0, 0)
   points.topRight = new Point(width, 0)
