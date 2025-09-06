@@ -5,3 +5,6 @@ encryption.key
 *.sqlite
 *.sqlite-journal
 
+# Auto-generated files
+sluglist.mjs
+

@@ -54,11 +54,7 @@ const baseConfig = {
   instance: process.env.BACKEND_INSTANCE || Date.now(),
   // Feature flags
   use: {
-    github: envToBool(process.env.BACKEND_ENABLE_GITHUB),
-    oauth: {
-      github: envToBool(process.env.BACKEND_ENABLE_OAUTH_GITHUB),
-      google: envToBool(process.env.BACKEND_ENABLE_OAUTH_GOOGLE),
-    },
+    codeberg: envToBool(process.env.BACKEND_ENABLE_CODEBERG),
     cloudflareImages: envToBool(process.env.BACKEND_ENABLE_CLOUDFLARE_IMAGES),
     forwardmx: envToBool(process.env.BACKEND_ENABLE_FORWARDMX),
     ses: envToBool(process.env.BACKEND_ENABLE_AWS_SES),
@@ -175,44 +171,23 @@ const baseConfig = {
     domain: process.env.BACKEND_WEBSITE_DOMAIN || 'freesewing.org',
     scheme: process.env.BACKEND_WEBSITE_SCHEME || 'https',
   },
-  oauth: {},
 }
 
 /*
  * Config behind feature flags
  */
 
-// Github config
-if (baseConfig.use.github)
-  baseConfig.github = {
-    token: process.env.BACKEND_GITHUB_TOKEN,
-    api: 'https://api.github.com',
-    repoId: 'R_kgDOCFgrqQ',
-    forumCategoryId: 'DIC_kwDOCFgrqc4B9zXs',
+// Codeberg config
+if (baseConfig.use.codeberg)
+  baseConfig.codeberg = {
+    token: process.env.BACKEND_CODEBERG_TOKEN,
+    api: 'https://codeberg.org/api/v1',
+    owner: 'freesewing',
+    repo: 'freesewing',
     bot: {
-      user: process.env.BACKEND_GITHUB_USER || 'freesewing-robot',
-      name: process.env.BACKEND_GITHUB_USER_NAME || 'Freesewing bot',
-      email: process.env.BACKEND_GITHUB_USER_EMAIL || 'bot@freesewing.org',
-    },
-    notify: {
-      specific: {
-        albert: ['woutervdub'],
-        bee: ['bobgeorgethe3rd'],
-        benjamin: ['woutervdub'],
-        cornelius: ['woutervdub'],
-        diana: ['alfalyr'],
-        holmes: ['alfalyr'],
-        hortensia: ['woutervdub'],
-        lunetius: ['starfetch'],
-        penelope: ['woutervdub'],
-        tiberius: ['starfetch'],
-        sandy: ['alfalyr'],
-        ursula: ['nataliasayang'],
-        yuri: ['biou', 'hellgy'],
-        walburga: ['starfetch'],
-        waralee: ['woutervdub'],
-      },
-      dflt: [process.env.BACKEND_GITHUB_NOTIFY_DEFAULT_USER || 'joostdecock'],
+      user: process.env.BACKEND_CODEBERG_USER || 'skully',
+      name: process.env.BACKEND_CODEBERG_USER_NAME || 'Freesewing bot',
+      email: process.env.BACKEND_CODEBERG_USER_EMAIL || 'skully@freesewing.eu',
     },
   }
 
@@ -225,6 +200,8 @@ if (baseConfig.use.cloudflareImages) {
     token: process.env.BACKEND_CLOUDFLARE_IMAGES_TOKEN || 'fixmeSetCloudflareToken',
     import: envToBool(process.env.BACKEND_IMPORT_CLOUDFLARE_IMAGES),
     useInTests: baseConfig.use.tests.cloudflareImages,
+    url: 'https://imagedelivery.net/ouSuR9yY1bHt-fuAokSA5Q/',
+    variants: ['public', 'sq100', 'sq200', 'sq500', 'w200', 'w500', 'w1000', 'w2000'],
   }
 }
 
@@ -251,59 +228,6 @@ if (baseConfig.use.ses)
         : ['FreeSewing records <records@freesewing.org>'],
     },
   }
-
-// Oauth config for Github as a provider
-if (baseConfig.use.oauth?.github) {
-  baseConfig.oauth.github = {
-    clientId: process.env.BACKEND_OAUTH_GITHUB_CLIENT_ID,
-    clientSecret: process.env.BACKEND_OAUTH_GITHUB_CLIENT_SECRET,
-    tokenUri: 'https://github.com/login/oauth/access_token',
-    dataUri: 'https://api.github.com/user',
-    emailUri: 'https://api.github.com/user/emails',
-    redirectUri: `${
-      process.env.BACKEND_OAUTH_GITHUB_CALLBACK_SITE
-        ? process.env.BACKEND_OAUTH_GITHUB_CALLBACK_SITE
-        : 'https://freesewing.org'
-    }/signin/callback/github`,
-  }
-  baseConfig.oauth.github.url = (state) =>
-    '' +
-    'https://github.com/login/oauth/authorize?client_id=' +
-    baseConfig.oauth.github.clientId +
-    '&redirect_uri=' +
-    baseConfig.oauth.github.redirectUri +
-    `&scope=read:user user:email&state=${state}`
-}
-
-// Oauth config for Google as a provider
-if (baseConfig.use.oauth?.google) {
-  baseConfig.oauth.google = {
-    clientId: process.env.BACKEND_OAUTH_GOOGLE_CLIENT_ID,
-    clientSecret: process.env.BACKEND_OAUTH_GOOGLE_CLIENT_SECRET,
-    tokenUri: 'https://oauth2.googleapis.com/token',
-    dataUri: 'https://people.googleapis.com/v1/people/me?personFields=emailAddresses,names,photos',
-    redirectUri: `${
-      process.env.BACKEND_OAUTH_GOOGLE_CALLBACK_SITE
-        ? process.env.BACKEND_OAUTH_GOOGLE_CALLBACK_SITE
-        : 'https://freesewing.org'
-    }/signin/callback/google`,
-  }
-  baseConfig.oauth.google.url = (state) =>
-    '' +
-    'https://accounts.google.com/o/oauth2/v2/auth' +
-    '?response_type=code' +
-    '&client_id=' +
-    baseConfig.oauth.google.clientId +
-    '&redirect_uri=' +
-    baseConfig.oauth.google.redirectUri +
-    '&scope=' +
-    'https://www.googleapis.com/auth/userinfo.profile' +
-    ' ' +
-    'https://www.googleapis.com/auth/userinfo.email' +
-    '&access_type=online' +
-    '&state=' +
-    state
-}
 
 // OIDC Provider config
 if (baseConfig.use.oidc.provider) {
@@ -376,10 +300,9 @@ const config = postConfig(baseConfig)
 export const cloudflareImages = config.cloudflareImages || {}
 export const forwardmx = config.forwardmx || {}
 export const website = config.website
-export const github = config.github
+export const codeberg = config.codeberg
 export const instance = config.instance
 export const exports = config.exports
-export const oauth = config.oauth
 export const imgConfig = config.img
 
 const vars = {
@@ -393,9 +316,7 @@ const vars = {
   // Feature flags
   BACKEND_ENABLE_AWS_SES: 'optional',
   BACKEND_ENABLE_CLOUDFLARE_IMAGES: 'optional',
-  BACKEND_ENABLE_GITHUB: 'optional',
-  BACKEND_ENABLE_OAUTH_GITHUB: 'optional',
-  BACKEND_ENABLE_OAUTH_GOOGLE: 'optional',
+  BACKEND_ENABLE_CODEBERG: 'optional',
   BACKEND_ENABLE_PAYMENTS: 'optional',
   BACKEND_ENABLE_TESTS: 'optional',
   BACKEND_ALLOW_TESTS_IN_PRODUCTION: 'optional',
@@ -418,23 +339,12 @@ if (envToBool(process.env.BACKEND_USE_CLOUDFLARE_IMAGES)) {
   vars.BACKEND_CLOUDFLARE_IMAGES_TOKEN = 'requiredSecret'
   vars.BACKEND_TEST_CLOUDFLARE_IMAGES = 'optional'
 }
-// Vars for Github integration
-if (envToBool(process.env.BACKEND_ENABLE_GITHUB)) {
-  vars.BACKEND_GITHUB_TOKEN = 'requiredSecret'
-  vars.BACKEND_GITHUB_USER = 'optional'
-  vars.BACKEND_GITHUB_USER_NAME = 'optional'
-  vars.BACKEND_GITHUB_USER_EMAIL = 'optional'
-  vars.BACKEND_GITHUB_NOTIFY_DEFAULT_USER = 'optional'
-}
-// Vars for Oauth via Github integration
-if (envToBool(process.env.BACKEND_ENABLE_OAUTH_GITHUB)) {
-  vars.BACKEND_OAUTH_GITHUB_CLIENT_ID = 'required'
-  vars.BACKEND_OAUTH_GITHUB_CLIENT_SECRET = 'requiredSecret'
-}
-// Vars for Oauth via Google integration
-if (envToBool(process.env.BACKEND_ENABLE_OAUTH_GOOGLE)) {
-  vars.BACKEND_OAUTH_GOOGLE_CLIENT_ID = 'required'
-  vars.BACKEND_OAUTH_GOOGLE_CLIENT_SECRET = 'requiredSecret'
+// Vars for Codeberg integration
+if (envToBool(process.env.BACKEND_ENABLE_CODEBERG)) {
+  vars.BACKEND_CODEBERG_TOKEN = 'requiredSecret'
+  vars.BACKEND_CODEBERG_USER = 'optional'
+  vars.BACKEND_CODEBERG_USER_NAME = 'optional'
+  vars.BACKEND_CODEBERG_USER_EMAIL = 'optional'
 }
 
 // Vars for OIDC Provider

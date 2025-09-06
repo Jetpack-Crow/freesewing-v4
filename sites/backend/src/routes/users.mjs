@@ -11,12 +11,6 @@ export function usersRoutes(tools) {
   // Sign Up
   app.post('/signup', (req, res) => Users.signup(req, res, tools))
 
-  // Init Oauth with GitHub or Google
-  app.post('/signin/oauth/init', (req, res) => Users.oauthInit(req, res, tools))
-
-  // Sign in (or sign up) with Oauth via GitHub or Google
-  app.post('/signin/oauth', (req, res) => Users.oauthSignIn(req, res, tools))
-
   // Confirm account
   app.post('/confirm/signup/:id', (req, res) => Users.confirm(req, res, tools))
 
@@ -110,6 +104,11 @@ export function usersRoutes(tools) {
   )
   app.delete('/account/key', passport.authenticate(...bsc), (req, res) =>
     Users.removeAccount(req, res, tools)
+  )
+
+  // Find users (regular user search, UID & username only)
+  app.post('/find/users', passport.authenticate(...jwt), (req, res) =>
+    Users.searchProfiles(req, res, tools)
   )
 
   /*

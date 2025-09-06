@@ -4,6 +4,7 @@
 export const urls = {
   // FreeSewing Backend
   backend: 'https://backend.freesewing.eu',
+  //backend: 'http://localhost:3001',
   // FreeSewing website
   website: 'https://freesewing.eu',
   // FreeSewing monorepo

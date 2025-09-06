@@ -7,6 +7,7 @@ import {
   distanceAsMm,
   validateEmail,
 } from '@freesewing/utils'
+import { cloudflare } from '@freesewing/config'
 import { collection } from '@freesewing/collection'
 import { measurements as measurementsTranslations } from '@freesewing/i18n'
 // Context
@@ -461,22 +462,37 @@ export const DesignInput = ({
   labelBR = false,
   labelTR = false,
   legend = false,
+  buttons = false,
   update,
 }) => (
   <Fieldset {...{ box, help, label, labelTR, labelBL, labelBR, legend }} forId={id}>
-    <select
-      id={id}
-      className="tw:daisy-select tw:w-full"
-      onChange={(evt) => update(evt.target.value)}
-      value={current}
-    >
-      {firstOption ? <option disabled={true}>{firstOption}</option> : null}
-      {collection.map((design) => (
-        <option key={design} value={design}>
-          {capitalize(design)}
-        </option>
-      ))}
-    </select>
+    {buttons ? (
+      <div className="tw:flex tw:flex-row tw:flex-wrap tw:items-center tw:gap-0.5">
+        {collection.map((design) => (
+          <button
+            key={design}
+            onClick={() => update(design)}
+            className="tw:daisy-btn tw:daisy-btn-secondary tw:daisy-btn-outline tw:daisy-btn-xs tw:p-1"
+          >
+            {capitalize(design)}
+          </button>
+        ))}
+      </div>
+    ) : (
+      <select
+        id={id}
+        className="tw:daisy-select tw:w-full"
+        onChange={(evt) => update(evt.target.value)}
+        value={current}
+      >
+        {firstOption ? <option disabled={true}>{firstOption}</option> : null}
+        {collection.map((design) => (
+          <option key={design} value={design}>
+            {capitalize(design)}
+          </option>
+        ))}
+      </select>
+    )}
   </Fieldset>
 )
 
@@ -533,7 +549,7 @@ export const ImageInput = ({
     }
     if (fromUrl) data.url = img
     else data.img = img
-    const [status, body] = await backend.uploadImageAnon(data)
+    const [status, body] = await backend.uploadImage(data)
     setLoadingStatus([true, 'allDone', true, true])
     if (status === 200 && body.result === 'success') {
       update(body.imgId)
@@ -735,6 +751,7 @@ export const ListInput = ({
 export const MarkdownInput = ({
   box = false,
   current,
+  previewCurrent = false,
   help = false,
   id = '',
   label = false,
@@ -744,6 +761,7 @@ export const MarkdownInput = ({
   legend = false,
   update,
   placeholder = '',
+  markdownOptions = {},
 }) => (
   <Fieldset {...{ box, help, label, labelTR, labelBL, labelBR, legend }} forId={id}>
     <Tabs tabs={['edit', 'preview']}>
@@ -761,7 +779,7 @@ export const MarkdownInput = ({
       </Tab>
       <Tab key="preview">
         <div className="mdx markdown">
-          <Markdown>{current}</Markdown>
+          <Markdown {...markdownOptions}>{previewCurrent || current}</Markdown>
         </div>
       </Tab>
     </Tabs>
@@ -980,9 +998,6 @@ export const FileInput = ({
   )
 }
 
-/*
- * Input for booleans
- */
 /**
  * A component to handle input of booleans (yes/no or on/off)
  *
@@ -1037,3 +1052,189 @@ export const ToggleInput = ({
     </label>
   </Fieldset>
 )
+
+/**
+ * A component to handle input of FreeSewing user IDs
+ *
+ * @component
+ * @param {object} props - All component props
+ * @param {boolean} [props.box = false] - Set this to true to render a boxed fieldset
+ * @param {number} props.current - The current value, to manage the state of this input
+ * @param {boolean} [props.disabled = false] - Set this to true to render a disabled input
+ * @param {string|function} [props.help = false] - An optional URL/method to link/show help or docs
+ * @param {string} [props.id = ''] - Id of the HTML element to link the fieldset labels
+ * @param {string} [props.label = false] - The label
+ * @param {string} [props.labelBL = false] - The bottom-left) label
+ * @param {string} [props.labelBR = false] - The bottom-right) label
+ * @param {string} [props.labelTR = false] - The top-right label
+ * @param {array} [props.labels = ['Yes', 'No'] - An array of labels for the values
+ * @param {string} [props.legend = false] - The fieldset legend
+ * @param {array} [props.list = [true, false] - An array of values to choose between
+ * @param {function} props.update - The onChange handler
+ * @param {any} [props.on = true] - The value that should show the toggle in the 'on' state
+ * @returns {JSX.Element}
+ */
+export const UserInput = ({
+  box = false,
+  current,
+  disabled = false,
+  help = false,
+  id = '',
+  label = false,
+  labelBL = 'Enter a (part of a ) username or ID',
+  labelBR = false,
+  labelTR = false,
+  labels = ['Yes', 'No'],
+  legend = false,
+  list = [true, false],
+  update,
+  placeholder = 'Username or ID',
+  on = true,
+  original = '',
+  valid = () => true,
+}) => {
+  const [userInfo, setUserInfo] = useState({})
+  const [notUsers, setNotUsers] = useState({})
+  const [suggestions, setSuggestions] = useState(false)
+  const [user, setUser] = useState(false)
+  const backend = useBackend()
+
+  const storeUser = (uid, name, ihash) => {
+    const newUserInfo = { ...userInfo }
+    newUserInfo[uid] = { name, ihash }
+    setUserInfo(newUserInfo)
+  }
+
+  const addNotUser = (uid) => {
+    const newNotUsers = { ...notUsers }
+    newNotUsers[uid] = true
+    setNotUsers(newNotUsers)
+  }
+
+  const confirmUser = (uid) => {
+    if (suggestions[uid]) {
+      setUser({ ...suggestions[uid], uid })
+      update(uid)
+      setSuggestions(false)
+    }
+  }
+
+  const removeUser = () => {
+    setUser(false)
+    update('')
+    setSuggestions(false)
+  }
+
+  const handleUpdate = async (evt) => {
+    const uid = evt.target.value
+    update(uid)
+    if (uid) {
+      let users
+      try {
+        users = await backend.findUserProfiles(uid)
+        if (users[0] === 200 && users[1]?.profiles && Object.keys(users[1].profiles).length > 0) {
+          setSuggestions(users[1].profiles)
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  }
+
+  if (suggestions)
+    labelBL = (
+      <>
+        Did you mean:
+        <ul>
+          {Object.entries(suggestions).map(([id, user]) => (
+            <li key={id}>
+              <SuggestedUser
+                id={id}
+                q={current}
+                username={user.username}
+                avatar={user.avatar}
+                confirmUser={confirmUser}
+              />
+            </li>
+          ))}
+        </ul>
+      </>
+    )
+
+  return (
+    <div className="tw:flex tw:flex-row tw:flex-wrap tw:items-center tw:gap-4">
+      {user ? (
+        <button
+          className="tw:flex tw:flex-row tw:items-center tw:gap-2 tw:mt-2 tw:hover:cursor-pointer tw:bg-transparent tw:hover:bg-error/20 tw:rounded-lg tw:p-2"
+          onClick={removeUser}
+        >
+          <SuggestedUserInner {...user} id={user.uid} />
+        </button>
+      ) : (
+        <Fieldset {...{ box, help, label, labelBL, labelBR, labelTR, legend }} forId={id}>
+          <input
+            id={id}
+            type="text"
+            placeholder={placeholder}
+            value={current}
+            onChange={handleUpdate}
+            className={`tw:daisy-input tw:w-full tw:daisy-input-bordered tw:text-current ${
+              current === original
+                ? 'tw:daisy-input-secondary'
+                : valid(current)
+                  ? 'tw:daisy-input-success'
+                  : 'tw:daisy-input-error'
+            }`}
+          />
+        </Fieldset>
+      )}
+    </div>
+  )
+}
+
+const SuggestedUser = ({ id, username, avatar, q, confirmUser }) => {
+  return (
+    <button
+      className="tw:flex tw:flex-row tw:items-center tw:gap-2 tw:mt-1 tw:hover:cursor-pointer tw:bg-transparent tw:hover:bg-secondary/20 tw:rounded-lg tw:p-1"
+      onClick={() => confirmUser(id)}
+    >
+      <SuggestedUserInner {...{ id, username, avatar, q }} />
+    </button>
+  )
+}
+
+const SuggestedUserInner = ({ id, username, avatar, q }) => (
+  <>
+    <object
+      data={cloudflareImageUrl({ id: `uid-${avatar}`, variant: 'sq500' })}
+      type="image/jpeg"
+      className="tw:shadow tw:rounded-full tw:w-10 tw:h-10 tw:bg-base-300"
+    >
+      <img
+        src="https://freesewing.eu/img/logo.svg"
+        className="tw:shadow tw:rounded-full tw:w-10 tw:h-10 tw:bg-base-300 tw:p-1"
+      />
+    </object>
+    <span className="tw:text-base tw:font-bold">
+      {q ? <Highlight string={username} q={q} /> : username}
+    </span>
+    <span className="tw:text-base">#{q ? <Highlight string={id} q={q} /> : id}</span>
+  </>
+)
+
+const Highlight = ({ string, q }) => {
+  const s = `${string}`.toLowerCase()
+  q = `${q}`.toLowerCase()
+  if (!s.includes(q)) return string
+
+  const start = s.indexOf(q)
+  const end = start + q.length
+
+  return (
+    <span>
+      {string.slice(0, start)}
+      <mark>{string.slice(start, end)}</mark>
+      {string.slice(end)}
+    </span>
+  )
+}

@@ -7,6 +7,23 @@ import { cloudflareImages as config } from '../config.mjs'
 const headers = { Authorization: `Bearer ${config.token}` }
 
 /*
+ * Returns the URL of a cloudflare image
+ * based on the ID and Variant
+ *
+ * @param {string} id - The image ID
+ * @param {string} variant - One of the cloudflare image variants
+ * @return {string} url - The image URL
+ */
+export function cloudflareImageUrl(id, variant = 'public') {
+  /*
+   * If the variant is invalid, set it to the smallest thumbnail so
+   * people don't load enourmous images by accident
+   */
+  if (!config.variants.includes(variant)) variant = 'sq100'
+
+  return `${config.url}${id}/${variant}`
+}
+/*
  * Method that does the actual image upload to cloudflare
  * Use this for a new image that does not yet exist
  */
@@ -70,13 +87,14 @@ export async function replaceImage(props, isTest = false) {
 export async function ensureImage(props, isTest = false) {
   if (isTest) return props.id || false
   const form = getFormData(props)
+  let result = false
   try {
-    await axios.post(config.api, form, { headers })
+    result = await axios.post(config.api, form, { headers })
   } catch (err) {
-    // It's fine
+    console.log('Failed to upload image to cloudflare', err.response.data)
   }
 
-  return props.id
+  return result && result.status === 200 ? [true, result] : [false, result]
 }
 
 /*
@@ -108,6 +126,7 @@ function getFormData({
   // Data can be either a URL or b64
   if (data) {
     if (data.slice(0, 4) === 'http') url = data
+    else if (data.slice(0, 5) === 'data:') b64 = data.replace(/^data:image\/[a-z]+;base64,/, '')
     else b64 = data
   }
   form.append('id', id)

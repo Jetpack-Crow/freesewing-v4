@@ -8,6 +8,7 @@ import { NewsletterSignup } from '@freesewing/react/components/Newsletter'
 import { UserVisitorContent } from '@freesewing/react/components/Role'
 import { linkClasses } from '@freesewing/utils'
 import { DocusaurusDoc } from '@freesewing/react/components/Docusaurus'
+import { PlusIcon } from '@freesewing/react/components/Icon'
 
 const textShadow = {
   textShadow:
@@ -141,6 +142,12 @@ const ShowcaseItems = ({ items, slug }) => {
           />
           <h1>Showcase</h1>
           <div className="tailwind-container">
+            <p className="tw:text-right">
+              <Link className="tw:daisy-btn tw:daisy-btn-primary" href="/add/showcase/">
+                <PlusIcon className="tw:w-6 tw:h-6 tw:text-primary-content" />
+                <span className="tw:text-primary-content">Add your own showcase</span>
+              </Link>
+            </p>
             <span className="tw:block tw:font-medium tw:text-sm tw:opacity-70">
               Browse by design:
             </span>
@@ -151,7 +158,7 @@ const ShowcaseItems = ({ items, slug }) => {
                     href={`/showcase/tags/${d}`}
                     className="tw:daisy-badge tw:daisy-badge-sm tw:daisy-badge-secondary tw:capitalize tw:text-xs tw:font-medium"
                   >
-                    {d}
+                    <span className="tw:text-secondary-content">{d}</span>
                   </Link>
                 </li>
               ))}

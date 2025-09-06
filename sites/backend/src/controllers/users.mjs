@@ -16,35 +16,6 @@ UsersController.prototype.signup = async (req, res, tools) => {
 }
 
 /*
- * Init Oauth flow with GitHub or Google
- *
- * This is the endpoint that starts the Oauth flow
- * See: https://freesewing.dev/reference/backend/api
- */
-UsersController.prototype.oauthInit = async (req, res, tools) => {
-  const User = new UserModel(tools)
-  await User.oauthInit(req)
-
-  return User.sendResponse(res)
-}
-
-/*
- * Sing In with Oauth via GitHub or Google
- *
- * This is the endpoint that finalizes the Oauth flow
- * Note that SignIn and SignUp are the same flow/endpoints
- * We will simply deal with the fact that the user does not exist,
- * and treat it as a sign up
- * See: https://freesewing.dev/reference/backend/api
- */
-UsersController.prototype.oauthSignIn = async (req, res, tools) => {
-  const User = new UserModel(tools)
-  await User.oauthSignIn(req)
-
-  return User.sendResponse(res)
-}
-
-/*
  * Confirm account (after signup)
  *
  * This is the endpoint that fully unlocks the account if the user gives their consent
@@ -235,6 +206,16 @@ UsersController.prototype.isUsernameAvailable = async (req, res, tools) => {
       available: false,
     })
   else User.setResponse(404)
+
+  return User.sendResponse(res)
+}
+
+/*
+ * Search user profiles
+ */
+UsersController.prototype.searchProfiles = async (req, res, tools) => {
+  const User = new UserModel(tools)
+  await User.searchProfiles(req)
 
   return User.sendResponse(res)
 }

@@ -1,14 +1,14 @@
 import { i18nUrl } from '../utils/index.mjs'
 import { decorateModel } from '../utils/model-decorator.mjs'
-import { ensureImage, replaceImage, removeImage } from '../utils/cloudflare-images.mjs'
 import {
-  createIssue,
-  createFile,
-  createBranch,
-  createPullRequest,
-  getFileList,
-  createDiscussion,
-} from '../utils/github.mjs'
+  ensureImage,
+  replaceImage,
+  removeImage,
+  cloudflareImageUrl,
+} from '../utils/cloudflare-images.mjs'
+import { codeberg } from '../config.mjs'
+import { createFile, createBranch, createPullRequest } from '../utils/codeberg.mjs'
+import { sluglist } from '../../sluglist.mjs'
 
 /*
  * This model handles all flows (typically that involves sending out emails)
@@ -18,108 +18,6 @@ export function FlowModel(tools) {
     name: 'flow',
     models: ['user'],
   })
-}
-
-/*
- * Send a translator invite
- *
- * @param {body} object - The request body
- * @param {user} object - The user as loaded by auth middleware
- * @returns {FlowModel} object - The FlowModel
- */
-FlowModel.prototype.sendTranslatorInvite = async function ({ body, user }) {
-  /*
-   * Enforce RBAC
-   */
-  if (!this.rbac.readSome(user)) return this.setResponse(403, 'insufficientAccessLevel')
-
-  /*
-   * Do we have a POST body?
-   */
-  if (Object.keys(body).length < 1) return this.setResponse(400, 'postBodyMissing')
-
-  /*
-   * Is language set?
-   */
-  if (!body.language) return this.setResponse(400, 'languageMissing')
-
-  /*
-   * Is language a valid language?
-   */
-  if (!this.config.translations.includes(body.language))
-    return this.setResponse(400, 'languageInvalid')
-
-  /*
-   * Load user record from database
-   */
-  await this.User.revealAuthenticatedUser(user)
-
-  /*
-   * Send the invite email
-   */
-  await this.mailer.send({
-    template: 'transinvite',
-    language: body.language,
-    to: this.User.clear.email,
-    replacements: {
-      actionUrl: this.config.crowdin.invites[body.language],
-      whyUrl: i18nUrl(body.language, `/docs/faq/email/why-transinvite`),
-      supportUrl: i18nUrl(body.language, `/patrons/join`),
-    },
-  })
-
-  /*
-   * Return 200
-   */
-  return this.setResponse200({})
-}
-
-/*
- * Send a language suggestion to the maintainer
- *
- * @param {body} object - The request body
- * @param {user} object - The user as loaded by auth middleware
- * @returns {FlowModel} object - The FlowModel
- */
-FlowModel.prototype.sendLanguageSuggestion = async function ({ body, user }) {
-  /*
-   * Enforce RBAC
-   */
-  if (!this.rbac.readSome(user)) return this.setResponse(403, 'insufficientAccessLevel')
-
-  /*
-   * Do we have a POST body?
-   */
-  if (Object.keys(body).length < 1) return this.setResponse(400, 'postBodyMissing')
-
-  /*
-   * Is language set?
-   */
-  if (!body.language) return this.setResponse(400, 'languageMissing')
-
-  /*
-   * Load user making the call
-   */
-  await this.User.revealAuthenticatedUser(user)
-
-  /*
-   * Send the invite email
-   */
-  await this.mailer.send({
-    template: 'langsuggest',
-    language: body.language,
-    to: this.config.maintainer,
-    subject: '[FreeSewing] New language suggested',
-    replacements: {
-      datadump: JSON.stringify(body, null, 2),
-      userdump: JSON.stringify(this.User.clear, null, 2),
-    },
-  })
-
-  /*
-   * Return 200
-   */
-  return this.setResponse200({})
 }
 
 /*
@@ -150,8 +48,7 @@ FlowModel.prototype.uploadImage = async function ({ body, user }, anon = false) 
    * Is type set and valid?
    */
   if (!body.type) return this.setResponse(400, 'typeMissing')
-  if (!['blog', 'showcase'].includes(body.type))
-    return this.setResponse(400, 'typeInvalid')
+  if (!['blog', 'showcase'].includes(body.type)) return this.setResponse(400, 'typeInvalid')
 
   /*
    * Is subId set and valid?
@@ -180,13 +77,13 @@ FlowModel.prototype.uploadImage = async function ({ body, user }, anon = false) 
    * Regular users can only update new images, not overwrite images.
    * If not, any user could overwrite any showcase image.
    */
-  const imgId =
-    !anon && this.rbac.curator(user) ? await replaceImage(data) : await ensureImage(data)
+  if (!anon && this.rbac.curator(user)) await replaceImage(data)
+  else await ensureImage(data)
 
   /*
    * Return 200 and the image ID
    */
-  return this.setResponse200({ imgId })
+  return this.setResponse200({ imgId: data.id })
 }
 
 /*
@@ -218,82 +115,6 @@ FlowModel.prototype.removeImage = async function ({ params, user }) {
   return gone ? this.setResponse(204) : this.setResponse(500, 'unableToRemoveImage')
 }
 
-/*
- * Create an issue
- *
- * @param {body} object - The request body
- * @returns {IssueModel} object - The IssueModel
- */
-FlowModel.prototype.createIssue = async function ({ body }) {
-  /*
-   * Is issue creation enabled
-   */
-  if (!this.config.use.github) return this.setResponse(400, 'notEnabled')
-
-  /*
-   * Do we have a POST body?
-   */
-  if (Object.keys(body).length < 1) return this.setResponse(400, 'postBodyMissing')
-
-  /*
-   * Is title set?
-   */
-  if (!body.title) return this.setResponse(400, 'titleMissing')
-
-  /*
-   * Is body set?
-   */
-  if (!body.body) return this.setResponse(400, 'bodyMissing')
-
-  /*
-   * Create the issue
-   */
-  const issue = await createIssue(body)
-
-  /*
-   * Return 201
-   */
-  return issue ? this.setResponse201({ issue }) : this.setResponse(400)
-}
-
-/*
- * Create a discussion
- *
- * @param {body} object - The request body
- * @returns {IssueModel} object - The IssueModel
- */
-FlowModel.prototype.createDiscussion = async function ({ body }) {
-  /*
-   * Is issue creation enabled
-   */
-  if (!this.config.use.github) return this.setResponse(400, 'notEnabled')
-
-  /*
-   * Do we have a POST body?
-   */
-  if (Object.keys(body).length < 1) return this.setResponse(400, 'postBodyMissing')
-
-  /*
-   * Is title set?
-   */
-  if (!body.title) return this.setResponse(400, 'titleMissing')
-
-  /*
-   * Is body set?
-   */
-  if (!body.body) return this.setResponse(400, 'bodyMissing')
-
-  /*
-   * Create the discussion
-   */
-  const discussion = await createDiscussion(body)
-
-  /*
-   * Return 201
-   */
-  return discussion ? this.setResponse201({ discussion }) : this.setResponse(400)
-}
-
 const nonEnWarning = `
 
 **Warning:** This was submitted by a non-English user.
@@ -312,9 +133,9 @@ to English prior to merging.
  */
 FlowModel.prototype.createPostPr = async function ({ body, user }, type) {
   /*
-   * Is markdown set?
+   * Check for required data
    */
-  for (const field of ['markdown', 'slug', 'language']) {
+  for (const field of ['markdown', 'slug', 'img']) {
     if (!body[field]) return this.setResponse(400, `${field}Missing`)
   }
 
@@ -322,6 +143,35 @@ FlowModel.prototype.createPostPr = async function ({ body, user }, type) {
    * Load user from the database
    */
   await this.User.read({ id: user.uid })
+
+  /*
+   * First upload the main image
+   */
+  const imgs = {
+    main: {
+      id: `${type}-${body.slug}`,
+      metadata: { uploadedBy: user.uid },
+      data: body.img,
+    },
+    extra: {},
+  }
+  await ensureImage(imgs.main)
+
+  /*
+   * Now handle any extra images
+   */
+  for (const [key, data] of Object.entries(body.extraImages || {})) {
+    imgs.extra[key] = {
+      id: `${type}-${body.slug}-${key}`,
+      metadata: { uploadedBy: user.uid },
+      data,
+    }
+    await ensureImage(imgs.extra[key])
+    body.markdown = body.markdown.replaceAll(
+      `__EXTRA_IMAGE_${key}__`,
+      cloudflareImageUrl(imgs.extra[key].id)
+    )
+  }
 
   /*
    * Create a new feature branch for this
@@ -332,19 +182,23 @@ FlowModel.prototype.createPostPr = async function ({ body, user }, type) {
   /*
    * Create the file
    */
-  const file = await createFile({
-    path: `markdown/org/${type}/${body.slug}/en.md`,
-    body: {
-      message: `feat: New ${type} post ${body.slug} by ${this.User.record.username}${
-        body.language !== 'en' ? nonEnWarning : ''
-      }`,
-      content: new Buffer.from(body.markdown).toString('base64'),
-      branch: branchName,
-      author: {
-        name: this.User.clear.data?.githubUsername || this.config.github.bot.name,
-        email: this.User.clear.data?.githubEmail || this.config.github.bot.email,
-      },
+  const content = new Buffer.from(body.markdown).toString('base64')
+  const data = {
+    author: {
+      email: codeberg.bot.email,
+      name: this.User.record.username,
     },
+    branch: branchName,
+    committer: {
+      email: codeberg.bot.email,
+      name: codeberg.bot.name,
+    },
+    content: new Buffer.from(body.markdown).toString('base64'),
+    message: `[org] feat: New ${type} post ${body.slug} by ${this.User.record.username}`,
+  }
+  const file = await createFile({
+    body: data,
+    path: `sites/org/${type}/${body.slug}/index.mdx`,
   })
 
   /*
@@ -352,17 +206,15 @@ FlowModel.prototype.createPostPr = async function ({ body, user }, type) {
    */
   const pr = await createPullRequest({
     title: `feat: New ${type} post ${body.slug} by ${this.User.record.username}`,
-    body: `Paging @joostdecock to check out this proposed ${type} post.${
-      body.language !== 'en' ? nonEnWarning : ''
-    }`,
-    from: branchName,
-    to: 'develop',
+    body: `Paging @joostdecock to check out this proposed ${type} post.`,
+    head: branchName,
+    base: 'develop',
   })
 
   /*
    * Return 201
    */
-  return pr ? this.setResponse201({ branch, file, pr }) : this.setResponse(400)
+  return pr ? this.setResponse201(pr) : this.setResponse(400)
 }
 
 /*
@@ -380,12 +232,7 @@ FlowModel.prototype.isSlugAvailable = async function ({ params }, type) {
   if (!params.slug) return this.setResponse(400, `slugMissing`)
 
   /*
-   * Load the list of folders from github
+   * Is the slug available
    */
-  const folders = (await getFileList(`markdown/org/${type}`)).map((folder) => folder.name)
-
-  /*
-   * Return  whether or not params.slug is already included in the list of slugs
-   */
-  return !folders.includes(params.slug)
+  return sluglist[type] && sluglist[type].includes(params.slug) ? false : true
 }

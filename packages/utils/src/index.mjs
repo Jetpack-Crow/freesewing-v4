@@ -4,8 +4,18 @@ import _get from 'lodash/get.js'
 import _set from 'lodash/set.js'
 import _unset from 'lodash/unset.js'
 import _orderBy from 'lodash/orderBy.js'
+import _slugify from 'slugify'
 import { loadingMessages } from './loading-messages.mjs'
 import { Path, Point } from '@freesewing/core'
+
+const slugifyConfig = {
+  replacement: '-', // replace spaces with replacement character, defaults to `-`
+  remove: undefined, // remove characters that match regex, defaults to `undefined`
+  lower: true, // convert to lower case, defaults to `false`
+  strict: true, // strip special characters except replacement, defaults to `false`
+  locale: 'en', // language code of the locale to use
+  trim: true, // trim leading and trailing replacement chars, defaults to `true`
+}
 
 /*
  * Re-export lodash utils
@@ -39,6 +49,40 @@ export const linkClasses = 'tw:text-secondary tw:hover:underline tw:hover:cursor
 /*
  * FUNCTIONS
  */
+
+/*
+ * Slugify a string
+ *
+ * @param {string} input - The input to slugify
+ * @return {string} slug - The slugified input
+ */
+export const slugify = (input) => _slugify(input, slugifyConfig)
+
+/*
+ * Slugify a title
+ *
+ * @param {string} input - The input to slugify
+ * @return {string} slug - The slugified input
+ */
+export const slugifyTitle = (input) =>
+  _slugify(
+    input.replaceAll(
+      /\b(a|an|the|and|or|but|in|on|at|to|for|of|with|by|from|as|is|are|was|were|be|been|have|has|had|do|does|did|will|would|could|should|may|might)\b/g,
+      ''
+    ),
+    slugifyConfig
+  )
+
+/*
+ * Slugify a string, but don't trim it
+ *
+ * This is useful when slugifying user input as you don't want to
+ * remove spaces while the user is typing.
+ *
+ * @param {string} input - The input to slugify
+ * @return {string} slug - The slugified input
+ */
+export const slugifyNoTrim = (input) => _slugify(input, { ...slugifyConfig, trim: false })
 
 /**
  * A method to capitalize a string
@@ -707,4 +751,21 @@ export function navigate(href, relative = false) {
 
   if (relative) window.location.href = `${window.location.origin}${href}`
   else window.location.href = href
+}
+
+/**
+ * Formats time as yyyymmdd
+ *
+ * @param {string} timestamp - An optional timestamp to use
+ * @return {string} yyyymmdd - The time in yyyymmdd format
+ */
+export const yyyymmdd = (timestamp = false) => {
+  const ts = timestamp ? new Date(timestamp) : new Date()
+
+  let m = String(ts.getMonth() + 1)
+  if (m.length === 1) m = '0' + m
+  let d = '' + ts.getDate()
+  if (d.length === 1) d = '0' + d
+
+  return `${ts.getFullYear()}${m}${d}`
 }

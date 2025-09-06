@@ -415,6 +415,16 @@ Backend.prototype.getUserProfile = async function (uid) {
   return await this.get(`/users/${uid}`)
 }
 
+/**
+ * Find user profile
+ *
+ * @param {number} query - The query input
+ * @return {array} result - The REST response, a [status, data] array
+ */
+Backend.prototype.findUserProfiles = async function (match) {
+  return await this.post(`/find/users`, { match })
+}
+
 /*
  * Check whether a slug for a blog or showcase post is available
  *
@@ -710,4 +720,14 @@ Backend.prototype.updateSet = async function (id, data) {
  */
 Backend.prototype.uploadImage = async function (data) {
   return await this.post('/images/jwt', data)
+}
+
+/*
+ * Check whether a slug is available
+ */
+Backend.prototype.isSlugAvailable = async function ({ slug, type }) {
+  const result = await this.get(`/slugs/${type}/${slug}/jwt`, {}, true)
+
+  // 404 means slug is available, which is success in this case
+  return result[0] === 404
 }

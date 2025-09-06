@@ -5,7 +5,6 @@ import { replaceImage, removeImage } from '../utils/cloudflare-images.mjs'
 import { clean, asJson, i18nUrl, writeExportedData } from '../utils/index.mjs'
 import { decorateModel } from '../utils/model-decorator.mjs'
 import { userCard } from '../templates/svg/user-card.mjs'
-import { oauth } from '../utils/oauth.mjs'
 
 /*
  * This model handles all user updates
@@ -17,178 +16,6 @@ export function UserModel(tools) {
     jsonFields: ['data'],
     models: ['confirmation', 'set', 'pattern'],
   })
-}
-
-/*
- * Start Oauth flow, supported providers are google and github
- *
- * To initialize the Oauth flow, all we need is to generate a secret
- * and let the client know what URL to connect to to trigger the authentication.
- * For the secret, we'll just use the UUID of the confirmation.
- *
- * @param {body} object - The request body
- * @returns {UserModel} object - The UserModel
- */
-UserModel.prototype.oauthInit = async function ({ body }) {
-  /*
-   * Is the provider set and a known Oauth provider?
-   */
-  if (
-    typeof body.provider === 'undefined' ||
-    !Object.keys(this.config.oauth).includes(body.provider.toLowerCase())
-  )
-    return this.setResponse(403, 'invalidProvider')
-
-  const provider = body.provider.toLowerCase()
-
-  /*
-   * Create confirmation
-   */
-  await this.Confirmation.createRecord({
-    type: 'oauth-init',
-    data: { provider },
-  })
-
-  /*
-   * Return the confirmation ID as Oauth state, along with the
-   * authentication URL the client should use.
-   */
-  return this.setResponse200({
-    authUrl: this.config.oauth[provider].url(this.Confirmation.record.id),
-  })
-}
-
-/*
- * Sign In via Oauth, supported providers are google and github
- *
- * This could be an existing user (Sign In) or a new user (Sign Up)
- * so we need to deal with both cases.
- *
- * @param {body} object - The request body
- * @returns {UserModel} object - The UserModel
- */
-UserModel.prototype.oauthSignIn = async function ({ body }) {
-  /*
-   * Is the provider set and a known Oauth provider?
-   */
-  if (
-    typeof body.provider === 'undefined' ||
-    !Object.keys(this.config.oauth).includes(body.provider.toLowerCase())
-  )
-    return this.setResponse(403, 'invalidProvider')
-
-  /*
-   * Is state set?
-   */
-  if (typeof body.state !== 'string') return this.setResponse(403, 'stateInvalid')
-
-  /*
-   * Is code set?
-   */
-  if (typeof body.code !== 'string') return this.setResponse(403, 'codeInvalid')
-
-  /*
-   * Attempt to retrieve the confirmation record, its ID is the state value
-   */
-  await this.Confirmation.read({ id: body.state })
-
-  /*
-   * Get token in exchange for Oauth code
-   */
-  const provider = body.provider.toLowerCase()
-  const token = await oauth[provider].getToken(body.code)
-
-  /*
-   * Load user data from API
-   */
-  const oauthData = await oauth[provider].loadUser(token)
-
-  /*
-   * Does the user exist?
-   */
-  await this.read({ ehash: hash(clean(oauthData.email)) })
-  if (this.exists) {
-    /*
-     * Final check for account status and other things before returning
-     */
-    const [ok, err, status] = this.isOk(401, 'signInFailed', true)
-    if (ok === true) return this.signInOk()
-    else return this.setResponse(status, err)
-  }
-
-  /*
-   * This is a new user, so essentially a sign-up.
-   * We need to handle this the same way, expect without the need to confirm email
-   *
-   * Let's start by making sure the username we use is available
-   */
-  let lusername = clean(oauthData.username)
-  let available = await this.isLusernameAvailable(lusername)
-  while (!available) {
-    lusername += '+'
-    available = await this.isLusernameAvailable(lusername)
-  }
-
-  /*
-   * Create all data to create the record
-   */
-  const email = clean(oauthData.email)
-  const ihash = hash(email)
-  const extraData = {}
-  if (provider === 'github') {
-    extraData.githubEmail = oauthData.email
-    extraData.githubUsername = oauthData.username
-  }
-  if (oauthData.website) extraData.website = oauthData.website
-  if (oauthData.twitter) extraData.twitter = oauthData.twitter
-  const data = {
-    ehash: ihash,
-    ihash,
-    email: this.encrypt(email),
-    initial: this.encrypt(email),
-    username: lusername,
-    lusername: lusername,
-    language: 'en',
-    mfaEnabled: false,
-    mfaSecret: '',
-    password: asJson(hashPassword(randomString())),
-    data: this.encrypt(extraData),
-    bio: this.encrypt(oauthData.bio || '--'),
-  }
-
-  /*
-   * Next, if there is an image (url) let's handle that first
-   */
-  if (oauthData.img) {
-    try {
-      await replaceImage({
-        id: `user-${ihash}`,
-        metadata: { ihash },
-        url: oauthData.img,
-      })
-    } catch (err) {
-      log.info(err, `Unable to update image post-oauth signup for user ${email}`)
-      return this.setResponse(500, 'createAccountFailed')
-    }
-  }
-
-  /*
-   * Now attempt to create the record in the database
-   */
-  try {
-    this.record = await this.prisma.user.create({ data })
-  } catch (err) {
-    /*
-     * Could not create record. Log warning and return 500
-     */
-    log.warn(err, 'Could not create user record')
-    return this.setResponse(500, 'createAccountFailed')
-  }
-
-  /*
-   * Consent won't be ok yet, but we must handle that in the frontend
-   */
-  return this.signInOk()
 }
 
 /*
@@ -1943,4 +1770,59 @@ UserModel.prototype.papersPlease = async function (id, type, payload) {
    * and their consent and status are ok, so so return true and let them through.
    */
   return [true, false]
+}
+
+/*
+ * Searches for user profiles
+ *
+ * @param {body} object - The request body
+ * @param {user} object - The user object as provided by the auth middleware
+ * @returns {UserModel} object - The UserModel
+ */
+UserModel.prototype.searchProfiles = async function ({ body, user }) {
+  if (!body.match) return this.setResponse200({ profiles: {} })
+
+  let usernames = []
+  let id = {}
+  const profiles = {}
+  /*
+   * Find users based on lusername
+   */
+  try {
+    usernames = await this.asAccountList(
+      await this.prisma.user.findMany({
+        where: {
+          lusername: { contains: clean(body.match) },
+        },
+        take: 10,
+      })
+    )
+  } catch (err) {
+    usernames = []
+  }
+
+  /*
+   * Find users based on their ID
+   */
+  try {
+    id = await this.prisma.user.findFirst({
+      where: { id: { equals: parseInt(body.match) || -1 } },
+    })
+  } catch (err) {
+    log.warn({ err, body }, `Error while trying to find user profile: ${body.match}`)
+    return this.setResponse(404)
+  }
+
+  /*
+   * Combine results into a profiles object
+   */
+  for (const user of [...usernames, id]) {
+    if (user?.id)
+      profiles[user.id] = {
+        username: user.username,
+        avatar: user.ihash,
+      }
+  }
+
+  return this.setResponse200({ profiles })
 }
