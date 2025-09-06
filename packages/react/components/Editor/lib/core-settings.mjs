@@ -50,7 +50,7 @@ export function menuCoreSettingsOnlyHandler({ updateHandler, current }) {
 export function menuCoreSettingsSammHandler({ updateHandler, config }) {
   return function (_path, newCurrent) {
     // convert to millimeters if there's a value
-    newCurrent = newCurrent === undefined ? config.dflt : newCurrent
+    newCurrent = newCurrent === undefined || newCurrent === '__UNSET__' ? config.dflt : newCurrent
     // update both values to match
     updateHandler(['samm'], newCurrent)
     updateHandler(['sa'], newCurrent)
