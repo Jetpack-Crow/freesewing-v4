@@ -98,9 +98,9 @@ export const bandTie = {
       grainline: true,
     })
     //cutlist
-    store.cutlist.addCut({ cut: 1, from: 'fabric', onFold: 'true' })
+    store.cutlist.addCut({ cut: 1, from: 'fabric', onFold: true })
     if (options.duoBandTieColours && !options.crossBackTies)
-      store.cutlist.addCut({ cut: 1, from: 'contrast', onFold: 'true' })
+      store.cutlist.addCut({ cut: 1, from: 'contrast', onFold: true })
     //notches
     if (options.crossBackTies) {
       points.sideNotchLeft = points.bottomLeft.shift(90, store.get('cupWidth'))
