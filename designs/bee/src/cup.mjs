@@ -213,10 +213,10 @@ export const cup = {
     })
     //cutlist
     if (options.reversible) {
-      store.cutlist.setCut({ cut: 2, from: 'fabric', identical: 'true' })
-      store.cutlist.addCut({ cut: 2, from: 'contrast', identical: 'true' })
+      store.cutlist.setCut({ cut: 2, from: 'fabric' })
+      store.cutlist.addCut({ cut: 2, from: 'contrast' })
     } else {
-      store.cutlist.setCut({ cut: 4, from: 'fabric', identical: 'true' })
+      store.cutlist.setCut({ cut: 4, from: 'fabric' })
     }
     //notches
     paths.frontCurve = new Path()
