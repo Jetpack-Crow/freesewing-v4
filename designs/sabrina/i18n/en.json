@@ -108,6 +108,14 @@
     "fullSaYes":{
       "t": "Burrito method",
       "d": "Seam allowance on the complete part outline"
+    },
+    "frontArmholeOpening": {
+      "t": "Front armhole opening",
+      "d": "How wide the arm opening is at the front"
+    },
+    "useLegacyArmholePosition": {
+      "t": "Use legacy armhole position",
+      "d": "Use the old calculation for the front armhole"
     }
   }
 }

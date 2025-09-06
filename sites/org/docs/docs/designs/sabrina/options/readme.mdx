@@ -10,6 +10,7 @@ import Backdartangle from '@site/docs/docs/designs/sabrina/options/backdartangle
 import Backwidth from '@site/docs/docs/designs/sabrina/options/backwidth/readme.mdx'
 import Bustpointfocus from '@site/docs/docs/designs/sabrina/options/bustpointfocus/readme.mdx'
 import Elasticwidth from '@site/docs/docs/designs/sabrina/options/elasticwidth/readme.mdx'
+import Frontarmholeopening from '@site/docs/docs/designs/sabrina/options/frontarmholeopening/readme.mdx'
 import Fullsa from '@site/docs/docs/designs/sabrina/options/fullsa/readme.mdx'
 import Horizontalbandstretch from '@site/docs/docs/designs/sabrina/options/horizontalbandstretch/readme.mdx'
 import Horizontalbuststretch from '@site/docs/docs/designs/sabrina/options/horizontalbuststretch/readme.mdx'
@@ -25,7 +26,19 @@ import Strapposition from '@site/docs/docs/designs/sabrina/options/strapposition
 import Strapstretch from '@site/docs/docs/designs/sabrina/options/strapstretch/readme.mdx'
 import Strapwidth from '@site/docs/docs/designs/sabrina/options/strapwidth/readme.mdx'
 import Upperbackshape from '@site/docs/docs/designs/sabrina/options/upperbackshape/readme.mdx'
+import Uselegacyarmholeposition from '@site/docs/docs/designs/sabrina/options/uselegacyarmholeposition/readme.mdx'
 import Verticalstretch from '@site/docs/docs/designs/sabrina/options/verticalstretch/readme.mdx'
+
+## Conditional Options {#conditional}
+### Front armhole opening {#frontarmholeopening}
+
+**How wide the arm opening is at the front**
+- Type: **Percentage**
+- Default: **5%**
+- Minimum: **0%**
+- Maximum: **15%**
+
+<Frontarmholeopening />
 
 ## Construction {#construction}
 ### Elastic width {#elasticwidth}
@@ -238,3 +251,11 @@ import Verticalstretch from '@site/docs/docs/designs/sabrina/options/verticalstr
 - Maximum: **60%**
 
 <Upperbackshape />
+
+### Use legacy armhole position {#uselegacyarmholeposition}
+
+**Use the old calculation for the front armhole**
+- Type: **Boolean**
+- Default: **false**
+
+<Uselegacyarmholeposition />
