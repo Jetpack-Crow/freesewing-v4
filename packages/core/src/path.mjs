@@ -751,7 +751,10 @@ Path.prototype.reverse = function (cloneAttributes = false) {
     if (op.to) current = op.to
   }
   let rev = new Path().__withLog(this.log).move(current)
-  for (let section of sections.reverse()) rev.ops.push(section.ops[1])
+  for (let section of sections.reverse()) {
+    if (rev.end().sitsOn(section.ops[0].to)) rev.ops.push(section.ops[1])
+    else rev.ops.push(...section.ops)
+  }
   if (closed) rev.close()
   if (cloneAttributes) rev.attributes = this.attributes.clone()
 
