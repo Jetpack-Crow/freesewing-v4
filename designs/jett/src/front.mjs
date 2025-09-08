@@ -665,6 +665,18 @@ const onlyWithPockets = (_settings, mergedOptions) =>
 const onlyWithRibbing = (_settings, mergedOptions) =>
   mergedOptions?.ribbing || typeof mergedOptions?.ribbing === 'undefined' ? 'style' : false
 
+// Option is false by default, so a simple check will do
+const onlyWithHighBust = (_settings, mergedOptions) =>
+  mergedOptions?.draftForHighBust ? 'fit.bust' : false
+
+// Option is false by default, so a simple check will do
+const onlyWithHighBustAdvanced = (_settings, mergedOptions) =>
+  mergedOptions?.draftForHighBust ? 'fit.bust.advanced' : false
+
+// Option is false by default, so a simple check will do
+const onlyWithBelly = (_settings, mergedOptions) =>
+  mergedOptions?.useBellyAdjustment ? 'fit.belly' : false
+
 export const front = {
   name: 'jett.front',
   from: brianFront,
@@ -689,13 +701,13 @@ export const front = {
     collarEase: { pct: 2, min: 0, max: 50, menu: 'fit' },
 
     draftForHighBust: { bool: false, menu: 'fit.bust' },
-    bustDart: { bool: false, menu: 'fit.bust' },
-    bustDartOffset: { pct: 25, min: 5, max: 90, menu: 'fit.bust' },
-    bustDartHeight: { pct: 20, min: 5, max: 95, menu: 'fit.bust.advanced' },
-    fullBustEase: { pct: 10, min: 0, max: 50, menu: 'fit.bust' },
-    armCutAngle: { pct: 100, min: 75, max: 125, menu: 'fit.bust.advanced' },
-    sideCutAngle: { pct: 100, min: 80, max: 120, menu: 'fit.bust.advanced' },
-    dartLegsTruing: { bool: true, menu: 'fit.bust.advanced' },
+    bustDart: { bool: false, menu: onlyWithHighBust },
+    bustDartOffset: { pct: 25, min: 5, max: 90, menu: onlyWithHighBust },
+    bustDartHeight: { pct: 20, min: 5, max: 95, menu: onlyWithHighBustAdvanced },
+    fullBustEase: { pct: 10, min: 0, max: 50, menu: onlyWithHighBust },
+    armCutAngle: { pct: 100, min: 75, max: 125, menu: onlyWithHighBustAdvanced },
+    sideCutAngle: { pct: 100, min: 80, max: 120, menu: onlyWithHighBustAdvanced },
+    dartLegsTruing: { bool: true, menu: onlyWithHighBustAdvanced },
 
     ribbing: { bool: true, menu: 'construction' },
     ribbingHeight: { pct: 10, min: 5, max: 15, menu: onlyWithRibbing },
@@ -710,8 +722,8 @@ export const front = {
 
     closureCount: { count: 7, min: 3, max: 12, menu: 'style.placket' },
 
-    waistEase: { pct: 10, min: 0, max: 50, menu: 'fit.belly' },
-    bellyAdjustmentX: { pct: 40, min: 5, max: 95, menu: 'fit.belly' },
+    waistEase: { pct: 10, min: 0, max: 50, menu: onlyWithBelly },
+    bellyAdjustmentX: { pct: 40, min: 5, max: 95, menu: onlyWithBelly },
     useBellyAdjustment: { bool: false, menu: 'fit.belly' },
   },
   draft: draftfront,
