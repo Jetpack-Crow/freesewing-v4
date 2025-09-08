@@ -469,6 +469,26 @@ describe('Path', () => {
     expect(rev.ops[2].type).to.equal('line')
   })
 
+  it('Should reverse a path with a move operation', () => {
+    const test = new Path()
+      .move(new Point(0, 0))
+      .line(new Point(100, 0))
+      .move(new Point(0, 100))
+      .line(new Point(100, 100))
+    let rev = test.reverse()
+    let tb = test.bbox()
+    let rb = rev.bbox()
+    expect(tb.topLeft.x).to.equal(rb.topLeft.x)
+    expect(tb.topLeft.y).to.equal(rb.topLeft.y)
+    expect(tb.bottomRight.x).to.equal(rb.bottomRight.x)
+    expect(tb.bottomRight.y).to.equal(rb.bottomRight.y)
+    expect(rev.ops.length).to.equal(4)
+    expect(rev.ops[0].type).to.equal('move')
+    expect(rev.ops[1].type).to.equal('line')
+    expect(rev.ops[2].type).to.equal('move')
+    expect(rev.ops[3].type).to.equal('line')
+  })
+
   it('Should rotate a path', () => {
     const test = new Path()
       .move(new Point(123, 456))
