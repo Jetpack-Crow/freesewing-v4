@@ -179,7 +179,7 @@ function titanFront({
   points.waistX = new Point(measurements.waistFrontArc * (1 + options.waistEase), 0)
   points.upperLegY = new Point(
     0,
-    options.crotchDepthOrUpperLeg || !measurements.crotchDepth
+    options.forkDepthMethod == 'upperLeg' || !measurements.crotchDepth
       ? measurements.waistToUpperLeg
       : measurements.crotchDepth
   )
@@ -193,6 +193,10 @@ function titanFront({
     measurements.seatFrontArc * (1 + options.seatEase) * 1.25,
     points.upperLegY.y * (1 + options.crotchDrop)
   )
+  if (options.forkDepthMethod == 'crotchDrop' && measurements.crotchDepth) {
+    points.fork.y = points.fork.y * (1 + options.crotchDepthExtraDrop)
+  }
+
   if (measurements.upperLeg && options.upperLegFork) {
     points.fork.x =
       measurements.upperLeg * (measurements.seatFront / measurements.seat) * (1 + options.forkEase)
@@ -546,7 +550,7 @@ export const front = {
   after: back,
   optionalMeasurements: ['upperLeg'],
   options: {
-    fitCrossSeamMethodFront: { pct: 50, min: 0, max: 100, menu: 'advanced' },
+    fitCrossSeamMethodFront: { pct: 50, min: 0, max: 100, menu: 'advanced.crossseam' },
   },
   draft: titanFront,
 }

@@ -104,7 +104,10 @@ function titanBack({
   }
 
   //Warn the user if the crotch depth doesn't look right
-  if (!options.crotchDepthOrUpperLeg && measurements.crotchDepth < measurements.waistToSeat * 0.8) {
+  if (
+    options.forkDepthMethod == 'crotchDrop' &&
+    measurements.crotchDepth < measurements.waistToSeat * 0.8
+  ) {
     store.flag.warn({ msg: 'titan:crotchDepthTooSmall' })
   }
 
@@ -112,7 +115,7 @@ function titanBack({
   points.waistX = new Point(-1 * measurements.waistBackArc * (1 + options.waistEase), 0)
   points.upperLegY = new Point(
     0,
-    options.crotchDepthOrUpperLeg || !measurements.crotchDepth
+    options.forkDepthMethod == 'upperLeg' || !measurements.crotchDepth
       ? measurements.waistToUpperLeg
       : measurements.crotchDepth
   )
@@ -126,6 +129,10 @@ function titanBack({
     measurements.seatBackArc * (1 + options.seatEase) * -1.25,
     points.upperLegY.y * (1 + options.crotchDrop)
   )
+  if (options.forkDepthMethod == 'crotchDrop' && measurements.crotchDepth) {
+    points.fork.y = points.fork.y * (1 + options.crotchDepthExtraDrop)
+  }
+
   if (measurements.upperLeg && options.upperLegFork) {
     points.fork.x =
       -measurements.upperLeg * (measurements.seatBack / measurements.seat) * (1 + options.forkEase)
@@ -522,15 +529,20 @@ export const back = {
     fitCrossSeamFront: true,
     fitCrossSeamBack: true,
 
-    fitCrossSeamMethodBack: { pct: 50, min: 0, max: 100, menu: 'advanced' },
-    legacyForkShift: { pct: 100, min: 0, max: 100, menu: 'advanced' },
-    crotchDepthOrUpperLeg: { bool: true, menu: 'advanced' },
+    fitCrossSeamMethodBack: { pct: 50, min: 0, max: 100, menu: 'advanced.crossseam' },
+    legacyForkShift: { pct: 100, min: 0, max: 100, menu: 'advanced.crossseam' },
+    forkDepthMethod: {
+      dflt: 'crotchDrop',
+      list: ['crotchDrop', 'upperLeg'],
+      menu: 'advanced.crossseam',
+    },
+    crotchDepthExtraDrop: { pct: 15, min: 0, max: 50, menu: 'advanced.crossseam' },
     legacyLegWidth: {
       list: ['seatFront', 'seatWhole', 'upperLeg'],
       dflt: 'seatWhole',
       menu: 'advanced',
     },
-    upperLegFork: { bool: true, menu: 'advanced' },
+    upperLegFork: { bool: true, menu: 'advanced.crossseam' },
 
     fitGuides: true,
     // Fit
@@ -553,12 +565,12 @@ export const back = {
 
     // Advanced
     legBalance: { pct: 57.5, min: 52.5, max: 62.5, menu: 'advanced' },
-    crossSeamCurveStart: { pct: 85, min: 60, max: 100, menu: 'advanced' },
-    crossSeamCurveBend: { pct: 65, min: 45, max: 85, menu: 'advanced' },
-    crossSeamCurveAngle: { deg: 12, min: 0, max: 20, menu: 'advanced' },
-    crotchSeamCurveStart: { pct: 80, min: 60, max: 95, menu: 'advanced' },
-    crotchSeamCurveBend: { pct: 80, min: 45, max: 100, menu: 'advanced' },
-    crotchSeamCurveAngle: { deg: 25, min: 0, max: 35, menu: 'advanced' },
+    crossSeamCurveStart: { pct: 85, min: 60, max: 100, menu: 'advanced.curves' },
+    crossSeamCurveBend: { pct: 65, min: 45, max: 85, menu: 'advanced.curves' },
+    crossSeamCurveAngle: { deg: 12, min: 0, max: 20, menu: 'advanced.curves' },
+    crotchSeamCurveStart: { pct: 80, min: 60, max: 95, menu: 'advanced.curves' },
+    crotchSeamCurveBend: { pct: 80, min: 45, max: 100, menu: 'advanced.curves' },
+    crotchSeamCurveAngle: { deg: 25, min: 0, max: 35, menu: 'advanced.curves' },
     waistBalance: { pct: 60, min: 30, max: 90, menu: 'advanced' },
     grainlinePosition: { pct: 45, min: 30, max: 60, menu: 'advanced' },
     waistbandWidth: {
