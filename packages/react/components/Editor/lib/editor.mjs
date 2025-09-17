@@ -617,6 +617,8 @@ export function stateUpdateFactory(setState, setEphemeralState, config) {
         const newState = { ...cur }
         objUpdate(newState, 'settings', {
           measurements: cur.settings.measurements,
+          // also keep the measurement set name in the metadata, since it belongs to the measurements.
+          metadata: cur.settings.metadata,
         })
         /*
          * Let's also reset the renderer to React as that feels a bit like a pattern setting even though it's UI
