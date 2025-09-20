@@ -48,8 +48,8 @@ function pacoWaistband({
   points.bottomMid = new Point(w, l)
   points.bottomRight = new Point(w * 2, l)
 
-  points.eyeletTop = new Point(w * 1.5, w / 2)
-  points.eyeletBottom = points.bottomLeft.translate(w * 1.5, w / -2)
+  points.eyeletTop = new Point(w * 1.5, l / 2 - w / 2)
+  points.eyeletBottom = new Point(w * 1.5, l / 2 + w / 2)
 
   paths.seam = new Path()
     .move(points.topLeft)
