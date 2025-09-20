@@ -28,7 +28,7 @@ function simonFront({
 }) {
   // Clean up
   for (const i in paths) {
-    if (['frontArmhole', 'frontCollar'].indexOf(i) === -1) delete paths[i]
+    if (['frontArmhole', 'frontCollar', 'chest', 'waist'].indexOf(i) === -1) delete paths[i]
   }
   for (const i in snippets) {
     if (i.indexOf('otch')) delete snippets[i]
@@ -136,6 +136,20 @@ function simonFront({
       .attr('class', 'fabric sa')
     delete paths.sa
   }
+
+  // Chest & Waist line
+  macro('banner', {
+    id: 'chestLine',
+    classes: 'center contrast help',
+    path: paths.chest,
+    text: 'simon:chestLine',
+  })
+  macro('banner', {
+    id: 'waistLine',
+    classes: 'center contrast help',
+    path: paths.waist,
+    text: 'simon:waistLine',
+  })
 
   /*
    * Annotations

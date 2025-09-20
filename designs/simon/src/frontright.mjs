@@ -6,9 +6,23 @@ import { front } from './front.mjs'
 import { buttonPlacketStyle } from './options.mjs'
 
 function simonFrontRight(params) {
-  const { sa, options, points, macro, part } = params
+  const { sa, options, points, macro, part, paths } = params
   macro('flip')
 
+  // Chest & Waist line
+  // (we redo this because text is upside-down after the flip
+  macro('banner', {
+    id: 'chestLine',
+    classes: 'center contrast help',
+    path: paths.chest.reverse(),
+    text: 'simon:chestLine',
+  })
+  macro('banner', {
+    id: 'waistLine',
+    classes: 'center contrast help',
+    path: paths.waist.reverse(),
+    text: 'simon:waistLine',
+  })
   /*
    * Annotations
    */

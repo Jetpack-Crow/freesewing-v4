@@ -267,6 +267,20 @@ function simonBack({
       .line(points.boxPleatRightBottom)
       .attr('class', 'fabric stroke-sm dashed')
 
+  // Chest and waist line
+  macro('banner', {
+    id: 'chestLine',
+    classes: 'center contrast help',
+    path: paths.chest,
+    text: 'simon:chestLine',
+  })
+  macro('banner', {
+    id: 'waistLine',
+    classes: 'center contrast help',
+    path: paths.waist,
+    text: 'simon:waistLine',
+  })
+
   /*
    * Annotations
    */
