@@ -95,7 +95,10 @@ export const translateStrings = (list, translations = {}) => {
     else if (string) {
       if (translations[string]) {
         translated += `${translations[string]}`.replace(/&quot;/g, '"') + ' '
-      } else translated += `${string}` + ' '
+      } else {
+        // Might be a string from an inherited design, let's try
+        translated += `${string}` + ' '
+      }
     }
   }
 

@@ -17,6 +17,7 @@ import {
 import { SubAccordion } from './Accordion.mjs'
 import { MiniTip, MiniNote } from '@freesewing/react/components/Mini'
 import Markdown from 'react-markdown'
+import { swapTranslationPrefix } from '@freesewing/utils'
 
 /*
  * Helper object to look up flag icons
@@ -39,7 +40,7 @@ export const FlagTypeIcon = ({ type, className = 'tw:w-6 tw:h-6' }) => {
   return <Icon className={className} />
 }
 
-export const Flag = ({ data, handleUpdate, strings }) => {
+export const Flag = ({ data, handleUpdate, strings, design }) => {
   const btnIcon = data.suggest?.icon ? (
     <FlagTypeIcon type={data.suggest.icon} className="tw:w-5 tw:h-6 tw:sm:w-6 tw:h-6" />
   ) : null
@@ -53,13 +54,13 @@ export const Flag = ({ data, handleUpdate, strings }) => {
         onClick={() => handleUpdate(data.suggest.update)}
       >
         {btnIcon}
-        {strings[data.suggest.text] || data.suggest.text}
+        {translate(data.suggest.text, strings, design)}
       </button>
     ) : null
 
   const desc = data.replace
-    ? mustache.render(strings[data.desc] || data.desc, data.replace)
-    : strings[data.desc] || data.desc
+    ? mustache.render(translate(data.desc, strings, design), data.replace)
+    : translate(data.desc, strings, design)
   const notes = data.notes
     ? Array.isArray(data.notes)
       ? '\n\n' +
@@ -117,7 +118,7 @@ export const FlagsAccordionTitle = ({ flags }) => {
   )
 }
 
-export const FlagsAccordionEntries = ({ flags, update, strings }) => {
+export const FlagsAccordionEntries = ({ flags, update, strings, Design }) => {
   const flagList = flattenFlags(flags)
 
   if (Object.keys(flagList).length < 1) return null
@@ -138,14 +139,33 @@ export const FlagsAccordionEntries = ({ flags, update, strings }) => {
               <div className="tw:no-shrink">
                 <FlagIcon type={flag.type} />
               </div>
-              <span className="tw:font-medium tw:text-left">{strings[title] || title}</span>
+              <span className="tw:font-medium tw:text-left">
+                {translate(title, strings, Design?.designConfig?.data?.id)}
+              </span>
             </div>
             <span className="tw:uppercase tw:font-bold">{flag.type}</span>
           </div>,
-          <Flag key={key} data={flag} strings={strings} handleUpdate={handleUpdate} />,
+          <Flag
+            key={key}
+            data={flag}
+            strings={strings}
+            handleUpdate={handleUpdate}
+            design={Design?.designConfig?.data?.id}
+          />,
           key,
         ]
       })}
     />
   )
+}
+
+/*
+ * This helper translate message will attempt to swap the design prefix
+ * when translation cannot be found. This handles inherited translation
+ */
+function translate(t, strings, design) {
+  if (strings[t]) return strings[t]
+  if (strings[swapTranslationPrefix(t, design)]) return strings[swapTranslationPrefix(t, design)]
+
+  return t
 }
