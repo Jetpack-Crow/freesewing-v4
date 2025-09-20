@@ -74,7 +74,7 @@ function draftFlorentSide({ store, sa, points, macro, paths, Path, snippets, Sni
     id: 'hFull',
     from: points.outerTop,
     to: points.foldBottom,
-    x: points.tip.x + sa + 30,
+    x: points.tip.x + sa + 45,
   })
   macro('hd', {
     id: 'wAtFold',
@@ -92,7 +92,31 @@ function draftFlorentSide({ store, sa, points, macro, paths, Path, snippets, Sni
     id: 'wFull',
     from: points.foldTop,
     to: points.tip,
+    y: points.outerTop.y + sa + 45,
+  })
+  macro('hd', {
+    id: 'notch2W',
+    from: points.foldTop,
+    to: points.notch2,
+    y: points.outerTop.y + sa,
+  })
+  macro('vd', {
+    id: 'notch2H',
+    from: points.foldTop,
+    to: points.notch2,
+    x: points.foldTop.x - sa - 15,
+  })
+  macro('hd', {
+    id: 'notch1W',
+    from: points.foldTop,
+    to: points.notch1,
     y: points.outerTop.y + sa + 30,
+  })
+  macro('vd', {
+    id: 'notch1H',
+    from: points.notch1,
+    to: points.foldBottom,
+    x: points.tip.x + sa + 30,
   })
 
   return part
