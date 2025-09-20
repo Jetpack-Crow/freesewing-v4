@@ -41,6 +41,7 @@ export const front = {
     measurements,
     macro,
     part,
+    complete,
   }) => {
     // Hide Brian paths
     for (let key of Object.keys(paths)) paths[key].hide()
@@ -203,6 +204,35 @@ export const front = {
       x: points.cfHem.x - sa - 15,
       id: 'hHemToCfNeck',
     })
+
+    // Chest line
+    points.chest = new Point(points.armhole.x, points.cbChest.y)
+    if (complete) {
+      paths.chest = new Path()
+        .move(points.cbChest)
+        .line(points.chest)
+        .attr('class', 'contrast help')
+      macro('banner', {
+        id: 'chestLine',
+        classes: 'center contrast help',
+        path: paths.chest,
+        text: 'aaron:chestLine',
+      })
+    }
+
+    // Waist line
+    if (complete) {
+      paths.waist = new Path()
+        .move(points.cbWaist)
+        .line(points.waist)
+        .attr('class', 'contrast help')
+      macro('banner', {
+        id: 'waistLine',
+        classes: 'center contrast help',
+        path: paths.waist,
+        text: 'aaron:waistLine',
+      })
+    }
 
     return part
   },
