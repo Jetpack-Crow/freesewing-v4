@@ -769,3 +769,18 @@ export const yyyymmdd = (timestamp = false) => {
 
   return `${ts.getFullYear()}${m}${d}`
 }
+
+/**
+ * Swaps a design: prefix in a string for a different one
+ *
+ * @param {string} t - The translation string
+ * @return {string} design - The design to swap in
+ */
+export const swapTranslationPrefix = (t, design = false) => {
+  if (!design) return t
+  // Replace
+  const chunks = t.split(':')
+  chunks[0] = design
+
+  return chunks.join(':')
+}
