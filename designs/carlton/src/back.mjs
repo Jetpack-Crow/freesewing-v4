@@ -118,6 +118,13 @@ function draftCarltonBack({
       .line(points.bpTriangleEdge)
       .line(points.bpStart)
       .addClass('dashed')
+    paths.chest = new Path().move(points.cbChest).line(points.chest).addClass('help contrast')
+    macro('banner', {
+      id: 'chestLine',
+      classes: 'center contrast help',
+      path: paths.chest,
+      text: 'carlton:chestLine',
+    })
   }
 
   /*

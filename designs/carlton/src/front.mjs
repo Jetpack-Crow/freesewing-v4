@@ -229,7 +229,7 @@ function draftCarltonFront({
 
   // Clean up
   for (let i in paths) {
-    if (['frontArmhole', 'frontCollar'].indexOf(i) === -1) delete paths[i]
+    if (['frontArmhole', 'frontCollar', 'chest', 'waist'].indexOf(i) === -1) delete paths[i]
   }
   for (let i in snippets) delete snippets[i]
 
@@ -354,6 +354,36 @@ function draftCarltonFront({
       .line(points.innerPocketTopLeft)
       .close()
       .addClass('note help')
+
+    // Chest & Waist line
+    macro('banner', {
+      id: 'chestLine',
+      classes: 'center contrast help',
+      path: paths.chest,
+      text: 'carlton:chestLine',
+    })
+    macro('banner', {
+      id: 'waistLine',
+      classes: 'center contrast help',
+      path: paths.waist,
+      text: 'carlton:waistLine',
+    })
+
+    // Seat & Hip line
+    paths.hip = new Path().move(points.cfHips).line(points.hips).addClass('help contrast')
+    macro('banner', {
+      id: 'hipLine',
+      classes: 'center contrast help',
+      path: paths.hip,
+      text: 'carlton:hipLine',
+    })
+    paths.seat = new Path().move(points.cfSeat).line(points.seat).addClass('help contrast')
+    macro('banner', {
+      id: 'seatLine',
+      classes: 'center contrast help',
+      path: paths.seat,
+      text: 'carlton:seatLine',
+    })
   }
 
   /*

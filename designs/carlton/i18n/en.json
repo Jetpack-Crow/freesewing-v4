@@ -41,7 +41,9 @@
     "cutTail.t": "The tail is not shown",
     "cutTail.d": "The **Tail** (5) is a rectangular piece of fabric {{{ w }}} wide and {{{ l }}} long.",
     "flbFacingSide": "Facing/Lining boundary - Facing side",
-    "flbLiningSide": "Facing/Lining boundary - Lining side"
+    "flbLiningSide": "Facing/Lining boundary - Lining side",
+    "hipLine": "Hip Line",
+    "seatLine": "Seat Line"
   },
   "o": {
     "seatEase": {
