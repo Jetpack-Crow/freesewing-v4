@@ -273,7 +273,7 @@ Svg.prototype.__renderPath = function (path) {
  * @return {string} svg - The SVG markup for the text on a Path object
  */
 Svg.prototype.__renderPathText = function (path) {
-  let text = path.attributes.get('data-text')
+  let text = path.attributes.getAsArray('data-text')
   if (!text) return ''
   else this.text = this.__insertText(text)
   let attributes = path.attributes.renderIfPrefixIs('data-text-')
