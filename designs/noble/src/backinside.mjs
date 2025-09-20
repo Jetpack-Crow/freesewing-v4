@@ -4,24 +4,31 @@ export const backInside = {
   name: 'noble.backInside',
   from: backPoints,
   draft: ({ sa, Point, points, Path, paths, Snippet, snippets, options, macro, store, part }) => {
-    if (options.dartPosition != 'shoulder') {
-      paths.insideSeam = paths.seam.clone().unhide()
-    } else {
-      // Hide Bella paths
-      for (let key of Object.keys(paths)) paths[key].hide()
-      for (let i in snippets) delete snippets[i]
+    for (let key of Object.keys(paths)) paths[key].hide()
+    for (let i in snippets) delete snippets[i]
 
-      paths.insideSeam = new Path()
-        .move(points.cbNeck)
-        .curve_(points.cbNeckCp2, points.waistCenter)
-        .line(points.dartBottomLeft)
-        .curve(points.dartLeftCp, points.shoulderDartCpDown, points.dartTip)
-        .curve(points.shoulderDartCpUp, points.shoulderDart, points.shoulderDart)
-        .line(points.hps)
-        ._curve(points.cbNeckCp1, points.cbNeck)
-        .close()
-        .attr('class', 'fabric')
+    paths.princess = new Path()
+      .move(points.dartBottomLeft)
+      .curve(points.dartLeftCp, points.shoulderDartCpDown, points.dartTip)
+      .curve(points.shoulderDartCpUp, points.shoulderDart, points.shoulderDart)
+
+    if (options.dartPosition === 'shoulder') {
+      paths.armhole = new Path().move(points.shoulderDart)
+    } else {
+      paths.armhole = paths.armhole.split(points.shoulderDart)[1]
     }
+
+    paths.insideSeam = new Path()
+      .move(points.cbNeck)
+      .curve_(points.cbNeckCp2, points.waistCenter)
+      .line(points.dartBottomLeft)
+      .curve(points.dartLeftCp, points.shoulderDartCpDown, points.dartTip)
+      .curve(points.shoulderDartCpUp, points.shoulderDart, points.shoulderDart)
+      .join(paths.armhole)
+      .line(points.hps)
+      ._curve(points.cbNeckCp1, points.cbNeck)
+      .close()
+      .attr('class', 'fabric')
 
     points.grainlineFrom = new Point(points.hps.x / 2, points.shoulder.y)
     points.grainlineTo = new Point(points.hps.x / 2, points.waistSide.y)
@@ -51,25 +58,25 @@ export const backInside = {
     macro('hd', {
       from: points.waistCenter,
       to: points.shoulderPoint,
-      y: points.waistCenter.y + sa + 15,
+      y: points.waistCenter.y + sa + 25,
       id: 'middleToShoulder',
     })
     macro('hd', {
       from: points.waistCenter,
       to: points.dartTip,
-      y: points.waistCenter.y + sa + 25,
+      y: points.waistCenter.y + sa + 35,
       id: 'middleToDartPoint',
     })
     macro('hd', {
       from: points.waistCenter,
       to: points.dartBottomLeft,
-      y: points.waistCenter.y + sa + 35,
+      y: points.waistCenter.y + sa + 45,
       id: 'middleToDart',
     })
     macro('hd', {
       from: points.cbNeck,
       to: points.dartBottomLeft,
-      y: points.waistCenter.y + sa + 45,
+      y: points.waistCenter.y + sa + 55,
       id: 'neckToDart',
     })
     macro('hd', {
@@ -84,42 +91,26 @@ export const backInside = {
       y: points.hps.y - sa - 15,
       id: 'hpsToShoulder',
     })
-    if (options.dartPosition != 'shoulder') {
-      macro('hd', {
-        from: points.dartTip,
-        to: points.waistSide,
-        y: points.waistCenter.y + sa + 25,
-        id: 'dartPointToSide',
+    if (options.dartPosition === 'shoulder') {
+      macro('vd', {
+        from: points.hps,
+        to: points.dartBottomLeft,
+        x: points.shoulderPoint.x + sa + 45,
+        id: 'middleToHps',
       })
+    } else {
       macro('hd', {
-        from: points.dartBottomRight,
-        to: points.waistSide,
-        y: points.waistCenter.y + sa + 35,
-        id: 'dartToSide',
+        from: points.waistCenter,
+        to: points.shoulderDart,
+        y: points.waistCenter.y + sa + 15,
+        id: 'middleToShoulderDart',
       })
-      macro('hd', {
-        from: points.dartBottomRight,
-        to: points.armhole,
-        y: points.waistCenter.y + sa + 45,
+      macro('vd', {
+        from: points.shoulderDart,
+        to: points.dartBottomLeft,
+        x: points.shoulderDart.x + sa + 15,
         id: 'dartToArmhole',
       })
-    }
-
-    let extraOffset = 0
-    if (options.dartPosition != 'shoulder') {
-      macro('vd', {
-        from: points.shoulderPoint,
-        to: points.waistSide,
-        x: points.shoulderPoint.x + sa + 25,
-        id: 'sideToShoulder',
-      })
-      macro('vd', {
-        from: points.armhole,
-        to: points.waistSide,
-        x: points.shoulderPoint.x + sa + 15,
-        id: 'sideToArmhole',
-      })
-      extraOffset = 10
     }
 
     macro('vd', {
@@ -131,20 +122,14 @@ export const backInside = {
     macro('vd', {
       from: points.shoulderPoint,
       to: points.dartBottomLeft,
-      x: points.shoulderPoint.x + sa + 25 + extraOffset,
+      x: points.shoulderPoint.x + sa + 25,
       id: 'dartToShoulder',
     })
     macro('vd', {
       from: points.shoulderPoint,
       to: points.waistCenter,
-      x: points.shoulderPoint.x + sa + 35 + extraOffset,
+      x: points.shoulderPoint.x + sa + 35,
       id: 'middleToShoulder',
-    })
-    macro('vd', {
-      from: points.hps,
-      to: points.waistCenter,
-      x: points.shoulderPoint.x + sa + 45 + extraOffset,
-      id: 'middleToHps',
     })
     macro('vd', {
       from: points.waistCenter,

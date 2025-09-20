@@ -33,24 +33,46 @@ export const frontOutside = {
         .close()
         .attr('class', 'fabric')
     } else {
-      paths.princessSeam = new Path()
-        .move(points.armholeDartOutside)
-        .curve(
-          points.armholeCircleOutsideCp1,
-          points.waistCircleOutsideCp1,
-          points.waistUpDartRight
-        )
-        .curve(points.waistUpDartRightCpDown, points.waistCpUp, points.waistDartRight)
-        .hide()
+      if (options.armholeDartCurved) {
+        paths.princessSeam = new Path()
+          .move(points.armholeDartOutside)
+          .curve(
+            points.armholeCircleOutsideCp1,
+            points.waistCircleOutsideCp1,
+            points.waistUpDartRight
+          )
+          .curve(points.waistUpDartRightCpDown, points.waistCpUp, points.waistDartRight)
+          .hide()
 
-      paths.seam = new Path()
-        .move(points.waistDartRight)
-        .line(points.sideHem)
-        .line(points.armhole)
-        .join(paths.armholeOutside.reverse())
-        .join(paths.princessSeam)
-        .close()
-        .attr('class', 'fabric')
+        paths.seam = new Path()
+          .move(points.waistDartRight)
+          .line(points.sideHem)
+          .line(points.armhole)
+          .join(paths.armholeOutside.reverse())
+          .join(paths.princessSeam)
+          .close()
+          .attr('class', 'fabric')
+      } else {
+        paths.princessSeam = new Path()
+          .move(points.armholeDartOutside)
+          .line(points.armholeToBustOutside)
+          .curve(
+            points.aboveBustPointOutside,
+            points.waistCircleOutsideCp1,
+            points.waistUpDartRight
+          )
+          .curve(points.waistUpDartRightCpDown, points.waistCpUp, points.waistDartRight)
+          .hide()
+
+        paths.seam = new Path()
+          .move(points.waistDartRight)
+          .line(points.sideHem)
+          .line(points.armhole)
+          .join(paths.armholeOutside.reverse())
+          .join(paths.princessSeam)
+          .close()
+          .attr('class', 'fabric')
+      }
     }
 
     points.grainTop = points.armhole.shift(225, 20)
@@ -113,7 +135,7 @@ export const frontOutside = {
       id: 'hemToLeft',
     })
 
-    if (options.dartPosition == 'shoulder') {
+    if (options.dartPosition === 'shoulder') {
       macro('hd', {
         from: points.shoulderDartOutside,
         to: points.shoulder,
@@ -190,12 +212,6 @@ export const frontOutside = {
         y: pTop.y - sa - 25,
         id: 'leftToArmholeDart',
       })
-      macro('hd', {
-        from: pLeft,
-        to: pTop,
-        y: pTop.y - sa - 15,
-        id: 'leftToTop',
-      })
       macro('vd', {
         from: points.waistDartRight,
         to: pTop,
@@ -214,12 +230,20 @@ export const frontOutside = {
         x: points.sideHemInitial.x + sa + 25,
         id: 'sideHemToArmholeDart',
       })
-      macro('vd', {
-        from: pTop,
-        to: points.sideHemInitial,
-        x: points.sideHemInitial.x + sa + 35,
-        id: 'sideHemToTop',
-      })
+      if (options.armholeDartCurved) {
+        macro('hd', {
+          from: pLeft,
+          to: pTop,
+          y: pTop.y - sa - 15,
+          id: 'leftToTop',
+        })
+        macro('vd', {
+          from: pTop,
+          to: points.sideHemInitial,
+          x: points.sideHemInitial.x + sa + 35,
+          id: 'sideHemToTop',
+        })
+      }
     }
 
     return part

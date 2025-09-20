@@ -34,3 +34,32 @@ export const armholeDartPosition = {
   // eslint-disable-next-line no-unused-vars
   menu: (settings, mergedOptions) => (mergedOptions.dartPosition === 'armhole' ? 'darts' : false),
 }
+export const armholeDartCurved = {
+  bool: true,
+  // eslint-disable-next-line no-unused-vars
+  menu: (settings, mergedOptions) => (mergedOptions.dartPosition === 'armhole' ? 'darts' : false),
+}
+export const armholeDartCurvePoint = {
+  pct: 20,
+  min: -20,
+  max: 90,
+  // eslint-disable-next-line no-unused-vars
+  menu: (settings, mergedOptions) =>
+    mergedOptions.dartPosition === 'armhole'
+      ? mergedOptions.armholeDartCurved
+        ? false
+        : 'darts'
+      : false,
+}
+export const armholeDartCurveWidth = {
+  pct: 70,
+  min: 10,
+  max: 90,
+  // eslint-disable-next-line no-unused-vars
+  menu: (settings, mergedOptions) =>
+    mergedOptions.dartPosition === 'armhole'
+      ? mergedOptions.armholeDartCurved
+        ? false
+        : 'darts'
+      : false,
+}

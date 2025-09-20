@@ -69,6 +69,26 @@
       "t": "Armhole depth",
       "d": "Controls the depth of the armhole"
     },
+    "armholeDartCurved": {
+      "t": "Princess Seam Curviness",
+      "d": "Controls the curvature of the princess seam"
+    },
+    "armholeDartCurvedYes": {
+      "t": "Cruved princess seam",
+      "d": "The princess seam will have the v1 curvature"
+    },
+    "armholeDartCurvedNo": {
+      "t": "Straighter princess seam",
+      "d": "The princess seam will have the v2 curvature"
+    },
+    "armholeDartCurvePoint": {
+      "t": "Armhole princess seam curve point",
+      "d": "This controls where (vertically) the curve of the princess seam starts"
+    },
+    "armholeDartCurveWidth": {
+      "t": "Armhole princess seam curve width",
+      "d": "This controls the radius of the curve of the princess seam"
+    },
     "backArmholeSlant": {
       "t": "Back armhole slant",
       "d": "Controls the slant of the armhole at the back"

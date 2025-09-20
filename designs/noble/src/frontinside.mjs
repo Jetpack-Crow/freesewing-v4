@@ -30,7 +30,7 @@ export const frontInside = {
     delete points.bustDartMiddle
     delete points.bustDartEdge
 
-    if (options.dartPosition == 'shoulder') {
+    if (options.dartPosition === 'shoulder') {
       paths.insideSeam = new Path()
         .move(points.cfHem)
         .line(points.waistDartLeft)
@@ -52,35 +52,73 @@ export const frontInside = {
           .length()
       )
     } else {
-      paths.insideSeam = new Path()
-        .move(points.cfHem)
-        .line(points.waistDartLeft)
-        .curve(
-          points.waistDartLeftCp,
-          points.armholeDartTipCpDownInside,
-          points.armholeDartTipInside
-        )
-        .curve(points.waistCircleInsideCp1, points.armholeCircleInsideCp1, points.armholeDartInside)
-        .join(paths.armholeInside)
-        .line(points.hps)
-        .curve(points.hpsCp2, points.cfNeckCp1, points.cfNeck)
-
-      paths.seam = paths.insideSeam
-        .join(new Path().move(points.cfNeck).line(points.cfHem))
-        .close()
-        .attr('class', 'fabric')
-
-      store.set(
-        'shoulderDartTipNotch',
-        new Path()
-          .move(points.waistDartLeft)
+      if (options.armholeDartCurved) {
+        paths.insideSeam = new Path()
+          .move(points.cfHem)
+          .line(points.waistDartLeft)
           .curve(
             points.waistDartLeftCp,
             points.armholeDartTipCpDownInside,
             points.armholeDartTipInside
           )
-          .length()
-      )
+          .curve(
+            points.waistCircleInsideCp1,
+            points.armholeCircleInsideCp1,
+            points.armholeDartInside
+          )
+          .join(paths.armholeInside)
+          .line(points.hps)
+          .curve(points.hpsCp2, points.cfNeckCp1, points.cfNeck)
+
+        paths.seam = paths.insideSeam
+          .join(new Path().move(points.cfNeck).line(points.cfHem))
+          .close()
+          .attr('class', 'fabric')
+
+        store.set(
+          'shoulderDartTipNotch',
+          new Path()
+            .move(points.waistDartLeft)
+            .curve(
+              points.waistDartLeftCp,
+              points.armholeDartTipCpDownInside,
+              points.armholeDartTipInside
+            )
+            .length()
+        )
+      } else {
+        paths.insideSeam = new Path()
+          .move(points.cfHem)
+          .line(points.waistDartLeft)
+          .line(points.waistToBustInside)
+          .curve(
+            points.aboveBustPointInside,
+            points.aboveBustPointInside,
+            points.armholeToBustInside
+          )
+          .line(points.armholeDartInside)
+          .join(paths.armholeInside)
+          .line(points.hps)
+          .curve(points.hpsCp2, points.cfNeckCp1, points.cfNeck)
+
+        paths.seam = paths.insideSeam
+          .join(new Path().move(points.cfNeck).line(points.cfHem))
+          .close()
+          .attr('class', 'fabric')
+
+        store.set(
+          'shoulderDartTipNotch',
+          new Path()
+            .move(points.waistDartLeft)
+            .line(points.waistToBustInside)
+            .curve(
+              points.aboveBustPointInside,
+              points.aboveBustPointInside,
+              points.armholeToBustInside
+            )
+            .length()
+        )
+      }
     }
 
     macro('cutonfold', {
@@ -89,10 +127,12 @@ export const frontInside = {
       grainline: true,
     })
 
-    if (options.dartPosition == 'shoulder') {
+    if (options.dartPosition === 'shoulder') {
       snippets.shoulderDartTip = new Snippet('notch', points.shoulderDartTip)
     } else {
-      snippets.shoulderDartTip = new Snippet('notch', points.armholeDartTipInside)
+      if (options.armholeDartCurved) {
+        snippets.shoulderDartTip = new Snippet('notch', points.armholeDartTipInside)
+      }
     }
     points.titleAnchor = new Point(points.hpsCp2.x * 0.75, points.cfNeckCp1.y * 1.5)
     macro('title', {
@@ -111,7 +151,7 @@ export const frontInside = {
     }
 
     let extraOffset = 0
-    if (options.dartPosition == 'shoulder') {
+    if (options.dartPosition === 'shoulder') {
       macro('hd', {
         from: points.cfNeck,
         to: points.shoulderDartInside,
@@ -137,6 +177,12 @@ export const frontInside = {
         id: 'middleToDartTip',
       })
     } else {
+      macro('hd', {
+        from: points.cfBust,
+        to: points.armholeDartArmhole,
+        y: points.cfHem.y + sa + 35,
+        id: 'middleToDartArmhole',
+      })
       extraOffset = 10
       macro('hd', {
         from: points.hps,
@@ -152,7 +198,7 @@ export const frontInside = {
       })
       macro('vd', {
         from: points.cfHem,
-        to: points.armholeDartInsideCp2,
+        to: points.armholeDartArmhole,
         x: 0 - 20,
         id: 'hemToDart',
       })
@@ -162,18 +208,20 @@ export const frontInside = {
         x: 0 - 40,
         id: 'hemToShoulder',
       })
-      macro('vd', {
-        from: points.cfHem,
-        to: points.armholeDartTipInside,
-        x: 0 - 10,
-        id: 'hemToDartTip',
-      })
-      macro('hd', {
-        from: points.cfBust,
-        to: points.armholeDartTipInside,
-        y: points.cfHem.y + sa + 25,
-        id: 'middleToDartTip',
-      })
+      if (options.armholeDartCurved) {
+        macro('vd', {
+          from: points.cfHem,
+          to: points.armholeDartTipInside,
+          x: 0 - 10,
+          id: 'hemToDartTip',
+        })
+        macro('hd', {
+          from: points.cfBust,
+          to: points.armholeDartTipInside,
+          y: points.cfHem.y + sa + 25,
+          id: 'middleToDartTip',
+        })
+      }
     }
 
     macro('vd', {

@@ -91,13 +91,13 @@ const createRightDartPoints = (points, Path, paths, diff, utils, options) => {
     points.armholeDartTipCpDownInside,
     -0.5 * cbqc * points.armholeDartInside.dist(points.armholeDartTip)
   )
-
   paths.princessSeam = new Path()
     .move(points.waistDartRight)
     .curve(points.waistCpUp, points.waistUpDartRightCpDown, points.waistUpDartRight)
     .join(createTopRightDartPoints(points, Path, options))
     .reverse()
     .hide()
+
   return paths.princessSeam.length()
 }
 
@@ -138,55 +138,23 @@ export const frontPoints = {
     macro('rmtitle')
     macro('rmscalebox')
 
-    const waistDartSize = points.waistDartLeft.dist(points.waistDartRight)
-    const waistDartMove = (waistDartSize / 2) * options.waistdartposition
-
-    points.waistDartLeft = points.waistDartLeft.shiftTowards(points.cfHem, waistDartMove * -1)
-    points.waistDartLeftCp = points.waistDartLeftCp.shift(0, waistDartMove)
-    points.waistDartRight = points.waistDartRight.shiftTowards(points.sideHemInitial, waistDartMove)
-
-    points.shoulderDartInside = points.hps.shiftFractionTowards(
-      points.shoulder,
-      options.dartPosition == 'shoulder' ? options.shoulderDartPosition : 0.5
-    )
-    points.orgShoulder = points.shoulder.clone()
-    points.orgArmhole = points.armhole.clone()
-    points.orgArmholeCp2 = points.armholeCp2.clone()
-    points.orgArmholePitch = points.armholePitch.clone()
-    points.orgArmholePitchCp1 = points.armholePitchCp1.clone()
-    points.orgArmholePitchCp2 = points.armholePitchCp2.clone()
     const armholePath = new Path()
       .move(points.shoulder)
       ._curve(points.armholePitchCp2, points.armholePitch)
       .curve(points.armholePitchCp1, points.armholeCp2, points.armhole)
 
-    points.armholeDartInside = armholePath.shiftFractionAlong(options.armholeDartPosition)
+    points.armholeDartInside = armholePath.shiftFractionAlong(
+      options.dartPosition == 'shoulder' ? 0.5 : options.armholeDartPosition
+    )
     points.armholeDartOutside = points.armholeDartInside.clone()
 
     const armholePaths = armholePath.split(points.armholeDartInside)
 
     const armholePathInside = armholePaths[0].clone().hide()
     const armholePathOutside = armholePaths[1].clone().hide()
-    const armholeDartAngle =
-      armholePathInside.reverse().shiftAlong(1).angle(armholePathOutside.shiftAlong(1)) - 90
-
-    points.armholeDartArmhole = points.armholeDartInside.shiftFractionTowards(
-      points.armholeDartOutside,
-      0.5
-    )
-    points.armholeDartTip = points.armholeDartArmhole.shiftFractionTowards(
-      points.bust,
-      options.upperDartLength
-    )
-    points.armholeCircleInsideCp1 = points.armholeDartInside.shift(
-      armholeDartAngle,
-      cbqc * points.armholeDartInside.dist(points.armholeDartTip)
-    )
-    points.armholeCircleOutsideCp1 = points.armholeCircleInsideCp1.clone()
-
-    points.shoulderCp1 = armholePathInside.ops[1].cp1.clone()
     points.armholeInsidePitch = armholePathInside.ops[1].to.clone()
     points.armholeInsidePitchCp2 = armholePathInside.ops[1].cp2.clone()
+    points.shoulderCp1 = armholePathInside.ops[1].cp1.clone()
     if (armholePathInside.ops.length == 2) {
       points.armholeInsidePitchCp1 = points.armholeDartInside.clone()
       points.armholeDartInsideCp2 = points.armholeDartInside.clone()
@@ -217,6 +185,49 @@ export const frontPoints = {
         .curve(points.armholeInsidePitchCp2, points.shoulderCp1, points.shoulder)
         .hide()
     }
+    points.armholeDartArmhole = points.armholeDartInside.shiftFractionTowards(
+      points.armholeDartOutside,
+      0.5
+    )
+    points.armholeDartTip = points.armholeDartArmhole.shiftFractionTowards(
+      points.bust,
+      options.upperDartLength
+    )
+    if (options.armholeDartCurved) {
+      const armholeDartAngle =
+        armholePathInside.reverse().shiftAlong(1).angle(armholePathOutside.shiftAlong(1)) - 90
+
+      points.armholeCircleInsideCp1 = points.armholeDartInside.shift(
+        armholeDartAngle,
+        cbqc * points.armholeDartInside.dist(points.armholeDartTip)
+      )
+      points.armholeCircleOutsideCp1 = points.armholeCircleInsideCp1.clone()
+    } else {
+      points.aboveBustPointInside = points.bust.shiftFractionTowards(
+        points.waistDartLeft,
+        -1 * options.armholeDartCurvePoint
+      )
+      points.armholeToBustInside = points.armholeDartInside.shiftFractionTowards(
+        points.aboveBustPointInside,
+        options.armholeDartCurveWidth
+      )
+      points.waistToBustInside = points.waistDartLeft.shiftFractionTowards(points.bust, 0.2)
+      points.aboveBustPointOutside = points.aboveBustPointInside.clone()
+      points.armholeToBustOutside = points.armholeToBustInside.clone()
+      points.waistToBustOutside = points.waistToBustInside.clone()
+    }
+
+    const waistDartSize = points.waistDartLeft.dist(points.waistDartRight)
+    const waistDartMove = (waistDartSize / 2) * options.waistdartposition
+
+    points.waistDartLeft = points.waistDartLeft.shiftTowards(points.cfHem, waistDartMove * -1)
+    points.waistDartLeftCp = points.waistDartLeftCp.shift(0, waistDartMove)
+    points.waistDartRight = points.waistDartRight.shiftTowards(points.sideHemInitial, waistDartMove)
+
+    points.shoulderDartInside = points.hps.shiftFractionTowards(
+      points.shoulder,
+      options.dartPosition == 'shoulder' ? options.shoulderDartPosition : 0.5
+    )
 
     let rotateAngle =
       points.shoulderDartInside.angle(points.bustA) - points.bustDartTop.angle(points.bustA)
@@ -226,7 +237,6 @@ export const frontPoints = {
     if (rotateAngle > 360) {
       rotateAngle -= 360
     }
-
     points.shoulderDartCpTop = points.bustDartCpTop.rotate(rotateAngle, points.bustA)
     points.shoulderDartCpBottom = points.bustDartCpBottom.rotate(rotateAngle, points.bustA)
 
@@ -255,25 +265,61 @@ export const frontPoints = {
       points.bust,
       options.upperDartLength
     )
-    const dartRatio =
-      new Path().move(points.waistDartHem).line(points.waistDartTip).length() /
-      new Path().move(points.shoulderDartShoulder).line(points.shoulderDartTip).length()
-
     points.shoulder = points.shoulder.rotate(spreadAngle, points.bustA)
     points.armhole = points.armhole.rotate(spreadAngle, points.bustA)
     points.armholeCp2 = points.armholeCp2.rotate(spreadAngle, points.bustA)
     points.armholePitch = points.armholePitch.rotate(spreadAngle, points.bustA)
     points.armholePitchCp1 = points.armholePitchCp1.rotate(spreadAngle, points.bustA)
     points.armholePitchCp2 = points.armholePitchCp2.rotate(spreadAngle, points.bustA)
-    points.armholeCircleOutsideCp1 = points.armholeCircleOutsideCp1.rotate(
-      spreadAngle,
-      points.bustA
+
+    const dartRatio =
+      new Path().move(points.waistDartHem).line(points.waistDartTip).length() /
+      new Path().move(points.shoulderDartShoulder).line(points.shoulderDartTip).length()
+
+    points.armholeDartTipCpDownInside = points.armholeDartTip.shiftFractionTowards(
+      points.waistDartLeft,
+      1 - options.upperDartLength + (1 - options.waistDartLength) * dartRatio
     )
+
+    points.shoulderDartTipCpDownOutside = points.shoulderDartOutside.shiftFractionTowards(
+      points.bust,
+      1 + (1 - options.upperDartLength) + (1 - options.waistDartLength) * dartRatio
+    )
+
     points.armholeDartOutside = points.armholeDartOutside.rotate(spreadAngle, points.bustA)
     points.armholeDartOutsideCp1 = points.armholeDartOutsideCp1.rotate(spreadAngle, points.bustA)
     points.armholeOutsidePitchCp2 = points.armholeOutsidePitchCp2.rotate(spreadAngle, points.bustA)
     points.armholeOutsidePitch = points.armholeOutsidePitch.rotate(spreadAngle, points.bustA)
     points.armholeOutsidePitchCp1 = points.armholeOutsidePitchCp1.rotate(spreadAngle, points.bustA)
+
+    if (options.armholeDartCurved) {
+      points.armholeCircleOutsideCp1 = points.armholeCircleOutsideCp1.rotate(
+        spreadAngle,
+        points.bustA
+      )
+    } else {
+      points.aboveBustPointOutside = points.aboveBustPointOutside.rotate(spreadAngle, points.bustA)
+      points.armholeToBustOutside = points.armholeToBustOutside.rotate(spreadAngle, points.bustA)
+      points.waistToBustOutside = points.waistToBustOutside.rotate(spreadAngle, points.bustA)
+      points.bustAcp = points.waistDartRight.shiftOutwards(points.bustA, 10)
+      let outsideSeam = new Path()
+        .move(points.waistDartRight)
+        .curve(points.bustAcp, points.shoulderDartTipCpDownOutside, points.shoulderDartOutside)
+
+      points.waistUpDartRight = outsideSeam.shiftAlong(
+        points.waistDartRight.dist(points.waistDartRightCp) * 0.5
+      )
+      points.waistUpDartRightCpDown = points.waistUpDartRight.shiftFractionTowards(
+        points.waistDartRight,
+        0.25
+      )
+      points.waistCpUp = points.waistDartRight
+        .shiftTowards(
+          points.sideHemInitial,
+          points.waistDartRight.dist(points.waistUpDartRight) * 0.25
+        )
+        .rotate(90, points.waistDartRight)
+    }
 
     if (points.armhole.sitsRoughlyOn(points.armholeOutsidePitch)) {
       paths.armholeOutside = new Path()
@@ -298,18 +344,9 @@ export const frontPoints = {
       .curve_(points.armholeDartCpTop, points.armholeDartInside)
       .hide()
 
-    points.shoulderDartTipCpDownOutside = points.shoulderDartOutside.shiftFractionTowards(
-      points.bust,
-      1 + (1 - options.upperDartLength) + (1 - options.waistDartLength) * dartRatio
-    )
-
     points.shoulderDartTipCpDownInside = points.shoulderDartInside.shiftFractionTowards(
       points.shoulderDartTip,
       1 + (1 - options.upperDartLength) + (1 - options.waistDartLength) * dartRatio
-    )
-    points.armholeDartTipCpDownInside = points.armholeDartTip.shiftFractionTowards(
-      points.waistDartLeft,
-      1 - options.upperDartLength + (1 - options.waistDartLength) * dartRatio
     )
 
     points.bustAcp = points.waistDartRight.shiftOutwards(points.bustA, 10)
@@ -338,50 +375,94 @@ export const frontPoints = {
       .line(points.shoulderDartInside)
       .hide()
 
-    points.waistUpDartLeft = paths.armholeInsideSeam.shiftAlong(
-      points.waistDartLeft.dist(points.armholeDartTip) * 0.5
-    )
-    points.waistCircleInsideCp1 = points.waistUpDartLeft.shiftTowards(
-      points.waistDartLeft,
-      -0.5 * cbqc * points.armholeDartOutside.dist(points.armholeDartTip)
-    )
-    points.shoulderDartTipCpDownOutside = points.shoulderDartTipCpDownOutside
-      .rotate(2.5, points.shoulderDartOutside)
-      .shiftFractionTowards(points.shoulderDartOutside, 0.2)
+    if (options.armholeDartCurved) {
+      points.waistUpDartLeft = paths.armholeInsideSeam.shiftAlong(
+        points.waistDartLeft.dist(points.armholeDartTip) * 0.5
+      )
+      points.waistCircleInsideCp1 = points.waistUpDartLeft.shiftTowards(
+        points.waistDartLeft,
+        -0.5 * cbqc * points.armholeDartOutside.dist(points.armholeDartTip)
+      )
 
-    let iteration = 1
-    let diff = 0
+      points.shoulderDartTipCpDownOutside = points.shoulderDartTipCpDownOutside
+        .rotate(2.5, points.shoulderDartOutside)
+        .shiftFractionTowards(points.shoulderDartOutside, 0.2)
 
-    let rightDartLength = createRightDartPoints(points, Path, paths, diff, utils, options)
-    do {
-      rightDartLength = createRightDartPoints(points, Path, paths, diff, utils, options)
+      let iteration = 1
+      let diff = 0
 
-      diff = shoulderInsideSeam.length() - rightDartLength
-      iteration++
-    } while ((diff > 1 || diff < -1) && iteration < 100)
+      let rightDartLength = createRightDartPoints(points, Path, paths, diff, utils, options)
+      do {
+        rightDartLength = createRightDartPoints(points, Path, paths, diff, utils, options)
 
-    if (iteration >= 100) {
-      log.error('Something is not quite right here!')
-    }
-    points.waistDartRightCp = points.bustAcp.clone()
-    points.armholeDartTipInside = points.armholeDartTip.clone()
-    points.waistCircleOutsideCp1 = points.waistUpDartRight.shiftTowards(
-      points.waistDartRight,
-      -1 * cbqc * points.armholeDartOutside.dist(points.armholeDartTip)
-    )
+        diff = shoulderInsideSeam.length() - rightDartLength
+        iteration++
+      } while ((diff > 1 || diff < -1) && iteration < 100)
 
-    createArmholeDartPoints(points, paths, Path, 0)
-    diff = paths.armholeTempCircleOutside.length() - paths.armholeTempCircleInside.length()
+      if (iteration >= 100) {
+        log.error('Something is not quite right here!')
+      }
+      points.waistDartRightCp = points.bustAcp.clone()
+      points.armholeDartTipInside = points.armholeDartTip.clone()
+      points.waistCircleOutsideCp1 = points.waistUpDartRight.shiftTowards(
+        points.waistDartRight,
+        -1 * cbqc * points.armholeDartOutside.dist(points.armholeDartTip)
+      )
 
-    iteration = 0
-    do {
-      createArmholeDartPoints(points, paths, Path, diff)
-
+      createArmholeDartPoints(points, paths, Path, 0)
       diff = paths.armholeTempCircleOutside.length() - paths.armholeTempCircleInside.length()
-      iteration++
-    } while ((diff < -1 || diff > 1) && iteration < 100)
-    if (iteration >= 100) {
-      log.error('Something is not quite right here too!')
+
+      iteration = 0
+      do {
+        createArmholeDartPoints(points, paths, Path, diff)
+
+        diff = paths.armholeTempCircleOutside.length() - paths.armholeTempCircleInside.length()
+        iteration++
+      } while ((diff < -1 || diff > 1) && iteration < 100)
+      if (iteration >= 100) {
+        log.error('Something is not quite right here too!')
+      }
+    } else {
+      let iteration = 1
+      let diff = 0
+
+      let rightDartLength = createRightDartPoints(points, Path, paths, diff, utils, options)
+      points.waistCircleOutsideCp1 = points.waistUpDartRight.shiftTowards(
+        points.waistDartRight,
+        -1 * cbqc * points.armholeDartOutside.dist(points.armholeDartTip)
+      )
+
+      const seamDimOutside = new Path()
+        .move(points.waistDartLeft)
+        .line(points.waistToBustInside)
+        .curve(points.aboveBustPointInside, points.aboveBustPointInside, points.armholeToBustInside)
+        .line(points.armholeDartInside)
+
+      do {
+        rightDartLength = createRightDartPoints(points, Path, paths, diff, utils, options)
+
+        const princessSeam = new Path()
+          .move(points.armholeDartOutside)
+          .line(points.armholeToBustOutside)
+          .curve(
+            points.aboveBustPointOutside,
+            points.waistCircleOutsideCp1,
+            points.waistUpDartRight
+          )
+          .curve(points.waistUpDartRightCpDown, points.waistCpUp, points.waistDartRight)
+
+        diff = seamDimOutside.length() - princessSeam.length()
+        iteration++
+      } while ((diff > 1 || diff < -1) && iteration < 3)
+
+      if (iteration >= 100) {
+        log.error('Something is not quite right here!')
+      }
+
+      points.waistCircleOutsideCp1 = points.waistUpDartRight.shiftTowards(
+        points.waistDartRight,
+        -1 * cbqc * points.armholeDartOutside.dist(points.armholeDartTip)
+      )
     }
 
     return part
