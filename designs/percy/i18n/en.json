@@ -1,0 +1,109 @@
+{
+  "t": "Percy puffy pants",
+  "d": "Percy is a pair of puffy shorts or bloomers.",
+  "p": {
+    "front": "Front",
+    "back": "Back",
+    "cuff": "Cuff",
+    "waist_back": "Waist Back",
+    "waist_front": "Waist Front",
+    "waist_side": "Waist Side",
+    "pocket": "Pocket",
+    "pocket_facing": "Pocket Facing"
+
+  },
+  "s": { 
+    "cutCuff.t": "The cuff is not shown",
+    "cutCuff.d": "The **Cuffs** are two strips of fabric {{{ width }}} wide and {{{ length }}} long.",
+    
+    "cutPocketFacing.t": "The pocket facing is not shown",
+    "cutPocketFacing.d": "The **Pocket Facing** (8) is not shown, but you can trace it from the Pocket (7) piece. Cut off the corner along the outline left from the green lining boundary, but remember your seam allowance."
+    
+  },
+  "o": {
+    "cuffWidth":  {
+      "t": "Cuff Width",
+      "d": "How wide to make the leg cuffs."
+    },
+
+    "pocketDepth": {
+      "t": "Pocket Depth",
+      "d": "How far below the waist the pockets should end. Measure from your waist to where your fingertips fall on your side."
+    },
+    "pocketOpeningDepth": {
+      "t": "Pocket Opening Depth",
+      "d": "How deep the pocket openings should be. They can't be shallower than the necessary front opening."
+    },
+    "pocketBottomCurve": {
+      "t": "Pocket Bottom Curve",
+      "d": "Adjusts the curve of the bottom of the pocket opening"
+    },
+    "pocketCurveControl": {
+      "t": "Pocket Curve Control",
+      "d": "Adjust the curve of the bottom of the pocket bag"
+    },
+    "pocketFacingUnderlap": {
+      "t": "Pocket Facing Underlap",
+      "d": "How far the pockets, pocket facings, and waist side pieces extend under the front panel"
+    },
+
+    "frontPleat": {
+      "t": "Front Pleat",
+      "d": "Whether to generate a pleat on the front panel."
+    },
+    "frontPleatYes": {
+      "t": "Yes",
+      "d": "Generate a pleat on the front panel."
+    },
+    "frontPleatNo": {
+      "t": "No",
+      "d": "Don't generate a pleat on the front panel."
+    },
+    "spread": {
+      "t": "Spread",
+      "d": "Whether to slash and spread the body panels."
+    },
+    "spreadYes": {
+      "t": "Yes",
+      "d": "Slash and spread the body panels."
+    },
+    "spreadNo": {
+      "t": "No",
+      "d": "Don't slash and spread the body panels."
+    },
+
+    "frontPleatPosition": {
+      "t": "Front Pleat Position",
+      "d": "Where to generate a pleat on the front panel."
+    },
+    "frontPleatWidth": {
+      "t": "Front Pleat Width",
+      "d": "How big of a pleat to generate on the front panel."
+    },
+
+    "frontPleatDisplayLength": {
+      "t": "Front Pleat Preview Length",
+      "d": "How far to draw the pleat preview lines. This doesn't affect shaping at all."
+    },
+
+    "lengthInseam": {
+      "t": "Length at Inseam",
+      "d": "How long the inseam of the shorts should be. 100% = floor length, 40-50% = knee length."
+    },
+
+    "frontPanelPercentage": {
+      "t": "Front Panel Width",
+      "d": "What proportion of the front of the pants should be taken up by the front panel."
+    },
+
+    "hemRatio": {
+      "t": "Hem Ratio",
+      "d": "How far the bottom hem should be flared, relative to the same height on a basic Titan. This is very approximate. The flare won't go past 90 degrees total."
+    },
+
+    "slashIterations": {
+      "t": "Slash Iterations",
+      "d": "How many cuts to make to spread the body panels. Turn this up if it looks jagged."
+    }
+   }
+}

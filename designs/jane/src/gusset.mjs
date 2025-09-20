@@ -18,7 +18,7 @@ export const gusset = {
     part,
     store,
   }) {
-   const gussetMeasure = measurements.biceps * options.gussetSize
+    const gussetMeasure = measurements.biceps * options.gussetSize
 
     points.gussetLeft = new Point(0, 0)
     points.gussetRight = new Point(gussetMeasure, 0)
@@ -34,7 +34,7 @@ export const gusset = {
       .addClass('fabric')
       .close()
 
-    store.cutlist.setCut({ cut: 2, from: 'fabric', identical: 'true'})
+    store.cutlist.setCut({ cut: 2, from: 'fabric', identical: 'true' })
 
     points.title = points.gussetLeft.shift(300, gussetMeasure / 2)
     macro('title', {

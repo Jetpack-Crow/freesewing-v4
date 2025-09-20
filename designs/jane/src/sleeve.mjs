@@ -41,7 +41,7 @@ export const sleeve = {
       .addClass('fabric')
       .close()
 
-    store.cutlist.setCut({ cut: 2, from: 'fabric', identical: 'true'})
+    store.cutlist.setCut({ cut: 2, from: 'fabric', identical: 'true' })
 
     points.title = points.sleeveLeft.shift(300, sleeveLength / 2)
     macro('title', {

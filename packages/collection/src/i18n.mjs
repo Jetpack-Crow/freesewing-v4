@@ -40,6 +40,7 @@ import { i18n as opal } from '@freesewing/opal'
 import { i18n as otis } from '@freesewing/otis'
 import { i18n as paco } from '@freesewing/paco'
 import { i18n as penelope } from '@freesewing/penelope'
+import { i18n as percy } from '@freesewing/percy'
 import { i18n as sabrina } from '@freesewing/sabrina'
 import { i18n as sandy } from '@freesewing/sandy'
 import { i18n as sarah } from '@freesewing/sarah'
@@ -108,6 +109,7 @@ export const i18n = {
   otis,
   paco,
   penelope,
+  percy,
   sabrina,
   sandy,
   sarah,

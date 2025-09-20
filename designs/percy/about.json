@@ -1,0 +1,22 @@
+{
+  "id": "percy",
+  "code": "Gawain (Candle)",
+  "design": "Gawain (Candle)",
+  "description": "A FreeSewing pattern for fall-front puffy shorts",
+  "name": "Percy Puffy Pants",
+  "difficulty": 3,
+  "tags": [
+    "bottoms",
+    "trousers"
+  ],
+  "techniques": [
+    "button",
+    "hem",
+    "interfacing",
+    "pocket",
+    "curved-seam"
+  ],
+  "version": "4.2.0",
+  "collection": true,
+  "pkg": "@freesewing/percy"
+}
