@@ -168,10 +168,6 @@ export const front = {
     // Add notches if the shoulder seam is shifted
     shared.s3Notches(snippets, Snippet, points, options, 'notch')
 
-    // Wait line
-    if (complete)
-      paths.waist = new Path().move(points.cfWaist).line(points.waist).attr('class', 'help')
-
     // Dimensions
     shared.dimensions(part, 'front')
 

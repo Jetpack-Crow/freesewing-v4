@@ -7,6 +7,7 @@ export const back = {
   draft: ({
     store,
     sa,
+    Point,
     points,
     Path,
     paths,
@@ -154,9 +155,34 @@ export const back = {
     // Notches
     snippets.armholePitchNotch = new Snippet('bnotch', points.armholePitch)
 
+    // Chest line
+    points.chest = new Point(points.armhole.x, points.cbChest.y)
+    if (complete) {
+      paths.chest = new Path()
+        .move(points.cbChest)
+        .line(points.chest)
+        .attr('class', 'contrast help')
+      macro('banner', {
+        id: 'chestLine',
+        classes: 'center contrast help',
+        path: paths.chest,
+        text: 'brian:chestLine',
+      })
+    }
+
     // Waist line
-    if (complete)
-      paths.waist = new Path().move(points.cbWaist).line(points.waist).attr('class', 'help')
+    if (complete) {
+      paths.waist = new Path()
+        .move(points.cbWaist)
+        .line(points.waist)
+        .attr('class', 'contrast help')
+      macro('banner', {
+        id: 'waistLine',
+        classes: 'center contrast help',
+        path: paths.waist,
+        text: 'brian:waistLine',
+      })
+    }
 
     // Add notches if the shoulder seam is shifted
     shared.s3Notches(snippets, Snippet, points, options, 'bnotch')
