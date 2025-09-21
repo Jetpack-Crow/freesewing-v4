@@ -13,10 +13,11 @@ function draftHueyBack({
   options,
   measurements,
   part,
+  complete,
 }) {
   // Clear paths from Brian
   for (let i in paths) {
-    if (['backArmhole', 'backCollar'].indexOf(i) === -1) delete paths[i]
+    if (['backArmhole', 'backCollar', 'chest', 'waist'].indexOf(i) === -1) delete paths[i]
   }
 
   // Shorten body to take ribbing into account
@@ -66,6 +67,21 @@ function draftHueyBack({
       .move(paths.sa.start())
       .line(points.cbHem)
       .attr('class', 'fabric sa')
+  }
+
+  if (complete) {
+    macro('banner', {
+      id: 'chestLine',
+      classes: 'center contrast help',
+      path: paths.chest,
+      text: 'huey:chestLine',
+    })
+    macro('banner', {
+      id: 'waistLine',
+      classes: 'center contrast help',
+      path: paths.waist,
+      text: 'huey:waistLine',
+    })
   }
 
   /*
