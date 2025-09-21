@@ -15,9 +15,12 @@ function hugoBack({
   snippets,
   macro,
   part,
+  complete,
 }) {
   // Remove clutter
-  for (const i in paths) delete paths[i]
+  for (const i in paths) {
+    if (!['chest', 'waist'].includes(i)) delete paths[i]
+  }
 
   // Remove notch inherited from Brian
   delete snippets.armholePitchNotch
@@ -58,6 +61,21 @@ function hugoBack({
   store.set('neckOpeningAnchorBack', points.neck)
   store.set('neckOpeningLenBack', neckOpening.length())
   store.set('neckCutoutBack', points.cbNeck.y)
+
+  if (complete) {
+    macro('banner', {
+      id: 'chestLine',
+      classes: 'center contrast help',
+      path: paths.chest,
+      text: 'hugo:chestLine',
+    })
+    macro('banner', {
+      id: 'waistLine',
+      classes: 'center contrast help',
+      path: paths.waist,
+      text: 'hugo:waistLine',
+    })
+  }
 
   /*
    * Annotations

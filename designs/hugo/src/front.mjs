@@ -34,7 +34,9 @@ function hugoFront({
   part,
 }) {
   // Remove clutter
-  for (const i in paths) delete paths[i]
+  for (const i in paths) {
+    if (!['chest', 'waist'].includes(i)) delete paths[i]
+  }
 
   // Remove notch inherited from Brian
   delete snippets.armholePitchNotch
@@ -119,6 +121,21 @@ function hugoFront({
   if (sa) {
     paths.sa = paths.saBase.offset(sa).line(points.cfNeck).attr('class', 'fabric sa')
     paths.sa.move(points.cfRibbing).line(paths.sa.start())
+  }
+
+  if (complete) {
+    macro('banner', {
+      id: 'chestLine',
+      classes: 'center contrast help',
+      path: paths.chest,
+      text: 'hugo:chestLine',
+    })
+    macro('banner', {
+      id: 'waistLine',
+      classes: 'center contrast help',
+      path: paths.waist,
+      text: 'hugo:waistLine',
+    })
   }
 
   /*
