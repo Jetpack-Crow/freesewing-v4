@@ -373,6 +373,65 @@ function draftCarlitaFront({
   }
 
   /*
+   * Chest/Waist/Hip lines
+   */
+  points.frontChest = new Point(points.hemEdge.x, points.cbChest.y)
+  points.sideSeamChest = new Point(points.psHem.x, points.cbChest.y)
+  points.frontWaist = new Point(points.hemEdge.x, points.cfWaist.y)
+  points.sideSeamWaist = new Point(points.psHem.x, points.cfWaist.y)
+  points.sideSeamHips = new Point(points.psHem.x, points.cfHips.y)
+  points.frontHips = new Point(points.hemEdge.x, points.cfHips.y)
+  points.frontSeat = new Point(points.hemEdge.x, points.cfSeat.y)
+  points.sideSeamSeat = new Point(points.sideSeamWaist.x, points.cfSeat.y)
+
+  if (complete) {
+    // Chest line
+    paths.chest = new Path()
+      .move(points.frontChest)
+      .line(points.sideSeamChest)
+      .addClass('contrast help')
+    macro('banner', {
+      id: 'chestLine',
+      classes: 'center contrast help',
+      path: paths.chest,
+      text: 'carlita:chestLine',
+    })
+    // Waist line
+    paths.waist = new Path()
+      .move(points.frontWaist)
+      .line(points.sideSeamWaist)
+      .addClass('contrast help')
+    macro('banner', {
+      id: 'waistLine',
+      classes: 'center contrast help',
+      path: paths.waist,
+      text: 'carlita:waistLine',
+    })
+    // Hip line
+    paths.hips = new Path()
+      .move(points.frontHips)
+      .line(points.sideSeamHips)
+      .addClass('contrast help')
+    macro('banner', {
+      id: 'hipLine',
+      classes: 'center contrast help',
+      path: paths.hips,
+      text: 'carlita:hipLine',
+    })
+    // Seat line
+    paths.seat = new Path()
+      .move(points.frontSeat)
+      .line(points.sideSeamSeat)
+      .addClass('contrast help')
+    macro('banner', {
+      id: 'seatLine',
+      classes: 'center contrast help',
+      path: paths.seat,
+      text: 'carlita:seatLine',
+    })
+  }
+
+  /*
    * Annotations
    */
 
@@ -391,8 +450,6 @@ function draftCarlitaFront({
   snippets.button3Right = new Snippet('button', points.button3Right).attr('data-scale', 2)
 
   // Notches
-  points.sideSeamWaist = new Point(points.psHem.x, points.cfWaist.y)
-  points.sideSeamHips = new Point(points.psHem.x, points.cfHips.y)
   macro('sprinkle', {
     snippet: 'notch',
     on: [

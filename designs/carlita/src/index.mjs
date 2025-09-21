@@ -2,10 +2,10 @@ import { Design, mergeI18n } from '@freesewing/core'
 import about from '../about.json' with { type: 'json' }
 import { front } from './front.mjs'
 import { side } from './side.mjs'
+import { back } from './back.mjs'
 import { frontFacing } from './front-facing.mjs'
 import { frontLining } from './front-lining.mjs'
 import {
-  back,
   backStay,
   tail,
   belt,
