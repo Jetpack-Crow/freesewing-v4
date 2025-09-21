@@ -23,8 +23,13 @@ function draftYoke({
 
   points.centerbottom = new Point(0, points.armholesplit.y)
 
+  // Clean up
   delete paths.saBase
   delete paths.waist
+  delete paths.chest
+  delete snippets.logo
+  macro('rmbanner', 'chestLine')
+  macro('rmbanner', 'waistLine')
 
   //Delete existing points lower than a given cutoff
   let cutoffy = points.frontArmholePitchCp1.y
