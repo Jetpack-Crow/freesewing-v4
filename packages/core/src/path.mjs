@@ -1365,8 +1365,24 @@ export function pathsProxy(paths, log) {
 function __addIntersectionsToArray(candidates, intersections) {
   if (!candidates) return
   if (typeof candidates === 'object') {
-    if (typeof candidates.x === 'number') intersections.push(candidates)
-    else {
+    if (typeof candidates.x === 'number') {
+      if (
+        !(
+          intersections.length > 0 &&
+          Math.abs(candidates.x - intersections[intersections.length - 1].x) < 1e-3 &&
+          Math.abs(candidates.y - intersections[intersections.length - 1].y) < 1e-3
+        )
+      ) {
+        intersections.push(candidates)
+      }
+    } else {
+      if (
+        intersections.length > 0 &&
+        Math.abs(candidates[0].x - intersections[intersections.length - 1].x) < 1e-3 &&
+        Math.abs(candidates[0].y - intersections[intersections.length - 1].y) < 1e-3
+      ) {
+        candidates.shift()
+      }
       for (let candidate of candidates) intersections.push(candidate)
     }
   }
