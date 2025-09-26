@@ -1,6 +1,25 @@
 # Change log for: @freesewing/react
 
 
+## 4.3.0 (2025-09-26)
+
+### Added
+
+ - Added LineDrawing for octoplushy, otis, penelope, and waralee (#553)
+ - Added new components to support the new user showcase page (#556)
+
+### Fixed
+
+ - Handle inconcistent SA icon state after SA reset (#540)
+ - Fix inherited translations in the flags menu
+ - Preserve metadata in measurement settings within the editor state update
+
+## 4.2.0 (2025-08-16)
+
+### Fixed
+
+ - Preserve pattern metadata when resetting the editor
+
 ## 4.1.0 (2025-06-29)
 
 ### Added

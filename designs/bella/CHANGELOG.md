@@ -1,6 +1,12 @@
 # Change log for: @freesewing/bella
 
 
+## 4.2.0 (2025-08-16)
+
+### Fixed
+
+ - Regression bug when dart fabric is zero (#504)
+
 ## 3.0.0 (2023-09-30)
 
 ### Changed

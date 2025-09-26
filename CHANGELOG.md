@@ -3,6 +3,159 @@
 
 ## Unreleased
 
+
+## 4.3.0 (2025-09-26)
+
+### aaron
+
+#### Added
+
+ - Mark chest and waist line on the pattern
+
+### bee
+
+#### Fixed
+
+ - Clarify the cut list (#538)
+ - Fix on-fold probem with the band part (#537)
+
+### bent
+
+#### Fixed
+
+ - Devon showed the Bent nodes (#530)
+
+### brian
+
+#### Added
+
+ - Mark chest and waist line on the pattern
+
+### carlita
+
+#### Added
+
+ - Mark chest, waist, hip, and seat line on the pattern
+
+### carlton
+
+#### Added
+
+ - Mark chest, waist, hip, and seat line on the pattern
+
+### devon
+
+#### Fixed
+
+ - Properly handle the expand functionality (#534)
+
+### florent
+
+#### Added
+
+ - Added dimensions for side part notches
+
+### huey
+
+#### Added
+
+ - Mark chest and waist line on the pattern
+
+### hugo
+
+#### Added
+
+ - Mark chest and waist line on the pattern
+
+### jett
+
+#### Added
+
+ - Mark chest and waist line on the pattern
+
+### noble
+
+#### Added
+
+ - Added a new armhole seam option (#566)
+
+#### Fixed
+
+ - Fixed missing back part (#566)
+
+### paco
+
+#### Fixed
+
+ - Fix double waistband drop (#529)
+ - Eyelets should be marked opposite the waistband join (#557)
+
+### percy
+
+#### Added
+
+ - Initial release of Percy, a design for puffy pants
+
+### sabrina
+
+#### Changed
+
+ - Changed the armhole calculation (#548)
+
+### simon
+
+#### Added
+
+ - Mark chest and waist line on the pattern
+
+### simone
+
+#### Added
+
+ - Mark chest and waist line on the pattern
+
+### plugin-annotations
+
+#### Fixed
+
+ - Fix expandIsOn flag behaviour
+
+### plugin-path-utils
+
+#### Fixed
+
+ - Fix edge case behaviour
+
+### core
+
+#### Fixed
+
+ - Handle move operations in path.reverse() (#561)
+ - Avoid possible duplicate intersections when looking for them (#565)
+ - Properly escape text when an array is passed in
+
+### react
+
+#### Added
+
+ - Added LineDrawing for octoplushy, otis, penelope, and waralee (#553)
+ - Added new components to support the new user showcase page (#556)
+
+#### Fixed
+
+ - Handle inconcistent SA icon state after SA reset (#540)
+ - Fix inherited translations in the flags menu
+ - Preserve metadata in measurement settings within the editor state update
+
+### utils
+
+#### Added
+
+ - Added swapTranslationPrefix() method to swap a translation prefix to help with inherited translations
+
+
+## 4.2.0 (2025-08-16)
+
 ### bella
 
 #### Fixed
@@ -51,6 +204,12 @@
 #### Fixed
 
  - Title macro now uses the set name from pattern metadata
+
+### react
+
+#### Fixed
+
+ - Preserve pattern metadata when resetting the editor
 
 
 ## 4.1.0 (2025-06-29)

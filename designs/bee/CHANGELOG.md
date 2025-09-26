@@ -1,6 +1,13 @@
 # Change log for: @freesewing/bee
 
 
+## 4.3.0 (2025-09-26)
+
+### Fixed
+
+ - Clarify the cut list (#538)
+ - Fix on-fold probem with the band part (#537)
+
 ## 4.0.1 (2025-06-09)
 
 ### Added

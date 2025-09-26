@@ -1,6 +1,12 @@
 # Change log for: @freesewing/sabrina
 
 
+## 4.3.0 (2025-09-26)
+
+### Changed
+
+ - Changed the armhole calculation (#548)
+
 ## 4.1.0 (2025-06-29)
 
 ### Added

@@ -1,6 +1,12 @@
 # Change log for: @freesewing/bent
 
 
+## 4.3.0 (2025-09-26)
+
+### Fixed
+
+ - Devon showed the Bent nodes (#530)
+
 ## 3.0.0 (2023-09-30)
 
 ### Changed

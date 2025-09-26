@@ -1,6 +1,12 @@
 # Change log for: @freesewing/plugin-path-utils
 
 
+## 4.3.0 (2025-09-26)
+
+### Fixed
+
+ - Fix edge case behaviour
+
 ## 4.0.1 (2025-06-09)
 
 ### Added

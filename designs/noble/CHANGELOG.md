@@ -1,6 +1,16 @@
 # Change log for: @freesewing/noble
 
 
+## 4.3.0 (2025-09-26)
+
+### Added
+
+ - Added a new armhole seam option (#566)
+
+### Fixed
+
+ - Fixed missing back part (#566)
+
 ## 4.0.0 (2025-04-01)
 
 ### Fixed

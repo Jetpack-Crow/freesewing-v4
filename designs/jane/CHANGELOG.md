@@ -1,6 +1,12 @@
 # Change log for: @freesewing/jane
 
 
+## 4.2.0 (2025-08-16)
+
+### Fixed
+
+ - Fix cutlist error and gusset sizing (#517)
+
 ## 3.0.0 (2023-09-30)
 
 ### Changed

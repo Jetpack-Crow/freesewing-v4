@@ -1,6 +1,12 @@
 # Change log for: @freesewing/sunny
 
 
+## 4.2.0 (2025-08-16)
+
+### Added
+
+ - Initial release of Sunny, an 18th century split side skirt
+
 ## 3.0.0 (2023-09-30)
 
 ### Changed

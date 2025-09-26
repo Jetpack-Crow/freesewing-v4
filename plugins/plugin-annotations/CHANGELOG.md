@@ -1,6 +1,18 @@
 # Change log for: @freesewing/plugin-annotations
 
 
+## 4.3.0 (2025-09-26)
+
+### Fixed
+
+ - Fix expandIsOn flag behaviour
+
+## 4.2.0 (2025-08-16)
+
+### Fixed
+
+ - Title macro now uses the set name from pattern metadata
+
 ## 4.0.1 (2025-06-09)
 
 ### Fixed

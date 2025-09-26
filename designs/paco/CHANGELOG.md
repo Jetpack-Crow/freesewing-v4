@@ -1,6 +1,13 @@
 # Change log for: @freesewing/paco
 
 
+## 4.3.0 (2025-09-26)
+
+### Fixed
+
+ - Fix double waistband drop (#529)
+ - Eyelets should be marked opposite the waistband join (#557)
+
 ## 3.1.0 (2023-12-26)
 
 ### Changed

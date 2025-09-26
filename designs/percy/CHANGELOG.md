@@ -1,6 +1,12 @@
 # Change log for: @freesewing/percy
 
 
+## 4.3.0 (2025-09-26)
+
+### Added
+
+ - Initial release of Percy, a design for puffy pants
+
 ## 3.0.0 (2023-09-30)
 
 ### Changed

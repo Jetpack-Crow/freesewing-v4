@@ -1,6 +1,12 @@
 # Change log for: @freesewing/carlita
 
 
+## 4.3.0 (2025-09-26)
+
+### Added
+
+ - Mark chest, waist, hip, and seat line on the pattern
+
 ## 3.0.0 (2023-09-30)
 
 ### Changed

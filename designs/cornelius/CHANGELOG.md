@@ -1,6 +1,13 @@
 # Change log for: @freesewing/cornelius
 
 
+## 4.2.0 (2025-08-16)
+
+### Fixed
+
+ - Add missing baste line (#493)
+ - Fix incorrect number in cut list (#498)
+
 ## 3.0.0 (2023-09-30)
 
 ### Changed

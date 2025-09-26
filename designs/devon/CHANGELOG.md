@@ -1,6 +1,18 @@
 # Change log for: @freesewing/devon
 
 
+## 4.3.0 (2025-09-26)
+
+### Fixed
+
+ - Properly handle the expand functionality (#534)
+
+## 4.2.0 (2025-08-16)
+
+### Added
+
+ - Initial release of Devon, a denim jacket
+
 ## 3.0.0 (2023-09-30)
 
 ### Changed

@@ -1,6 +1,14 @@
 # Change log for: @freesewing/core
 
 
+## 4.3.0 (2025-09-26)
+
+### Fixed
+
+ - Handle move operations in path.reverse() (#561)
+ - Avoid possible duplicate intersections when looking for them (#565)
+ - Properly escape text when an array is passed in
+
 ## 4.1.0 (2025-06-29)
 
 ### Added

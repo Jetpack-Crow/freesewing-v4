@@ -1,5 +1,75 @@
 Unreleased:
   Added:
+
+4.3.0:
+  date: 2025-09-26
+
+  Added:
+    aaron:
+      - Mark chest and waist line on the pattern
+    brian:
+      - Mark chest and waist line on the pattern
+    carlton:
+      - Mark chest, waist, hip, and seat line on the pattern
+    carlita:
+      - Mark chest, waist, hip, and seat line on the pattern
+    florent:
+      - Added dimensions for side part notches
+    huey:
+      - Mark chest and waist line on the pattern
+    hugo:
+      - Mark chest and waist line on the pattern
+    jett:
+      - Mark chest and waist line on the pattern
+    noble:
+      - Added a new armhole seam option (#566)
+    percy:
+      - Initial release of Percy, a design for puffy pants
+    react:
+      - Added LineDrawing for octoplushy, otis, penelope, and waralee (#553)
+      - Added new components to support the new user showcase page (#556)
+    simon:
+      - Mark chest and waist line on the pattern
+    simone:
+      - Mark chest and waist line on the pattern
+    utils:
+      - Added swapTranslationPrefix() method to swap a translation prefix to help with inherited translations
+
+  Changed:
+    sabrina:
+      - Changed the armhole calculation (#548)
+
+  Fixed:
+    bee:
+      - Clarify the cut list (#538)
+      - Fix on-fold probem with the band part (#537)
+    bent:
+      - Devon showed the Bent nodes (#530)
+    core:
+      - Handle move operations in path.reverse() (#561)
+      - Avoid possible duplicate intersections when looking for them (#565)
+      - Properly escape text when an array is passed in
+    devon:
+      - Properly handle the expand functionality (#534)
+    noble:
+      - Fixed missing back part (#566)
+    paco:
+      - Fix double waistband drop (#529)
+      - Eyelets should be marked opposite the waistband join (#557)
+    plugin-annotations:
+      - Fix expandIsOn flag behaviour
+    plugin-path-utils:
+      - Fix edge case behaviour
+    react:
+      - Handle inconcistent SA icon state after SA reset (#540)
+      - Fix inherited translations in the flags menu
+      - Preserve metadata in measurement settings within the editor state update
+
+
+4.2.0:
+  date: 2025-08-16
+
+  Added:
     devon:
       - Initial release of Devon, a denim jacket
     jett:
@@ -19,6 +89,8 @@ Unreleased:
       - Fix cutlist error and gusset sizing (#517)
     plugin-annotations:
       - Title macro now uses the set name from pattern metadata
+    react:
+      - Preserve pattern metadata when resetting the editor
 
 4.1.0:
   date: 2025-06-29

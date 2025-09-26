@@ -1,6 +1,18 @@
 # Change log for: @freesewing/jett
 
 
+## 4.3.0 (2025-09-26)
+
+### Added
+
+ - Mark chest and waist line on the pattern
+
+## 4.2.0 (2025-08-16)
+
+### Added
+
+ - Initial release of the Jett jacket
+
 ## 3.0.0 (2023-09-30)
 
 ### Changed

@@ -1,6 +1,12 @@
 # Change log for: @freesewing/florent
 
 
+## 4.3.0 (2025-09-26)
+
+### Added
+
+ - Added dimensions for side part notches
+
 ## 3.0.0 (2023-09-30)
 
 ### Changed

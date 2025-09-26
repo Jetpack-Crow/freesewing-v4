@@ -1,6 +1,12 @@
 # Change log for: @freesewing/utils
 
 
+## 4.3.0 (2025-09-26)
+
+### Added
+
+ - Added swapTranslationPrefix() method to swap a translation prefix to help with inherited translations
+
 ## 4.0.0 (2025-04-01)
 
 ### Added

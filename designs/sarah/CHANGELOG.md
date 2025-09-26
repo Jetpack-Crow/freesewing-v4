@@ -1,6 +1,12 @@
 # Change log for: @freesewing/sarah
 
 
+## 4.2.0 (2025-08-16)
+
+### Added
+
+ - Initial release of Sarah, a basic skirt block based on the Aldrich drafting method
+
 ## 3.0.0 (2023-09-30)
 
 ### Changed

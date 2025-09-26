@@ -1,6 +1,12 @@
 # Change log for: @freesewing/aaron
 
 
+## 4.3.0 (2025-09-26)
+
+### Added
+
+ - Mark chest and waist line on the pattern
+
 ## 3.1.0 (2023-12-26)
 
 ### Changed
