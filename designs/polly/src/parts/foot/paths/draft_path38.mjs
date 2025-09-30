@@ -1,3 +1,5 @@
+import { scaleAllPoints } from '../../../shared.mjs'
+
 function draft_path38(Path, Point, paths, points, measurements, options, utils, macro, part) {
   // Path: path38
   // m 305.19 380.466
@@ -19,6 +21,8 @@ function draft_path38(Path, Point, paths, points, measurements, options, utils, 
   points.path38_p5_cp2 = new Point(303.5751, 348.2851)
   points.path38_p5_ep = new Point(305.0499, 380.314)
   // z
+
+  scaleAllPoints(part, options.totalsize)
 
   paths.path38 = new Path()
     // inkex.paths.move: m 305.19 380.466

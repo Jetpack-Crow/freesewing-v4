@@ -1,6 +1,5 @@
 import { Design } from '@freesewing/core'
 import about from '../about.json' with { type: 'json' }
-import { box } from './box.mjs'
 
 import { head_back } from './parts/head_back/head_back.mjs'
 import { face } from './parts/face/face.mjs'
@@ -16,12 +15,11 @@ import { i18n } from '../i18n/index.mjs'
 // Setup our new design
 const Polly = new Design({
   data: about,
-  parts: [box, head_back, face, body_back, body_front, arm_bottom, arm_top, leg, foot],
+  parts: [head_back, face, body_back, body_front, arm_bottom, arm_top, leg, foot],
 })
 
 // Named exports
 export {
-  box,
   head_back,
   face,
   body_back,

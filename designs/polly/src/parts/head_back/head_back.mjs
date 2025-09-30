@@ -25,16 +25,6 @@ export const head_back = {
     // Enter the measurements your design needs here. See https://freesewing.dev/reference/measurements .
   ],
   options: {
-    // Enter your pattern options here. Example:
-    /*
-        extraLength: {
-            pct: 10,
-            min: 5,
-            max: 20,
-            label: 'Extra length',
-            menu: 'fit',
-            ...pctBasedOn('neck')
-        }
-        */
+    totalsize: { pct: 25, min: 5, max: 200, menu: 'scale' },
   },
 }
