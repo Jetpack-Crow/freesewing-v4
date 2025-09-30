@@ -18,7 +18,7 @@ function draftPollyArm_top({
 }
 
 export const arm_top = {
-  name: 'Polly.arm_top',
+  name: 'polly.arm_top',
   draft: draftPollyArm_top,
 
   measurements: [

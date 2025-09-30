@@ -8,7 +8,7 @@ function draftPollyLeg({ Path, Point, paths, points, measurements, options, util
 }
 
 export const leg = {
-  name: 'Polly.leg',
+  name: 'polly.leg',
   draft: draftPollyLeg,
 
   measurements: [

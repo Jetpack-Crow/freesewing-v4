@@ -39,9 +39,9 @@ function draft_path127(Path, Point, paths, points, measurements, options, utils,
   points.path127_p10_cp2 = new Point(188.3183, 144.5355)
   points.path127_p10_ep = new Point(179.4749, 94.9771)
   // C 175.51 66.3162 158.338 28.5686 151.075 13.7283
-  points.path127_p11_cp1 = new Point(175.5097, 66.3162)
-  points.path127_p11_cp2 = new Point(158.3381, 28.5686)
-  points.path127_p11_ep = new Point(151.0749, 13.7283)
+  points.headTip_cp1 = new Point(175.5097, 66.3162)
+  points.headTip_cp2 = new Point(158.3381, 28.5686)
+  points.headTip_ep = new Point(151.0749, 13.7283)
   // C 90.9817 40.5134 69.3601 61.2949 43.4626 83.938
   points.path127_p12_cp1 = new Point(90.9817, 40.5134)
   points.path127_p12_cp2 = new Point(69.3601, 61.2949)
@@ -70,7 +70,7 @@ function draft_path127(Path, Point, paths, points, measurements, options, utils,
     // inkex.paths.curve: c 9.49224 -49.4383 8.31825 -101.464 -0.52509 -151.023
     .curve(points.path127_p10_cp1, points.path127_p10_cp2, points.path127_p10_ep)
     // inkex.paths.Curve: C 175.51 66.3162 158.338 28.5686 151.075 13.7283
-    .curve(points.path127_p11_cp1, points.path127_p11_cp2, points.path127_p11_ep)
+    .curve(points.headTip_cp1, points.headTip_cp2, points.headTip_ep)
     // inkex.paths.Curve: C 90.9817 40.5134 69.3601 61.2949 43.4626 83.938
     .curve(points.path127_p12_cp1, points.path127_p12_cp2, points.path127_p12_ep)
     // inkex.paths.ZoneClose: Z

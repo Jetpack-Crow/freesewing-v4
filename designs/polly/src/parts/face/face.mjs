@@ -8,7 +8,7 @@ function draftPollyFace({ Path, Point, paths, points, measurements, options, uti
 }
 
 export const face = {
-  name: 'Polly.face',
+  name: 'polly.face',
   draft: draftPollyFace,
 
   measurements: [

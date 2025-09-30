@@ -18,7 +18,7 @@ function draftPollyHead_back({
 }
 
 export const head_back = {
-  name: 'Polly.head_back',
+  name: 'polly.head_back',
   draft: draftPollyHead_back,
 
   measurements: [

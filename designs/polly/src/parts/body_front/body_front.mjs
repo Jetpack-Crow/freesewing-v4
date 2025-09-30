@@ -18,7 +18,7 @@ function draftPollyBody_front({
 }
 
 export const body_front = {
-  name: 'Polly.body_front',
+  name: 'polly.body_front',
   draft: draftPollyBody_front,
 
   measurements: [
