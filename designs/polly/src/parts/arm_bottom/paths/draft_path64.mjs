@@ -13,6 +13,24 @@ function draft_path64(
   store,
   log
 ) {
+  const drawArmCurve = () => {
+    return (
+      new Path()
+        .move(points.armpitPointRight_ep)
+
+        // inkex.paths.curve: c 0.26393 15.8943 -0.93376 42.5687 0.42245 63.7888
+        .curve(points.armNarrowRight_cp1, points.armNarrowRight_cp2, points.armNarrowRight_ep)
+        // inkex.paths.curve: c 4.51413 47.2555 26.3062 122.293 -3.55182 164.779
+        .curve(points.armWideRight_cp1, points.armWideRight_cp2, points.armWideRight_ep)
+        ._curve(
+          //points.armWideLeft_cp1,
+          points.curveBottom_cpRight,
+          points.curveBottom
+        )
+        .hide()
+    )
+  }
+
   // Path: path64
   // m 79.3917 371.74
   // c 33.1012 -0.59962 50.4497 -22.6328 61.6766 -30.8383
@@ -55,7 +73,7 @@ function draft_path64(
 
   const shiftPoints = ['armpitPointRight_cp2', 'armpitPointRight_ep', 'armNarrowRight_cp1']
 
-  while (armpitIteration < 5 && Math.abs(delta) > 0.001 * options.totalSize) {
+  while (armpitIteration < 8 && Math.abs(delta) > 0.001 * options.totalSize) {
     log.info('lower arm iteration ' + armpitIteration + ', delta = ' + delta)
 
     //shift each point
@@ -77,69 +95,38 @@ function draft_path64(
     armpitIteration = armpitIteration + 1
   }
 
-  paths.armCurvePath = new Path()
-    .move(points.armpitPointRight_ep)
+  paths.armCurvePath = drawArmCurve()
 
-    // inkex.paths.curve: c 0.26393 15.8943 -0.93376 42.5687 0.42245 63.7888
-    .curve(points.armNarrowRight_cp1, points.armNarrowRight_cp2, points.armNarrowRight_ep)
-    // inkex.paths.curve: c 4.51413 47.2555 26.3062 122.293 -3.55182 164.779
-    .curve(points.armWideRight_cp1, points.armWideRight_cp2, points.armWideRight_ep)
-    ._curve(
-      //points.armWideLeft_cp1,
-      points.curveBottom_cpRight,
-      points.curveBottom
-    )
-    .hide()
+  //Match armpit curve length
+  const armTopCurve = store.get('armTopCurve')
+  let armBottomCurve = paths.armCurvePath.length()
 
+  delta = armTopCurve - armBottomCurve
+  log.info('Arm length delta ' + delta)
+  let armIteration = 0
+
+  const armShiftPoints = ['armWideRight_ep', 'armWideRight_cp2']
+
+  while (armIteration < 5 && Math.abs(delta) > 0.001 * options.totalSize) {
+    log.info('Arm curve iteration ' + armIteration + ', delta = ' + delta)
+
+    //shift each point
+    for (let p of armShiftPoints) {
+      points[p] = points[p].shift(0, delta)
+    }
+
+    //redraw the path
+    paths.armCurvePath = drawArmCurve()
+
+    //recalculate delta
+    armBottomCurve = paths.armCurvePath.length()
+    delta = armTopCurve - armBottomCurve
+
+    armIteration = armIteration + 1
+  }
+
+  //And combine the path!
   paths.path64 = paths.armpitPath.join(paths.armCurvePath)
-  /*
-    paths.path64 = new Path()
-        // inkex.paths.move: m 79.3917 371.74
-        .move(points.armpitPointRight_ep
-        )
-        // inkex.paths.curve: c 0.26393 15.8943 -0.93376 42.5687 0.42245 63.7888
-        .curve(
-            points.armNarrowRight_cp1,
-            points.armNarrowRight_cp2,
-            points.armNarrowRight_ep
-        )
-        // inkex.paths.curve: c 4.51413 47.2555 26.3062 122.293 -3.55182 164.779
-        .curve(
-            points.armWideRight_cp1,
-            points.armWideRight_cp2,
-            points.armWideRight_ep
-        )
-        // inkex.paths.curve: c -26.4789 32.1512 -86.9396 35.751 -113.271 2.20581
-        .curve(
-            points.armWideLeft_cp1,
-            points.armWideLeft_cp2,
-            points.armWideLeft_ep
-        )
-        // inkex.paths.curve: c -29.7894 -46.6465 -7.43748 -114.628 -3.57334 -165.295
-        .curve(
-            points.armNarrowLeft_cp1,
-            points.armNarrowLeft_cp2,
-            points.armNarrowLeft_ep
-        )
-        // inkex.paths.curve: c 0.97507 -20.1893 0.44914 -48.0516 -1.47854 -60.6205
-        .curve(
-            points.armpitPointLeft_cp1,
-            points.armpitPointLeft_cp2,
-            points.armpitPointLeft_ep
-        )
-        // inkex.paths.curve: c 10.2074 6.6545 26.6743 26.5798 59.7756 25.9802
-        .curve(
-            points.armpitCenter_cp1,
-            points.armpitCenter_cp2,
-            points.armpitCenter_ep
-        )
-        // inkex.paths.curve: c 33.1012 -0.59962 50.4497 -22.6328 61.6766 -30.8383
-        .curve(
-            points.armpitPointRight_cp1,
-            points.armpitPointRight_cp2,
-            points.armpitPointRight_ep)
-        //.hide()
-        */
 }
 
 export { draft_path64 }

@@ -26,6 +26,13 @@ function draftPollyArm_top({
 
   store.set('armTopCurve', paths.armCurve.length() - raglanLength)
 
+  paths.lowerArmCurve = paths.armCurve.split(points.raglanNotch)[0]
+
+  macro('pd', {
+    path: paths.lowerArmCurve.reverse(),
+    d: 15,
+  })
+
   macro('mirror', {
     clone: true,
     mirror: [points.neckCenter_ep, points.armBottom_ep],
@@ -41,11 +48,6 @@ function draftPollyArm_top({
 
   points.title = points.neckCenter_ep.shiftFractionTowards(points.armBottom_ep, 0.5)
   macro('title', { at: points.title, nr: 5, title: 'arm_top', scale: options.totalSize })
-
-  console.log({
-    points: JSON.parse(JSON.stringify(points)),
-    paths: JSON.parse(JSON.stringify(paths)),
-  })
 
   return part
 }

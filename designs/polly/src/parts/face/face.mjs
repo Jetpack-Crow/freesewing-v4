@@ -1,4 +1,3 @@
-import { pctBasedOn } from '@freesewing/core'
 import { draft_path254 } from './paths/draft_path254.mjs'
 
 function draftPollyFace({

@@ -67,8 +67,8 @@ function draft_path254(Path, Point, paths, points, measurements, options, utils,
     .curve(points.dartUpperTop_cp1, points.dartUpperTop_cp2, points.dartUpperTop_ep)
     // inkex.paths.Curve: C 282.506 41.3202 238.267 19.8402 187.293 21.209
     .curve(points.faceTop_cp1, points.faceTop_cp2, points.faceTop_ep)
-    // inkex.paths.ZoneClose: Z
-    .line(points.path254_p1)
+  // inkex.paths.ZoneClose: Z
+  //.line(points.path254_p1)
 }
 
 export { draft_path254 }
