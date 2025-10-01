@@ -15,6 +15,8 @@ function draftPollyBody_back({
   sa,
   store,
   log,
+  Snippet,
+  snippets,
 }) {
   draft_path85(Path, Point, paths, points, measurements, options, utils, macro, part, store, log)
 
@@ -25,6 +27,13 @@ function draftPollyBody_back({
     paths.saBasis = paths.path85.reverse()
     paths.sa = paths.saBasis.offset(sa).trim().attr('class', 'fabric sa')
   }
+
+  snippets.backRaglanNotch = new Snippet('bnotch', points.armpitNotch_ep)
+
+  macro('pd', {
+    path: paths.armpitCurveBack,
+    d: 15,
+  })
 
   return part
 }

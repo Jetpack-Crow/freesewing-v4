@@ -32,9 +32,9 @@ function draftPollyBody_front({
   points.title = points.neckCenter_ep.shiftFractionTowards(points.crotchCenter, 0.5)
   macro('title', { at: points.title, nr: 1, title: 'body_front', scale: options.totalSize })
 
-  console.log({
-    points: JSON.parse(JSON.stringify(points)),
-    paths: JSON.parse(JSON.stringify(paths)),
+  macro('pd', {
+    path: paths.armpitCurve.reverse(),
+    d: 15,
   })
 
   return part

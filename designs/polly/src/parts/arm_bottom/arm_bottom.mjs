@@ -1,5 +1,6 @@
 import { pctBasedOn } from '@freesewing/core'
 import { draft_path64 } from './paths/draft_path64.mjs'
+import { body_front } from '../body_front/body_front.mjs'
 
 function draftPollyArm_bottom({
   Path,
@@ -12,8 +13,10 @@ function draftPollyArm_bottom({
   macro,
   part,
   sa,
+  store,
+  log,
 }) {
-  draft_path64(Path, Point, paths, points, measurements, options, utils, macro, part)
+  draft_path64(Path, Point, paths, points, measurements, options, utils, macro, part, store, log)
 
   macro('mirror', {
     clone: true,
@@ -35,6 +38,7 @@ function draftPollyArm_bottom({
 export const arm_bottom = {
   name: 'polly.arm_bottom',
   draft: draftPollyArm_bottom,
+  after: body_front,
 
   measurements: [
     // Enter the measurements your design needs here. See https://freesewing.dev/reference/measurements .

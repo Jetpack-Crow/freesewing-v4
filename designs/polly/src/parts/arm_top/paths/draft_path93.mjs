@@ -5,6 +5,7 @@ function draft_path93(Path, Point, paths, points, measurements, options, utils, 
   // m 245.113 369.027
   points.path93_p1 = new Point(245.1125, 369.0271)
   // c 15.6403 -0.30672 25.6438 -7.94185 32.5596 -12.3965
+  /*
   points.neckRight_cp1 = new Point(260.6403, 368.6933)
   points.neckRight_cp2 = new Point(270.6438, 361.0582)
   points.neckRight_ep = new Point(277.5596, 356.6035)
@@ -12,6 +13,7 @@ function draft_path93(Path, Point, paths, points, measurements, options, utils, 
   points.armWideRight_cp1 = new Point(302.2874, 422.1072)
   points.armWideRight_cp2 = new Point(316.5814, 503.7815)
   points.armWideRight_ep = new Point(317.1313, 565.6502)
+  */
   // c 0.54983 61.8687 -25.3772 117.991 -71.5642 118.667
   points.armBottom_cp1 = new Point(317.5498, 627.8687)
   points.armBottom_cp2 = new Point(291.6228, 683.9911)

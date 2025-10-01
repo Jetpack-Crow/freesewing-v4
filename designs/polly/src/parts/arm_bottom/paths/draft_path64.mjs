@@ -1,6 +1,18 @@
 import { scaleAllPoints } from '../../../shared.mjs'
 
-function draft_path64(Path, Point, paths, points, measurements, options, utils, macro, part) {
+function draft_path64(
+  Path,
+  Point,
+  paths,
+  points,
+  measurements,
+  options,
+  utils,
+  macro,
+  part,
+  store,
+  log
+) {
   // Path: path64
   // m 79.3917 371.74
   // c 33.1012 -0.59962 50.4497 -22.6328 61.6766 -30.8383
@@ -15,18 +27,7 @@ function draft_path64(Path, Point, paths, points, measurements, options, utils, 
   points.armWideRight_cp1 = new Point(145.5141, 452.2555)
   points.armWideRight_cp2 = new Point(167.3062, 527.2926)
   points.armWideRight_ep = new Point(137.4482, 569.7786)
-  // c -26.4789 32.1512 -86.9396 35.751 -113.271 2.20581
-  points.armWideLeft_cp1 = new Point(110.5211, 602.1512)
-  points.armWideLeft_cp2 = new Point(50.0604, 605.751)
-  points.armWideLeft_ep = new Point(23.7291, 572.2058)
-  // c -29.7894 -46.6465 -7.43748 -114.628 -3.57334 -165.295
-  points.armNarrowLeft_cp1 = new Point(-5.7894, 525.3534)
-  points.armNarrowLeft_cp2 = new Point(16.5625, 457.3721)
-  points.armNarrowLeft_ep = new Point(20.4267, 406.7054)
-  // c 0.97507 -20.1893 0.44914 -48.0516 -1.47854 -60.6205
-  points.armpitPointLeft_cp1 = new Point(20.9751, 386.8107)
-  points.armpitPointLeft_cp2 = new Point(20.4491, 358.9484)
-  points.armpitPointLeft_ep = new Point(18.5215, 346.3795)
+
   // c 10.2074 6.6545 26.6743 26.5798 59.7756 25.9802
   points.armpitCenter_cp1 = new Point(29.2074, 352.6545)
   points.armpitCenter_cp2 = new Point(45.6743, 372.5798)
@@ -43,6 +44,38 @@ function draft_path64(Path, Point, paths, points, measurements, options, utils, 
     // inkex.paths.curve: c 33.1012 -0.59962 50.4497 -22.6328 61.6766 -30.8383
     .curve(points.armpitPointRight_cp1, points.armpitPointRight_cp2, points.armpitPointRight_ep)
     .hide()
+
+  //Match armpit curve length
+  const armpitCurveFront = store.get('armpitCurveFront')
+  let armpitCurveBack = paths.armpitPath.length()
+
+  let delta = armpitCurveFront - armpitCurveBack
+  log.info('Armpit curve delta ' + delta)
+  let armpitIteration = 0
+
+  const shiftPoints = ['armpitPointRight_cp2', 'armpitPointRight_ep', 'armNarrowRight_cp1']
+
+  while (armpitIteration < 5 && Math.abs(delta) > 0.001 * options.totalSize) {
+    log.info('lower arm iteration ' + armpitIteration + ', delta = ' + delta)
+
+    //shift each point
+    for (let p of shiftPoints) {
+      points[p] = points[p].shift(0, delta)
+    }
+
+    //redraw the path
+    paths.armpitPath = new Path()
+      .move(points.armpitCenter_ep)
+      // inkex.paths.curve: c 33.1012 -0.59962 50.4497 -22.6328 61.6766 -30.8383
+      .curve(points.armpitPointRight_cp1, points.armpitPointRight_cp2, points.armpitPointRight_ep)
+      .hide()
+
+    //recalculate delta
+    armpitCurveBack = paths.armpitPath.length()
+    delta = armpitCurveFront - armpitCurveBack
+
+    armpitIteration = armpitIteration + 1
+  }
 
   paths.armCurvePath = new Path()
     .move(points.armpitPointRight_ep)

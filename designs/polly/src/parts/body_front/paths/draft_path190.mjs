@@ -28,7 +28,6 @@ function draft_path190(
   points.crotchCenter = new Point(136.3125, 409.6074)
   // c 8.53215 -0.22404 17.7678 -0.49973 23.4434 -0.66211
   points.crotchWidth_cp1 = new Point(144.5322, 409.776)
-  points.crotchWidth_cp2 = new Point(153.7678, 409.5003)
   points.crotchWidth_ep = new Point(159.4434, 409.3379)
   // c -7.23857 -23.8798 -5.28216 -60.9714 -3.98242 -91.459
   points.path190_p6_cp1 = new Point(151.7614, 385.1202)
@@ -102,11 +101,26 @@ function draft_path190(
   store.set('hipCurveFront', paths.hipCurve.length())
   log.info('Hip length front: ' + paths.hipCurve.length() + ' mm')
 
+  //Store armpit curve length
+  paths.armpitCurve = new Path()
+    .move(points.armpitSide_ep)
+    .curve(points.armpitCurve_cp1, points.armpitCurve_cp2, points.armpitCurve_ep)
+    // inkex.paths.curve: c -7.02217 -7.72509 -6.28038 -21.7507 -6.54688 -30.627
+    .curve(points.armpitNotch_cp1, points.armpitNotch_cp2, points.armpitNotch_ep)
+    .hide()
+  store.set('armpitCurveFront', paths.armpitCurve.length())
+
+  const crotchWidthFront = points.crotchWidth_ep.dist(points.crotchCenter)
+  store.set('crotchWidthFront', crotchWidthFront)
+
+  const raglanLengthFront = points.neckOuter_ep.dist(points.armpitNotch_ep)
+  store.set('raglanLengthFront', raglanLengthFront)
+
   paths.path190 = new Path()
     // inkex.paths.Move: M 163.803 0.845703
     .move(points.crotchCenter)
     // inkex.paths.curve: c 8.53215 -0.22404 17.7678 -0.49973 23.4434 -0.66211
-    .curve(points.crotchWidth_cp1, points.crotchWidth_cp2, points.crotchWidth_ep)
+    .line(points.crotchWidth_ep)
     // inkex.paths.curve: c -7.23857 -23.8798 -5.28216 -60.9714 -3.98242 -91.459
     .curve(points.path190_p6_cp1, points.path190_p6_cp2, points.path190_p6_ep)
     // inkex.paths.curve: c 0.65759 -15.4246 -0.44896 -40.479 5.94531 -45.9336
