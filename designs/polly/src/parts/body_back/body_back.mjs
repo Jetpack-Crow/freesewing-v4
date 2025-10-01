@@ -20,7 +20,7 @@ function draftPollyBody_back({
 
   if (sa) {
     paths.saBasis = paths.path85.reverse()
-    paths.sa = paths.saBasis.offset(sa).attr('class', 'fabric sa')
+    paths.sa = paths.saBasis.offset(sa).trim().attr('class', 'fabric sa')
   }
 
   return part

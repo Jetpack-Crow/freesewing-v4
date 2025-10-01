@@ -2,77 +2,95 @@ import { scaleAllPoints } from '../../../shared.mjs'
 
 function draft_path93(Path, Point, paths, points, measurements, options, utils, macro, part) {
   // Path: path93
-  // m 245.113 366.637
-  points.path93_p1 = new Point(245.1125, 366.6374)
+  // m 245.113 369.027
+  points.path93_p1 = new Point(245.1125, 369.0271)
   // c 15.6403 -0.30672 25.6438 -7.94185 32.5596 -12.3965
-  points.path93_p2_cp1 = new Point(260.6403, 366.6933)
-  points.path93_p2_cp2 = new Point(270.6438, 359.0582)
-  points.path93_p2_ep = new Point(277.5596, 354.6035)
-  // c 1.95509 6.88125 11.7478 29.9962 15.8573 45.5341
-  points.path93_p3_cp1 = new Point(279.9551, 361.8813)
-  points.path93_p3_cp2 = new Point(289.7478, 384.9962)
-  points.path93_p3_ep = new Point(293.8573, 400.534)
-  // c 8.50418 32.1536 24.4766 127.491 23.2739 163.116
-  points.path93_p4_cp1 = new Point(302.5042, 433.1536)
-  points.path93_p4_cp2 = new Point(318.4766, 528.4905)
-  points.path93_p4_ep = new Point(317.274, 564.1161)
-  // c -1.07974 31.9838 2.96202 68.7895 -15.8317 94.6916
-  points.path93_p5_cp1 = new Point(315.9203, 595.9838)
-  points.path93_p5_cp2 = new Point(319.962, 632.7895)
-  points.path93_p5_ep = new Point(301.1683, 658.6916)
-  // c -11.9112 16.4164 -33.6597 27.8801 -53.9402 28.1572
-  points.path93_p6_cp1 = new Point(289.0888, 675.4164)
-  points.path93_p6_cp2 = new Point(267.3403, 686.88)
-  points.path93_p6_ep = new Point(247.0598, 687.1572)
-  // c -22.0905 0.30185 -46.0952 -11.5461 -59.5703 -29.0533
-  points.path93_p7_cp1 = new Point(224.9095, 687.3018)
-  points.path93_p7_cp2 = new Point(200.9048, 675.4539)
-  points.path93_p7_ep = new Point(187.4297, 657.9467)
-  // c -19.3972 -25.2014 -17.375 -61.816 -18.481 -93.5987
-  points.path93_p8_cp1 = new Point(167.6028, 632.7986)
-  points.path93_p8_cp2 = new Point(169.625, 596.184)
-  points.path93_p8_ep = new Point(168.519, 564.4013)
-  // c -0.75712 -21.758 18.4985 -148.27 23.4119 -164.542
-  points.path93_p9_cp1 = new Point(168.2429, 542.242)
-  points.path93_p9_cp2 = new Point(187.4985, 415.7304)
-  points.path93_p9_ep = new Point(192.4119, 399.4581)
-  // c 4.59966 -15.2331 15.1707 -36.3212 19.8622 -43.4089
-  points.path93_p10_cp1 = new Point(196.5997, 383.7669)
-  points.path93_p10_cp2 = new Point(207.1707, 362.6788)
-  points.path93_p10_ep = new Point(211.8622, 355.5911)
+  points.neckRight_cp1 = new Point(260.6403, 368.6933)
+  points.neckRight_cp2 = new Point(270.6438, 361.0582)
+  points.neckRight_ep = new Point(277.5596, 356.6035)
+  // c 24.2874 65.1072 38.5814 146.781 39.1313 208.65
+  points.armWideRight_cp1 = new Point(302.2874, 422.1072)
+  points.armWideRight_cp2 = new Point(316.5814, 503.7815)
+  points.armWideRight_ep = new Point(317.1313, 565.6502)
+  // c 0.54983 61.8687 -25.3772 117.991 -71.5642 118.667
+  points.armBottom_cp1 = new Point(317.5498, 627.8687)
+  points.armBottom_cp2 = new Point(291.6228, 683.9911)
+  points.armBottom_ep = new Point(245.4358, 684.6668)
+  // c -46.959 0.68706 -82.2708 -50.5625 -76.259 -118.47
+  points.armWideLeft_cp1 = new Point(198.041, 685.6871)
+  points.armWideLeft_cp2 = new Point(162.7292, 634.4375)
+  points.armWideLeft_ep = new Point(168.741, 566.5299)
+  // c 6.01177 -67.9076 7.20623 -149.982 43.2741 -207.951
+  points.neckLeft_cp1 = new Point(175.0118, 499.0924)
+  points.neckLeft_cp2 = new Point(176.2062, 417.0177)
+  points.neckLeft_ep = new Point(212.2741, 359.0492)
   // c 7.8373 4.71393 17.218 11.8071 32.8583 11.5004
-  points.path93_p11_cp1 = new Point(219.8373, 360.7139)
-  points.path93_p11_cp2 = new Point(229.218, 367.8071)
-  points.path93_p11_ep = new Point(244.8583, 367.5004)
+  points.neckCenter_cp1 = new Point(219.8373, 363.7139)
+  points.neckCenter_cp2 = new Point(229.218, 370.8071)
+  points.neckCenter_ep = new Point(244.8583, 370.5004)
   // z
 
   scaleAllPoints(part, options.totalSize)
 
-  paths.path93 = new Path()
-    // inkex.paths.move: m 245.113 366.637
-    .move(points.path93_p1)
-    // inkex.paths.curve: c 15.6403 -0.30672 25.6438 -7.94185 32.5596 -12.3965
-    .curve(points.path93_p2_cp1, points.path93_p2_cp2, points.path93_p2_ep)
-    // inkex.paths.curve: c 1.95509 6.88125 11.7478 29.9962 15.8573 45.5341
-    .curve(points.path93_p3_cp1, points.path93_p3_cp2, points.path93_p3_ep)
-    // inkex.paths.curve: c 8.50418 32.1536 24.4766 127.491 23.2739 163.116
-    .curve(points.path93_p4_cp1, points.path93_p4_cp2, points.path93_p4_ep)
-    // inkex.paths.curve: c -1.07974 31.9838 2.96202 68.7895 -15.8317 94.6916
-    .curve(points.path93_p5_cp1, points.path93_p5_cp2, points.path93_p5_ep)
-    // inkex.paths.curve: c -11.9112 16.4164 -33.6597 27.8801 -53.9402 28.1572
-    .curve(points.path93_p6_cp1, points.path93_p6_cp2, points.path93_p6_ep)
-    // inkex.paths.curve: c -22.0905 0.30185 -46.0952 -11.5461 -59.5703 -29.0533
-    .curve(points.path93_p7_cp1, points.path93_p7_cp2, points.path93_p7_ep)
-    // inkex.paths.curve: c -19.3972 -25.2014 -17.375 -61.816 -18.481 -93.5987
-    .curve(points.path93_p8_cp1, points.path93_p8_cp2, points.path93_p8_ep)
-    // inkex.paths.curve: c -0.75712 -21.758 18.4985 -148.27 23.4119 -164.542
-    .curve(points.path93_p9_cp1, points.path93_p9_cp2, points.path93_p9_ep)
-    // inkex.paths.curve: c 4.59966 -15.2331 15.1707 -36.3212 19.8622 -43.4089
-    .curve(points.path93_p10_cp1, points.path93_p10_cp2, points.path93_p10_ep)
+  paths.armCurve = new Path()
+    .move(points.armBottom_ep)
+    .curve(points.armWideLeft_cp1, points.armWideLeft_cp2, points.armWideLeft_ep)
+    .curve(points.neckLeft_cp1, points.neckLeft_cp2, points.neckLeft_ep)
+    .hide()
+
+  paths.neckCurve = new Path()
+    .move(points.neckLeft_ep)
     // inkex.paths.curve: c 7.8373 4.71393 17.218 11.8071 32.8583 11.5004
-    .curve(points.path93_p11_cp1, points.path93_p11_cp2, points.path93_p11_ep)
-    // inkex.paths.zoneClose: z
-    .line(points.path93_p1)
+    .curve(points.neckCenter_cp1, points.neckCenter_cp2, points.neckCenter_ep)
+    .hide()
+
+  paths.path93 = paths.armCurve.join(paths.neckCurve)
+  //.hide()
+
+  /*
+  paths.path93 = new Path()
+      // inkex.paths.move: m 245.113 369.027
+      .move(points.path93_p1)
+      // inkex.paths.curve: c 15.6403 -0.30672 25.6438 -7.94185 32.5596 -12.3965
+      .curve(
+          points.neckRight_cp1,
+          points.neckRight_cp2,
+          points.neckRight_ep
+      )
+      // inkex.paths.curve: c 24.2874 65.1072 38.5814 146.781 39.1313 208.65
+      .curve(
+          points.armWideRight_cp1,
+          points.armWideRight_cp2,
+          points.armWideRight_ep
+      )
+      // inkex.paths.curve: c 0.54983 61.8687 -25.3772 117.991 -71.5642 118.667
+      .curve(
+          points.armBottom_cp1,
+          points.armBottom_cp2,
+          points.armBottom_ep
+      )
+      // inkex.paths.curve: c -46.959 0.68706 -82.2708 -50.5625 -76.259 -118.47
+      .curve(
+          points.armWideLeft_cp1,
+          points.armWideLeft_cp2,
+          points.armWideLeft_ep
+      )
+      // inkex.paths.curve: c 6.01177 -67.9076 7.20623 -149.982 43.2741 -207.951
+      .curve(
+          points.neckLeft_cp1,
+          points.neckLeft_cp2,
+          points.neckLeft_ep
+      )
+      // inkex.paths.curve: c 7.8373 4.71393 17.218 11.8071 32.8583 11.5004
+      .curve(
+          points.neckCenter_cp1,
+          points.neckCenter_cp2,
+          points.neckCenter_ep
+      )
+      // inkex.paths.zoneClose: z
+      .line(points.path93_p1)
+      .hide()
+    */
 }
 
 export { draft_path93 }

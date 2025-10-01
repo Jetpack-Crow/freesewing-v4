@@ -17,7 +17,9 @@ function draftPollyFoot({
 
   const circumference = store.get('legBottomLength')
 
-  points.center.addCircle(circumference / (2 * 3.14))
+  points.center.addCircle(circumference / (2 * 3.14), 'fabric')
+
+  if (sa) points.center.addCircle(sa + circumference / (2 * 3.14), 'fabric sa')
 
   macro('title', { at: points.center, nr: 4, title: 'foot', scale: options.totalSize })
 

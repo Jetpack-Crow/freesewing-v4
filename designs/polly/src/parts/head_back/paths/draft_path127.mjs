@@ -78,7 +78,7 @@ function draft_path127(Path, Point, paths, points, measurements, options, utils,
     // inkex.paths.Curve: C 90.9817 40.5134 69.3601 61.2949 43.4626 83.938
     .curve(points.dartTop_cp1, points.dartTop_cp2, points.dartTop_ep)
     // inkex.paths.ZoneClose: Z
-    .line(points.path127_p1)
+    .close()
 }
 
 export { draft_path127 }

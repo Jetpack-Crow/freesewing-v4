@@ -11,8 +11,23 @@ function draftPollyArm_bottom({
   utils,
   macro,
   part,
+  sa,
 }) {
   draft_path64(Path, Point, paths, points, measurements, options, utils, macro, part)
+
+  macro('mirror', {
+    clone: true,
+    mirror: [points.armpitCenter_ep, points.curveBottom],
+    paths: Object.keys(paths),
+  })
+
+  if (sa) {
+    paths.saBasis = paths.path64.join(paths.mirroredPath64.reverse()).reverse()
+    paths.sa = paths.saBasis.offset(sa).attr('class', 'fabric sa')
+  }
+
+  points.title = points.armpitCenter_ep.shiftFractionTowards(points.curveBottom, 0.5)
+  macro('title', { at: points.title, nr: 6, title: 'arm_bottom', scale: options.totalSize })
 
   return part
 }

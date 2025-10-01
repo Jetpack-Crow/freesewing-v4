@@ -24,7 +24,7 @@ function draftPollyBody_front({
 
   if (sa) {
     paths.saBasis = paths.path190.join(paths.mirroredPath190.reverse())
-    paths.sa = paths.saBasis.offset(sa).attr('class', 'fabric sa')
+    paths.sa = paths.saBasis.offset(sa).trim().attr('class', 'fabric sa')
   }
 
   points.title = points.neckCenter_ep.shiftFractionTowards(points.crotchCenter, 0.5)
