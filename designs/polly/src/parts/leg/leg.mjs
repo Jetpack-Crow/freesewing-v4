@@ -12,8 +12,17 @@ function draftPollyLeg({
   macro,
   part,
   store,
+  sa,
 }) {
   draft_path128(Path, Point, paths, points, measurements, options, utils, macro, part, store)
+
+  points.title = points.legEndRight_ep.shiftFractionTowards(points.legTopLeft_ep, 0.5)
+  macro('title', { at: points.title, nr: 3, title: 'leg', scale: options.totalSize })
+
+  if (sa) {
+    paths.saBasis = paths.path128
+    paths.sa = paths.saBasis.offset(sa).attr('class', 'fabric sa')
+  }
 
   return part
 }
@@ -26,16 +35,11 @@ export const leg = {
     // Enter the measurements your design needs here. See https://freesewing.dev/reference/measurements .
   ],
   options: {
-    // Enter your pattern options here. Example:
-    /*
-        extraLength: {
-            pct: 10,
-            min: 5,
-            max: 20,
-            label: 'Extra length',
-            menu: 'fit',
-            ...pctBasedOn('neck')
-        }
-        */
+    legFlare: {
+      pct: 100,
+      min: 20,
+      max: 200,
+      menu: 'style',
+    },
   },
 }

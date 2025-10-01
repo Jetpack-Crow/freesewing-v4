@@ -46,7 +46,7 @@ function draft_path64(Path, Point, paths, points, measurements, options, utils, 
   points.path64_p11_ep = new Point(77.7756, 371.9802)
   // z
 
-  scaleAllPoints(part, options.totalsize)
+  scaleAllPoints(part, options.totalSize)
 
   paths.path64 = new Path()
     // inkex.paths.move: m 79.3917 371.74

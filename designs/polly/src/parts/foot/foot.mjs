@@ -11,12 +11,17 @@ function draftPollyFoot({
   macro,
   part,
   store,
+  sa,
 }) {
   points.center = new Point(0, 0)
 
   const circumference = store.get('legBottomLength')
 
   points.center.addCircle(circumference / (2 * 3.14))
+
+  macro('title', { at: points.center, nr: 4, title: 'foot', scale: options.totalSize })
+
+  //console.log({ points: JSON.parse(JSON.stringify(points)), paths: JSON.parse(JSON.stringify(paths)) })
 
   return part
 }

@@ -9,11 +9,11 @@ function draft_path190(Path, Point, paths, points, measurements, options, utils,
   points.path190_p2_cp2 = new Point(154.8418, 4.2209)
   points.path190_p2_ep = new Point(150.1719, 5.1836)
   // C 145.289 6.19022 139.269 6.67263 135.287 6.6543
-  points.path190_p3_cp1 = new Point(145.2889, 6.1902)
-  points.path190_p3_cp2 = new Point(139.269, 6.6726)
-  points.path190_p3_ep = new Point(135.2871, 6.6543)
+  points.neckCenter_cp1 = new Point(145.2889, 6.1902)
+  points.neckCenter_cp2 = new Point(139.269, 6.6726)
+  points.neckCenter_ep = new Point(135.2871, 6.6543)
   // l 1.3125 402.607
-  points.path190_p4 = new Point(136.3125, 409.6074)
+  points.crotchCenter = new Point(136.3125, 409.6074)
   // c 8.53215 -0.22404 17.7678 -0.49973 23.4434 -0.66211
   points.path190_p5_cp1 = new Point(144.5322, 409.776)
   points.path190_p5_cp2 = new Point(153.7678, 409.5003)
@@ -64,17 +64,11 @@ function draft_path190(Path, Point, paths, points, measurements, options, utils,
   points.path190_p16_ep = new Point(163.8027, 0.8457)
   // Z
 
-  scaleAllPoints(part, options.totalsize)
+  scaleAllPoints(part, options.totalSize)
 
   paths.path190 = new Path()
     // inkex.paths.Move: M 163.803 0.845703
-    .move(points.path190_p1)
-    // inkex.paths.Curve: C 158.263 3.02254 154.842 4.22089 150.172 5.18359
-    .curve(points.path190_p2_cp1, points.path190_p2_cp2, points.path190_p2_ep)
-    // inkex.paths.Curve: C 145.289 6.19022 139.269 6.67263 135.287 6.6543
-    .curve(points.path190_p3_cp1, points.path190_p3_cp2, points.path190_p3_ep)
-    // inkex.paths.line: l 1.3125 402.607
-    .line(points.path190_p4)
+    .move(points.crotchCenter)
     // inkex.paths.curve: c 8.53215 -0.22404 17.7678 -0.49973 23.4434 -0.66211
     .curve(points.path190_p5_cp1, points.path190_p5_cp2, points.path190_p5_ep)
     // inkex.paths.curve: c -7.23857 -23.8798 -5.28216 -60.9714 -3.98242 -91.459
@@ -101,6 +95,11 @@ function draft_path190(Path, Point, paths, points, measurements, options, utils,
     .curve(points.path190_p16_cp1, points.path190_p16_cp2, points.path190_p16_ep)
     // inkex.paths.ZoneClose: Z
     .line(points.path190_p1)
+    // inkex.paths.Curve: C 158.263 3.02254 154.842 4.22089 150.172 5.18359
+    .curve(points.path190_p2_cp1, points.path190_p2_cp2, points.path190_p2_ep)
+    // inkex.paths.Curve: C 145.289 6.19022 139.269 6.67263 135.287 6.6543
+    .curve(points.neckCenter_cp1, points.neckCenter_cp2, points.neckCenter_ep)
+  // inkex.paths.line: l 1.3125 402.607
 }
 
 export { draft_path190 }

@@ -4,6 +4,12 @@ import { draft_path254 } from './paths/draft_path254.mjs'
 function draftPollyFace({ Path, Point, paths, points, measurements, options, utils, macro, part }) {
   draft_path254(Path, Point, paths, points, measurements, options, utils, macro, part)
 
+  macro('mirror', {
+    clone: true,
+    mirror: [points.faceTop_ep, points.chinCenter],
+    paths: Object.keys(paths),
+  })
+
   return part
 }
 

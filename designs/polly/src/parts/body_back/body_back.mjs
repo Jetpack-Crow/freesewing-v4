@@ -11,8 +11,17 @@ function draftPollyBody_back({
   utils,
   macro,
   part,
+  sa,
 }) {
   draft_path85(Path, Point, paths, points, measurements, options, utils, macro, part)
+
+  points.title = points.armpitBottom_ep.shiftFractionTowards(points.crotchCenter_ep, 0.5)
+  macro('title', { at: points.title, nr: 2, title: 'body_back', scale: options.totalSize })
+
+  if (sa) {
+    paths.saBasis = paths.path85.reverse()
+    paths.sa = paths.saBasis.offset(sa).attr('class', 'fabric sa')
+  }
 
   return part
 }

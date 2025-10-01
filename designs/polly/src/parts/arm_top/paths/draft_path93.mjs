@@ -46,7 +46,7 @@ function draft_path93(Path, Point, paths, points, measurements, options, utils, 
   points.path93_p11_ep = new Point(244.8583, 367.5004)
   // z
 
-  scaleAllPoints(part, options.totalsize)
+  scaleAllPoints(part, options.totalSize)
 
   paths.path93 = new Path()
     // inkex.paths.move: m 245.113 366.637

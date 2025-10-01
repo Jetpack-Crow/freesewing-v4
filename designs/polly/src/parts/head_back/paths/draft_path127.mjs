@@ -50,7 +50,7 @@ function draft_path127(Path, Point, paths, points, measurements, options, utils,
   points.dartTop_ep = new Point(43.4626, 83.938)
   // Z
 
-  scaleAllPoints(part, options.totalsize)
+  scaleAllPoints(part, options.totalSize)
 
   paths.path127 = new Path()
     // inkex.paths.move: m 43.4626 83.938

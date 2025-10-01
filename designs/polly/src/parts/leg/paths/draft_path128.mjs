@@ -14,19 +14,17 @@ function draft_path128(
 ) {
   // Path: path128
   // m 337.139 747.8
-  points.path128_p1 = new Point(337.1393, 747.8003)
+  points.path128_p1 = new Point(337.1393, 750)
   // c 44.0098 1.96676 112.022 9.14853 168.126 8.29219
   points.path128_p2_cp1 = new Point(381.0098, 749.9668)
   points.path128_p2_cp2 = new Point(449.0224, 757.1485)
   points.path128_p2_ep = new Point(505.1261, 756.2922)
   // c 54.6489 -0.83413 140.478 -9.15975 163.444 -13.0716
-  points.path128_p3_cp1 = new Point(559.6489, 755.1659)
-  points.path128_p3_cp2 = new Point(645.4783, 746.8402)
-  points.path128_p3_ep = new Point(668.444, 742.9284)
+  points.legEndRight_ep = new Point(644.4018, 750)
   // c -9.01574 -88.3579 -18.3812 -179.55 -23.5982 -268.243
-  points.path128_p4_cp1 = new Point(658.9843, 654.6421)
-  points.path128_p4_cp2 = new Point(649.6188, 563.4497)
-  points.path128_p4_ep = new Point(644.4018, 474.7568)
+  points.legTopRight_cp1 = new Point(658.9843, 654.6421)
+  points.legTopRight_cp2 = new Point(649.6188, 563.4497)
+  points.legTopRight_ep = new Point(644.4018, 474.7568)
   // c -10.5848 -0.68171 -28.4322 -1.25095 -42.2498 -4.3326
   points.path128_p5_cp1 = new Point(633.4152, 474.3183)
   points.path128_p5_cp2 = new Point(615.5678, 473.7491)
@@ -48,25 +46,34 @@ function draft_path128(
   points.path128_p9_cp2 = new Point(416.3946, 459.6016)
   points.path128_p9_ep = new Point(398.3752, 469.599)
   // c -21.9578 12.1825 -52.0848 10.2192 -74.3792 11.9485
-  points.path128_p10_cp1 = new Point(376.0422, 482.1825)
-  points.path128_p10_cp2 = new Point(345.9152, 480.2192)
-  points.path128_p10_ep = new Point(323.6208, 481.9485)
+  points.legTopLeft_cp1 = new Point(376.0422, 482.1825)
+  points.legTopLeft_cp2 = new Point(345.9152, 480.2192)
+  points.legTopLeft_ep = new Point(323.6208, 481.9485)
   // c 5.23663 82.4291 8.62003 171.002 12.5459 266.75
-  points.path128_p11_cp1 = new Point(329.2366, 564.4291)
-  points.path128_p11_cp2 = new Point(332.62, 653.0022)
-  points.path128_p11_ep = new Point(336.5459, 748.7496)
+  points.legEndLeft_ep = new Point(323.6208, 750)
   // z
 
-  scaleAllPoints(part, options.totalsize)
+  scaleAllPoints(part, options.totalSize)
 
-  store.set('legBottomLength', points.path128_p3_ep.dist(points.path128_p11_ep))
+  points.legBottomCenter = points.legEndLeft_ep.shiftFractionTowards(points.legEndRight_ep, 0.5)
+
+  points.legEndLeft_ep = points.legEndLeft_ep.shiftFractionTowards(
+    points.legBottomCenter,
+    1 - options.legFlare
+  )
+  points.legEndRight_ep = points.legEndRight_ep.shiftFractionTowards(
+    points.legBottomCenter,
+    1 - options.legFlare
+  )
+
+  store.set('legBottomLength', points.legEndRight_ep.dist(points.legEndLeft_ep))
 
   paths.path128 = new Path()
     // inkex.paths.move: m 337.139 747.8
-    .move(points.path128_p1)
-    .line(points.path128_p3_ep)
+    .move(points.legEndLeft_ep)
+    .line(points.legEndRight_ep)
     // inkex.paths.curve: c -9.01574 -88.3579 -18.3812 -179.55 -23.5982 -268.243
-    .curve(points.path128_p4_cp1, points.path128_p4_cp2, points.path128_p4_ep)
+    .line(points.legTopRight_ep)
     // inkex.paths.curve: c -10.5848 -0.68171 -28.4322 -1.25095 -42.2498 -4.3326
     .curve(points.path128_p5_cp1, points.path128_p5_cp2, points.path128_p5_ep)
     // inkex.paths.curve: c -18.3852 -4.10031 -36.7639 -9.71674 -53.3379 -18.6682
@@ -78,11 +85,11 @@ function draft_path128(
     // inkex.paths.curve: c -19.0729 7.80208 -22.6054 36.6016 -40.6248 46.599
     .curve(points.path128_p9_cp1, points.path128_p9_cp2, points.path128_p9_ep)
     // inkex.paths.curve: c -21.9578 12.1825 -52.0848 10.2192 -74.3792 11.9485
-    .curve(points.path128_p10_cp1, points.path128_p10_cp2, points.path128_p10_ep)
+    .curve(points.legTopLeft_cp1, points.legTopLeft_cp2, points.legTopLeft_ep)
     // inkex.paths.curve: c 5.23663 82.4291 8.62003 171.002 12.5459 266.75
-    .curve(points.path128_p11_cp1, points.path128_p11_cp2, points.path128_p11_ep)
+    .line(points.legEndLeft_ep)
     // inkex.paths.zoneClose: z
-    .line(points.path128_p1)
+    .close()
 }
 
 export { draft_path128 }
