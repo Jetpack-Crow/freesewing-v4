@@ -1,6 +1,18 @@
 import { scaleAllPoints } from '../../../shared.mjs'
 
-function draft_path85(Path, Point, paths, points, measurements, options, utils, macro, part) {
+function draft_path85(
+  Path,
+  Point,
+  paths,
+  points,
+  measurements,
+  options,
+  utils,
+  macro,
+  part,
+  store,
+  log
+) {
   // Path: path85
   // m 472.983 12.8617
   points.path85_p1 = new Point(472.9833, 12.8617)
@@ -48,6 +60,25 @@ function draft_path85(Path, Point, paths, points, measurements, options, utils, 
   // z
 
   scaleAllPoints(part, options.totalSize)
+
+  let sideSeamBackLength = points.armpitBottom_ep.dist(points.hipOuter_ep)
+  const sideSeamFrontLength = store.get('sideSeamFrontLength')
+  log.info('Side seam back length is ' + sideSeamBackLength + ' mm')
+
+  let delta = sideSeamFrontLength - sideSeamBackLength
+
+  let iteration = 0
+
+  while (iteration < 5 && delta > 0.001 * options.totalSize) {
+    log.info('Iteration ' + iteration + ', delta = ' + delta)
+
+    points.hipOuter_ep = points.hipOuter_ep.shift(-90, delta)
+
+    let sideSeamBackLength = points.armpitBottom_ep.dist(points.hipOuter_ep)
+    delta = sideSeamFrontLength - sideSeamBackLength
+
+    iteration = iteration + 1
+  }
 
   paths.path85 = new Path()
     // inkex.paths.move: m 472.983 12.8617

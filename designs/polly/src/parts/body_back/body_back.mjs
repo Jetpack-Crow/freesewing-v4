@@ -1,5 +1,6 @@
 import { pctBasedOn } from '@freesewing/core'
 import { draft_path85 } from './paths/draft_path85.mjs'
+import { body_front } from '../body_front/body_front.mjs'
 
 function draftPollyBody_back({
   Path,
@@ -12,8 +13,10 @@ function draftPollyBody_back({
   macro,
   part,
   sa,
+  store,
+  log,
 }) {
-  draft_path85(Path, Point, paths, points, measurements, options, utils, macro, part)
+  draft_path85(Path, Point, paths, points, measurements, options, utils, macro, part, store, log)
 
   points.title = points.armpitBottom_ep.shiftFractionTowards(points.crotchCenter_ep, 0.5)
   macro('title', { at: points.title, nr: 2, title: 'body_back', scale: options.totalSize })
@@ -29,6 +32,7 @@ function draftPollyBody_back({
 export const body_back = {
   name: 'polly.body_back',
   draft: draftPollyBody_back,
+  after: body_front,
 
   measurements: [
     // Enter the measurements your design needs here. See https://freesewing.dev/reference/measurements .

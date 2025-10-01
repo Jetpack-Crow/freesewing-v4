@@ -11,8 +11,10 @@ function draftPollyBody_front({
   macro,
   part,
   sa,
+  store,
+  log,
 }) {
-  draft_path190(Path, Point, paths, points, measurements, options, utils, macro, part)
+  draft_path190(Path, Point, paths, points, measurements, options, utils, macro, part, store, log)
 
   paths.mirror = new Path().move(points.neckCenter_ep).line(points.crotchCenter).hide()
 
