@@ -1,8 +1,19 @@
 import { pctBasedOn } from '@freesewing/core'
 import { draft_path128 } from './paths/draft_path128.mjs'
 
-function draftPollyLeg({ Path, Point, paths, points, measurements, options, utils, macro, part }) {
-  draft_path128(Path, Point, paths, points, measurements, options, utils, macro, part)
+function draftPollyLeg({
+  Path,
+  Point,
+  paths,
+  points,
+  measurements,
+  options,
+  utils,
+  macro,
+  part,
+  store,
+}) {
+  draft_path128(Path, Point, paths, points, measurements, options, utils, macro, part, store)
 
   return part
 }

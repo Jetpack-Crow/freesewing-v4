@@ -1,6 +1,17 @@
 import { scaleAllPoints } from '../../../shared.mjs'
 
-function draft_path128(Path, Point, paths, points, measurements, options, utils, macro, part) {
+function draft_path128(
+  Path,
+  Point,
+  paths,
+  points,
+  measurements,
+  options,
+  utils,
+  macro,
+  part,
+  store
+) {
   // Path: path128
   // m 337.139 747.8
   points.path128_p1 = new Point(337.1393, 747.8003)
@@ -48,13 +59,12 @@ function draft_path128(Path, Point, paths, points, measurements, options, utils,
 
   scaleAllPoints(part, options.totalsize)
 
+  store.set('legBottomLength', points.path128_p3_ep.dist(points.path128_p11_ep))
+
   paths.path128 = new Path()
     // inkex.paths.move: m 337.139 747.8
     .move(points.path128_p1)
-    // inkex.paths.curve: c 44.0098 1.96676 112.022 9.14853 168.126 8.29219
-    .curve(points.path128_p2_cp1, points.path128_p2_cp2, points.path128_p2_ep)
-    // inkex.paths.curve: c 54.6489 -0.83413 140.478 -9.15975 163.444 -13.0716
-    .curve(points.path128_p3_cp1, points.path128_p3_cp2, points.path128_p3_ep)
+    .line(points.path128_p3_ep)
     // inkex.paths.curve: c -9.01574 -88.3579 -18.3812 -179.55 -23.5982 -268.243
     .curve(points.path128_p4_cp1, points.path128_p4_cp2, points.path128_p4_ep)
     // inkex.paths.curve: c -10.5848 -0.68171 -28.4322 -1.25095 -42.2498 -4.3326

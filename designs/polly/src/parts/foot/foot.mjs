@@ -1,8 +1,22 @@
-import { pctBasedOn } from '@freesewing/core'
-import { draft_path38 } from './paths/draft_path38.mjs'
+import { leg } from '../leg/leg.mjs'
 
-function draftPollyFoot({ Path, Point, paths, points, measurements, options, utils, macro, part }) {
-  draft_path38(Path, Point, paths, points, measurements, options, utils, macro, part)
+function draftPollyFoot({
+  Path,
+  Point,
+  paths,
+  points,
+  measurements,
+  options,
+  utils,
+  macro,
+  part,
+  store,
+}) {
+  points.center = new Point(0, 0)
+
+  const circumference = store.get('legBottomLength')
+
+  points.center.addCircle(circumference / (2 * 3.14))
 
   return part
 }
@@ -10,6 +24,8 @@ function draftPollyFoot({ Path, Point, paths, points, measurements, options, uti
 export const foot = {
   name: 'polly.foot',
   draft: draftPollyFoot,
+
+  after: leg,
 
   measurements: [
     // Enter the measurements your design needs here. See https://freesewing.dev/reference/measurements .
