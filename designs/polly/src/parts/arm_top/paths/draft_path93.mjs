@@ -34,6 +34,21 @@ function draft_path93(Path, Point, paths, points, measurements, options, utils, 
 
   scaleAllPoints(part, options.totalSize)
 
+  //Style: Adjust length
+  const vertShiftPoints = [
+    'armBottom_ep',
+    'armBottom_cp1',
+    'armBottom_cp2',
+    'armWideLeft_ep',
+    'armWideLeft_cp1',
+    'armWideLeft_cp2',
+    'neckLeft_cp1',
+  ]
+
+  for (let p of vertShiftPoints) {
+    points[p] = points[p].shift(-90, 300 * options.totalSize * (options.armLength - 1))
+  }
+
   paths.armCurve = new Path()
     .move(points.armBottom_ep)
     .curve(points.armWideLeft_cp1, points.armWideLeft_cp2, points.armWideLeft_ep)
@@ -48,51 +63,6 @@ function draft_path93(Path, Point, paths, points, measurements, options, utils, 
 
   paths.path93 = paths.armCurve.join(paths.neckCurve)
   //.hide()
-
-  /*
-  paths.path93 = new Path()
-      // inkex.paths.move: m 245.113 369.027
-      .move(points.path93_p1)
-      // inkex.paths.curve: c 15.6403 -0.30672 25.6438 -7.94185 32.5596 -12.3965
-      .curve(
-          points.neckRight_cp1,
-          points.neckRight_cp2,
-          points.neckRight_ep
-      )
-      // inkex.paths.curve: c 24.2874 65.1072 38.5814 146.781 39.1313 208.65
-      .curve(
-          points.armWideRight_cp1,
-          points.armWideRight_cp2,
-          points.armWideRight_ep
-      )
-      // inkex.paths.curve: c 0.54983 61.8687 -25.3772 117.991 -71.5642 118.667
-      .curve(
-          points.armBottom_cp1,
-          points.armBottom_cp2,
-          points.armBottom_ep
-      )
-      // inkex.paths.curve: c -46.959 0.68706 -82.2708 -50.5625 -76.259 -118.47
-      .curve(
-          points.armWideLeft_cp1,
-          points.armWideLeft_cp2,
-          points.armWideLeft_ep
-      )
-      // inkex.paths.curve: c 6.01177 -67.9076 7.20623 -149.982 43.2741 -207.951
-      .curve(
-          points.neckLeft_cp1,
-          points.neckLeft_cp2,
-          points.neckLeft_ep
-      )
-      // inkex.paths.curve: c 7.8373 4.71393 17.218 11.8071 32.8583 11.5004
-      .curve(
-          points.neckCenter_cp1,
-          points.neckCenter_cp2,
-          points.neckCenter_ep
-      )
-      // inkex.paths.zoneClose: z
-      .line(points.path93_p1)
-      .hide()
-    */
 }
 
 export { draft_path93 }

@@ -1,74 +1,64 @@
 import { scaleAllPoints } from '../../../shared.mjs'
 
 function draft_path254(Path, Point, paths, points, measurements, options, utils, macro, part) {
-  // Path: path254
-  // m 187.293 21.209
-  points.path254_p1 = new Point(187.293, 21.209)
-  // l -0.39649 305.119
-  points.chinCenter = new Point(186.6035, 326.1191)
-  // c 23.6447 0.41308 36.5269 6.76345 49.8828 23.5938
-  points.dartLowerBottom_cp1 = new Point(210.6447, 326.4131)
-  points.dartLowerBottom_cp2 = new Point(223.5269, 332.7634)
-  points.dartLowerBottom_ep = new Point(236.8828, 349.5938)
-  // c -2.76891 -16.4376 -11.0619 -55.5334 -17.4434 -78.5449
-  points.dartLowerEnd_cp1 = new Point(234.2311, 333.5624)
-  points.dartLowerEnd_cp2 = new Point(225.9381, 294.4666)
-  points.dartLowerEnd_ep = new Point(219.5566, 271.4551)
-  // c 20.7026 27.5104 41.6562 50.8871 74.5879 63.9707
-  points.dartLowerTop_cp1 = new Point(240.7026, 298.5104)
-  points.dartLowerTop_cp2 = new Point(261.6562, 321.8871)
-  points.dartLowerTop_ep = new Point(294.5879, 334.9707)
-  // c 38.3553 -58.3976 64.4057 -111.882 64.2773 -201.434
-  points.dartUpperBottom_cp1 = new Point(333.3553, 276.6024)
-  points.dartUpperBottom_cp2 = new Point(359.4057, 223.1177)
-  points.dartUpperBottom_ep = new Point(359.2773, 133.5664)
-  // c -12.837 -0.80124 -39.0776 -1.65681 -58.2266 1.55078
-  points.path254_p7_cp1 = new Point(346.163, 133.1988)
-  points.path254_p7_cp2 = new Point(319.9224, 132.3432)
-  points.path254_p7_ep = new Point(300.7734, 135.5508)
-  // c -20.256 3.39303 -44.3728 10.0496 -58.7656 18.5215
-  points.dartUpperPoint_cp1 = new Point(280.744, 139.393)
-  points.dartUpperPoint_cp2 = new Point(256.6272, 146.0496)
-  points.dartUpperPoint_ep = new Point(242.2344, 154.5215)
-  // c 17.3817 -15.183 31.9472 -33.0754 44.6914 -52.0684
-  points.path254_p9_cp1 = new Point(259.3817, 139.817)
-  points.path254_p9_cp2 = new Point(273.9472, 121.9246)
-  points.path254_p9_ep = new Point(286.6914, 102.9316)
-  // C 295.86 87.0744 302.388 71.1712 310.316 54.1719
-  points.dartUpperTop_cp1 = new Point(295.8604, 87.0744)
-  points.dartUpperTop_cp2 = new Point(302.3879, 71.1712)
-  points.dartUpperTop_ep = new Point(310.3164, 54.1719)
-  // C 282.506 41.3202 238.267 19.8402 187.293 21.209
-  points.faceTop_cp1 = new Point(282.5062, 41.3202)
-  points.faceTop_cp2 = new Point(238.2675, 19.8402)
-  points.faceTop_ep = new Point(187.293, 21.209)
-  // Z
+  // Path: path1
+  // m 188.487 20.9453
+  points.headTopCenter = new Point(188, 20.9453)
+  // c 46.1322 -0.618836 96.0851 17.0327 122.472 32.8583
+  points.dartUpperTop_cp1 = new Point(234.1322, 20.3812)
+  points.dartUpperTop_cp2 = new Point(284.0851, 38.0327)
+  points.dartUpperTop_ep = new Point(310.4718, 53.8583)
+  // c -6.65939 27.5584 -34.1572 68.3735 -64.4763 98.886
+  points.dartUpperPoint_cp1 = new Point(303.3406, 81.5584)
+  points.dartUpperPoint_cp2 = new Point(275.8428, 122.3735)
+  points.dartUpperPoint_ep = new Point(245.5237, 152.886)
+  // c 38.444 -15.0305 81.68 -25.4915 117.013 -24.4661
+  points.dartUpperBottom_cp1 = new Point(284.444, 137.9695)
+  points.dartUpperBottom_cp2 = new Point(327.68, 127.5085)
+  points.dartUpperBottom_ep = new Point(363.0133, 128.5339)
+  // c 2.82067 68.5525 -10.7277 116.682 -27.8765 168.557
+  points.dartLowerTop_cp1 = new Point(365.8207, 197.5525)
+  points.dartLowerTop_cp2 = new Point(352.2723, 245.6818)
+  points.dartLowerTop_ep = new Point(335.1235, 297.5565)
+  // c -28.4591 -8.52216 -54.7292 -20.6781 -82.76 -36.7159
+  points.dartLowerPoint_cp1 = new Point(306.5409, 289.4778)
+  points.dartLowerPoint_cp2 = new Point(280.2708, 277.3219)
+  points.dartLowerPoint_ep = new Point(252.24, 261.2841)
+  // c 18.5912 26.8278 32.4837 55.7392 43.7613 76.6196
+  points.dartLowerBottom_cp1 = new Point(270.5912, 287.8278)
+  points.dartLowerBottom_cp2 = new Point(284.4837, 316.7392)
+  points.dartLowerBottom_ep = new Point(295.7613, 337.6196)
+  // c -13.9665 9.79401 -25.2608 14.1619 -39.1394 21.3312
+  points.neckEdge_cp1 = new Point(282.0335, 347.794)
+  points.neckEdge_cp2 = new Point(270.7392, 352.1619)
+  points.neckEdge_ep = new Point(256.8606, 359.3312)
+  // c -11.5386 -25.6553 -44.1392 -31.6027 -69.118 -32.0035
+  points.neckCenter_cp1 = new Point(245.4614, 333.3447)
+  points.neckCenter_cp2 = new Point(212.8608, 327.3973)
+  points.neckCenter_ep = new Point(188, 326.9965)
 
   scaleAllPoints(part, options.totalSize)
 
   paths.path254 = new Path()
-    // inkex.paths.move: m 187.293 21.209
-    .move(points.chinCenter)
-    // inkex.paths.curve: c 23.6447 0.41308 36.5269 6.76345 49.8828 23.5938
-    .curve(points.dartLowerBottom_cp1, points.dartLowerBottom_cp2, points.dartLowerBottom_ep)
-    // inkex.paths.curve: c -2.76891 -16.4376 -11.0619 -55.5334 -17.4434 -78.5449
-    .curve(points.dartLowerEnd_cp1, points.dartLowerEnd_cp2, points.dartLowerEnd_ep)
-    // inkex.paths.curve: c 20.7026 27.5104 41.6562 50.8871 74.5879 63.9707
-    .curve(points.dartLowerTop_cp1, points.dartLowerTop_cp2, points.dartLowerTop_ep)
-    // inkex.paths.curve: c 38.3553 -58.3976 64.4057 -111.882 64.2773 -201.434
-    .curve(points.dartUpperBottom_cp1, points.dartUpperBottom_cp2, points.dartUpperBottom_ep)
-    // inkex.paths.curve: c -12.837 -0.80124 -39.0776 -1.65681 -58.2266 1.55078
-    .curve(points.path254_p7_cp1, points.path254_p7_cp2, points.path254_p7_ep)
-    // inkex.paths.curve: c -20.256 3.39303 -44.3728 10.0496 -58.7656 18.5215
-    .curve(points.dartUpperPoint_cp1, points.dartUpperPoint_cp2, points.dartUpperPoint_ep)
-    // inkex.paths.curve: c 17.3817 -15.183 31.9472 -33.0754 44.6914 -52.0684
-    .curve(points.path254_p9_cp1, points.path254_p9_cp2, points.path254_p9_ep)
-    // inkex.paths.Curve: C 295.86 87.0744 302.388 71.1712 310.316 54.1719
+    // inkex.paths.move: m 188.487 20.9453
+    .move(points.headTopCenter)
+    // inkex.paths.curve: c 46.1322 -0.618836 96.0851 17.0327 122.472 32.8583
     .curve(points.dartUpperTop_cp1, points.dartUpperTop_cp2, points.dartUpperTop_ep)
-    // inkex.paths.Curve: C 282.506 41.3202 238.267 19.8402 187.293 21.209
-    .curve(points.faceTop_cp1, points.faceTop_cp2, points.faceTop_ep)
-  // inkex.paths.ZoneClose: Z
-  //.line(points.path254_p1)
+    // inkex.paths.curve: c -6.65939 27.5584 -34.1572 68.3735 -64.4763 98.886
+    .curve(points.dartUpperPoint_cp1, points.dartUpperPoint_cp2, points.dartUpperPoint_ep)
+    // inkex.paths.curve: c 38.444 -15.0305 81.68 -25.4915 117.013 -24.4661
+    .curve(points.dartUpperBottom_cp1, points.dartUpperBottom_cp2, points.dartUpperBottom_ep)
+    // inkex.paths.curve: c 2.82067 68.5525 -10.7277 116.682 -27.8765 168.557
+    .curve(points.dartLowerTop_cp1, points.dartLowerTop_cp2, points.dartLowerTop_ep)
+    // inkex.paths.curve: c -28.4591 -8.52216 -54.7292 -20.6781 -82.76 -36.7159
+    .curve(points.dartLowerPoint_cp1, points.dartLowerPoint_cp2, points.dartLowerPoint_ep)
+    // inkex.paths.curve: c 18.5912 26.8278 32.4837 55.7392 43.7613 76.6196
+    .curve(points.dartLowerBottom_cp1, points.dartLowerBottom_cp2, points.dartLowerBottom_ep)
+    // inkex.paths.curve: c -13.9665 9.79401 -25.2608 14.1619 -39.1394 21.3312
+    .line(points.neckEdge_ep)
+    // inkex.paths.curve: c -11.5386 -25.6553 -44.1392 -31.6027 -69.118 -32.0035
+    .curve(points.neckCenter_cp1, points.neckCenter_cp2, points.neckCenter_ep)
+    .reverse()
 }
 
 export { draft_path254 }

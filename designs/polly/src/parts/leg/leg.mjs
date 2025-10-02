@@ -41,5 +41,11 @@ export const leg = {
       max: 200,
       menu: 'style',
     },
+    legLength: {
+      pct: 100,
+      min: 50,
+      max: 150,
+      menu: 'style',
+    },
   },
 }

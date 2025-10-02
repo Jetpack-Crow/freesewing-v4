@@ -55,6 +55,13 @@ function draft_path128(
 
   scaleAllPoints(part, options.totalSize)
 
+  //Style: Adjust length
+  const vertShiftPoints = ['legEndRight_ep', 'legEndLeft_ep']
+
+  for (let p of vertShiftPoints) {
+    points[p] = points[p].shift(-90, 300 * options.totalSize * (options.legLength - 1))
+  }
+
   points.legBottomCenter = points.legEndLeft_ep.shiftFractionTowards(points.legEndRight_ep, 0.5)
 
   points.legEndLeft_ep = points.legEndLeft_ep.shiftFractionTowards(

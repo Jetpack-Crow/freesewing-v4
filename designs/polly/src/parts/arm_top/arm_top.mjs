@@ -24,6 +24,8 @@ function draftPollyArm_top({
 
   snippets.raglanNotch = new Snippet('notch', points.raglanNotch)
 
+  store.set('armVerticalLength', points.armBottom_ep.y - points.raglanNotch.y)
+
   store.set('armTopCurve', paths.armCurve.length() - raglanLength)
 
   paths.lowerArmCurve = paths.armCurve.split(points.raglanNotch)[0]
@@ -61,16 +63,12 @@ export const arm_top = {
     // Enter the measurements your design needs here. See https://freesewing.dev/reference/measurements .
   ],
   options: {
-    // Enter your pattern options here. Example:
-    /*
-        extraLength: {
-            pct: 10,
-            min: 5,
-            max: 20,
-            label: 'Extra length',
-            menu: 'fit',
-            ...pctBasedOn('neck')
-        }
-        */
+    armLength: {
+      pct: 100,
+      min: 50,
+      max: 200,
+      label: 'Arm length',
+      menu: 'style',
+    },
   },
 }

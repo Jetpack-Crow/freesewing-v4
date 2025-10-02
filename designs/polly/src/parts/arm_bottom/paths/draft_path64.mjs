@@ -95,14 +95,42 @@ function draft_path64(
     armpitIteration = armpitIteration + 1
   }
 
+  //Match vertical length
+  const armVerticalLength = store.get('armVerticalLength')
+  let bottomVerticalLength = points.curveBottom.y - points.armpitPointRight_ep.y
+  delta = armVerticalLength - bottomVerticalLength
+  log.info('Arm length delta ' + delta)
+  let armLengthIteration = 0
+  const vertShiftPoints = [
+    'armWideRight_ep',
+    'armWideRight_cp2',
+    'curveBottom',
+    'curveBottom_cpRight',
+  ]
+
+  while (armLengthIteration < 5 && Math.abs(delta) > 0.001 * options.totalSize) {
+    log.info('Arm length iteration ' + armLengthIteration + ', delta = ' + delta)
+
+    //shift each point
+    for (let p of vertShiftPoints) {
+      points[p] = points[p].shift(-90, delta)
+    }
+
+    //recalculate delta
+    bottomVerticalLength = points.curveBottom.y - points.armpitPointRight_ep.y
+    delta = armVerticalLength - bottomVerticalLength
+
+    armLengthIteration = armLengthIteration + 1
+  }
+
   paths.armCurvePath = drawArmCurve()
 
-  //Match armpit curve length
+  //Match arm lower curve length
   const armTopCurve = store.get('armTopCurve')
   let armBottomCurve = paths.armCurvePath.length()
 
   delta = armTopCurve - armBottomCurve
-  log.info('Arm length delta ' + delta)
+  log.info('Arm curve delta ' + delta)
   let armIteration = 0
 
   const armShiftPoints = ['armWideRight_ep', 'armWideRight_cp2']

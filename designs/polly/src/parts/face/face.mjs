@@ -16,11 +16,11 @@ function draftPollyFace({
 
   macro('mirror', {
     clone: true,
-    mirror: [points.faceTop_ep, points.chinCenter],
+    mirror: [points.headTopCenter, points.neckCenter_ep],
     paths: Object.keys(paths),
   })
 
-  points.title = points.chinCenter.shiftFractionTowards(points.faceTop_ep, 0.5)
+  points.title = points.neckCenter_ep.shiftFractionTowards(points.headTopCenter, 0.5)
   macro('title', { at: points.title, nr: 7, title: 'face', scale: options.totalSize })
 
   if (sa) {
