@@ -1,5 +1,5 @@
-import { pctBasedOn } from '@freesewing/core'
 import { draft_path128 } from './paths/draft_path128.mjs'
+import { body_back } from '../body_back/body_back.mjs'
 
 function draftPollyLeg({
   Path,
@@ -13,8 +13,14 @@ function draftPollyLeg({
   part,
   store,
   sa,
+  log,
+  Snippet,
+  snippets,
 }) {
-  draft_path128(Path, Point, paths, points, measurements, options, utils, macro, part, store)
+  draft_path128(Path, Point, paths, points, measurements, options, utils, macro, part, store, log)
+
+  snippets.hipCurveNotch = new Snippet('bnotch', points.hipCurveSnippet)
+  snippets.hipCornerNotch = new Snippet('notch', points.hipCornerNotch)
 
   points.title = points.legEndRight_ep.shiftFractionTowards(points.legTopLeft_ep, 0.5)
   macro('title', { at: points.title, nr: 3, title: 'leg', scale: options.totalSize })
@@ -30,6 +36,7 @@ function draftPollyLeg({
 export const leg = {
   name: 'polly.leg',
   draft: draftPollyLeg,
+  after: body_back,
 
   measurements: [
     // Enter the measurements your design needs here. See https://freesewing.dev/reference/measurements .

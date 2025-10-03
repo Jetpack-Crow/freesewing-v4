@@ -13,10 +13,14 @@ function draftPollyBody_front({
   sa,
   store,
   log,
+  Snippet,
+  snippets,
 }) {
   draft_path190(Path, Point, paths, points, measurements, options, utils, macro, part, store, log)
 
   paths.mirror = new Path().move(points.neckCenter_ep).line(points.crotchCenter).hide()
+
+  snippets.hipCornerNotch = new Snippet('notch', points.hipCorner_ep)
 
   macro('mirror', {
     clone: true,

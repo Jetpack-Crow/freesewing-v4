@@ -34,9 +34,9 @@ function draft_path190(
   points.path190_p6_cp2 = new Point(153.7178, 348.0286)
   points.path190_p6_ep = new Point(155.0176, 317.541)
   // c 0.65759 -15.4246 -0.44896 -40.479 5.94531 -45.9336
-  points.path190_p7_cp1 = new Point(155.6576, 302.5754)
-  points.path190_p7_cp2 = new Point(154.551, 277.521)
-  points.path190_p7_ep = new Point(160.9453, 272.0664)
+  points.hipCorner_cp1 = new Point(155.6576, 302.5754)
+  points.hipCorner_cp2 = new Point(154.551, 277.521)
+  points.hipCorner_ep = new Point(160.9453, 272.0664)
   // c 6.39428 -5.45458 55.0486 -13.9971 81.5859 -7.54297
   points.path190_p8_cp1 = new Point(167.3943, 266.5454)
   points.path190_p8_cp2 = new Point(216.0486, 258.0029)
@@ -93,13 +93,20 @@ function draft_path190(
     // inkex.paths.curve: c -7.23857 -23.8798 -5.28216 -60.9714 -3.98242 -91.459
     .curve(points.path190_p6_cp1, points.path190_p6_cp2, points.path190_p6_ep)
     // inkex.paths.curve: c 0.65759 -15.4246 -0.44896 -40.479 5.94531 -45.9336
-    .curve(points.path190_p7_cp1, points.path190_p7_cp2, points.path190_p7_ep)
+    .curve(points.hipCorner_cp1, points.hipCorner_cp2, points.hipCorner_ep)
     // inkex.paths.curve: c 6.39428 -5.45458 55.0486 -13.9971 81.5859 -7.54297
     .curve(points.path190_p8_cp1, points.path190_p8_cp2, points.path190_p8_ep)
     // inkex.paths.curve: c 10.8441 2.6374 13.1967 7.75259 28.1992 18.0488
     .curve(points.hipOuter_cp1, points.hipOuter_cp2, points.hipOuter_ep)
   store.set('hipCurveFront', paths.hipCurve.length())
   log.info('Hip length front: ' + paths.hipCurve.length() + ' mm')
+
+  paths.hipToCorner = new Path()
+    .move(points.crotchWidth_ep)
+    .curve(points.path190_p6_cp1, points.path190_p6_cp2, points.path190_p6_ep)
+    .curve(points.hipCorner_cp1, points.hipCorner_cp2, points.hipCorner_ep)
+  store.set('hipToCorner', paths.hipToCorner.length())
+  log.info('Hip to corner: ' + paths.hipToCorner.length() + ' mm')
 
   //Store armpit curve length
   paths.armpitCurve = new Path()
@@ -124,7 +131,7 @@ function draft_path190(
     // inkex.paths.curve: c -7.23857 -23.8798 -5.28216 -60.9714 -3.98242 -91.459
     .curve(points.path190_p6_cp1, points.path190_p6_cp2, points.path190_p6_ep)
     // inkex.paths.curve: c 0.65759 -15.4246 -0.44896 -40.479 5.94531 -45.9336
-    .curve(points.path190_p7_cp1, points.path190_p7_cp2, points.path190_p7_ep)
+    .curve(points.hipCorner_cp1, points.hipCorner_cp2, points.hipCorner_ep)
     // inkex.paths.curve: c 6.39428 -5.45458 55.0486 -13.9971 81.5859 -7.54297
     .curve(points.path190_p8_cp1, points.path190_p8_cp2, points.path190_p8_ep)
     // inkex.paths.curve: c 10.8441 2.6374 13.1967 7.75259 28.1992 18.0488

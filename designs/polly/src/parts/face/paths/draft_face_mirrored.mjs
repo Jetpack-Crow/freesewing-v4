@@ -1,6 +1,16 @@
 import { scaleAllPoints } from '../../../shared.mjs'
 
-function draft_path254(Path, Point, paths, points, measurements, options, utils, macro, part) {
+function draft_face_mirrored(
+  Path,
+  Point,
+  paths,
+  points,
+  measurements,
+  options,
+  utils,
+  macro,
+  part
+) {
   // Path: path1
   // m 188.487 20.9453
   points.headTopCenter = new Point(188, 20.9453)
@@ -31,15 +41,20 @@ function draft_path254(Path, Point, paths, points, measurements, options, utils,
   // c -13.9665 9.79401 -25.2608 14.1619 -39.1394 21.3312
   points.neckEdge_cp1 = new Point(282.0335, 347.794)
   points.neckEdge_cp2 = new Point(270.7392, 352.1619)
-  points.neckEdge_ep = new Point(256.8606, 359.3312)
+  points.neckEdge = new Point(256.8606, 359.3312)
   // c -11.5386 -25.6553 -44.1392 -31.6027 -69.118 -32.0035
   points.neckCenter_cp1 = new Point(245.4614, 333.3447)
   points.neckCenter_cp2 = new Point(212.8608, 327.3973)
-  points.neckCenter_ep = new Point(188, 326.9965)
+  points.neckCenter = new Point(188, 326.9965)
 
   scaleAllPoints(part, options.totalSize)
 
-  paths.path254 = new Path()
+  paths.neck_path = new Path()
+    .move(points.neckEdge)
+    .curve(points.neckCenter_cp1, points.neckCenter_cp2, points.neckCenter)
+    .hide()
+
+  paths.face_path = new Path()
     // inkex.paths.move: m 188.487 20.9453
     .move(points.headTopCenter)
     // inkex.paths.curve: c 46.1322 -0.618836 96.0851 17.0327 122.472 32.8583
@@ -55,10 +70,10 @@ function draft_path254(Path, Point, paths, points, measurements, options, utils,
     // inkex.paths.curve: c 18.5912 26.8278 32.4837 55.7392 43.7613 76.6196
     .curve(points.dartLowerBottom_cp1, points.dartLowerBottom_cp2, points.dartLowerBottom_ep)
     // inkex.paths.curve: c -13.9665 9.79401 -25.2608 14.1619 -39.1394 21.3312
-    .line(points.neckEdge_ep)
+    .line(points.neckEdge)
     // inkex.paths.curve: c -11.5386 -25.6553 -44.1392 -31.6027 -69.118 -32.0035
-    .curve(points.neckCenter_cp1, points.neckCenter_cp2, points.neckCenter_ep)
+    .curve(points.neckCenter_cp1, points.neckCenter_cp2, points.neckCenter)
     .reverse()
 }
 
-export { draft_path254 }
+export { draft_face_mirrored }

@@ -1,4 +1,5 @@
-import { draft_path254 } from './paths/draft_path254.mjs'
+import { draft_face_mirrored } from './paths/draft_face_mirrored.mjs'
+import { draft_face_split } from './paths/draft_face_split.mjs'
 
 function draftPollyFace({
   Path,
@@ -11,20 +12,26 @@ function draftPollyFace({
   macro,
   part,
   sa,
+  log,
 }) {
-  draft_path254(Path, Point, paths, points, measurements, options, utils, macro, part)
+  if (options.faceMirrored) {
+    draft_face_mirrored(Path, Point, paths, points, measurements, options, utils, macro, part)
+    macro('mirror', {
+      clone: true,
+      mirror: [points.headTopCenter, points.neckCenter],
+      paths: Object.keys(paths),
+    })
+    paths.saBasis = paths.face_path.join(paths.mirroredFace_path.reverse()).hide()
+  } else {
+    draft_face_split(Path, Point, paths, points, measurements, options, utils, macro, part)
+    paths.saBasis = paths.face_path.reverse().hide()
+  }
 
-  macro('mirror', {
-    clone: true,
-    mirror: [points.headTopCenter, points.neckCenter_ep],
-    paths: Object.keys(paths),
-  })
+  log.info('Face neck length is ' + paths.neck_path.length())
 
-  points.title = points.neckCenter_ep.shiftFractionTowards(points.headTopCenter, 0.5)
+  points.title = points.neckCenter.shiftFractionTowards(points.headTopCenter, 0.5)
   macro('title', { at: points.title, nr: 7, title: 'face', scale: options.totalSize })
-
   if (sa) {
-    paths.saBasis = paths.path254.join(paths.mirroredPath254.reverse())
     paths.sa = paths.saBasis.offset(sa).trim().attr('class', 'fabric sa')
   }
 
@@ -39,16 +46,10 @@ export const face = {
     // Enter the measurements your design needs here. See https://freesewing.dev/reference/measurements .
   ],
   options: {
-    // Enter your pattern options here. Example:
-    /*
-        extraLength: {
-            pct: 10,
-            min: 5,
-            max: 20,
-            label: 'Extra length',
-            menu: 'fit',
-            ...pctBasedOn('neck')
-        }
-        */
+    faceMirrored: {
+      bool: true,
+      label: 'Face on the fold',
+      menu: 'construction',
+    },
   },
 }

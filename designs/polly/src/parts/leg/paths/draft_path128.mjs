@@ -10,8 +10,29 @@ function draft_path128(
   utils,
   macro,
   part,
-  store
+  store,
+  log
 ) {
+  const drawHipCurve = () => {
+    return (
+      new Path()
+        .move(points.legTopRight_ep)
+        .curve(points.curve1_cp1, points.curve1_cp2, points.curve1_ep)
+        // inkex.paths.curve: c -18.3852 -4.10031 -36.7639 -9.71674 -53.3379 -18.6682
+        .curve(points.curve2_cp1, points.curve2_cp2, points.curve2_ep)
+        // inkex.paths.curve: c -11.1423 -6.01785 -18.3305 -18.5785 -30.1577 -23.1042
+        .curve(points.curve3_cp1, points.curve3_cp2, points.curve3_ep)
+        // inkex.paths.curve: c -24.9076 -9.53092 -55.0848 -16.2667 -79.7682 -6.16957
+        .curve(points.curve4_cp1, points.curve4_cp2, points.curve4_ep)
+        // inkex.paths.curve: c -19.0729 7.80208 -22.6054 36.6016 -40.6248 46.599
+        .curve(points.curve5_cp1, points.curve5_cp2, points.curve5_ep)
+        // inkex.paths.curve: c -21.9578 12.1825 -52.0848 10.2192 -74.3792 11.9485
+        .curve(points.legTopLeft_cp1, points.legTopLeft_cp2, points.legTopLeft_ep)
+
+      //.hide()
+    )
+  }
+
   // Path: path128
   // m 337.139 747.8
   points.path128_p1 = new Point(337.1393, 750)
@@ -26,25 +47,25 @@ function draft_path128(
   points.legTopRight_cp2 = new Point(649.6188, 563.4497)
   points.legTopRight_ep = new Point(644.4018, 474.7568)
   // c -10.5848 -0.68171 -28.4322 -1.25095 -42.2498 -4.3326
-  points.path128_p5_cp1 = new Point(633.4152, 474.3183)
-  points.path128_p5_cp2 = new Point(615.5678, 473.7491)
-  points.path128_p5_ep = new Point(601.7502, 470.6674)
+  points.curve1_cp1 = new Point(633.4152, 474.3183)
+  points.curve1_cp2 = new Point(615.5678, 473.7491)
+  points.curve1_ep = new Point(601.7502, 470.6674)
   // c -18.3852 -4.10031 -36.7639 -9.71674 -53.3379 -18.6682
-  points.path128_p6_cp1 = new Point(583.6148, 466.8997)
-  points.path128_p6_cp2 = new Point(565.2361, 461.2833)
-  points.path128_p6_ep = new Point(548.6621, 452.3318)
+  points.curve2_cp1 = new Point(583.6148, 466.8997)
+  points.curve2_cp2 = new Point(565.2361, 461.2833)
+  points.curve2_ep = new Point(548.6621, 452.3318)
   // c -11.1423 -6.01785 -18.3305 -18.5785 -30.1577 -23.1042
-  points.path128_p7_cp1 = new Point(537.8577, 445.9821)
-  points.path128_p7_cp2 = new Point(530.6695, 433.4215)
-  points.path128_p7_ep = new Point(518.8423, 428.8958)
+  points.curve3_cp1 = new Point(537.8577, 445.9821)
+  points.curve3_cp2 = new Point(530.6695, 433.4215)
+  points.curve3_ep = new Point(518.8423, 428.8958)
   // c -24.9076 -9.53092 -55.0848 -16.2667 -79.7682 -6.16957
-  points.path128_p8_cp1 = new Point(494.0924, 419.4691)
-  points.path128_p8_cp2 = new Point(463.9152, 412.7333)
-  points.path128_p8_ep = new Point(439.2318, 422.8304)
+  points.curve4_cp1 = new Point(494.0924, 419.4691)
+  points.curve4_cp2 = new Point(463.9152, 412.7333)
+  points.curve4_ep = new Point(439.2318, 422.8304)
   // c -19.0729 7.80208 -22.6054 36.6016 -40.6248 46.599
-  points.path128_p9_cp1 = new Point(419.9271, 430.8021)
-  points.path128_p9_cp2 = new Point(416.3946, 459.6016)
-  points.path128_p9_ep = new Point(398.3752, 469.599)
+  points.curve5_cp1 = new Point(419.9271, 430.8021)
+  points.curve5_cp2 = new Point(416.3946, 459.6016)
+  points.curve5_ep = new Point(398.3752, 469.599)
   // c -21.9578 12.1825 -52.0848 10.2192 -74.3792 11.9485
   points.legTopLeft_cp1 = new Point(376.0422, 482.1825)
   points.legTopLeft_cp2 = new Point(345.9152, 480.2192)
@@ -54,6 +75,40 @@ function draft_path128(
   // z
 
   scaleAllPoints(part, options.totalSize)
+
+  //Truing: match top curve length to the hip curve of the body pieces
+  const hipCurveFront = store.get('hipCurveFront')
+  const hipCurveBack = store.get('hipCurveBack')
+  const hipCurve = hipCurveFront + hipCurveBack
+
+  paths.hipCurve = drawHipCurve()
+  log.info('Hip curve length is ' + paths.hipCurve.length() + ', needed length is ' + hipCurve)
+
+  const curveTweakPoints = [
+    'curve5_cp1',
+    'curve4_ep',
+    'curve4_cp2',
+    'curve4_cp1',
+    'curve3_ep',
+    'curve3_cp2',
+  ]
+  let hipCurveDelta = hipCurve - paths.hipCurve.length()
+  let hipCurveIterations = 0
+  while (hipCurveIterations < 5 && hipCurveDelta > 0.001 * options.totalSize) {
+    log.info('Hip curve iteration ' + hipCurveIterations + ', delta ' + hipCurveDelta)
+
+    for (let p of curveTweakPoints) {
+      points[p] = points[p].shift(90, hipCurveDelta)
+    }
+
+    paths.hipCurve = drawHipCurve()
+    hipCurveDelta = hipCurve - paths.hipCurve.length()
+    hipCurveIterations = hipCurveIterations + 1
+  }
+
+  points.hipCurveSnippet = paths.hipCurve.shiftFractionAlong(hipCurveBack / hipCurve)
+
+  points.hipCornerNotch = paths.hipCurve.reverse().shiftAlong(store.get('hipToCorner'))
 
   //Style: Adjust length
   const vertShiftPoints = ['legEndRight_ep', 'legEndLeft_ep']
@@ -82,15 +137,15 @@ function draft_path128(
     // inkex.paths.curve: c -9.01574 -88.3579 -18.3812 -179.55 -23.5982 -268.243
     .line(points.legTopRight_ep)
     // inkex.paths.curve: c -10.5848 -0.68171 -28.4322 -1.25095 -42.2498 -4.3326
-    .curve(points.path128_p5_cp1, points.path128_p5_cp2, points.path128_p5_ep)
+    .curve(points.curve1_cp1, points.curve1_cp2, points.curve1_ep)
     // inkex.paths.curve: c -18.3852 -4.10031 -36.7639 -9.71674 -53.3379 -18.6682
-    .curve(points.path128_p6_cp1, points.path128_p6_cp2, points.path128_p6_ep)
+    .curve(points.curve2_cp1, points.curve2_cp2, points.curve2_ep)
     // inkex.paths.curve: c -11.1423 -6.01785 -18.3305 -18.5785 -30.1577 -23.1042
-    .curve(points.path128_p7_cp1, points.path128_p7_cp2, points.path128_p7_ep)
+    .curve(points.curve3_cp1, points.curve3_cp2, points.curve3_ep)
     // inkex.paths.curve: c -24.9076 -9.53092 -55.0848 -16.2667 -79.7682 -6.16957
-    .curve(points.path128_p8_cp1, points.path128_p8_cp2, points.path128_p8_ep)
+    .curve(points.curve4_cp1, points.curve4_cp2, points.curve4_ep)
     // inkex.paths.curve: c -19.0729 7.80208 -22.6054 36.6016 -40.6248 46.599
-    .curve(points.path128_p9_cp1, points.path128_p9_cp2, points.path128_p9_ep)
+    .curve(points.curve5_cp1, points.curve5_cp2, points.curve5_ep)
     // inkex.paths.curve: c -21.9578 12.1825 -52.0848 10.2192 -74.3792 11.9485
     .curve(points.legTopLeft_cp1, points.legTopLeft_cp2, points.legTopLeft_ep)
     // inkex.paths.curve: c 5.23663 82.4291 8.62003 171.002 12.5459 266.75
