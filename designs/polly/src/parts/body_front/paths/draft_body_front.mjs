@@ -1,6 +1,6 @@
 import { scaleAllPoints } from '../../../shared.mjs'
 
-function draft_path190(
+function draft_body_front(
   Path,
   Point,
   paths,
@@ -46,7 +46,7 @@ function draft_path190(
   points.hipOuter_cp2 = new Point(256.1967, 271.7526)
   points.hipOuter_ep = new Point(271.1992, 282.0488)
   // c -1.73255 -19.0809 -4.64158 -34.1428 -7.94727 -51.041
-  points.hipControl_cp1 = new Point(269.2674, 262.9191)
+  points.hipControl_cp1 = new Point(269.2674, 220)
   points.hipControl_cp2 = new Point(266.3584, 247.8572)
   points.hipControl_ep = new Point(263.0527, 230.959)
   // c -3.99901 -20.4424 -12.0719 -40.113 -14.3633 -60.8164
@@ -55,7 +55,7 @@ function draft_path190(
   points.waistControl_ep = new Point(248.6367, 170.1836)
   // c -2.27075 -20.5168 -1.5954 -43.3911 0.71094 -61.9219
   points.armpitSide_cp1 = new Point(246.7293, 149.4832)
-  points.armpitSide_cp2 = new Point(247.4046, 126.6089)
+  points.armpitSide_cp2 = new Point(245, 180)
   points.armpitSide_ep = new Point(249.7109, 108.0781)
   // c -7.60541 -1.13495 -23.0225 -1.7184 -30.0996 -9.5039
   points.armpitCurve_cp1 = new Point(242.3946, 106.865)
@@ -72,10 +72,44 @@ function draft_path190(
   points.neckOuter_ep = new Point(163.8027, 0.8457)
   // Z
 
+  //Style: add extra width at the hip
+  const hipShiftPoints = [
+    'crotchWidth_ep',
+    'path190_p6_cp1',
+    'path190_p6_cp2',
+    'path190_p6_ep',
+    'hipCorner_cp1',
+    'hipCorner_cp2',
+    'hipCorner_ep',
+    'path190_p8_cp1',
+    'path190_p8_cp2',
+    'path190_p8_ep',
+    'hipOuter_cp1',
+    'hipOuter_cp2',
+    'hipOuter_ep',
+    'hipControl_cp1',
+    'hipControl_cp2',
+    'hipControl_ep',
+    'waistControl_cp1',
+  ]
+
+  for (let p of hipShiftPoints) {
+    points[p] = points[p].shift(0, 100 * options.hipExtraWidth)
+  }
+
+  //Style: Extra torso length
+  const lengthShiftPoints = hipShiftPoints
+  lengthShiftPoints.push('crotchCenter')
+  for (let p of lengthShiftPoints) {
+    points[p] = points[p].shift(-90, 100 * options.torsoLength)
+  }
+
   scaleAllPoints(part, options.totalSize)
 
   paths.sideSeamCurve = new Path()
     .move(points.hipOuter_ep)
+    .curve(points.hipControl_cp1, points.armpitSide_cp2, points.armpitSide_ep)
+    /*
     // inkex.paths.curve: c -1.73255 -19.0809 -4.64158 -34.1428 -7.94727 -51.041
     .curve(points.hipControl_cp1, points.hipControl_cp2, points.hipControl_ep)
     // inkex.paths.curve: c -3.99901 -20.4424 -12.0719 -40.113 -14.3633 -60.8164
@@ -83,6 +117,7 @@ function draft_path190(
     // inkex.paths.curve: c -2.27075 -20.5168 -1.5954 -43.3911 0.71094 -61.9219
     .curve(points.armpitSide_cp1, points.armpitSide_cp2, points.armpitSide_ep)
     // inkex.paths.curve: c -7.60541 -1.13495 -23.0225 -1.7184 -30.0996 -9.5039
+    */
     .hide()
 
   store.set('sideSeamFrontLength', paths.sideSeamCurve.length())
@@ -98,6 +133,7 @@ function draft_path190(
     .curve(points.path190_p8_cp1, points.path190_p8_cp2, points.path190_p8_ep)
     // inkex.paths.curve: c 10.8441 2.6374 13.1967 7.75259 28.1992 18.0488
     .curve(points.hipOuter_cp1, points.hipOuter_cp2, points.hipOuter_ep)
+    .hide()
   store.set('hipCurveFront', paths.hipCurve.length())
   log.info('Hip length front: ' + paths.hipCurve.length() + ' mm')
 
@@ -105,6 +141,7 @@ function draft_path190(
     .move(points.crotchWidth_ep)
     .curve(points.path190_p6_cp1, points.path190_p6_cp2, points.path190_p6_ep)
     .curve(points.hipCorner_cp1, points.hipCorner_cp2, points.hipCorner_ep)
+    .hide()
   store.set('hipToCorner', paths.hipToCorner.length())
   log.info('Hip to corner: ' + paths.hipToCorner.length() + ' mm')
 
@@ -128,25 +165,9 @@ function draft_path190(
     .move(points.crotchCenter)
     // inkex.paths.curve: c 8.53215 -0.22404 17.7678 -0.49973 23.4434 -0.66211
     .line(points.crotchWidth_ep)
-    // inkex.paths.curve: c -7.23857 -23.8798 -5.28216 -60.9714 -3.98242 -91.459
-    .curve(points.path190_p6_cp1, points.path190_p6_cp2, points.path190_p6_ep)
-    // inkex.paths.curve: c 0.65759 -15.4246 -0.44896 -40.479 5.94531 -45.9336
-    .curve(points.hipCorner_cp1, points.hipCorner_cp2, points.hipCorner_ep)
-    // inkex.paths.curve: c 6.39428 -5.45458 55.0486 -13.9971 81.5859 -7.54297
-    .curve(points.path190_p8_cp1, points.path190_p8_cp2, points.path190_p8_ep)
-    // inkex.paths.curve: c 10.8441 2.6374 13.1967 7.75259 28.1992 18.0488
-    .curve(points.hipOuter_cp1, points.hipOuter_cp2, points.hipOuter_ep)
-    // inkex.paths.curve: c -1.73255 -19.0809 -4.64158 -34.1428 -7.94727 -51.041
-    .curve(points.hipControl_cp1, points.hipControl_cp2, points.hipControl_ep)
-    // inkex.paths.curve: c -3.99901 -20.4424 -12.0719 -40.113 -14.3633 -60.8164
-    .curve(points.waistControl_cp1, points.waistControl_cp2, points.waistControl_ep)
-    // inkex.paths.curve: c -2.27075 -20.5168 -1.5954 -43.3911 0.71094 -61.9219
-    .curve(points.armpitSide_cp1, points.armpitSide_cp2, points.armpitSide_ep)
-    // inkex.paths.curve: c -7.60541 -1.13495 -23.0225 -1.7184 -30.0996 -9.5039
-    .curve(points.armpitCurve_cp1, points.armpitCurve_cp2, points.armpitCurve_ep)
-    // inkex.paths.curve: c -7.02217 -7.72509 -6.28038 -21.7507 -6.54688 -30.627
-    .curve(points.armpitNotch_cp1, points.armpitNotch_cp2, points.armpitNotch_ep)
-    // inkex.paths.Curve: C 207.611 60.9423 195.776 48.349 190.311 39.0762
+    .join(paths.hipCurve)
+    .join(paths.sideSeamCurve)
+    .join(paths.armpitCurve)
     .line(points.neckOuter_ep)
     // inkex.paths.ZoneClose: Z
     .line(points.path190_p1)
@@ -157,4 +178,4 @@ function draft_path190(
   // inkex.paths.line: l 1.3125 402.607
 }
 
-export { draft_path190 }
+export { draft_body_front }

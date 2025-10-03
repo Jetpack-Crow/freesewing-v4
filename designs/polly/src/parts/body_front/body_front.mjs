@@ -1,4 +1,4 @@
-import { draft_path190 } from './paths/draft_path190.mjs'
+import { draft_body_front } from './paths/draft_body_front.mjs'
 
 function draftPollyBody_front({
   Path,
@@ -16,7 +16,19 @@ function draftPollyBody_front({
   Snippet,
   snippets,
 }) {
-  draft_path190(Path, Point, paths, points, measurements, options, utils, macro, part, store, log)
+  draft_body_front(
+    Path,
+    Point,
+    paths,
+    points,
+    measurements,
+    options,
+    utils,
+    macro,
+    part,
+    store,
+    log
+  )
 
   paths.mirror = new Path().move(points.neckCenter_ep).line(points.crotchCenter).hide()
 
@@ -52,16 +64,19 @@ export const body_front = {
     // Enter the measurements your design needs here. See https://freesewing.dev/reference/measurements .
   ],
   options: {
-    // Enter your pattern options here. Example:
-    /*
-        extraLength: {
-            pct: 10,
-            min: 5,
-            max: 20,
-            label: 'Extra length',
-            menu: 'fit',
-            ...pctBasedOn('neck')
-        }
-        */
+    hipExtraWidth: {
+      pct: 0,
+      min: 0,
+      max: 50,
+      label: 'Hip extra width',
+      menu: 'style',
+    },
+    torsoLength: {
+      pct: 0,
+      min: -50,
+      max: 50,
+      label: 'Torso length',
+      menu: 'style',
+    },
   },
 }

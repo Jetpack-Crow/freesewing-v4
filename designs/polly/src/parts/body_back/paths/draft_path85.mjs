@@ -72,6 +72,19 @@ function draft_path85(
   points.shoulder_ep = new Point(473.2326, 12.8606)
   // z
 
+  //Style: Extra hip width
+  const hipShiftPoints = ['hipOuter_ep', 'hipBack_ep']
+  for (let p of hipShiftPoints) {
+    points[p] = points[p].shift(180, 100 * options.hipExtraWidth)
+  }
+
+  //Style: Extra torso length
+  const lengthShiftPoints = hipShiftPoints
+  lengthShiftPoints.push('crotchCenter_ep', 'crotchCenter_cp1', 'path85_p5_ep', 'path85_p5_cp2')
+  for (let p of lengthShiftPoints) {
+    points[p] = points[p].shift(-90, 100 * options.torsoLength)
+  }
+
   scaleAllPoints(part, options.totalSize)
 
   paths.armpitCurveBack = drawArmpitCurve()
