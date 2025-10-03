@@ -31,6 +31,7 @@ import { Lumina, LuminaFront, LuminaBack } from './lumina.mjs'
 import { Lumira, LumiraFront, LumiraBack } from './lumira.mjs'
 import { Lunetius, LunetiusFront } from './lunetius.mjs'
 import { Percy, PercyFront } from './percy.mjs'
+import { Polly, PollyFront } from './polly.mjs'
 import { Noble, NobleFront, NobleBack } from './noble.mjs'
 import { Octoplushy, OctoplushyFront /*, OctoplushyBack*/ } from './octoplushy.mjs'
 import { Otis, OtisFront /*, OtisBack*/ } from './otis.mjs'
@@ -85,6 +86,7 @@ export const lineDrawingsFront = {
   lumira: LumiraFront,
   lunetius: LunetiusFront,
   percy: PercyFront,
+  polly: PollyFront,
   noble: NobleFront,
   octoplushy: OctoplushyFront,
   otis: OtisFront,
@@ -185,6 +187,7 @@ export const lineDrawings = {
   lumira: Lumira,
   lunetius: Lunetius,
   percy: Percy,
+  polly: Polly,
   noble: Noble,
   octoplushy: Octoplushy,
   otis: Otis,
@@ -324,6 +327,9 @@ export {
   // Percy
   Percy,
   PercyFront,
+  // Polly
+  Polly,
+  PollyFront,
   // Noble
   Noble,
   NobleFront,
