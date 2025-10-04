@@ -78,5 +78,6 @@ export const body_front = {
       label: 'Torso length',
       menu: 'style',
     },
+    totalSize: { pct: 100, min: 5, max: 200, menu: 'scale' },
   },
 }

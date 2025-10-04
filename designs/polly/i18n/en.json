@@ -9,7 +9,9 @@
     "face": "Face", 
     "foot": "Foot", 
     "head_back": "Head back",
-    "leg": "Leg"
+    "leg": "Leg",
+    "snout_nose_top": "Snout top",
+    "snout_forehead": "Snout forehead"
   },
   "s": { },
   "o": { }

@@ -9,7 +9,8 @@ function draft_face_mirrored(
   options,
   utils,
   macro,
-  part
+  part,
+  log
 ) {
   // Path: path1
   // m 188.487 20.9453
@@ -47,7 +48,23 @@ function draft_face_mirrored(
   points.neckCenter_cp2 = new Point(212.8608, 327.3973)
   points.neckCenter = new Point(188, 326.9965)
 
-  scaleAllPoints(part, options.totalSize)
+  scaleAllPoints(part, options.totalSize * options.headScale)
+
+  paths.sideSeamTop = new Path()
+    .move(points.headTopCenter)
+    .curve(points.dartUpperTop_cp1, points.dartUpperTop_cp2, points.dartUpperTop_ep)
+    .hide()
+
+  paths.sideSeamMiddle = new Path()
+    .move(points.dartUpperBottom_ep)
+    .curve(points.dartLowerTop_cp1, points.dartLowerTop_cp2, points.dartLowerTop_ep)
+    .hide()
+
+  paths.sideSeamLower = new Path().move(points.dartLowerBottom_ep).line(points.neckEdge).hide()
+
+  const totalSideSeamLength =
+    paths.sideSeamTop.length() + paths.sideSeamMiddle.length() + paths.sideSeamLower.length()
+  log.info('Mirrored face side seam length is ' + totalSideSeamLength)
 
   paths.neck_path = new Path()
     .move(points.neckEdge)

@@ -12,8 +12,9 @@ function draftPollyHead_back({
   macro,
   part,
   sa,
+  log,
 }) {
-  draft_path127(Path, Point, paths, points, measurements, options, utils, macro, part)
+  draft_path127(Path, Point, paths, points, measurements, options, utils, macro, part, log)
 
   points.title = points.headTip_ep.shiftFractionTowards(points.neckOuter_ep, 0.5)
   macro('title', { at: points.title, nr: 8, title: 'head_back', scale: options.totalSize })
@@ -34,6 +35,6 @@ export const head_back = {
     // Enter the measurements your design needs here. See https://freesewing.dev/reference/measurements .
   ],
   options: {
-    totalSize: { pct: 100, min: 5, max: 200, menu: 'scale' },
+    headScale: { pct: 100, min: 50, max: 200, menu: 'style' },
   },
 }

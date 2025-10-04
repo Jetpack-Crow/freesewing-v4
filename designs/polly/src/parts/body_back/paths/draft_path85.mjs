@@ -139,7 +139,7 @@ function draft_path85(
     'armpitBottom_ep',
   ]
 
-  delta = Math.abs(raglanLengthFront - raglanLengthBack)
+  delta = raglanLengthFront - raglanLengthBack
   let raglanIteration = 0
   while (raglanIteration < 5 && Math.abs(delta) > 0.001 * options.totalSize) {
     log.info('raglanIteration ' + raglanIteration + ', delta = ' + delta)

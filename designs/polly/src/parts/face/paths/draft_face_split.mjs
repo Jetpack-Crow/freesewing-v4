@@ -1,6 +1,17 @@
 import { scaleAllPoints } from '../../../shared.mjs'
 
-function draft_face_split(Path, Point, paths, points, measurements, options, utils, macro, part) {
+function draft_face_split(
+  Path,
+  Point,
+  paths,
+  points,
+  measurements,
+  options,
+  utils,
+  macro,
+  part,
+  log
+) {
   // Path: path7
   // m 265.664 269.168
   points.path7_p1 = new Point(265.7, 269.2)
@@ -42,7 +53,23 @@ function draft_face_split(Path, Point, paths, points, measurements, options, uti
 
   //This piece wasn't unwrapped and scaled at the same time as all the other pieces, so there's a slight
   //constant factor adjustment that has to be made to match it to the others.
-  scaleAllPoints(part, options.totalSize * (80.39 / 76.53))
+  scaleAllPoints(part, options.totalSize * (80.39 / 76.53) * (345.14 / 354.63) * options.headScale)
+
+  paths.sideSeamTop = new Path()
+    .move(points.headTopCenter)
+    .curve(points.dartUpperTop_cp1, points.dartUpperTop_cp2, points.dartUpperTop_ep)
+    .hide()
+
+  paths.sideSeamMiddle = new Path()
+    .move(points.dartUpperBottom_ep)
+    .curve(points.dartLowerTop_cp1, points.dartLowerTop_cp2, points.dartLowerTop_ep)
+    .hide()
+
+  paths.sideSeamLower = new Path().move(points.dartLowerBottom_ep).line(points.neckEdge).hide()
+
+  const totalSideSeamLength =
+    paths.sideSeamTop.length() + paths.sideSeamMiddle.length() + paths.sideSeamLower.length()
+  log.info('Split face side seam length is ' + totalSideSeamLength)
 
   paths.neck_path = new Path()
     .move(points.neckEdge)
@@ -55,20 +82,20 @@ function draft_face_split(Path, Point, paths, points, measurements, options, uti
     // inkex.paths.Curve: C 180.441 263.035 175.953 102.208 215.714 20.4365
     .curve(points.headTopCenter_cp1, points.headTopCenter_cp2, points.headTopCenter)
     // inkex.paths.curve: c 33.4183 6.16857 101.086 42.8414 111.76 61.6315
-    .curve(points.dartUpperTop_cp1, points.dartUpperTop_cp2, points.dartUpperTop_ep)
+    .join(paths.sideSeamTop)
     // inkex.paths.curve: c -24.9843 32.7325 -47.0607 58.82 -77.0744 83.8488
     .curve(points.dartUpperPoint_cp1, points.dartUpperPoint_cp2, points.dartUpperPoint_ep)
     // inkex.paths.curve: c 34.0732 -20.4073 60.7508 -27.2284 109.157 -32.5937
     .curve(points.dartUpperBottom_cp1, points.dartUpperBottom_cp2, points.dartUpperBottom_ep)
     // inkex.paths.curve: c 8.62108 57.2862 3.13831 114.919 -10.7126 165.065
-    .curve(points.dartLowerTop_cp1, points.dartLowerTop_cp2, points.dartLowerTop_ep)
+    .join(paths.sideSeamMiddle)
     // inkex.paths.curve: c -29.8962 -6.30284 -56.3308 -15.85 -83.1796 -29.2196
     .curve(points.dartLowerPoint_cp1, points.dartLowerPoint_cp2, points.dartLowerPoint_ep)
     .curve(points.dartLowerBottom_cp1, points.dartLowerBottom_cp2, points.dartLowerBottom_ep)
     // inkex.paths.line: l -28.1537 30.2777
     .line(points.neckEdge)
     // inkex.paths.curve: c -14.1207 -16.6085 -56.5354 -19.8624 -70.6781 -5.3325
-    .curve(points.neckCenter_cp1, points.neckCenter_cp2, points.neckCenter)
+    .join(paths.neck_path)
     // inkex.paths.zoneClose: z
     .close()
 }

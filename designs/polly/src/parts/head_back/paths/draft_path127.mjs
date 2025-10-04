@@ -1,6 +1,6 @@
 import { scaleAllPoints } from '../../../shared.mjs'
 
-function draft_path127(Path, Point, paths, points, measurements, options, utils, macro, part) {
+function draft_path127(Path, Point, paths, points, measurements, options, utils, macro, part, log) {
   // Path: path127
   // m 43.4626 83.938
   points.path127_p1 = new Point(43.4626, 83.938)
@@ -50,7 +50,25 @@ function draft_path127(Path, Point, paths, points, measurements, options, utils,
   points.dartTop_ep = new Point(43.4626, 83.938)
   // Z
 
-  scaleAllPoints(part, options.totalSize)
+  //Putting a constant factor in here to make sure it scales to the size of the head front just right
+  scaleAllPoints(part, options.totalSize * (345.14 / 342.18) * options.headScale)
+
+  paths.sideSeamTop = new Path()
+    .move(points.headTip_ep)
+    .curve(points.dartTop_cp1, points.dartTop_cp2, points.dartTop_ep)
+    .hide()
+
+  paths.sideSeamLower = new Path()
+    .move(points.dartBottom_ep)
+    // inkex.paths.curve: c -1.63459 33.746 -1.32107 52.4883 3.33086 78.1403
+    .curve(points.sideCurveUpper_cp1, points.sideCurveUpper_cp2, points.sideCurveUpper_ep)
+    // inkex.paths.curve: c 4.47635 24.6838 11.8388 49.2658 23.402 71.5283
+    .curve(points.sideCurveLower_cp1, points.sideCurveLower_cp2, points.sideCurveLower_ep)
+    // inkex.paths.curve: c 9.07378 17.4696 23.2391 36.7396 35.3585 47.3018
+    .curve(points.neckOuter_cp1, points.neckOuter_cp2, points.neckOuter_ep)
+    .hide()
+  const totalSideSeamLength = paths.sideSeamTop.length() + paths.sideSeamLower.length()
+  log.info('Head back side seam length is ' + totalSideSeamLength)
 
   paths.path127 = new Path()
     // inkex.paths.move: m 43.4626 83.938
