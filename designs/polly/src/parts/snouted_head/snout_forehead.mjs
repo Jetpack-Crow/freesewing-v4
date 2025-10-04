@@ -43,7 +43,7 @@ function draftPollySnoutForehead({
   points.noseCenter_cp2 = new Point(702.7, 846.5)
   points.noseCenter_ep = new Point(746.6, 845.8)
 
-  const snoutHeadScale = (0.5 * 333.27) / 345.15
+  const snoutHeadScale = (0.5 * 333.27 * (350 / 327) * (350 / 353)) / 345.15
 
   store.set('snoutHeadScale', snoutHeadScale)
 
