@@ -20,6 +20,13 @@ function draftPollyBody_back({
 }) {
   draft_path85(Path, Point, paths, points, measurements, options, utils, macro, part, store, log)
 
+  if (options.helpText) {
+    paths.backHipCurve = new Path().move(points.hipOuter_ep).line(points.hipBack_ep)
+
+    paths.backHipCurve.addText('C C C C C C C C C C C C C C C C C C ')
+    paths.backHipCurve.attributes.add('data-text-class', 'bold fill-note')
+  }
+
   points.title = points.armpitBottom_ep.shiftFractionTowards(points.crotchCenter_ep, 0.5)
   macro('title', { at: points.title, nr: 2, title: 'body_back', scale: options.totalSize })
 

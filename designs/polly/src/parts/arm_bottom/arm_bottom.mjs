@@ -16,6 +16,8 @@ function draftPollyArm_bottom({
   sa,
   store,
   log,
+  Snippet,
+  snippets,
 }) {
   draft_path64(Path, Point, paths, points, measurements, options, utils, macro, part, store, log)
 
@@ -23,6 +25,9 @@ function draftPollyArm_bottom({
     path: paths.armCurvePath.reverse(),
     //d: 15,
   })
+
+  //snippets.backRaglanNotch = new Snippet('notch', points.armpitPointRight_ep)
+  snippets.bottom = new Snippet('bnotch', points.curveBottom)
 
   macro('mirror', {
     clone: true,
@@ -36,7 +41,7 @@ function draftPollyArm_bottom({
   }
 
   points.title = points.armpitCenter_ep.shiftFractionTowards(points.curveBottom, 0.5)
-  macro('title', { at: points.title, nr: 6, title: 'arm_bottom', scale: options.totalSize })
+  macro('title', { at: points.title, nr: 5, title: 'arm_bottom', scale: options.totalSize })
 
   return part
 }

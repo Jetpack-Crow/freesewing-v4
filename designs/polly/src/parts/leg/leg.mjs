@@ -1,4 +1,4 @@
-import { draft_path128 } from './paths/draft_path128.mjs'
+import { draft_legPath } from './paths/draft_legPath.mjs'
 import { body_back } from '../body_back/body_back.mjs'
 
 function draftPollyLeg({
@@ -17,7 +17,7 @@ function draftPollyLeg({
   Snippet,
   snippets,
 }) {
-  draft_path128(Path, Point, paths, points, measurements, options, utils, macro, part, store, log)
+  draft_legPath(Path, Point, paths, points, measurements, options, utils, macro, part, store, log)
 
   snippets.hipCurveNotch = new Snippet('bnotch', points.hipCurveSnippet)
   snippets.hipCornerNotch = new Snippet('notch', points.hipCornerNotch)
@@ -26,7 +26,7 @@ function draftPollyLeg({
   macro('title', { at: points.title, nr: 3, title: 'leg', scale: options.totalSize })
 
   if (sa) {
-    paths.saBasis = paths.path128
+    paths.saBasis = paths.legPath
     paths.sa = paths.saBasis.offset(sa).attr('class', 'fabric sa')
   }
 
