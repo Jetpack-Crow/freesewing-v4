@@ -82,7 +82,7 @@ function draft_path128(
   const hipCurve = hipCurveFront + hipCurveBack
 
   paths.hipCurve = drawHipCurve()
-  log.info('Hip curve length is ' + paths.hipCurve.length() + ', needed length is ' + hipCurve)
+  log.debug('Hip curve length is ' + paths.hipCurve.length() + ', needed length is ' + hipCurve)
 
   const curveTweakPoints = [
     'curve5_cp1',
@@ -94,8 +94,8 @@ function draft_path128(
   ]
   let hipCurveDelta = hipCurve - paths.hipCurve.length()
   let hipCurveIterations = 0
-  while (hipCurveIterations < 5 && hipCurveDelta > 0.001 * options.totalSize) {
-    log.info('Hip curve iteration ' + hipCurveIterations + ', delta ' + hipCurveDelta)
+  while (hipCurveIterations < 5 && Math.abs(hipCurveDelta) > 0.001 * options.totalSize) {
+    log.debug('Hip curve iteration ' + hipCurveIterations + ', delta ' + hipCurveDelta)
 
     for (let p of curveTweakPoints) {
       points[p] = points[p].shift(90, hipCurveDelta)

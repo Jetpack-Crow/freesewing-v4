@@ -15,6 +15,12 @@ function draftPollySnoutHeadSide({
   log,
   store,
 }) {
+  const drawNeckCurve = () => {
+    return new Path()
+      .move(points.neckCenter_ep)
+      .curve(points.neckSide_cp1, points.neckSide_cp2, points.neckSide_ep)
+  }
+
   if (options.faceType != 'snout') {
     return part
   }
@@ -52,8 +58,40 @@ function draftPollySnoutHeadSide({
   points.foreheadOuter_ep = new Point(115, 300.4)
   // Z
 
+  points.neckScalePoint = new Point(470, 750)
+
   const snoutHeadScale = store.get('snoutHeadScale')
   scaleAllPoints(part, options.totalSize * snoutHeadScale * options.headScale)
+
+  //Match neck curve to necessary length to fit the body
+
+  paths.neckCurve = drawNeckCurve()
+  const neckAdjustmentPoints = ['neckCenter_ep', 'neckSide_cp1', 'neckSide_cp2', 'neckSide_ep']
+  const neckLengthHalf = store.get('neckLengthHalf')
+
+  let neckCurveDelta = neckLengthHalf / 2 - paths.neckCurve.length()
+  let neckCurveIterations = 0
+
+  while (neckCurveIterations < 5 && Math.abs(neckCurveDelta) > 0.001 * options.totalSize) {
+    log.debug('Snout face iteration ' + neckCurveIterations + ', delta ' + neckCurveDelta)
+
+    for (let p of neckAdjustmentPoints) {
+      points[p] = points[p].shiftTowards(points.neckScalePoint, -neckCurveDelta * 0.675)
+    }
+
+    paths.neckCurve = drawNeckCurve()
+    neckCurveDelta = neckLengthHalf / 2 - paths.neckCurve.length()
+
+    neckCurveIterations = neckCurveIterations + 1
+  }
+  //Neck curve matching done!
+
+  const foreheadTopSeamLength = store.get('foreheadTopSeamLength')
+  paths.headSideSeam = new Path()
+    .move(points.neckSide_ep)
+    .curve(points.foreheadOuter_cp1, points.foreheadOuter_cp2, points.foreheadOuter_ep)
+  const totalSideSeamLength = foreheadTopSeamLength + paths.headSideSeam.length()
+  log.debug('Snouted head side seam length is ' + totalSideSeamLength)
 
   paths.path5 = new Path()
     // inkex.paths.move: m 114.957 300.386
@@ -70,23 +108,21 @@ function draftPollySnoutHeadSide({
     .curve(points.neckCenter_cp1, points.neckCenter_cp2, points.neckCenter_ep)
     // inkex.paths.Curve: C 366.712 730.973 390.717 670.911 433.19 651.675
     .curve(points.neckSide_cp1, points.neckSide_cp2, points.neckSide_ep)
-    // inkex.paths.Curve: C 361.744 507.453 262.663 377.136 114.957 300.386
-    .curve(points.foreheadOuter_cp1, points.foreheadOuter_cp2, points.foreheadOuter_ep)
+    .join(paths.headSideSeam)
     // inkex.paths.ZoneClose: Z
     .line(points.path5_p1)
 
-  const foreheadTopSeamLength = store.get('foreheadTopSeamLength')
-  paths.headSideSeam = new Path()
-    .move(points.neckSide_ep)
-    .curve(points.foreheadOuter_cp1, points.foreheadOuter_cp2, points.foreheadOuter_ep)
-  const totalSideSeamLength = foreheadTopSeamLength + paths.headSideSeam.length()
-  log.info('Snouted head side seam length is ' + totalSideSeamLength)
-
-  points.title = points.foreheadOuter_ep.shiftFractionTowards(points.neckCenter_ep, 0.5)
+  points.title = points.noseEdge_ep.shiftFractionTowards(points.neckCenter_ep, 0.3)
   macro('title', { at: points.title, nr: '7c', title: 'snout_head_side', scale: options.totalSize })
   if (sa) {
     paths.sa = paths.path5.offset(sa).attr('class', 'fabric sa')
   }
+
+  macro('pd', {
+    path: paths.neckCurve,
+    id: 'neckCurvePd',
+    d: 10,
+  })
 
   return part
 }

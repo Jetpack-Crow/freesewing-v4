@@ -68,13 +68,13 @@ function draft_path64(
   let armpitCurveBack = paths.armpitPath.length()
 
   let delta = armpitCurveFront - armpitCurveBack
-  log.info('Armpit curve delta ' + delta)
+  log.debug('Armpit curve delta ' + delta)
   let armpitIteration = 0
 
   const shiftPoints = ['armpitPointRight_cp2', 'armpitPointRight_ep', 'armNarrowRight_cp1']
 
   while (armpitIteration < 8 && Math.abs(delta) > 0.001 * options.totalSize) {
-    log.info('lower arm iteration ' + armpitIteration + ', delta = ' + delta)
+    log.debug('lower arm iteration ' + armpitIteration + ', delta = ' + delta)
 
     //shift each point
     for (let p of shiftPoints) {
@@ -99,7 +99,7 @@ function draft_path64(
   const armVerticalLength = store.get('armVerticalLength')
   let bottomVerticalLength = points.curveBottom.y - points.armpitPointRight_ep.y
   delta = armVerticalLength - bottomVerticalLength
-  log.info('Arm length delta ' + delta)
+  log.debug('Arm length delta ' + delta)
   let armLengthIteration = 0
   const vertShiftPoints = [
     'armWideRight_ep',
@@ -109,7 +109,7 @@ function draft_path64(
   ]
 
   while (armLengthIteration < 5 && Math.abs(delta) > 0.001 * options.totalSize) {
-    log.info('Arm length iteration ' + armLengthIteration + ', delta = ' + delta)
+    log.debug('Arm length iteration ' + armLengthIteration + ', delta = ' + delta)
 
     //shift each point
     for (let p of vertShiftPoints) {
@@ -130,13 +130,13 @@ function draft_path64(
   let armBottomCurve = paths.armCurvePath.length()
 
   delta = armTopCurve - armBottomCurve
-  log.info('Arm curve delta ' + delta)
+  log.debug('Arm curve delta ' + delta)
   let armIteration = 0
 
   const armShiftPoints = ['armWideRight_ep', 'armWideRight_cp2']
 
   while (armIteration < 5 && Math.abs(delta) > 0.001 * options.totalSize) {
-    log.info('Arm curve iteration ' + armIteration + ', delta = ' + delta)
+    log.debug('Arm curve iteration ' + armIteration + ', delta = ' + delta)
 
     //shift each point
     for (let p of armShiftPoints) {

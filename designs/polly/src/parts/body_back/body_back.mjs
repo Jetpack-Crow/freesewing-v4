@@ -32,7 +32,12 @@ function draftPollyBody_back({
 
   macro('pd', {
     path: paths.armpitCurveBack,
-    d: 15,
+    //d: 15,
+  })
+
+  macro('pd', {
+    path: paths.neckCurve,
+    ////d: 15,
   })
 
   return part

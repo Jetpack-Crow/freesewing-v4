@@ -10,8 +10,15 @@ function draft_face_split(
   utils,
   macro,
   part,
-  log
+  log,
+  store
 ) {
+  const drawNeckCurve = () => {
+    return new Path()
+      .move(points.neckEdge)
+      .curve(points.neckCenter_cp1, points.neckCenter_cp2, points.neckCenter)
+  }
+
   // Path: path7
   // m 265.664 269.168
   points.path7_p1 = new Point(265.7, 269.2)
@@ -51,9 +58,32 @@ function draft_face_split(
   points.dartLowerPoint_ep = new Point(265.8, 268.8)
   // z
 
+  points.neckScalePoint = new Point(260, 400)
+
   //This piece wasn't unwrapped and scaled at the same time as all the other pieces, so there's a slight
   //constant factor adjustment that has to be made to match it to the others.
   scaleAllPoints(part, options.totalSize * (80.39 / 76.53) * (345.14 / 354.63) * options.headScale)
+
+  //Match neck curve length
+  paths.neckCurve = drawNeckCurve()
+  const neckAdjustmentPoints = ['neckEdge', 'neckCenter_cp1', 'neckCenter_cp2', 'neckCenter']
+
+  const neckLengthHalf = store.get('neckLengthHalf')
+
+  let neckCurveDelta = neckLengthHalf / 2 - paths.neckCurve.length()
+  let neckCurveIterations = 0
+  while (neckCurveIterations < 5 && Math.abs(neckCurveDelta) > 0.001 * options.totalSize) {
+    log.debug('Split face neck iteration ' + neckCurveIterations + ', delta ' + neckCurveDelta)
+
+    for (let p of neckAdjustmentPoints) {
+      points[p] = points[p].shiftTowards(points.neckScalePoint, -neckCurveDelta * 0.785)
+    }
+
+    paths.neckCurve = drawNeckCurve()
+    neckCurveDelta = neckLengthHalf / 2 - paths.neckCurve.length()
+
+    neckCurveIterations = neckCurveIterations + 1
+  }
 
   paths.sideSeamTop = new Path()
     .move(points.headTopCenter)
@@ -69,11 +99,7 @@ function draft_face_split(
 
   const totalSideSeamLength =
     paths.sideSeamTop.length() + paths.sideSeamMiddle.length() + paths.sideSeamLower.length()
-  log.info('Split face side seam length is ' + totalSideSeamLength)
-
-  paths.neck_path = new Path()
-    .move(points.neckEdge)
-    .curve(points.neckCenter_cp1, points.neckCenter_cp2, points.neckCenter)
+  log.debug('Split face side seam length is ' + totalSideSeamLength)
 
   paths.face_path = new Path()
     // inkex.paths.move: m 265.664 269.168
@@ -95,7 +121,7 @@ function draft_face_split(
     // inkex.paths.line: l -28.1537 30.2777
     .line(points.neckEdge)
     // inkex.paths.curve: c -14.1207 -16.6085 -56.5354 -19.8624 -70.6781 -5.3325
-    .join(paths.neck_path)
+    .join(paths.neckCurve)
     // inkex.paths.zoneClose: z
     .close()
 }

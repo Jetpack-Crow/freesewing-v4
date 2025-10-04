@@ -1,3 +1,4 @@
+import { Store } from '@freesewing/core'
 import { scaleAllPoints } from '../../../shared.mjs'
 
 function draft_face_mirrored(
@@ -10,8 +11,15 @@ function draft_face_mirrored(
   utils,
   macro,
   part,
-  log
+  log,
+  store
 ) {
+  const drawNeckCurve = () => {
+    return new Path()
+      .move(points.neckEdge)
+      .curve(points.neckCenter_cp1, points.neckCenter_cp2, points.neckCenter)
+  }
+
   // Path: path1
   // m 188.487 20.9453
   points.headTopCenter = new Point(188, 20.9453)
@@ -48,7 +56,32 @@ function draft_face_mirrored(
   points.neckCenter_cp2 = new Point(212.8608, 327.3973)
   points.neckCenter = new Point(188, 326.9965)
 
+  points.neckScalePoint = new Point(188, 395)
+
   scaleAllPoints(part, options.totalSize * options.headScale)
+
+  //Match neck curve length to the body
+
+  paths.neckCurve = drawNeckCurve()
+  const neckAdjustmentPoints = ['neckEdge', 'neckCenter_cp1', 'neckCenter_cp2', 'neckCenter']
+
+  const neckLengthHalf = store.get('neckLengthHalf')
+
+  let neckCurveDelta = neckLengthHalf / 2 - paths.neckCurve.length()
+  let neckCurveIterations = 0
+
+  while (neckCurveIterations < 5 && Math.abs(neckCurveDelta) > 0.001 * options.totalSize) {
+    log.debug('front neck iteration ' + neckCurveIterations + ', delta ' + neckCurveDelta)
+
+    for (let p of neckAdjustmentPoints) {
+      points[p] = points[p].shiftTowards(points.neckScalePoint, -neckCurveDelta * 0.785)
+    }
+
+    paths.neckCurve = drawNeckCurve()
+    neckCurveDelta = neckLengthHalf / 2 - paths.neckCurve.length()
+
+    neckCurveIterations = neckCurveIterations + 1
+  }
 
   paths.sideSeamTop = new Path()
     .move(points.headTopCenter)
@@ -64,12 +97,7 @@ function draft_face_mirrored(
 
   const totalSideSeamLength =
     paths.sideSeamTop.length() + paths.sideSeamMiddle.length() + paths.sideSeamLower.length()
-  log.info('Mirrored face side seam length is ' + totalSideSeamLength)
-
-  paths.neck_path = new Path()
-    .move(points.neckEdge)
-    .curve(points.neckCenter_cp1, points.neckCenter_cp2, points.neckCenter)
-    .hide()
+  log.debug('Mirrored face side seam length is ' + totalSideSeamLength)
 
   paths.face_path = new Path()
     // inkex.paths.move: m 188.487 20.9453

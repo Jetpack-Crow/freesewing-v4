@@ -50,7 +50,12 @@ function draftPollyBody_front({
 
   macro('pd', {
     path: paths.armpitCurve.reverse(),
-    d: 15,
+    //d: 15,
+  })
+
+  macro('pd', {
+    path: paths.neckCurve.join(paths.mirroredNeckCurve.reverse()).reverse(),
+    ////d: 15,
   })
 
   return part

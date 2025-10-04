@@ -21,7 +21,7 @@ function draftPollyArm_bottom({
 
   macro('pd', {
     path: paths.armCurvePath.reverse(),
-    d: 15,
+    //d: 15,
   })
 
   macro('mirror', {

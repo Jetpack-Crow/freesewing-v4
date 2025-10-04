@@ -121,7 +121,7 @@ function draft_body_front(
     .hide()
 
   store.set('sideSeamFrontLength', paths.sideSeamCurve.length())
-  log.info('Side seam length front: ' + paths.sideSeamCurve.length() + ' mm')
+  log.debug('Side seam length front: ' + paths.sideSeamCurve.length() + ' mm')
 
   paths.hipCurve = new Path()
     .move(points.crotchWidth_ep)
@@ -135,7 +135,7 @@ function draft_body_front(
     .curve(points.hipOuter_cp1, points.hipOuter_cp2, points.hipOuter_ep)
     .hide()
   store.set('hipCurveFront', paths.hipCurve.length())
-  log.info('Hip length front: ' + paths.hipCurve.length() + ' mm')
+  log.debug('Hip length front: ' + paths.hipCurve.length() + ' mm')
 
   paths.hipToCorner = new Path()
     .move(points.crotchWidth_ep)
@@ -143,7 +143,7 @@ function draft_body_front(
     .curve(points.hipCorner_cp1, points.hipCorner_cp2, points.hipCorner_ep)
     .hide()
   store.set('hipToCorner', paths.hipToCorner.length())
-  log.info('Hip to corner: ' + paths.hipToCorner.length() + ' mm')
+  log.debug('Hip to corner: ' + paths.hipToCorner.length() + ' mm')
 
   //Store armpit curve length
   paths.armpitCurve = new Path()
@@ -154,9 +154,23 @@ function draft_body_front(
     .hide()
   store.set('armpitCurveFront', paths.armpitCurve.length())
 
+  //store neck curve length
+  paths.neckCurve = new Path()
+    .move(points.neckOuter_ep)
+    .line(points.path190_p1)
+    // inkex.paths.Curve: C 158.263 3.02254 154.842 4.22089 150.172 5.18359
+    .curve(points.path190_p2_cp1, points.path190_p2_cp2, points.path190_p2_ep)
+    // inkex.paths.Curve: C 145.289 6.19022 139.269 6.67263 135.287 6.6543
+    .curve(points.neckCenter_cp1, points.neckCenter_cp2, points.neckCenter_ep)
+    // inkex.paths.line: l 1.3125 402.607
+    .hide()
+  store.set('neckLengthFront', paths.neckCurve.length())
+
+  //Store crotch length
   const crotchWidthFront = points.crotchWidth_ep.dist(points.crotchCenter)
   store.set('crotchWidthFront', crotchWidthFront)
 
+  //store raglan length
   const raglanLengthFront = points.neckOuter_ep.dist(points.armpitNotch_ep)
   store.set('raglanLengthFront', raglanLengthFront)
 
@@ -169,13 +183,7 @@ function draft_body_front(
     .join(paths.sideSeamCurve)
     .join(paths.armpitCurve)
     .line(points.neckOuter_ep)
-    // inkex.paths.ZoneClose: Z
-    .line(points.path190_p1)
-    // inkex.paths.Curve: C 158.263 3.02254 154.842 4.22089 150.172 5.18359
-    .curve(points.path190_p2_cp1, points.path190_p2_cp2, points.path190_p2_ep)
-    // inkex.paths.Curve: C 145.289 6.19022 139.269 6.67263 135.287 6.6543
-    .curve(points.neckCenter_cp1, points.neckCenter_cp2, points.neckCenter_ep)
-  // inkex.paths.line: l 1.3125 402.607
+    .join(paths.neckCurve)
 }
 
 export { draft_body_front }

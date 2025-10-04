@@ -93,7 +93,7 @@ function draft_path85(
 
   const armpitCurveFront = store.get('armpitCurveFront')
   let armpitCurveBack = paths.armpitCurveBack.length()
-  log.info('Armpit length delta is ' + (armpitCurveFront - armpitCurveBack))
+  log.debug('Armpit length delta is ' + (armpitCurveFront - armpitCurveBack))
 
   const armpitShiftPoints = [
     'armpitBottom_ep',
@@ -107,7 +107,7 @@ function draft_path85(
   let armpitIteration = 0
 
   while (armpitIteration < 5 && Math.abs(delta) > 0.001 * options.totalSize) {
-    log.info('armpitIteration ' + armpitIteration + ', delta = ' + delta)
+    log.debug('armpitIteration ' + armpitIteration + ', delta = ' + delta)
 
     for (let p of armpitShiftPoints) {
       points[p] = points[p].shift(-170, delta)
@@ -124,7 +124,7 @@ function draft_path85(
   //Match raglan curve length
   const raglanLengthFront = store.get('raglanLengthFront')
   let raglanLengthBack = points.shoulder_ep.dist(points.armpitNotch_ep)
-  log.info('Raglan length delta is ' + (raglanLengthFront - raglanLengthBack))
+  log.debug('Raglan length delta is ' + (raglanLengthFront - raglanLengthBack))
 
   const raglanShiftPoints = [
     'armpitNotch_ep',
@@ -142,7 +142,7 @@ function draft_path85(
   delta = raglanLengthFront - raglanLengthBack
   let raglanIteration = 0
   while (raglanIteration < 5 && Math.abs(delta) > 0.001 * options.totalSize) {
-    log.info('raglanIteration ' + raglanIteration + ', delta = ' + delta)
+    log.debug('raglanIteration ' + raglanIteration + ', delta = ' + delta)
 
     for (let p of raglanShiftPoints) {
       points[p] = points[p].shift(0, -delta)
@@ -157,14 +157,14 @@ function draft_path85(
   //Match side seam to front side seam
   let sideSeamBackLength = points.armpitBottom_ep.dist(points.hipOuter_ep)
   const sideSeamFrontLength = store.get('sideSeamFrontLength')
-  log.info('Side seam back length is ' + sideSeamBackLength + ' mm')
+  log.debug('Side seam back length is ' + sideSeamBackLength + ' mm')
 
   delta = sideSeamFrontLength - sideSeamBackLength
 
   let iteration = 0
 
   while (iteration < 5 && Math.abs(delta) > 0.001 * options.totalSize) {
-    log.info('Side seam iteration ' + iteration + ', delta = ' + delta)
+    log.debug('Side seam iteration ' + iteration + ', delta = ' + delta)
 
     points.hipOuter_ep = points.hipOuter_ep.shift(-90, delta)
 
@@ -177,12 +177,12 @@ function draft_path85(
   //Match crotch seam to front crotch seam
   let crotchWidthBack = points.crotchCenter_ep.dist(points.hipBack_ep)
   const crotchWidthFront = store.get('crotchWidthFront')
-  log.info('crotch back length is ' + crotchWidthBack + ' mm')
-  log.info('crotch front length is ' + crotchWidthFront + ' mm')
+  log.debug('crotch back length is ' + crotchWidthBack + ' mm')
+  log.debug('crotch front length is ' + crotchWidthFront + ' mm')
   delta = crotchWidthFront - crotchWidthBack
   let crotchIteration = 0
-  while (crotchIteration < 5 && delta > 0.001 * options.totalSize) {
-    log.info('crotchIteration ' + crotchIteration + ', delta = ' + delta)
+  while (crotchIteration < 5 && Math.abs(delta) > 0.001 * options.totalSize) {
+    log.debug('crotchIteration ' + crotchIteration + ', delta = ' + delta)
 
     points.hipBack_ep = points.hipBack_ep.shift(180, delta)
 
@@ -196,15 +196,19 @@ function draft_path85(
   paths.armpitCurveBack = drawArmpitCurve()
 
   //Store hip curve length
-  log.info('Hip curve back length is ' + points.hipBack_ep.dist(points.hipOuter_ep))
+  log.debug('Hip curve back length is ' + points.hipBack_ep.dist(points.hipOuter_ep))
   store.set('hipCurveBack', points.hipBack_ep.dist(points.hipOuter_ep))
 
-  paths.path85 = new Path()
-    // inkex.paths.move: m 472.983 12.8617
-    .move(points.path85_p1)
-    // inkex.paths.curve: c 14.0074 3.04588 19.5758 4.49088 29.7218 4.18197
+  //Store neck curve lenght
+  paths.neckCurve = new Path()
+    .move(points.shoulder_ep)
     .curve(points.neckCenter_cp1, points.neckCenter_cp2, points.neckCenter_ep)
-    // inkex.paths.curve: c -1.05206 13.276 -4.52225 49.6723 -5.9235 74.5668
+    .hide()
+  store.set('neckLengthBack', paths.neckCurve.length())
+
+  paths.path85 = new Path()
+    .move(points.shoulder_ep)
+    .join(paths.neckCurve)
     .curve(points.path85_p3_cp1, points.path85_p3_cp2, points.path85_p3_ep)
     // inkex.paths.curve: c -1.84297 32.7422 -4.51459 65.5577 -3.26408 98.3279
     .curve(points.path85_p4_cp1, points.path85_p4_cp2, points.path85_p4_ep)

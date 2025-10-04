@@ -1,6 +1,30 @@
 import { scaleAllPoints } from '../../../shared.mjs'
 
-function draft_path127(Path, Point, paths, points, measurements, options, utils, macro, part, log) {
+function draft_path127(
+  Path,
+  Point,
+  paths,
+  points,
+  measurements,
+  options,
+  utils,
+  macro,
+  part,
+  log,
+  store
+) {
+  const drawNeckCurve = () => {
+    return (
+      new Path()
+        .move(points.neckOuter_ep)
+        // inkex.paths.curve: c 6.30967 -7.58899 22.0015 -11.5732 34.0531 -12.3965
+        .curve(points.neckCurve_cp1, points.neckCurve_cp2, points.neckCurve_ep)
+        // inkex.paths.curve: c 11.1131 -0.75925 23.4173 4.19693 32.6639 7.05415
+        .curve(points.neckCenter_cp1, points.neckCenter_cp2, points.neckCenter_ep)
+      // inkex.paths.curve: c 6.11959 -11.0503 26.169 -50.5519 31.4624 -78.1213
+    )
+  }
+
   // Path: path127
   // m 43.4626 83.938
   points.path127_p1 = new Point(43.4626, 83.938)
@@ -50,8 +74,45 @@ function draft_path127(Path, Point, paths, points, measurements, options, utils,
   points.dartTop_ep = new Point(43.4626, 83.938)
   // Z
 
+  points.neckAdjustmentCenter = new Point(120, 370)
+
   //Putting a constant factor in here to make sure it scales to the size of the head front just right
   scaleAllPoints(part, options.totalSize * (345.14 / 342.18) * options.headScale)
+
+  //Match the neck curve to the length of the neck on the body
+  const neckLengthHalf =
+    store.get('neckLengthBack') + store.get('neckLengthArm') + store.get('neckLengthFront')
+  log.debug('Neck curve length to fit the body is ' + neckLengthHalf)
+  store.set('neckLengthHalf', neckLengthHalf)
+
+  paths.neckCurve = drawNeckCurve()
+
+  const neckAdjustmentPoints = [
+    'neckOuter_ep',
+    'neckCurve_cp1',
+    'neckCurve_cp2',
+    'neckCurve_ep',
+    'neckCenter_cp1',
+    'neckCenter_cp2',
+    'neckCenter_ep',
+  ]
+
+  let neckCurveDelta = neckLengthHalf / 2 - paths.neckCurve.length()
+  let neckCurveIterations = 0
+
+  while (neckCurveIterations < 5 && Math.abs(neckCurveDelta) > 0.001 * options.totalSize) {
+    log.debug('Back neck iteration ' + neckCurveIterations + ', delta ' + neckCurveDelta)
+
+    for (let p of neckAdjustmentPoints) {
+      points[p] = points[p].shiftTowards(points.neckAdjustmentCenter, -neckCurveDelta * 0.785)
+    }
+
+    paths.neckCurve = drawNeckCurve()
+    neckCurveDelta = neckLengthHalf / 2 - paths.neckCurve.length()
+
+    neckCurveIterations = neckCurveIterations + 1
+  }
+  //Neck curve matching is done!
 
   paths.sideSeamTop = new Path()
     .move(points.headTip_ep)
@@ -68,7 +129,7 @@ function draft_path127(Path, Point, paths, points, measurements, options, utils,
     .curve(points.neckOuter_cp1, points.neckOuter_cp2, points.neckOuter_ep)
     .hide()
   const totalSideSeamLength = paths.sideSeamTop.length() + paths.sideSeamLower.length()
-  log.info('Head back side seam length is ' + totalSideSeamLength)
+  log.debug('Head back side seam length is ' + totalSideSeamLength)
 
   paths.path127 = new Path()
     // inkex.paths.move: m 43.4626 83.938
@@ -83,11 +144,7 @@ function draft_path127(Path, Point, paths, points, measurements, options, utils,
     .curve(points.sideCurveLower_cp1, points.sideCurveLower_cp2, points.sideCurveLower_ep)
     // inkex.paths.curve: c 9.07378 17.4696 23.2391 36.7396 35.3585 47.3018
     .curve(points.neckOuter_cp1, points.neckOuter_cp2, points.neckOuter_ep)
-    // inkex.paths.curve: c 6.30967 -7.58899 22.0015 -11.5732 34.0531 -12.3965
-    .curve(points.neckCurve_cp1, points.neckCurve_cp2, points.neckCurve_ep)
-    // inkex.paths.curve: c 11.1131 -0.75925 23.4173 4.19693 32.6639 7.05415
-    .curve(points.neckCenter_cp1, points.neckCenter_cp2, points.neckCenter_ep)
-    // inkex.paths.curve: c 6.11959 -11.0503 26.169 -50.5519 31.4624 -78.1213
+    .join(paths.neckCurve)
     .curve(points.backCurveLower_cp1, points.backCurveLower_cp2, points.backCurveLower_ep)
     // inkex.paths.curve: c 9.49224 -49.4383 8.31825 -101.464 -0.52509 -151.023
     .curve(points.backCurveUpper_cp1, points.backCurveUpper_cp2, points.backCurveUpper_ep)

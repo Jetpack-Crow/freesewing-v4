@@ -17,7 +17,7 @@ function draftPollyArm_top({
   Snippet,
   snippets,
 }) {
-  draft_path93(Path, Point, paths, points, measurements, options, utils, macro, part)
+  draft_path93(Path, Point, paths, points, measurements, options, utils, macro, part, store)
 
   const raglanLength = store.get('raglanLengthFront')
   points.raglanNotch = paths.armCurve.reverse().shiftAlong(raglanLength)
@@ -32,7 +32,7 @@ function draftPollyArm_top({
 
   macro('pd', {
     path: paths.lowerArmCurve.reverse(),
-    d: 15,
+    //d: 15,
   })
 
   macro('mirror', {
@@ -50,6 +50,11 @@ function draftPollyArm_top({
 
   points.title = points.neckCenter_ep.shiftFractionTowards(points.armBottom_ep, 0.5)
   macro('title', { at: points.title, nr: 5, title: 'arm_top', scale: options.totalSize })
+
+  macro('pd', {
+    path: paths.neckCurve.join(paths.mirroredNeckCurve.reverse()),
+    ////d: 15,
+  })
 
   return part
 }

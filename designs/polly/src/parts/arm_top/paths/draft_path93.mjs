@@ -1,6 +1,17 @@
 import { scaleAllPoints } from '../../../shared.mjs'
 
-function draft_path93(Path, Point, paths, points, measurements, options, utils, macro, part) {
+function draft_path93(
+  Path,
+  Point,
+  paths,
+  points,
+  measurements,
+  options,
+  utils,
+  macro,
+  part,
+  store
+) {
   // Path: path93
   // m 245.113 369.027
   points.path93_p1 = new Point(245.1125, 369.0271)
@@ -60,6 +71,7 @@ function draft_path93(Path, Point, paths, points, measurements, options, utils, 
     // inkex.paths.curve: c 7.8373 4.71393 17.218 11.8071 32.8583 11.5004
     .curve(points.neckCenter_cp1, points.neckCenter_cp2, points.neckCenter_ep)
     .hide()
+  store.set('neckLengthArm', paths.neckCurve.length() * 2)
 
   paths.path93 = paths.armCurve.join(paths.neckCurve)
   //.hide()
