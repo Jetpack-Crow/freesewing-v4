@@ -12,6 +12,10 @@ import { foot } from './parts/foot/foot.mjs'
 import { snout_forehead } from './parts/snouted_head/snout_forehead.mjs'
 import { snout_nose_top } from './parts/snouted_head/snout_nose_top.mjs'
 import { snout_head_side } from './parts/snouted_head/snout_head_side.mjs'
+import { anthro_leg_inner } from './parts/anthro_legs/anthro_leg_inner.mjs'
+import { anthro_leg_outer } from './parts/anthro_legs/anthro_leg_outer.mjs'
+import { anthro_foot_upper } from './parts/anthro_legs/anthro_foot_upper.mjs'
+import { anthro_foot_sole } from './parts/anthro_legs/anthro_foot_sole.mjs'
 
 import { i18n } from '../i18n/index.mjs'
 
@@ -30,6 +34,10 @@ const Polly = new Design({
     snout_forehead,
     snout_nose_top,
     snout_head_side,
+    anthro_leg_inner,
+    anthro_leg_outer,
+    anthro_foot_upper,
+    anthro_foot_sole,
   ],
 })
 
@@ -46,6 +54,10 @@ export {
   snout_forehead,
   snout_nose_top,
   snout_head_side,
+  anthro_leg_inner,
+  anthro_leg_outer,
+  anthro_foot_upper,
+  anthro_foot_sole,
   Polly,
   i18n,
   about,

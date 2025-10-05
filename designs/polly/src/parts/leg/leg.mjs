@@ -17,6 +17,10 @@ function draftPollyLeg({
   Snippet,
   snippets,
 }) {
+  if (options.legType != 'cylinder') {
+    return part
+  }
+
   draft_legPath(Path, Point, paths, points, measurements, options, utils, macro, part, store, log)
 
   snippets.hipCurveNotch = new Snippet('bnotch', points.hipCurveSnippet)
@@ -81,6 +85,12 @@ export const leg = {
       min: 50,
       max: 150,
       menu: 'style',
+    },
+
+    legType: {
+      dflt: 'cylinder',
+      list: ['cylinder', 'anthro'],
+      menu: 'parts',
     },
   },
 }

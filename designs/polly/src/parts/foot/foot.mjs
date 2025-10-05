@@ -13,15 +13,17 @@ function draftPollyFoot({
   store,
   sa,
 }) {
-  points.center = new Point(0, 0)
+  if (options.legType == 'cylinder') {
+    points.center = new Point(0, 0)
 
-  const circumference = store.get('legBottomLength')
+    const circumference = store.get('legBottomLength')
 
-  points.center.addCircle(circumference / (2 * 3.14), 'fabric')
+    points.center.addCircle(circumference / (2 * 3.14), 'fabric')
 
-  if (sa) points.center.addCircle(sa + circumference / (2 * 3.14), 'fabric sa')
+    if (sa) points.center.addCircle(sa + circumference / (2 * 3.14), 'fabric sa')
 
-  macro('title', { at: points.center, nr: 4, title: 'foot', scale: options.totalSize })
+    macro('title', { at: points.center, nr: 4, title: 'foot', scale: options.totalSize })
+  }
 
   //console.log({ points: JSON.parse(JSON.stringify(points)), paths: JSON.parse(JSON.stringify(paths)) })
 
