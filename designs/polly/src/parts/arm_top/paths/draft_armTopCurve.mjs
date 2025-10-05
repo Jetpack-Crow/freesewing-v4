@@ -1,6 +1,6 @@
 import { scaleAllPoints } from '../../../shared.mjs'
 
-function draft_path93(
+function draft_armTopCurve(
   Path,
   Point,
   paths,
@@ -12,9 +12,9 @@ function draft_path93(
   part,
   store
 ) {
-  // Path: path93
+  // Path: armTopCurve
   // m 245.113 369.027
-  points.path93_p1 = new Point(245.1125, 369.0271)
+  points.armTopCurve_p1 = new Point(245.1125, 369.0271)
   // c 15.6403 -0.30672 25.6438 -7.94185 32.5596 -12.3965
   /*
   points.neckRight_cp1 = new Point(260.6403, 368.6933)
@@ -73,8 +73,8 @@ function draft_path93(
     .hide()
   store.set('neckLengthArm', paths.neckCurve.length() * 2)
 
-  paths.path93 = paths.armCurve.join(paths.neckCurve)
+  paths.armTopCurve = paths.armCurve.join(paths.neckCurve)
   //.hide()
 }
 
-export { draft_path93 }
+export { draft_armTopCurve }

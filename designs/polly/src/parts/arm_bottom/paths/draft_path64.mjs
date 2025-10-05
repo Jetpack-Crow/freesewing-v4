@@ -55,6 +55,8 @@ function draft_path64(
   points.curveBottom = new Point(80, 595.7)
   points.curveBottom_cpRight = new Point(115, 595.7)
 
+  points.title = new Point(60, 500)
+
   scaleAllPoints(part, options.totalSize)
 
   paths.armpitPath = new Path()

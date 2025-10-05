@@ -22,6 +22,7 @@ function draftPollyArm_bottom({
   draft_path64(Path, Point, paths, points, measurements, options, utils, macro, part, store, log)
 
   macro('pd', {
+    id: 'armCurveLength',
     path: paths.armCurvePath.reverse(),
     //d: 15,
   })
@@ -35,12 +36,23 @@ function draftPollyArm_bottom({
     paths: Object.keys(paths),
   })
 
+  macro('pd', {
+    id: 'armpitCurveLength',
+    path: paths.armpitPath.reverse().join(paths.mirroredArmpitPath).reverse(),
+    //d: 15,
+  })
+
+  if (options.helpText) {
+    paths.armpitTextPath = paths.armpitPath.reverse().join(paths.mirroredArmpitPath)
+    paths.armpitTextPath.unhide().addText('D D D D D D D D D D D D D D D D D D D D ')
+    paths.armpitTextPath.attributes.add('data-text-class', 'bold fill-note')
+  }
+
   if (sa) {
     paths.saBasis = paths.path64.join(paths.mirroredPath64.reverse()).reverse()
     paths.sa = paths.saBasis.offset(sa).attr('class', 'fabric sa')
   }
 
-  points.title = points.armpitCenter_ep.shiftFractionTowards(points.curveBottom, 0.5)
   macro('title', { at: points.title, nr: 5, title: 'arm_bottom', scale: options.totalSize })
 
   return part

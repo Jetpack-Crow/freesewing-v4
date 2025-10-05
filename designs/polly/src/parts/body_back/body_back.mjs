@@ -25,6 +25,13 @@ function draftPollyBody_back({
 
     paths.backHipCurve.addText('C C C C C C C C C C C C C C C C C C ')
     paths.backHipCurve.attributes.add('data-text-class', 'bold fill-note')
+
+    paths.armpitCurveBack.unhide().addText('D D D D D D D D D D D D D D D D D D D D ')
+    paths.armpitCurveBack.attributes.add('data-text-class', 'bold fill-note')
+
+    paths.raglanLength = new Path().move(points.armpitNotch_ep).line(points.shoulder_ep).reverse()
+    paths.raglanLength.addText('F F F F F F F F F F F F F F F F F F F F ')
+    paths.raglanLength.attributes.add('data-text-class', 'bold fill-lining')
   }
 
   points.title = points.armpitBottom_ep.shiftFractionTowards(points.crotchCenter_ep, 0.5)
@@ -38,11 +45,13 @@ function draftPollyBody_back({
   snippets.backRaglanNotch = new Snippet('bnotch', points.armpitNotch_ep)
 
   macro('pd', {
+    id: 'armpitCurveBackLength',
     path: paths.armpitCurveBack,
     //d: 15,
   })
 
   macro('pd', {
+    id: 'neckCurveLength',
     path: paths.neckCurve,
     ////d: 15,
   })

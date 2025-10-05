@@ -1,5 +1,5 @@
 import { pctBasedOn, Store } from '@freesewing/core'
-import { draft_path93 } from './paths/draft_path93.mjs'
+import { draft_armTopCurve } from './paths/draft_armTopCurve.mjs'
 import { body_front } from '../body_front/body_front.mjs'
 
 function draftPollyArm_top({
@@ -17,7 +17,7 @@ function draftPollyArm_top({
   Snippet,
   snippets,
 }) {
-  draft_path93(Path, Point, paths, points, measurements, options, utils, macro, part, store)
+  draft_armTopCurve(Path, Point, paths, points, measurements, options, utils, macro, part, store)
 
   const raglanLength = store.get('raglanLengthFront')
   points.raglanNotch = paths.armCurve.reverse().shiftAlong(raglanLength)
@@ -30,8 +30,10 @@ function draftPollyArm_top({
   store.set('armTopCurve', paths.armCurve.length() - raglanLength)
 
   paths.lowerArmCurve = paths.armCurve.split(points.raglanNotch)[0]
+  paths.raglanCurve = paths.armCurve.split(points.raglanNotch)[1]
 
   macro('pd', {
+    id: 'lowerArmCurve',
     path: paths.lowerArmCurve.reverse(),
     //d: 15,
   })
@@ -42,11 +44,20 @@ function draftPollyArm_top({
     paths: Object.keys(paths),
   })
 
+  if (options.helpText) {
+    paths.raglanCurve = paths.raglanCurve.reverse()
+    paths.raglanCurve.addText('E E E E E E E E E E E E E E E E E E E E E E E E E ')
+    paths.raglanCurve.attributes.add('data-text-class', 'bold fill-contrast')
+
+    paths.mirroredRaglanCurve.addText('F F F F F F F F F F F F F F F ')
+    paths.mirroredRaglanCurve.attributes.add('data-text-class', 'bold fill-lining')
+  }
+
   points.backRaglanNotch = paths.mirroredArmCurve.reverse().shiftAlong(raglanLength)
   snippets.backRaglanNotch = new Snippet('bnotch', points.backRaglanNotch)
 
   if (sa) {
-    paths.saBasis = paths.path93.join(paths.mirroredPath93.reverse()).reverse()
+    paths.saBasis = paths.armTopCurve.join(paths.mirroredArmTopCurve.reverse()).reverse()
     paths.sa = paths.saBasis.offset(sa).trim().attr('class', 'fabric sa')
   }
 
@@ -54,6 +65,7 @@ function draftPollyArm_top({
   macro('title', { at: points.title, nr: 6, title: 'arm_top', scale: options.totalSize })
 
   macro('pd', {
+    id: 'neckCurveJoined',
     path: paths.neckCurve.join(paths.mirroredNeckCurve.reverse()),
     ////d: 15,
   })

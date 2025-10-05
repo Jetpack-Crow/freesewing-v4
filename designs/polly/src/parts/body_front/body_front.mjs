@@ -37,10 +37,23 @@ function draftPollyBody_front({
     paths.cornerToSide = paths.hipCurve.split(points.hipCorner_ep)[1]
     paths.cornerToSide.addText('B B B B B B B B B B B B B B B B B B B B B B ')
     paths.cornerToSide.attributes.add('data-text-class', 'bold fill-lining')
+
+    paths.armpitCurve.unhide().addText('D D D D D D D D D D D D D D D D D D D D ')
+    paths.armpitCurve.attributes.add('data-text-class', 'bold fill-note')
+
+    paths.raglanLength = new Path().move(points.armpitNotch_ep).line(points.neckOuter_ep)
+    paths.raglanLength.addText('E E E E E E E E E E E E E E E E E E E E E E E E E ')
+    paths.raglanLength.attributes.add('data-text-class', 'bold fill-contrast')
   }
 
   snippets.hipCornerNotch = new Snippet('notch', points.hipCorner_ep)
   snippets.armpitNotch = new Snippet('notch', points.armpitNotch_ep)
+
+  macro('pd', {
+    id: 'armpitCurveLength',
+    path: paths.armpitCurve.reverse(),
+    //d: 15,
+  })
 
   macro('mirror', {
     clone: true,
@@ -51,6 +64,9 @@ function draftPollyBody_front({
   points.armpitNotchMirrored = paths.mirroredArmpitCurve.end()
   snippets.armpitNotchMirrored = new Snippet('notch', points.armpitNotchMirrored)
 
+  points.hipNotchMirrored = paths.mirroredHipToCorner.end()
+  snippets.hipNotchMirrored = new Snippet('notch', points.hipNotchMirrored)
+
   if (sa) {
     paths.saBasis = paths.path190.join(paths.mirroredPath190.reverse())
     paths.sa = paths.saBasis.offset(sa).trim().attr('class', 'fabric sa')
@@ -60,11 +76,7 @@ function draftPollyBody_front({
   macro('title', { at: points.title, nr: 1, title: 'body_front', scale: options.totalSize })
 
   macro('pd', {
-    path: paths.armpitCurve.reverse(),
-    //d: 15,
-  })
-
-  macro('pd', {
+    id: 'neckCurveJoined',
     path: paths.neckCurve.join(paths.mirroredNeckCurve.reverse()).reverse(),
     ////d: 15,
   })
@@ -94,7 +106,15 @@ export const body_front = {
       label: 'Torso length',
       menu: 'style',
     },
-    totalSize: { pct: 25, min: 5, max: 200, menu: 'scale' },
+    totalSize: {
+      pct: 25,
+      min: 5,
+      max: 200,
+      menu: 'scale',
+      toAbs: function (value, settings) {
+        return 813 * value
+      },
+    },
     helpText: { bool: false, menu: 'style' },
   },
 }
