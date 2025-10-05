@@ -206,9 +206,8 @@ function draft_path85(
     .hide()
   store.set('neckLengthBack', paths.neckCurve.length())
 
-  paths.path85 = new Path()
-    .move(points.shoulder_ep)
-    .join(paths.neckCurve)
+  paths.backSeam = new Path()
+    .move(points.neckCenter_ep)
     .curve(points.path85_p3_cp1, points.path85_p3_cp2, points.path85_p3_ep)
     // inkex.paths.curve: c -1.84297 32.7422 -4.51459 65.5577 -3.26408 98.3279
     .curve(points.path85_p4_cp1, points.path85_p4_cp2, points.path85_p4_ep)
@@ -216,7 +215,12 @@ function draft_path85(
     .curve(points.path85_p5_cp1, points.path85_p5_cp2, points.path85_p5_ep)
     // inkex.paths.curve: c 1.56038 23.6633 2.36966 37.1077 1.58105 71.1265
     .curve(points.crotchCenter_cp1, points.crotchCenter_cp2, points.crotchCenter_ep)
-    // inkex.paths.curve: c -8.98283 1.59062 -21.0562 2.86232 -22.5996 3.15588
+    .hide()
+
+  paths.path85 = new Path()
+    .move(points.shoulder_ep)
+    .join(paths.neckCurve)
+    .join(paths.backSeam)
     .line(points.hipBack_ep)
     // inkex.paths.curve: c -12.6733 -5.80867 -90.9351 -36.2156 -100.681 -42.5527
     .line(points.hipOuter_ep)

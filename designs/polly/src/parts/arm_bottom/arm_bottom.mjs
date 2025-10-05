@@ -44,8 +44,12 @@ function draftPollyArm_bottom({
 
   if (options.helpText) {
     paths.armpitTextPath = paths.armpitPath.reverse().join(paths.mirroredArmpitPath)
-    paths.armpitTextPath.unhide().addText('D D D D D D D D D D D D D D D D D D D D ')
-    paths.armpitTextPath.attributes.add('data-text-class', 'bold fill-note')
+    macro('banner', {
+      id: 'seamAlignD',
+      path: paths.armpitTextPath,
+      text: 'polly:seamAlignD',
+      spaces: 2,
+    })
   }
 
   if (sa) {

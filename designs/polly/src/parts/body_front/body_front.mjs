@@ -31,19 +31,37 @@ function draftPollyBody_front({
   )
 
   if (options.helpText) {
-    paths.hipToCorner.unhide().addText('A A A A A A A A A A A A A A A A A A A A A A A A A ')
-    paths.hipToCorner.attributes.add('data-text-class', 'bold fill-contrast')
+    paths.hipToCorner.unhide()
+    macro('banner', {
+      id: 'seamAlignA',
+      path: paths.hipToCorner,
+      text: 'polly:seamAlignA',
+      spaces: 2,
+    })
 
     paths.cornerToSide = paths.hipCurve.split(points.hipCorner_ep)[1]
-    paths.cornerToSide.addText('B B B B B B B B B B B B B B B B B B B B B B ')
-    paths.cornerToSide.attributes.add('data-text-class', 'bold fill-lining')
+    macro('banner', {
+      id: 'seamAlignB',
+      path: paths.cornerToSide,
+      text: 'polly:seamAlignB',
+      spaces: 2,
+    })
 
-    paths.armpitCurve.unhide().addText('D D D D D D D D D D D D D D D D D D D D ')
-    paths.armpitCurve.attributes.add('data-text-class', 'bold fill-note')
+    paths.armpitCurve.unhide()
+    macro('banner', {
+      id: 'seamAlignD',
+      path: paths.armpitCurve,
+      text: 'polly:seamAlignD',
+      spaces: 2,
+    })
 
     paths.raglanLength = new Path().move(points.armpitNotch_ep).line(points.neckOuter_ep)
-    paths.raglanLength.addText('E E E E E E E E E E E E E E E E E E E E E E E E E ')
-    paths.raglanLength.attributes.add('data-text-class', 'bold fill-contrast')
+    macro('banner', {
+      id: 'seamAlignE',
+      path: paths.raglanLength,
+      text: 'polly:seamAlignE',
+      spaces: 2,
+    })
   }
 
   snippets.hipCornerNotch = new Snippet('notch', points.hipCorner_ep)
@@ -115,6 +133,6 @@ export const body_front = {
         return 813 * value
       },
     },
-    helpText: { bool: false, menu: 'style' },
+    helpText: { bool: false, menu: 'help' },
   },
 }

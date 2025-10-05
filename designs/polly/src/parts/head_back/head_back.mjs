@@ -17,11 +17,24 @@ function draftPollyHead_back({
   sa,
   log,
   store,
+  Snippet,
+  snippets,
 }) {
   draft_path127(Path, Point, paths, points, measurements, options, utils, macro, part, log, store)
 
-  points.title = points.headTip_ep.shiftFractionTowards(points.neckOuter_ep, 0.5)
+  points.ladderOpeningNotch = paths.backSeam.shiftFractionAlong(0.4)
+  snippets.ladderOpeningNotch = new Snippet('bnotch', points.ladderOpeningNotch)
+
+  points.title = points.dartBottom_ep.shiftFractionTowards(points.neckCenter_ep, 0.5)
   macro('title', { at: points.title, nr: 8, title: 'head_back', scale: options.totalSize })
+
+  if (options.helpText) {
+    paths.ladderOpeningPath = paths.backSeam.split(points.ladderOpeningNotch)[0]
+    macro('banner', {
+      path: paths.ladderOpeningPath,
+      text: 'polly:openToTurn',
+    })
+  }
 
   macro('pd', {
     path: paths.neckCurve.reverse(),
@@ -30,7 +43,7 @@ function draftPollyHead_back({
   })
 
   if (sa) {
-    paths.saBasis = paths.path127
+    paths.saBasis = paths.path127.close()
     paths.sa = paths.saBasis.offset(sa).trim().attr('class', 'fabric sa')
   }
 

@@ -131,6 +131,15 @@ function draft_path127(
   const totalSideSeamLength = paths.sideSeamTop.length() + paths.sideSeamLower.length()
   log.debug('Head back side seam length is ' + totalSideSeamLength)
 
+  paths.backSeam = new Path()
+    .move(points.neckCenter_ep)
+    .curve(points.backCurveLower_cp1, points.backCurveLower_cp2, points.backCurveLower_ep)
+    // inkex.paths.curve: c 9.49224 -49.4383 8.31825 -101.464 -0.52509 -151.023
+    .curve(points.backCurveUpper_cp1, points.backCurveUpper_cp2, points.backCurveUpper_ep)
+    // inkex.paths.Curve: C 175.51 66.3162 158.338 28.5686 151.075 13.7283
+    .curve(points.headTip_cp1, points.headTip_cp2, points.headTip_ep)
+    .hide()
+
   paths.path127 = new Path()
     // inkex.paths.move: m 43.4626 83.938
     .move(points.path127_p1)
@@ -145,12 +154,7 @@ function draft_path127(
     // inkex.paths.curve: c 9.07378 17.4696 23.2391 36.7396 35.3585 47.3018
     .curve(points.neckOuter_cp1, points.neckOuter_cp2, points.neckOuter_ep)
     .join(paths.neckCurve)
-    .curve(points.backCurveLower_cp1, points.backCurveLower_cp2, points.backCurveLower_ep)
-    // inkex.paths.curve: c 9.49224 -49.4383 8.31825 -101.464 -0.52509 -151.023
-    .curve(points.backCurveUpper_cp1, points.backCurveUpper_cp2, points.backCurveUpper_ep)
-    // inkex.paths.Curve: C 175.51 66.3162 158.338 28.5686 151.075 13.7283
-    .curve(points.headTip_cp1, points.headTip_cp2, points.headTip_ep)
-    // inkex.paths.Curve: C 90.9817 40.5134 69.3601 61.2949 43.4626 83.938
+    .join(paths.backSeam)
     .curve(points.dartTop_cp1, points.dartTop_cp2, points.dartTop_ep)
     // inkex.paths.ZoneClose: Z
     .close()

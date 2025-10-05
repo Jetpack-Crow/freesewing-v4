@@ -128,22 +128,6 @@ function draft_legPath(
     1 - options.legFlare
   )
 
-  if (options.helpText) {
-    paths.legSectionC = paths.hipCurve.split(points.hipCurveSnippet)[0]
-    paths.legSectionC.addText('C C C C C C C C C C C C C C C C C C ')
-    paths.legSectionC.attributes.add('data-text-class', 'bold fill-note')
-
-    paths.legSectionB = paths.hipCurve
-      .split(points.hipCurveSnippet)[1]
-      .split(points.hipCornerNotch)[0]
-    paths.legSectionB.addText('B B B B B B B B B B B B B B B B B B B B  ')
-    paths.legSectionB.attributes.add('data-text-class', 'bold fill-lining')
-
-    paths.legSectionA = paths.hipCurve.split(points.hipCornerNotch)[1]
-    paths.legSectionA.addText('A A A A A A A A A A A A A A A A A A A A A A A A A ')
-    paths.legSectionA.attributes.add('data-text-class', 'bold fill-contrast')
-  }
-
   store.set('legBottomLength', points.legEndRight_ep.dist(points.legEndLeft_ep))
 
   paths.legPath = new Path()

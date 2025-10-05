@@ -46,11 +46,19 @@ function draftPollyArm_top({
 
   if (options.helpText) {
     paths.raglanCurve = paths.raglanCurve.reverse()
-    paths.raglanCurve.addText('E E E E E E E E E E E E E E E E E E E E E E E E E ')
-    paths.raglanCurve.attributes.add('data-text-class', 'bold fill-contrast')
+    macro('banner', {
+      id: 'seamAlignE',
+      path: paths.raglanCurve,
+      text: 'polly:seamAlignE',
+      spaces: 2,
+    })
 
-    paths.mirroredRaglanCurve.addText('F F F F F F F F F F F F F F F ')
-    paths.mirroredRaglanCurve.attributes.add('data-text-class', 'bold fill-lining')
+    macro('banner', {
+      id: 'seamAlignF',
+      path: paths.mirroredRaglanCurve,
+      text: 'polly:seamAlignF',
+      spaces: 2,
+    })
   }
 
   points.backRaglanNotch = paths.mirroredArmCurve.reverse().shiftAlong(raglanLength)

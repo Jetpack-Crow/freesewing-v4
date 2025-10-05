@@ -20,18 +20,41 @@ function draftPollyBody_back({
 }) {
   draft_path85(Path, Point, paths, points, measurements, options, utils, macro, part, store, log)
 
+  points.ladderOpeningNotch = paths.backSeam.shiftFractionAlong(0.5)
+  snippets.ladderOpeningNotch = new Snippet('bnotch', points.ladderOpeningNotch)
+
   if (options.helpText) {
     paths.backHipCurve = new Path().move(points.hipOuter_ep).line(points.hipBack_ep)
 
-    paths.backHipCurve.addText('C C C C C C C C C C C C C C C C C C ')
-    paths.backHipCurve.attributes.add('data-text-class', 'bold fill-note')
+    macro('banner', {
+      id: 'seamAlignC',
+      path: paths.backHipCurve,
+      text: 'polly:seamAlignC',
+      spaces: 3,
+    })
 
-    paths.armpitCurveBack.unhide().addText('D D D D D D D D D D D D D D D D D D D D ')
-    paths.armpitCurveBack.attributes.add('data-text-class', 'bold fill-note')
+    paths.armpitCurveBack = paths.armpitCurveBack.reverse()
+    paths.armpitCurveBack.unhide()
+    macro('banner', {
+      id: 'seamAlignD',
+      path: paths.armpitCurveBack,
+      text: 'polly:seamAlignD',
+      spaces: 2,
+    })
 
     paths.raglanLength = new Path().move(points.armpitNotch_ep).line(points.shoulder_ep).reverse()
-    paths.raglanLength.addText('F F F F F F F F F F F F F F F F F F F F ')
-    paths.raglanLength.attributes.add('data-text-class', 'bold fill-lining')
+    macro('banner', {
+      id: 'seamAlignF',
+      path: paths.raglanLength,
+      text: 'polly:seamAlignF',
+      spaces: 2,
+    })
+
+    paths.ladderOpeningPath = paths.backSeam.split(points.ladderOpeningNotch)[0].reverse()
+    macro('banner', {
+      path: paths.ladderOpeningPath,
+      text: 'polly:openToTurn',
+    })
   }
 
   points.title = points.armpitBottom_ep.shiftFractionTowards(points.crotchCenter_ep, 0.5)
