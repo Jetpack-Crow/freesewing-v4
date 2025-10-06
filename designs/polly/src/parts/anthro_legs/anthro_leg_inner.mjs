@@ -18,6 +18,12 @@ function draftPollyAnthroLegInner({
 }) {
   if (options.legType != 'anthro') return part
 
+  const drawAnkleUpper = () => {
+    return new Path()
+      .move(points.ankleLowestPoint_ep)
+      .curve(points.ankleTop_cp1, points.ankleTop_cp2, points.ankleTop_ep)
+  }
+
   // Path: path8
   // m 173.979 804.303
   points.path8_p1 = new Point(174, 804.3)
@@ -58,7 +64,37 @@ function draftPollyAnthroLegInner({
   points.ankleLowestPoint_cp2 = new Point(136.8, 732.7)
   points.ankleLowestPoint_ep = new Point(172.1, 805.3)
 
+  points.title = new Point(150, 400)
+
   scaleAllPoints(part, options.totalSize * store.get('anthroLegScale'))
+
+  //Match the ankle length to the ankle curve on the front
+  const ankleUpperLength = store.get('ankleUpperLength')
+  paths.ankleUpperPath = drawAnkleUpper()
+
+  let ankleDelta = ankleUpperLength - paths.ankleUpperPath.length()
+
+  const ankleRotationPoints = [
+    'ankleTop_cp1',
+    'ankleLowestPoint_ep',
+    'ankleLowestPoint_cp2',
+    'ankleLowestPoint_cp1',
+  ]
+
+  let ankleIterations = 0
+  while (ankleIterations < 10 && Math.abs(ankleDelta) > 0.001 * options.totalSize) {
+    log.debug('Inner leg ankle iteration ' + ankleIterations + ', ankle delta ' + ankleDelta)
+
+    for (let p of ankleRotationPoints) {
+      points[p] = points[p].rotate(-ankleDelta * 0.8, points.hockBack_ep)
+    }
+    paths.ankleUpperPath = drawAnkleUpper()
+    ankleDelta = ankleUpperLength - paths.ankleUpperPath.length()
+
+    ankleIterations = ankleIterations + 1
+  }
+
+  log.debug('Final inner leg ankle length is ' + paths.ankleUpperPath.length())
 
   paths.thighCurve = new Path()
     .move(points.thighUpperPoint_ep)
@@ -66,6 +102,21 @@ function draftPollyAnthroLegInner({
     .curve(points.crotchCurve_cp1, points.crotchCurve_cp2, points.crotchCurve_ep)
     // inkex.paths.Curve: C 235.688 229.784 161.027 216.944 97.1037 215.301
     .curve(points.thighBack_cp1, points.thighBack_cp2, points.thighBack_ep)
+
+  if (options.helpText) {
+    macro('banner', {
+      id: 'seamAlignA',
+      path: paths.thighCurve,
+      text: 'polly:seamAlignA',
+      spaces: 2,
+    })
+    macro('banner', {
+      id: 'seamAlignG',
+      path: paths.ankleUpperPath,
+      text: 'polly:seamAlignG',
+      spaces: 2,
+    })
+  }
 
   const outerThighCurveLength = store.get('outerThighCurveLength')
   log.debug('Anthro leg outer hip length is ' + outerThighCurveLength)
@@ -76,9 +127,8 @@ function draftPollyAnthroLegInner({
 
   paths.path8 = new Path()
     // inkex.paths.move: m 173.979 804.303
-    .move(points.path8_p1)
-    // inkex.paths.curve: c 42.1486 -65.1356 76.6882 -142.428 125.974 -178.301
-    .curve(points.ankleTop_cp1, points.ankleTop_cp2, points.ankleTop_ep)
+    .move(points.ankleLowestPoint_ep)
+    .join(paths.ankleUpperPath)
     // inkex.paths.curve: c -16.4136 -39.3227 -38.2998 -57.1323 -33.37 -88.1667
     .curve(points.hockInner_cp1, points.hockInner_cp2, points.hockInner_ep)
     // inkex.paths.curve: c 2.69088 -16.9397 82.4058 -81.4912 99.9896 -163.634
@@ -92,6 +142,17 @@ function draftPollyAnthroLegInner({
     .curve(points.hockBack_cp1, points.hockBack_cp2, points.hockBack_ep)
     // inkex.paths.Curve: C 38.809 544.112 136.776 732.742 172.072 805.285
     .curve(points.ankleLowestPoint_cp1, points.ankleLowestPoint_cp2, points.ankleLowestPoint_ep)
+    .close()
+
+  macro('title', {
+    at: points.title,
+    nr: '3b',
+    title: 'anthro_leg_inner',
+    scale: options.totalSize,
+  })
+  if (sa) {
+    paths.sa = paths.path8.offset(sa).attr('class', 'fabric sa')
+  }
 
   return part
 }

@@ -14,7 +14,10 @@
     "snout_forehead": "Snout forehead",
     "snout_head_side": "Snout head side",
     "anthro_leg_inner": "Anthro leg inner",
-    "anthro_leg_outer": "Anthro leg outer"
+    "anthro_leg_outer": "Anthro leg outer",
+    "anthro_foot_sole": "Anthro foot sole",
+    "anthro_foot_upper": "Anthro foot upper"
+
   },
   "s": { 
     "seamAlignA": "<tspan class=\"bold fill-lining\">A</tspan>",
@@ -23,6 +26,7 @@
     "seamAlignD": "<tspan class=\"bold fill-various\">D</tspan>",
     "seamAlignE": "<tspan class=\"bold fill-contrast\">E</tspan>",
     "seamAlignF": "<tspan class=\"bold fill-note\">F</tspan>",
+    "seamAlignG": "<tspan class=\"bold fill-note\">G</tspan>",
     "openToTurn": "open for turning"
   },
   "o": { }

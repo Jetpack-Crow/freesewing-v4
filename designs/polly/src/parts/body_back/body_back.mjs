@@ -66,6 +66,7 @@ function draftPollyBody_back({
   }
 
   snippets.backRaglanNotch = new Snippet('bnotch', points.armpitNotch_ep)
+  snippets.backCrotchNotch = new Snippet('notch', points.hipBack_ep)
 
   macro('pd', {
     id: 'armpitCurveBackLength',

@@ -60,6 +60,9 @@ function draftPollySnoutHeadSide({
 
   points.neckScalePoint = new Point(470, 750)
 
+  points.origin = new Point(0, 0)
+  for (let p in points) points[p] = points[p].rotate(-70, points.origin)
+
   const snoutHeadScale = store.get('snoutHeadScale')
   scaleAllPoints(part, options.totalSize * snoutHeadScale * options.headScale)
 

@@ -17,6 +17,12 @@ function draftPollyAnthroLegOuter({
 }) {
   if (options.legType != 'anthro') return part
 
+  const drawAnkleUpper = () => {
+    return new Path()
+      .move(points.ankleFront_ep)
+      .curve(points.ankleSide_cp1, points.ankleSide_cp2, points.ankleSide_ep)
+  }
+
   // Path: path2
   // M 363.572 147.61
   points.path2_p1 = new Point(363.6, 147.6)
@@ -86,6 +92,39 @@ function draftPollyAnthroLegOuter({
   store.set('anthroLegScale', anthroLegScale)
   scaleAllPoints(part, options.totalSize * anthroLegScale)
 
+  //Adjust a few points to set the ankle length as desired
+  const ankleRotationPoints = [
+    'ankleSide_cp2',
+    'ankleSide_ep',
+    'ankleBack_cp1',
+    'ankleBack_cp2',
+    'ankleBack_ep',
+    'hockBack_cp1',
+  ]
+
+  paths.ankleUpperPath = drawAnkleUpper()
+
+  const desiredAnkleLength = 104.4 * options.totalSize * options.footUpperSize
+
+  let ankleDelta = desiredAnkleLength - paths.ankleUpperPath.length()
+
+  let ankleIterations = 0
+
+  while (ankleIterations < 10 && Math.abs(ankleDelta) > 0.001 * options.totalSize) {
+    log.debug('Outer leg ankle iteration ' + ankleIterations + ', ankle delta ' + ankleDelta)
+
+    for (let p of ankleRotationPoints) {
+      points[p] = points[p].rotate(ankleDelta * 0.45, points.hockBack_ep)
+    }
+    paths.ankleUpperPath = drawAnkleUpper()
+    ankleDelta = desiredAnkleLength - paths.ankleUpperPath.length()
+
+    ankleIterations = ankleIterations + 1
+  }
+
+  log.debug('Anthro leg outer ankle length is ' + paths.ankleUpperPath.length())
+  store.set('ankleUpperLength', paths.ankleUpperPath.length())
+
   paths.thighCurveBack = new Path()
     .move(points.thighBack_ep)
     // inkex.paths.Curve: C 572.27 424.101 524.79 353.02 496.658 288.326
@@ -101,9 +140,15 @@ function draftPollyAnthroLegOuter({
     paths.thighCurveFront.length() + paths.thighCurveMiddle.length() + paths.thighCurveBack.length()
   store.set('outerThighCurveLength', outerThighCurveLength)
 
+  paths.heelPath = new Path()
+    .move(points.ankleSide_ep)
+    // inkex.paths.curve: c 19.7062 2.3692 84.7058 44.6968 101.909 68.1943
+    .curve(points.ankleBack_cp1, points.ankleBack_cp2, points.ankleBack_ep)
+  store.set('heelLength', paths.heelPath.length())
+
   paths.path2 = new Path()
     // inkex.paths.Move: M 363.572 147.61
-    .move(points.path2_p1)
+    .move(points.frontDartOuter_ep)
     // inkex.paths.Curve: C 315.305 232.209 272.301 332.09 259.182 417.818
     .curve(points.frontDartPoint_cp1, points.frontDartPoint_cp2, points.frontDartPoint_ep)
     // inkex.paths.Curve: C 257.092 328.27 236.787 242.651 210.823 156.127
@@ -115,10 +160,8 @@ function draftPollyAnthroLegOuter({
     .curve(points.path2_p6_cp1, points.path2_p6_cp2, points.path2_p6_ep)
     // inkex.paths.curve: c -12.2765 25.9678 -43.0219 47.666 -61.1303 66.0434
     .curve(points.ankleFront_cp1, points.ankleFront_cp2, points.ankleFront_ep)
-    // inkex.paths.curve: c 36.4464 47.1367 39.5085 148.363 42.8424 193.869
-    .curve(points.ankleSide_cp1, points.ankleSide_cp2, points.ankleSide_ep)
-    // inkex.paths.curve: c 19.7062 2.3692 84.7058 44.6968 101.909 68.1943
-    .curve(points.ankleBack_cp1, points.ankleBack_cp2, points.ankleBack_ep)
+    .join(paths.ankleUpperPath)
+    .join(paths.heelPath)
     // inkex.paths.curve: c 65.4257 -95.0818 104.427 -154.27 158.324 -234.662
     .curve(points.hockBack_cp1, points.hockBack_cp2, points.hockBack_ep)
     // inkex.paths.curve: c 25.9131 -21.0409 68.2233 -71.7221 96.3206 -112.23
@@ -132,7 +175,47 @@ function draftPollyAnthroLegOuter({
     .curve(points.backDartInner_cp1, points.backDartInner_cp2, points.backDartInner_ep)
     .join(paths.thighCurveMiddle)
     // inkex.paths.zoneClose: z
-    .line(points.path2_p1)
+    .close()
+
+  if (options.helpText) {
+    macro('banner', {
+      id: 'seamAlignC',
+      path: paths.thighCurveBack,
+      text: 'polly:seamAlignC',
+      spaces: 2,
+    })
+
+    macro('banner', {
+      id: 'seamAlignBCenter',
+      path: paths.thighCurveMiddle,
+      text: 'polly:seamAlignB',
+      spaces: 2,
+    })
+    macro('banner', {
+      id: 'seamAlignBFront',
+      path: paths.thighCurveFront,
+      text: 'polly:seamAlignB',
+      spaces: 2,
+    })
+
+    macro('banner', {
+      id: 'seamAlignG',
+      path: paths.ankleUpperPath,
+      text: 'polly:seamAlignG',
+      spaces: 2,
+    })
+  }
+
+  points.title = points.backDartPoint_ep.shiftFractionTowards(points.ankleFront_ep, 0.5)
+  macro('title', {
+    at: points.title,
+    nr: '3a',
+    title: 'anthro_leg_outer',
+    scale: options.totalSize,
+  })
+  if (sa) {
+    paths.sa = paths.path2.offset(sa).trim().attr('class', 'fabric sa')
+  }
 
   return part
 }
@@ -143,5 +226,12 @@ export const anthro_leg_outer = {
   after: leg,
 
   measurements: [],
-  options: {},
+  options: {
+    footUpperSize: {
+      pct: 100,
+      min: 50,
+      max: 150,
+      menu: 'style',
+    },
+  },
 }

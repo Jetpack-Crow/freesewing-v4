@@ -1,6 +1,5 @@
 import { scaleAllPoints } from '../../shared.mjs'
-import { leg } from '../leg/leg.mjs'
-import { anthro_leg_outer } from './anthro_leg_outer.mjs'
+import { anthro_foot_upper } from './anthro_foot_upper.mjs'
 
 function draftPollyAnthroFootSole({
   Path,
@@ -15,57 +14,112 @@ function draftPollyAnthroFootSole({
   sa,
   log,
   store,
+  Snippet,
+  snippets,
 }) {
   if (options.legType != 'anthro') return part
+
+  const drawHeelPath = () => {
+    return new Path()
+      .move(points.topCenter_ep)
+      .curve(points.heelOuter_cp1, points.heelOuter_cp2, points.heelOuter_ep)
+  }
+
+  const drawToePath = () => {
+    return (
+      new Path()
+        .move(points.heelOuter_ep)
+        // inkex.paths.curve: c -31.8376 81.7548 -41.0956 201.488 4.91045 230.139
+        .curve(points.toeOuter_cp1, points.toeOuter_cp2, points.toeOuter_ep)
+        // inkex.paths.curve: c 15.8829 9.89111 37.6033 14.6045 58.4811 13.3672
+        .curve(points.toeCenter_cp1, points.toeCenter_cp2, points.toeCenter_ep)
+    )
+  }
 
   // Path: path3
   // m 56.1169 39.0665
   points.path3_p1 = new Point(56.1, 39.1)
   // c -31.8376 81.7548 -41.0956 201.488 4.91045 230.139
-  points.path3_p2_cp1 = new Point(24.2, 120.8)
-  points.path3_p2_cp2 = new Point(14.9, 240.5)
-  points.path3_p2_ep = new Point(60.9, 269.1)
+  points.toeOuter_cp1 = new Point(24.2, 120.8)
+  points.toeOuter_cp2 = new Point(14.9, 240.5)
+  points.toeOuter_ep = new Point(60.9, 269.1)
   // c 15.8829 9.89111 37.6033 14.6045 58.4811 13.3672
-  points.path3_p3_cp1 = new Point(76.9, 278.9)
-  points.path3_p3_cp2 = new Point(98.6, 283.6)
-  points.path3_p3_ep = new Point(119.5, 282.4)
-  // c 20.8778 -1.2373 40.9131 -8.42527 53.4258 -22.3369
-  points.path3_p4_cp1 = new Point(140.9, 280.8)
-  points.path3_p4_cp2 = new Point(160.9, 273.6)
-  points.path3_p4_ep = new Point(173.4, 259.7)
-  // C 223.163 204.39 184.026 75.1775 167.121 34.9776
-  points.path3_p5_cp1 = new Point(223.2, 204.4)
-  points.path3_p5_cp2 = new Point(184, 75.2)
-  points.path3_p5_ep = new Point(167.1, 35)
+  points.toeCenter_cp1 = new Point(76.9, 278.9)
+  points.toeCenter_cp2 = new Point(98.6, 282.5)
+  points.toeCenter_ep = new Point(116, 283)
   // C 161.518 21.6559 130.797 20.9726 111.853 21.5999
-  points.path3_p6_cp1 = new Point(161.5, 21.7)
-  points.path3_p6_cp2 = new Point(130.8, 21)
-  points.path3_p6_ep = new Point(111.9, 21.6)
+  points.topCenter_cp1 = new Point(161.5, 21.7)
+  points.topCenter_cp2 = new Point(130.8, 21)
+  points.topCenter_ep = new Point(116, 21.6)
   // C 92.3939 22.2443 62.4497 22.8048 56.1169 39.0665
-  points.path3_p7_cp1 = new Point(92.4, 22.2)
-  points.path3_p7_cp2 = new Point(62.4, 22.8)
-  points.path3_p7_ep = new Point(56.1, 39.1)
+  points.heelOuter_cp1 = new Point(92.4, 22.2)
+  points.heelOuter_cp2 = new Point(62.4, 22.8)
+  points.heelOuter_ep = new Point(56.1, 39.1)
   // Z
+
+  points.scalePoint = points.topCenter_ep.shiftFractionTowards(points.toeCenter_ep, 0.5)
+
+  points.title = new Point(80, 200)
 
   scaleAllPoints(part, options.totalSize * store.get('anthroLegScale'))
 
-  paths.path3 = new Path()
-    // inkex.paths.move: m 56.1169 39.0665
-    .move(points.path3_p1)
-    // inkex.paths.curve: c -31.8376 81.7548 -41.0956 201.488 4.91045 230.139
-    .curve(points.path3_p2_cp1, points.path3_p2_cp2, points.path3_p2_ep)
-    // inkex.paths.curve: c 15.8829 9.89111 37.6033 14.6045 58.4811 13.3672
-    .curve(points.path3_p3_cp1, points.path3_p3_cp2, points.path3_p3_ep)
-    // inkex.paths.curve: c 20.8778 -1.2373 40.9131 -8.42527 53.4258 -22.3369
-    .curve(points.path3_p4_cp1, points.path3_p4_cp2, points.path3_p4_ep)
-    // inkex.paths.Curve: C 223.163 204.39 184.026 75.1775 167.121 34.9776
-    .curve(points.path3_p5_cp1, points.path3_p5_cp2, points.path3_p5_ep)
-    // inkex.paths.Curve: C 161.518 21.6559 130.797 20.9726 111.853 21.5999
-    .curve(points.path3_p6_cp1, points.path3_p6_cp2, points.path3_p6_ep)
-    // inkex.paths.Curve: C 92.3939 22.2443 62.4497 22.8048 56.1169 39.0665
-    .curve(points.path3_p7_cp1, points.path3_p7_cp2, points.path3_p7_ep)
-    // inkex.paths.ZoneClose: Z
-    .line(points.path3_p1)
+  //Scale the whole piece to match the heel length properly
+  paths.heelPath = drawHeelPath()
+  const heelLength = store.get('heelLength') / 2
+  log.debug('Scaling foot heel by ' + heelLength / paths.heelPath.length())
+  scaleAllPoints(part, heelLength / paths.heelPath.length())
+  paths.heelPath = drawHeelPath()
+
+  paths.toePath = drawToePath()
+  const footCurveLength = store.get('footCurveHalf')
+
+  let footCurveDelta = paths.toePath.length() - footCurveLength
+
+  const footScalePoints = [
+    'toeCenter_ep',
+    'toeCenter_cp1',
+    'toeCenter_cp2',
+    'toeOuter_ep',
+    'toeOuter_cp2',
+  ]
+
+  let footCurveIterations = 0
+
+  while (footCurveIterations < 5 && Math.abs(footCurveDelta) > 0.001 * options.totalSize) {
+    log.debug('Foot curve iteration ' + footCurveIterations + ', foot delta ' + footCurveDelta)
+
+    for (let p of footScalePoints) {
+      points[p] = points[p].shiftTowards(points.scalePoint, footCurveDelta * 0.715)
+    }
+
+    paths.toePath = drawToePath()
+    footCurveDelta = paths.toePath.length() - footCurveLength
+
+    footCurveIterations = footCurveIterations + 1
+  }
+
+  paths.saHalf = paths.heelPath.join(paths.toePath)
+
+  macro('mirror', {
+    clone: true,
+    mirror: [points.topCenter_ep, points.toeCenter_ep],
+    paths: Object.keys(paths),
+  })
+
+  if (sa) {
+    paths.saBasis = paths.saHalf.join(paths.mirroredSaHalf.reverse())
+    paths.sa = paths.saBasis.offset(sa).attr('class', 'fabric sa')
+  }
+
+  snippets.heelNotch = new Snippet('notch', paths.heelPath.end())
+  snippets.mirroredHeelNotch = new Snippet('notch', paths.mirroredHeelPath.end())
+
+  macro('title', {
+    at: points.title,
+    nr: '4b',
+    title: 'anthro_foot_sole',
+    scale: options.totalSize * 0.7,
+  })
 
   return part
 }
@@ -73,7 +127,7 @@ function draftPollyAnthroFootSole({
 export const anthro_foot_sole = {
   name: 'polly.anthro_foot_sole',
   draft: draftPollyAnthroFootSole,
-  after: [leg, anthro_leg_outer],
+  after: [anthro_foot_upper],
 
   measurements: [],
   options: {},
