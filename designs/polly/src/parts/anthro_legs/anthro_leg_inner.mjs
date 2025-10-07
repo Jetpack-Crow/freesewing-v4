@@ -73,6 +73,7 @@ function draftPollyAnthroLegInner({
   paths.ankleUpperPath = drawAnkleUpper()
 
   let ankleDelta = ankleUpperLength - paths.ankleUpperPath.length()
+  const anklePathLengthConstant = points.ankleLowestPoint_ep.dist(points.hockBack_ep)
 
   const ankleRotationPoints = [
     'ankleTop_cp1',
@@ -86,7 +87,7 @@ function draftPollyAnthroLegInner({
     log.debug('Inner leg ankle iteration ' + ankleIterations + ', ankle delta ' + ankleDelta)
 
     for (let p of ankleRotationPoints) {
-      points[p] = points[p].rotate(-ankleDelta * 0.8, points.hockBack_ep)
+      points[p] = points[p].rotate((-68 * ankleDelta) / anklePathLengthConstant, points.hockBack_ep)
     }
     paths.ankleUpperPath = drawAnkleUpper()
     ankleDelta = ankleUpperLength - paths.ankleUpperPath.length()
@@ -105,15 +106,15 @@ function draftPollyAnthroLegInner({
 
   if (options.helpText) {
     macro('banner', {
-      id: 'seamAlignA',
+      id: 'seamBetweenLegs',
       path: paths.thighCurve,
-      text: 'polly:seamAlignA',
+      text: 'polly:seamBetweenLegs',
       spaces: 2,
     })
     macro('banner', {
-      id: 'seamAlignG',
+      id: 'seamAnthroAnkle',
       path: paths.ankleUpperPath,
-      text: 'polly:seamAlignG',
+      text: 'polly:seamAnthroAnkle',
       spaces: 2,
     })
   }

@@ -47,16 +47,16 @@ function draftPollyArm_top({
   if (options.helpText) {
     paths.raglanCurve = paths.raglanCurve.reverse()
     macro('banner', {
-      id: 'seamAlignE',
+      id: 'seamRaglanFront',
       path: paths.raglanCurve,
-      text: 'polly:seamAlignE',
+      text: 'polly:seamRaglanFront',
       spaces: 2,
     })
 
     macro('banner', {
-      id: 'seamAlignF',
+      id: 'seamRaglanBack',
       path: paths.mirroredRaglanCurve,
-      text: 'polly:seamAlignF',
+      text: 'polly:seamRaglanBack',
       spaces: 2,
     })
   }

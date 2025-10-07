@@ -20,13 +20,13 @@
 
   },
   "s": { 
-    "seamAlignA": "<tspan class=\"bold fill-lining\">A</tspan>",
-    "seamAlignB": "<tspan class=\"bold fill-canvas\">B</tspan>",
-    "seamAlignC": "<tspan class=\"bold fill-mark\">C</tspan>",
-    "seamAlignD": "<tspan class=\"bold fill-various\">D</tspan>",
-    "seamAlignE": "<tspan class=\"bold fill-contrast\">E</tspan>",
-    "seamAlignF": "<tspan class=\"bold fill-note\">F</tspan>",
-    "seamAlignG": "<tspan class=\"bold fill-note\">G</tspan>",
+    "seamBetweenLegs": "A",
+    "seamLegsFront": "B",
+    "seamLegsBack": "C",
+    "seamArmscye": "D",
+    "seamRaglanFront": "E",
+    "seamRaglanBack": "F",
+    "seamAnthroAnkle": "G",
     "openToTurn": "open for turning"
   },
   "o": { }

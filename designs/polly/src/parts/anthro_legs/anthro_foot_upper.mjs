@@ -93,9 +93,9 @@ function draftPollyAnthroFootUpper({
 
   if (options.helpText) {
     macro('banner', {
-      id: 'seamAlignG',
+      id: 'seamAnthroAnkle',
       path: paths.mirroredAnklePathHalf.reverse().join(paths.anklePathHalf),
-      text: 'polly:seamAlignG',
+      text: 'polly:seamAnthroAnkle',
       spaces: 2,
     })
   }

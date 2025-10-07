@@ -45,9 +45,9 @@ function draftPollyArm_bottom({
   if (options.helpText) {
     paths.armpitTextPath = paths.armpitPath.reverse().join(paths.mirroredArmpitPath)
     macro('banner', {
-      id: 'seamAlignD',
+      id: 'seamArmscye',
       path: paths.armpitTextPath,
-      text: 'polly:seamAlignD',
+      text: 'polly:seamArmscye',
       spaces: 2,
     })
   }

@@ -27,26 +27,26 @@ function draftPollyBody_back({
     paths.backHipCurve = new Path().move(points.hipOuter_ep).line(points.hipBack_ep)
 
     macro('banner', {
-      id: 'seamAlignC',
+      id: 'seamLegsBack',
       path: paths.backHipCurve,
-      text: 'polly:seamAlignC',
-      spaces: 3,
+      text: 'polly:seamLegsBack',
+      spaces: 2,
     })
 
     paths.armpitCurveBack = paths.armpitCurveBack.reverse()
     paths.armpitCurveBack.unhide()
     macro('banner', {
-      id: 'seamAlignD',
+      id: 'seamArmscye',
       path: paths.armpitCurveBack,
-      text: 'polly:seamAlignD',
+      text: 'polly:seamArmscye',
       spaces: 2,
     })
 
     paths.raglanLength = new Path().move(points.armpitNotch_ep).line(points.shoulder_ep).reverse()
     macro('banner', {
-      id: 'seamAlignF',
+      id: 'seamRaglanBack',
       path: paths.raglanLength,
-      text: 'polly:seamAlignF',
+      text: 'polly:seamRaglanBack',
       spaces: 2,
     })
 

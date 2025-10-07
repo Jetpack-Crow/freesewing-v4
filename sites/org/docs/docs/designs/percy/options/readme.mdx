@@ -39,6 +39,57 @@ import Waistease from '@site/docs/docs/designs/percy/options/waistease/readme.md
 import Waistheight from '@site/docs/docs/designs/percy/options/waistheight/readme.mdx'
 import Waistbandwidth from '@site/docs/docs/designs/percy/options/waistbandwidth/readme.mdx'
 
+## Conditional Options {#conditional}
+### Front Pleat Preview Length {#frontpleatdisplaylength}
+
+**How far to draw the pleat preview lines. This doesn't affect shaping at all.**
+- Type: **Percentage**
+- Default: **8%**
+- Minimum: **1%**
+- Maximum: **20%**
+
+<Frontpleatdisplaylength />
+
+### Front Pleat Position {#frontpleatposition}
+
+**Where to generate a pleat on the front panel.**
+- Type: **Percentage**
+- Default: **50%**
+- Minimum: **10%**
+- Maximum: **90%**
+
+<Frontpleatposition />
+
+### Front Pleat Width {#frontpleatwidth}
+
+**How big of a pleat to generate on the front panel.**
+- Type: **Percentage**
+- Default: **6.4%**
+- Minimum: **0%**
+- Maximum: **10%**
+
+<Frontpleatwidth />
+
+### Hem Ratio {#hemratio}
+
+**How far the bottom hem should be flared, relative to the same height on a basic Titan. This is very approximate. The flare won't go past 90 degrees total.**
+- Type: **Percentage**
+- Default: **250%**
+- Minimum: **100%**
+- Maximum: **400%**
+
+<Hemratio />
+
+### Slash Iterations {#slashiterations}
+
+**How many cuts to make to spread the body panels. Turn this up if it looks jagged.**
+- Type: **Percentage**
+- Default: **undefined**
+- Minimum: **1**
+- Maximum: **24**
+
+<Slashiterations />
+
 ## Fit {#fit}
 ### Knee ease {#kneeease}
 
@@ -191,57 +242,7 @@ import Waistbandwidth from '@site/docs/docs/designs/percy/options/waistbandwidth
 
 <Frontpleat />
 
-#### Front Pleat Preview Length {#frontpleatdisplaylength}
-
-**How far to draw the pleat preview lines. This doesn't affect shaping at all.**
-- Type: **Percentage**
-- Default: **8%**
-- Minimum: **1%**
-- Maximum: **20%**
-
-<Frontpleatdisplaylength />
-
-#### Front Pleat Position {#frontpleatposition}
-
-**Where to generate a pleat on the front panel.**
-- Type: **Percentage**
-- Default: **50%**
-- Minimum: **10%**
-- Maximum: **90%**
-
-<Frontpleatposition />
-
-#### Front Pleat Width {#frontpleatwidth}
-
-**How big of a pleat to generate on the front panel.**
-- Type: **Percentage**
-- Default: **6.4%**
-- Minimum: **0%**
-- Maximum: **10%**
-
-<Frontpleatwidth />
-
 ### Spread {#spread}
-#### Hem Ratio {#hemratio}
-
-**How far the bottom hem should be flared, relative to the same height on a basic Titan. This is very approximate. The flare won't go past 90 degrees total.**
-- Type: **Percentage**
-- Default: **250%**
-- Minimum: **100%**
-- Maximum: **400%**
-
-<Hemratio />
-
-#### Slash Iterations {#slashiterations}
-
-**How many cuts to make to spread the body panels. Turn this up if it looks jagged.**
-- Type: **Percentage**
-- Default: **undefined**
-- Minimum: **1**
-- Maximum: **24**
-
-<Slashiterations />
-
 #### Spread {#spread}
 
 **Whether to slash and spread the body panels.**

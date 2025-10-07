@@ -33,33 +33,33 @@ function draftPollyBody_front({
   if (options.helpText) {
     paths.hipToCorner.unhide()
     macro('banner', {
-      id: 'seamAlignA',
+      id: 'seamBetweenLegs',
       path: paths.hipToCorner,
-      text: 'polly:seamAlignA',
+      text: 'polly:seamBetweenLegs',
       spaces: 2,
     })
 
     paths.cornerToSide = paths.hipCurve.split(points.hipCorner_ep)[1]
     macro('banner', {
-      id: 'seamAlignB',
+      id: 'seamLegsFront',
       path: paths.cornerToSide,
-      text: 'polly:seamAlignB',
+      text: 'polly:seamLegsFront',
       spaces: 2,
     })
 
     paths.armpitCurve.unhide()
     macro('banner', {
-      id: 'seamAlignD',
+      id: 'seamArmscye',
       path: paths.armpitCurve,
-      text: 'polly:seamAlignD',
+      text: 'polly:seamArmscye',
       spaces: 2,
     })
 
     paths.raglanLength = new Path().move(points.armpitNotch_ep).line(points.neckOuter_ep)
     macro('banner', {
-      id: 'seamAlignE',
+      id: 'seamRaglanFront',
       path: paths.raglanLength,
-      text: 'polly:seamAlignE',
+      text: 'polly:seamRaglanFront',
       spaces: 2,
     })
   }
@@ -125,7 +125,7 @@ export const body_front = {
       menu: 'style',
     },
     totalSize: {
-      pct: 25,
+      pct: 37.5,
       min: 5,
       max: 200,
       menu: 'scale',

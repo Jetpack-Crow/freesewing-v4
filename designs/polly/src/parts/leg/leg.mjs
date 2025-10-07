@@ -37,28 +37,28 @@ function draftPollyLeg({
   if (options.helpText) {
     paths.legSectionC = paths.hipCurve.split(points.hipCurveSnippet)[0]
     macro('banner', {
-      id: 'seamAlignC',
+      id: 'seamLegsBack',
       path: paths.legSectionC,
-      text: 'polly:seamAlignC',
-      spaces: 3,
+      text: 'polly:seamLegsBack',
+      spaces: 2,
     })
 
     paths.legSectionB = paths.hipCurve
       .split(points.hipCurveSnippet)[1]
       .split(points.hipCornerNotch)[0]
     macro('banner', {
-      id: 'seamAlignB',
+      id: 'seamLegsFront',
       path: paths.legSectionB,
-      text: 'polly:seamAlignB',
-      spaces: 3,
+      text: 'polly:seamLegsFront',
+      spaces: 2,
     })
 
     paths.legSectionA = paths.hipCurve.split(points.hipCornerNotch)[1]
     macro('banner', {
-      id: 'seamAlignA',
+      id: 'seamBetweenLegs',
       path: paths.legSectionA,
-      text: 'polly:seamAlignA',
-      spaces: 3,
+      text: 'polly:seamBetweenLegs',
+      spaces: 2,
     })
   }
 

@@ -179,29 +179,29 @@ function draftPollyAnthroLegOuter({
 
   if (options.helpText) {
     macro('banner', {
-      id: 'seamAlignC',
+      id: 'seamLegsBack',
       path: paths.thighCurveBack,
-      text: 'polly:seamAlignC',
+      text: 'polly:seamLegsBack',
       spaces: 2,
     })
 
     macro('banner', {
-      id: 'seamAlignBCenter',
+      id: 'seamLegsFrontCenter',
       path: paths.thighCurveMiddle,
-      text: 'polly:seamAlignB',
+      text: 'polly:seamLegsFront',
       spaces: 2,
     })
     macro('banner', {
-      id: 'seamAlignBFront',
+      id: 'seamLegsFrontFront',
       path: paths.thighCurveFront,
-      text: 'polly:seamAlignB',
+      text: 'polly:seamLegsFront',
       spaces: 2,
     })
 
     macro('banner', {
-      id: 'seamAlignG',
+      id: 'seamAnthroAnkle',
       path: paths.ankleUpperPath,
-      text: 'polly:seamAlignG',
+      text: 'polly:seamAnthroAnkle',
       spaces: 2,
     })
   }
