@@ -174,6 +174,9 @@ function draft_body_front(
   const raglanLengthFront = points.neckOuter_ep.dist(points.armpitNotch_ep)
   store.set('raglanLengthFront', raglanLengthFront)
 
+  paths.raglanLength = new Path().move(points.armpitNotch_ep).line(points.neckOuter_ep)
+  paths.cornerToSide = paths.hipCurve.split(points.hipCorner_ep)[1]
+
   paths.path190 = new Path()
     // inkex.paths.Move: M 163.803 0.845703
     .move(points.crotchCenter)

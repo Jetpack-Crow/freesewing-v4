@@ -151,6 +151,13 @@ function draftPollyAnthroLegInner({
     title: 'anthro_leg_inner',
     scale: options.totalSize,
   })
+
+  macro('pd', {
+    id: 'ankleCurveLength',
+    path: paths.ankleUpperPath,
+    //d: 15,
+  })
+
   if (sa) {
     paths.sa = paths.path8.offset(sa).attr('class', 'fabric sa')
   }

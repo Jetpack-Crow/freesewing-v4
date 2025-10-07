@@ -213,6 +213,13 @@ function draftPollyAnthroLegOuter({
     title: 'anthro_leg_outer',
     scale: options.totalSize,
   })
+
+  macro('pd', {
+    id: 'ankleCurveLength',
+    path: paths.ankleUpperPath,
+    //d: 15,
+  })
+
   if (sa) {
     paths.sa = paths.path2.offset(sa).trim().attr('class', 'fabric sa')
   }

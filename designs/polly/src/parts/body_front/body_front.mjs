@@ -39,7 +39,6 @@ function draftPollyBody_front({
       spaces: 2,
     })
 
-    paths.cornerToSide = paths.hipCurve.split(points.hipCorner_ep)[1]
     macro('banner', {
       id: 'seamLegsFront',
       path: paths.cornerToSide,
@@ -55,7 +54,6 @@ function draftPollyBody_front({
       spaces: 2,
     })
 
-    paths.raglanLength = new Path().move(points.armpitNotch_ep).line(points.neckOuter_ep)
     macro('banner', {
       id: 'seamRaglanFront',
       path: paths.raglanLength,
@@ -67,10 +65,44 @@ function draftPollyBody_front({
   snippets.hipCornerNotch = new Snippet('notch', points.hipCorner_ep)
   snippets.armpitNotch = new Snippet('notch', points.armpitNotch_ep)
 
+  const paperlessDistance = 25 * options.totalSize
+
   macro('pd', {
     id: 'armpitCurveLength',
     path: paths.armpitCurve.reverse(),
-    //d: 15,
+    d: paperlessDistance,
+  })
+
+  macro('pd', {
+    id: 'raglanCurveLength',
+    path: paths.raglanLength,
+    d: paperlessDistance,
+  })
+
+  macro('pd', {
+    id: 'hipCurveLength',
+    path: paths.hipCurve,
+    d: paperlessDistance / 2,
+  })
+
+  macro('pd', {
+    id: 'sideSeamLength',
+    path: paths.sideSeamCurve,
+    d: paperlessDistance,
+  })
+
+  macro('hd', {
+    id: 'bottomHipWidth',
+    from: points.crotchCenter,
+    to: points.hipOuter_ep,
+    y: points.crotchCenter.y + paperlessDistance,
+  })
+
+  macro('vd', {
+    id: 'sideLength',
+    from: points.crotchCenter,
+    to: points.neckOuter_ep,
+    x: points.hipOuter_ep.x + 2 * paperlessDistance,
   })
 
   macro('mirror', {
@@ -96,7 +128,7 @@ function draftPollyBody_front({
   macro('pd', {
     id: 'neckCurveJoined',
     path: paths.neckCurve.join(paths.mirroredNeckCurve.reverse()).reverse(),
-    ////d: 15,
+    d: paperlessDistance,
   })
 
   return part
@@ -125,7 +157,7 @@ export const body_front = {
       menu: 'style',
     },
     totalSize: {
-      pct: 37.5,
+      pct: 33.5,
       min: 5,
       max: 200,
       menu: 'scale',
