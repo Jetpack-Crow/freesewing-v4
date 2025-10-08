@@ -67,22 +67,23 @@ function draftPollyBody_front({
 
   const paperlessDistance = 25 * options.totalSize
 
-  macro('pd', {
-    id: 'armpitCurveLength',
-    path: paths.armpitCurve.reverse(),
-    d: paperlessDistance,
-  })
+  if (options.paperlessCurves) {
+    macro('pd', {
+      id: 'armpitCurveLength',
+      path: paths.armpitCurve.reverse(),
+      d: paperlessDistance,
+    })
+    macro('pd', {
+      id: 'hipCurveLength',
+      path: paths.hipCurve,
+      d: paperlessDistance / 2,
+    })
+  }
 
   macro('pd', {
     id: 'raglanCurveLength',
     path: paths.raglanLength,
     d: paperlessDistance,
-  })
-
-  macro('pd', {
-    id: 'hipCurveLength',
-    path: paths.hipCurve,
-    d: paperlessDistance / 2,
   })
 
   macro('pd', {
@@ -166,5 +167,6 @@ export const body_front = {
       },
     },
     helpText: { bool: false, menu: 'help' },
+    paperlessCurves: { bool: false, menu: 'help' },
   },
 }

@@ -62,6 +62,72 @@ function draftPollyLeg({
     })
   }
 
+  points.highestPoint = paths.hipCurve.shiftFractionAlong(0.5)
+  const increment = 0.1 * options.totalSize
+
+  let ary = paths.legPath.intersectsY(points.highestPoint.y - increment)
+  let x = 0
+  while (x < 15 && ary.length > 0) {
+    log.info('Leg curve intersects ' + ary.length + ' times at y ' + points.highestPoint.y)
+    points.highestPoint = ary[0]
+    x = x + 1
+    ary = paths.legPath.intersectsY(points.highestPoint.y - increment)
+  }
+
+  macro('vd', {
+    id: 'highestLength',
+    from: points.highestPoint,
+    to: points.legEndLeft_ep,
+    x: points.highestPoint.x,
+  })
+  macro('vd', {
+    id: 'sideLength',
+    from: points.legTopLeft_ep,
+    to: points.legEndLeft_ep,
+    x: points.legEndLeft_ep.x - 15,
+  })
+  macro('vd', {
+    id: 'sideLength2',
+    from: points.legTopRight_ep,
+    to: points.legEndRight_ep,
+    x: points.legEndRight_ep.x + 15,
+  })
+
+  macro('hd', {
+    id: 'bottomWidth',
+    from: points.legEndLeft_ep,
+    to: points.legEndRight_ep,
+    y: points.legEndLeft_ep.y + 15,
+  })
+
+  macro('hd', {
+    id: 'cornerNotchX',
+    from: points.legTopLeft_ep,
+    to: points.hipCornerNotch,
+    y: points.hipCornerNotch.y,
+  })
+
+  macro('vd', {
+    id: 'cornerNotchY',
+    from: points.legTopLeft_ep,
+    to: points.hipCornerNotch,
+    x: points.hipCornerNotch.x,
+  })
+
+  macro('hd', {
+    id: 'curveNotchX',
+    from: points.hipCurveSnippet,
+    to: points.legTopRight_ep,
+    y: points.hipCurveSnippet.y,
+  })
+
+  macro('vd', {
+    id: 'curveNotchY',
+    from: points.hipCurveSnippet,
+    to: points.legTopRight_ep,
+    x: points.hipCurveSnippet.x,
+  })
+
   return part
 }
 

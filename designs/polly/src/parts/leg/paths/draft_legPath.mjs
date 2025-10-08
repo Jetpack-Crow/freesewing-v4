@@ -76,6 +76,20 @@ function draft_legPath(
 
   scaleAllPoints(part, options.totalSize)
 
+  //Truing: Match the two side lengths
+  const crossSeamDelta = points.legTopLeft_ep.y - points.legTopRight_ep.y
+  const leftSideShiftPoints = [
+    'legTopLeft_ep',
+    'legTopLeft_cp1',
+    'legTopLeft_cp2',
+    'curve5_ep',
+    'curve5_cp2',
+  ]
+
+  for (let p of leftSideShiftPoints) {
+    points[p] = points[p].shift(90, crossSeamDelta)
+  }
+
   //Truing: match top curve length to the hip curve of the body pieces
   const hipCurveFront = store.get('hipCurveFront')
   const hipCurveBack = store.get('hipCurveBack')
@@ -136,18 +150,7 @@ function draft_legPath(
     .line(points.legEndRight_ep)
     // inkex.paths.curve: c -9.01574 -88.3579 -18.3812 -179.55 -23.5982 -268.243
     .line(points.legTopRight_ep)
-    // inkex.paths.curve: c -10.5848 -0.68171 -28.4322 -1.25095 -42.2498 -4.3326
-    .curve(points.curve1_cp1, points.curve1_cp2, points.curve1_ep)
-    // inkex.paths.curve: c -18.3852 -4.10031 -36.7639 -9.71674 -53.3379 -18.6682
-    .curve(points.curve2_cp1, points.curve2_cp2, points.curve2_ep)
-    // inkex.paths.curve: c -11.1423 -6.01785 -18.3305 -18.5785 -30.1577 -23.1042
-    .curve(points.curve3_cp1, points.curve3_cp2, points.curve3_ep)
-    // inkex.paths.curve: c -24.9076 -9.53092 -55.0848 -16.2667 -79.7682 -6.16957
-    .curve(points.curve4_cp1, points.curve4_cp2, points.curve4_ep)
-    // inkex.paths.curve: c -19.0729 7.80208 -22.6054 36.6016 -40.6248 46.599
-    .curve(points.curve5_cp1, points.curve5_cp2, points.curve5_ep)
-    // inkex.paths.curve: c -21.9578 12.1825 -52.0848 10.2192 -74.3792 11.9485
-    .curve(points.legTopLeft_cp1, points.legTopLeft_cp2, points.legTopLeft_ep)
+    .join(paths.hipCurve)
     // inkex.paths.curve: c 5.23663 82.4291 8.62003 171.002 12.5459 266.75
     .line(points.legEndLeft_ep)
     // inkex.paths.zoneClose: z
