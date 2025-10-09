@@ -78,6 +78,14 @@ function draftPollyArm_top({
     ////d: 15,
   })
 
+  macro('vd', {
+    id: 'heightToNotch',
+    from: points.armBottom_ep,
+    to: points.raglanNotch,
+    x: points.armBottom_ep.x,
+    ////d: 15,
+  })
+
   return part
 }
 

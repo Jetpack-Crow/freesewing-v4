@@ -16,6 +16,7 @@ import { anthro_leg_inner } from './parts/anthro_legs/anthro_leg_inner.mjs'
 import { anthro_leg_outer } from './parts/anthro_legs/anthro_leg_outer.mjs'
 import { anthro_foot_upper } from './parts/anthro_legs/anthro_foot_upper.mjs'
 import { anthro_foot_sole } from './parts/anthro_legs/anthro_foot_sole.mjs'
+import { preview } from './parts/preview/preview.mjs'
 
 import { i18n } from '../i18n/index.mjs'
 
@@ -38,6 +39,7 @@ const Polly = new Design({
     anthro_leg_outer,
     anthro_foot_upper,
     anthro_foot_sole,
+    preview,
   ],
 })
 
@@ -58,6 +60,7 @@ export {
   anthro_leg_outer,
   anthro_foot_upper,
   anthro_foot_sole,
+  preview,
   Polly,
   i18n,
   about,

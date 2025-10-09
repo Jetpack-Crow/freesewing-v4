@@ -74,6 +74,12 @@ function draftPollyFace({
     d: 10,
   })
 
+  macro('ld', {
+    id: 'faceDartDistance',
+    from: points.dartUpperPoint_ep,
+    to: points.dartLowerPoint_ep,
+  })
+
   if (sa) {
     paths.sa = paths.saBasis.offset(sa).trim().attr('class', 'fabric sa')
   }
