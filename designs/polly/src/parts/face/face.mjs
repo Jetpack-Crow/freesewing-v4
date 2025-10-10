@@ -99,7 +99,7 @@ export const face = {
     faceType: {
       menu: 'parts',
       dflt: 'split',
-      list: ['split', 'mirrored', 'snout'],
+      list: ['split', 'mirrored', 'snout', 'hairline'],
     },
   },
 }

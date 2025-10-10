@@ -1,0 +1,48 @@
+import { draft_path2 } from './paths/draft_path2.mjs'
+import { faceForelock } from '../faceForelock/faceForelock.mjs'
+
+function draftPollyHairback({
+  Path,
+  Point,
+  paths,
+  points,
+  measurements,
+  options,
+  utils,
+  macro,
+  part,
+  store,
+}) {
+  if (options.faceType != 'hairline') {
+    return part
+  }
+
+  draft_path2(Path, Point, paths, points, measurements, options, utils, macro, part, store)
+
+  macro('title', { at: points.title, nr: '8a', title: 'hairBack', scale: options.totalSize })
+
+  return part
+}
+
+export const hairBack = {
+  name: 'Polly.hairBack',
+  draft: draftPollyHairback,
+  after: faceForelock,
+
+  measurements: [
+    // Enter the measurements your design needs here. See https://freesewing.dev/reference/measurements .
+  ],
+  options: {
+    // Enter your pattern options here. Example:
+    /*
+        extraLength: {
+            pct: 10,
+            min: 5,
+            max: 20,
+            label: 'Extra length',
+            menu: 'fit',
+            ...pctBasedOn('neck')
+        }
+        */
+  },
+}

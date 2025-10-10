@@ -19,6 +19,10 @@ import { anthro_foot_sole } from './parts/anthro_legs/anthro_foot_sole.mjs'
 import { preview } from './parts/preview/preview.mjs'
 
 import { i18n } from '../i18n/index.mjs'
+import { faceForelock } from './parts/hairline_head/faceForelock/faceForelock.mjs'
+import { hairBack } from './parts/hairline_head/hairBack/hairBack.mjs'
+import { hairForelockTriangle } from './parts/hairline_head/hairForelockTriangle/hairForelockTriangle.mjs'
+import { neckBack } from './parts/hairline_head/neckBack/neckBack.mjs'
 
 // Setup our new design
 const Polly = new Design({
@@ -39,6 +43,12 @@ const Polly = new Design({
     anthro_leg_outer,
     anthro_foot_upper,
     anthro_foot_sole,
+
+    faceForelock,
+    hairBack,
+    hairForelockTriangle,
+    neckBack,
+
     preview,
   ],
 })
@@ -60,6 +70,10 @@ export {
   anthro_leg_outer,
   anthro_foot_upper,
   anthro_foot_sole,
+  faceForelock,
+  hairBack,
+  hairForelockTriangle,
+  neckBack,
   preview,
   Polly,
   i18n,

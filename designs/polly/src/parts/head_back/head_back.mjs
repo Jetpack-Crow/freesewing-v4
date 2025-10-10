@@ -20,6 +20,10 @@ function draftPollyHead_back({
   Snippet,
   snippets,
 }) {
+  if (options.faceType == 'hairline') {
+    return part
+  }
+
   draft_path127(Path, Point, paths, points, measurements, options, utils, macro, part, log, store)
 
   points.ladderOpeningNotch = paths.backSeam.shiftFractionAlong(0.4)
