@@ -12,6 +12,7 @@ function draftPollyHairforelocktriangle({
   part,
   store,
   log,
+  sa,
 }) {
   if (options.faceType != 'hairline') {
     return part
@@ -26,11 +27,16 @@ function draftPollyHairforelocktriangle({
     scale: options.totalSize * 1,
   })
 
+  if (sa) {
+    paths.saBasis = paths.path3
+    paths.sa = paths.saBasis.offset(sa).attr('class', 'fabric sa')
+  }
+
   return part
 }
 
 export const hairForelockTriangle = {
-  name: 'Polly.hairForelockTriangle',
+  name: 'polly.hairForelockTriangle',
   draft: draftPollyHairforelocktriangle,
 
   measurements: [

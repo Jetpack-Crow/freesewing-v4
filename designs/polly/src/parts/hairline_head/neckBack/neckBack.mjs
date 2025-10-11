@@ -15,6 +15,7 @@ function draftPollyNeckback({
   part,
   store,
   log,
+  sa,
 }) {
   if (options.faceType != 'hairline') {
     return part
@@ -24,11 +25,16 @@ function draftPollyNeckback({
 
   macro('title', { at: points.title, nr: '8b', title: 'neckBack', scale: options.totalSize * 0.5 })
 
+  if (sa) {
+    paths.saBasis = paths.path4
+    paths.sa = paths.saBasis.offset(sa).attr('class', 'fabric sa')
+  }
+
   return part
 }
 
 export const neckBack = {
-  name: 'Polly.neckBack',
+  name: 'polly.neckBack',
   draft: draftPollyNeckback,
   after: [arm_top, body_back],
 

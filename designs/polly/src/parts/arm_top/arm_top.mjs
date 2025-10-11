@@ -100,7 +100,7 @@ export const arm_top = {
   options: {
     armLength: {
       pct: 100,
-      min: 50,
+      min: 70,
       max: 200,
       label: 'Arm length',
       menu: 'style',

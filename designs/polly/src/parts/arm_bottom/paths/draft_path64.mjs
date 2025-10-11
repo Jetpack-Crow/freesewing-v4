@@ -14,14 +14,47 @@ function draft_path64(
   log
 ) {
   const drawArmCurve = () => {
+    if (options.armLength > 0.8) {
+      log.info('long arm')
+      return (
+        new Path()
+          .move(points.armpitPointRight_ep)
+
+          // inkex.paths.curve: c 0.26393 15.8943 -0.93376 42.5687 0.42245 63.7888
+          /*
+          ._curve(
+            //points.armNarrowRight_cp1, 
+            points.armNarrowRight_cp2, 
+            points.armNarrowRight_ep)
+          // inkex.paths.curve: c 4.51413 47.2555 26.3062 122.293 -3.55182 164.779
+          */
+          .curve(points.armWideRight_cp1, points.armWideRight_cp2, points.armWideRight_ep)
+          ._curve(
+            //points.armWideLeft_cp1,
+            points.curveBottom_cpRight,
+            points.curveBottom
+          )
+          .hide()
+      )
+    }
+    //else, short arm
     return (
       new Path()
         .move(points.armpitPointRight_ep)
 
         // inkex.paths.curve: c 0.26393 15.8943 -0.93376 42.5687 0.42245 63.7888
-        .curve(points.armNarrowRight_cp1, points.armNarrowRight_cp2, points.armNarrowRight_ep)
+        /*
+        ._curve(
+          //points.armNarrowRight_cp1, 
+          points.armNarrowRight_cp2, 
+          points.armNarrowRight_ep)
         // inkex.paths.curve: c 4.51413 47.2555 26.3062 122.293 -3.55182 164.779
-        .curve(points.armWideRight_cp1, points.armWideRight_cp2, points.armWideRight_ep)
+        */
+        ._curve(
+          //points.armWideRight_cp1,
+          points.armWideRight_cp2,
+          points.armWideRight_ep
+        )
         ._curve(
           //points.armWideLeft_cp1,
           points.curveBottom_cpRight,

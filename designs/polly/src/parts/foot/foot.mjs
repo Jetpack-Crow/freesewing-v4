@@ -18,9 +18,11 @@ function draftPollyFoot({
 
     const circumference = store.get('legBottomLength')
 
-    points.center.addCircle(circumference / (2 * 3.14), 'fabric')
+    points.radius = new Point(0, circumference / (2 * 3.14))
 
-    if (sa) points.center.addCircle(sa + circumference / (2 * 3.14), 'fabric sa')
+    paths.circle = new Path().move(points.radius).circleSegment(360, points.center).close()
+
+    if (sa) paths.sa = paths.circle.offset(sa).attr('class', 'fabric sa')
 
     macro('title', { at: points.center, nr: 4, title: 'foot', scale: options.totalSize })
   }

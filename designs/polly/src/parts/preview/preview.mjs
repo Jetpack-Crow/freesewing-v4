@@ -211,7 +211,7 @@ function draftPollyPreview({
 }
 
 export const preview = {
-  name: 'Polly.preview',
+  name: 'polly.preview',
   draft: draftPollyPreview,
 
   measurements: [

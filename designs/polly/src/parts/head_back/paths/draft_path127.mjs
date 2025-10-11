@@ -142,8 +142,8 @@ function draft_path127(
 
   paths.path127 = new Path()
     // inkex.paths.move: m 43.4626 83.938
-    .move(points.path127_p1)
-    // inkex.paths.curve: c 17.2538 20.0646 48.6087 51.8633 70.7841 66.8664
+    .move(points.headTip_ep)
+    .curve(points.dartTop_cp1, points.dartTop_cp2, points.dartTop_ep)
     .curve(points.dartEnd_cp1, points.dartEnd_cp2, points.dartEnd_ep)
     // inkex.paths.curve: c -23.8299 -12.3087 -67.7212 -19.3495 -93.4455 -18.7438
     .curve(points.dartBottom_cp1, points.dartBottom_cp2, points.dartBottom_ep)
@@ -155,8 +155,6 @@ function draft_path127(
     .curve(points.neckOuter_cp1, points.neckOuter_cp2, points.neckOuter_ep)
     .join(paths.neckCurve)
     .join(paths.backSeam)
-    .curve(points.dartTop_cp1, points.dartTop_cp2, points.dartTop_ep)
-    // inkex.paths.ZoneClose: Z
     .close()
 }
 

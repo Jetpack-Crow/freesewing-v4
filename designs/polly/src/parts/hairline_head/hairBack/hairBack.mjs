@@ -11,6 +11,7 @@ function draftPollyHairback({
   macro,
   part,
   store,
+  sa,
 }) {
   if (options.faceType != 'hairline') {
     return part
@@ -20,11 +21,16 @@ function draftPollyHairback({
 
   macro('title', { at: points.title, nr: '8a', title: 'hairBack', scale: options.totalSize })
 
+  if (sa) {
+    paths.saBasis = paths.path2
+    paths.sa = paths.saBasis.offset(sa).trim().attr('class', 'fabric sa')
+  }
+
   return part
 }
 
 export const hairBack = {
-  name: 'Polly.hairBack',
+  name: 'polly.hairBack',
   draft: draftPollyHairback,
 
   measurements: [

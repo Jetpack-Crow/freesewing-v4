@@ -78,14 +78,14 @@ function draft_path6(
   store.set('lowerHeadSeam', lowerHeadSeam)
 
   paths.path6 = new Path()
-    .move(points.path6_p1)
+    .move(points.neckOuter_ep)
+    .line(points.dartBottom)
+    .curve(points.dartPoint_cp1, points.dartPoint_cp2, points.dartPoint_ep)
     .curve(points.dartTop_cp1, points.dartTop_cp2, points.dartTop_ep)
     .curve(points.foreheadCenter_cp1, points.foreheadCenter_cp2, points.foreheadCenter_ep)
     .curve(points.neckInner_cp1, points.neckInner_cp2, points.neckInner_ep)
     .join(paths.neckCurve)
-    .line(points.dartBottom)
-    .curve(points.dartPoint_cp1, points.dartPoint_cp2, points.dartPoint_ep)
-    .line(points.path6_p1)
+    .close()
 }
 
 export { draft_path6 }

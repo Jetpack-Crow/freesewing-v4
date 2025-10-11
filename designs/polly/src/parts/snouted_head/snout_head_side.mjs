@@ -118,7 +118,7 @@ function draftPollySnoutHeadSide({
   points.title = points.noseEdge_ep.shiftFractionTowards(points.neckCenter_ep, 0.3)
   macro('title', { at: points.title, nr: '7c', title: 'snout_head_side', scale: options.totalSize })
   if (sa) {
-    paths.sa = paths.path5.offset(sa).attr('class', 'fabric sa')
+    paths.sa = paths.path5.close().offset(sa).trim().attr('class', 'fabric sa')
   }
 
   macro('pd', {

@@ -34,7 +34,7 @@ function draft_path2(Path, Point, paths, points, measurements, options, utils, m
     .curve(points.path2_p5_cp1, points.path2_p5_cp2, points.path2_p5_ep)
     .curve(points.path2_p6_cp1, points.path2_p6_cp2, points.path2_p6_ep)
     .curve(points.path2_p7_cp1, points.path2_p7_cp2, points.path2_p7_ep)
-    .line(points.path2_p1)
+    .close()
 }
 
 export { draft_path2 }

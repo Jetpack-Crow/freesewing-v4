@@ -14,6 +14,7 @@ function draftPollyFaceforelock({
   part,
   store,
   log,
+  sa,
 }) {
   if (options.faceType != 'hairline') {
     return part
@@ -23,11 +24,16 @@ function draftPollyFaceforelock({
 
   macro('title', { at: points.title, nr: '7b', title: 'faceForelock', scale: options.totalSize })
 
+  if (sa) {
+    paths.saBasis = paths.path6
+    paths.sa = paths.saBasis.offset(sa).trim().attr('class', 'fabric sa')
+  }
+
   return part
 }
 
 export const faceForelock = {
-  name: 'Polly.faceForelock',
+  name: 'polly.faceForelock',
   draft: draftPollyFaceforelock,
   after: neckBack,
 
