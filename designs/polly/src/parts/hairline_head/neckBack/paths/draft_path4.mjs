@@ -34,7 +34,7 @@ function draft_path4(
 
   points.title = points.hairCenter_ep.shiftFractionTowards(points.hairOuter, 0.5)
 
-  scaleAllPoints(part, options.totalSize * store.get('hairlineHeadScale'))
+  scaleAllPoints(part, options.totalSize * options.hairlineHeadScale)
 
   for (let p in points) {
     points[p] = points[p].rotate(75, points.title)

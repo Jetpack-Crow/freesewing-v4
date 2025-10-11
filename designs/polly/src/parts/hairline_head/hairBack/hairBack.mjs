@@ -1,5 +1,4 @@
 import { draft_path2 } from './paths/draft_path2.mjs'
-import { faceForelock } from '../faceForelock/faceForelock.mjs'
 
 function draftPollyHairback({
   Path,
@@ -27,7 +26,6 @@ function draftPollyHairback({
 export const hairBack = {
   name: 'Polly.hairBack',
   draft: draftPollyHairback,
-  after: faceForelock,
 
   measurements: [
     // Enter the measurements your design needs here. See https://freesewing.dev/reference/measurements .

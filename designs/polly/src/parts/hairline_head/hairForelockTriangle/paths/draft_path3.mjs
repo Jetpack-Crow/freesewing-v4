@@ -26,7 +26,9 @@ function draft_path3(
   points.lowerPoint_cp2 = new Point(549, 789.2)
   points.lowerPoint_ep = new Point(497.4, 1021.8)
 
-  scaleAllPoints(part, options.totalSize * store.get('hairlineHeadScale'))
+  points.title = new Point(550, 500)
+
+  scaleAllPoints(part, options.totalSize * options.hairlineHeadScale)
 
   paths.crownSeam = new Path()
     .move(points.crownCenter_ep)

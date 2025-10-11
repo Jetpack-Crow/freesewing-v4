@@ -24,7 +24,7 @@ function draft_path2(Path, Point, paths, points, measurements, options, utils, m
 
   points.title = new Point(150, 800)
 
-  scaleAllPoints(part, options.totalSize * store.get('hairlineHeadScale'))
+  scaleAllPoints(part, options.totalSize * options.hairlineHeadScale)
 
   paths.path2 = new Path()
     .move(points.path2_p1)

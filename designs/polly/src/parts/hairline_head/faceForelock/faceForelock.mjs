@@ -1,5 +1,7 @@
 import { draft_path6 } from './paths/draft_path6.mjs'
 
+import { neckBack } from '../neckBack/neckBack.mjs'
+
 function draftPollyFaceforelock({
   Path,
   Point,
@@ -11,12 +13,15 @@ function draftPollyFaceforelock({
   macro,
   part,
   store,
+  log,
 }) {
   if (options.faceType != 'hairline') {
     return part
   }
 
-  draft_path6(Path, Point, paths, points, measurements, options, utils, macro, part, store)
+  draft_path6(Path, Point, paths, points, measurements, options, utils, macro, part, store, log)
+
+  macro('title', { at: points.title, nr: '7b', title: 'faceForelock', scale: options.totalSize })
 
   return part
 }
@@ -24,6 +29,7 @@ function draftPollyFaceforelock({
 export const faceForelock = {
   name: 'Polly.faceForelock',
   draft: draftPollyFaceforelock,
+  after: neckBack,
 
   measurements: [
     // Enter the measurements your design needs here. See https://freesewing.dev/reference/measurements .

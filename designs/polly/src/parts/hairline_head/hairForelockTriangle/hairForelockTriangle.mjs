@@ -1,5 +1,4 @@
 import { draft_path3 } from './paths/draft_path3.mjs'
-import { faceForelock } from '../faceForelock/faceForelock.mjs'
 
 function draftPollyHairforelocktriangle({
   Path,
@@ -20,13 +19,19 @@ function draftPollyHairforelocktriangle({
 
   draft_path3(Path, Point, paths, points, measurements, options, utils, macro, part, store, log)
 
+  macro('title', {
+    at: points.title,
+    nr: '7a',
+    title: 'hairForelockTriangle',
+    scale: options.totalSize * 1,
+  })
+
   return part
 }
 
 export const hairForelockTriangle = {
   name: 'Polly.hairForelockTriangle',
   draft: draftPollyHairforelocktriangle,
-  after: faceForelock,
 
   measurements: [
     // Enter the measurements your design needs here. See https://freesewing.dev/reference/measurements .

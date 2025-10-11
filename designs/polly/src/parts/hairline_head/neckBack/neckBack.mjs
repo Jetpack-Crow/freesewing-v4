@@ -1,5 +1,4 @@
 import { draft_path4 } from './paths/draft_path4.mjs'
-import { faceForelock } from '../faceForelock/faceForelock.mjs'
 
 import { arm_top } from '../../arm_top/arm_top.mjs'
 import { body_back } from '../../body_back/body_back.mjs'
@@ -31,7 +30,7 @@ function draftPollyNeckback({
 export const neckBack = {
   name: 'Polly.neckBack',
   draft: draftPollyNeckback,
-  after: [arm_top, body_back, faceForelock],
+  after: [arm_top, body_back],
 
   measurements: [
     // Enter the measurements your design needs here. See https://freesewing.dev/reference/measurements .

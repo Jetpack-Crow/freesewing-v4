@@ -101,5 +101,6 @@ export const face = {
       dflt: 'split',
       list: ['split', 'mirrored', 'snout', 'hairline'],
     },
+    hairlineHeadScale: 0.40927,
   },
 }
